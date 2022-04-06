@@ -1,12 +1,11 @@
 package com.example.demo.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Boat extends Property{
 
     private String type;
-    private int lenght;
+    private int length;
     private int engineNum;//string?
     private int enginePow;
     private int maxSpeed;
@@ -14,10 +13,10 @@ public class Boat extends Property{
     private List<String> fishingEquipment;
 
 
-    public Boat(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,String type, int lenght, int engineNum, int enginePow, int maxSpeed, List<String> navEquipment, List<String> fishingEquipment) {
+    public Boat(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,String type, int length, int engineNum, int enginePow, int maxSpeed, List<String> navEquipment, List<String> fishingEquipment) {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices,dailyPrice );
         this.type = type;
-        this.lenght = lenght;
+        this.length = length;
         this.engineNum = engineNum;
         this.enginePow = enginePow;
         this.maxSpeed = maxSpeed;
@@ -33,12 +32,12 @@ public class Boat extends Property{
         this.type = type;
     }
 
-    public int getLenght() {
-        return lenght;
+    public int getLength() {
+        return length;
     }
 
-    public void setLenght(int lenght) {
-        this.lenght = lenght;
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public int getEngineNum() {
