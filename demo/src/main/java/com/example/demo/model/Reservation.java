@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 public class Reservation { //Bojane dodaj ostale klase (Offer, AdditionalService...)
 
     private Client client;

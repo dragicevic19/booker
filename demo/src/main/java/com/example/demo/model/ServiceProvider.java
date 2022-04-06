@@ -6,12 +6,12 @@ public abstract class ServiceProvider extends User {
     public ServiceProvider() {
     }
 
-    public ServiceProvider(Integer id, String email, String name, String lastName, Address address, String phoneNumber, LoyaltyProgram loyaltyProgram) {
+    public ServiceProvider(Integer id, String email, String name, String lastName, Address address, String phoneNumber) {
         super(id, email, name, lastName, address, phoneNumber);
-        this.loyaltyProgram = loyaltyProgram;
+        this.loyaltyProgram = new LoyaltyProgram(0, LoyaltyRank.REGULAR);
     }
 
-
-
-
+    public LoyaltyProgram getLoyaltyProgram() {
+        return loyaltyProgram;
+    }
 }

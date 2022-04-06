@@ -11,11 +11,10 @@ public class BoatOwner extends PropertyOwner {
         this.boats = new ArrayList<Boat>();
     }
 
-    public BoatOwner(Integer id, String email, String name, String lastName, Address address, String phoneNumber, LoyaltyProgram loyaltyProgram) {
-        super(id, email, name, lastName, address, phoneNumber, loyaltyProgram);
+    public BoatOwner(Integer id, String email, String name, String lastName, Address address, String phoneNumber) {
+        super(id, email, name, lastName, address, phoneNumber);
         this.boats = new ArrayList<Boat>();
     }
-
 
     public List<Boat> getBoats() {
         return boats;

@@ -80,4 +80,9 @@ public class Boat extends Property{
     public void setFishingEquipment(List<String> fishingEquipment) {
         this.fishingEquipment = fishingEquipment;
     }
+
+    @Override
+    public int calculatePrice() {
+        return 0; //treba overrajdovati
+    }
 }

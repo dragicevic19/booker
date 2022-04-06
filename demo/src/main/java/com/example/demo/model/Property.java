@@ -8,7 +8,7 @@ public abstract class Property extends Offer {
 
     private int dailyPrice;
 
-    private Property(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice)
+    public Property(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice)
     {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices );
         this.dailyPrice = dailyPrice;
@@ -21,4 +21,6 @@ public abstract class Property extends Offer {
     public void setDailyPrice(int dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
+
+    public abstract int calculatePrice();
 }

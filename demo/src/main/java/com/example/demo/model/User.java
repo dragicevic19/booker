@@ -10,7 +10,6 @@ public abstract class User {
     private String lastName;
     private Address address;
     private String phoneNumber;
-
     private Rating rating;
 
     public User() {

@@ -13,7 +13,7 @@ public class FishingInstructor extends ServiceProvider {
 
     public FishingInstructor(Integer id, String email, String name, String lastName, Address address, String phoneNumber,
                              LoyaltyProgram loyaltyProgram) {
-        super(id, email, name, lastName, address, phoneNumber, loyaltyProgram);
+        super(id, email, name, lastName, address, phoneNumber);
         this.fishingLessons = new ArrayList<FishingLesson>();
     }
 

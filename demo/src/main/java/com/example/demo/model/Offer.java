@@ -16,6 +16,7 @@ public abstract class Offer {
     private List<AdditionalService> additionalServices;
     private List<Discount> discounts;
     private Rating rating;
+    //slike treba ubaciti
 
     public Offer(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices) {
         this.name = name;
@@ -25,8 +26,8 @@ public abstract class Offer {
         this.regulations = regulations;
         this.cancellationFee = cancellationFee;
         this.additionalServices = additionalServices;
-        this.periodsOfOccupancy = new List<Period>;
-        this.discounts = new List<Discount>;
+        this.periodsOfOccupancy = new ArrayList<Period>();
+        this.discounts = new ArrayList<Discount>();
     }
 
     public String getName() {
@@ -109,11 +110,5 @@ public abstract class Offer {
         this.rating = rating;
     }
 
-    public abstract int calculatePrice(){
-
-    }
-
-
-
-
+    public abstract int calculatePrice();
 }
