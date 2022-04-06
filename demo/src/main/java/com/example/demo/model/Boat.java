@@ -3,7 +3,7 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Offer extends Property{
+public class Boat extends Property{
 
     private String type;
     private int lenght;
@@ -14,7 +14,7 @@ public class Offer extends Property{
     private List<String> fishingEquipment;
 
 
-    public Offer(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,String type, int lenght, int engineNum, int enginePow, int maxSpeed, List<String> navEquipment, List<String> fishingEquipment) {
+    public Boat(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,String type, int lenght, int engineNum, int enginePow, int maxSpeed, List<String> navEquipment, List<String> fishingEquipment) {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices,dailyPrice );
         this.type = type;
         this.lenght = lenght;
