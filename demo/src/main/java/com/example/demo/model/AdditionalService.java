@@ -1,14 +1,29 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AdditionalService {
 
+@Entity
+public class AdditionalService {
 
+    @Id
+    @SequenceGenerator(name = "additionalServiceSeqGen", sequenceName = "additionalServiceSeq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "additionalServiceSeqGen")
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
+
+    @Column(name = "title", unique = false, nullable = false)
     private String title;
+
+    @Column(name = "price", unique = false, nullable = false)
     private int price;
+
+    @Column(name = "description", unique = false, nullable = false)
     private String description;
+
+    public AdditionalService() {}
 
     public AdditionalService(String title, int price, String description) {
         this.title = title;

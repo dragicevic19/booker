@@ -1,18 +1,28 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.*;
 
+
+@Entity
 public class Client extends User{
 
+    @Column(name = "num_of_penalties", unique = false, nullable = false)
     private int numOfPenalties;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "loyalty_id", nullable = false)
     private LoyaltyProgram loyaltyProgram;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name = "reservations")
     private List<Reservation> reservations;
 
     public Client() {
     }
 
-    public Client(Integer id, String email, String name, String lastName, Address address, String phoneNumber) {
-        super(id, email, name, lastName, address, phoneNumber);
+    public Client(String email, String name, String lastName, Address address, String phoneNumber) {
+        super(email, name, lastName, address, phoneNumber);
         this.numOfPenalties = 0;
         this.loyaltyProgram = new LoyaltyProgram(0, LoyaltyRank.REGULAR);
         this.reservations = new ArrayList<Reservation>();

@@ -1,23 +1,22 @@
 package com.example.demo.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Cottage extends Property {
 
-    private String type;
+@Entity
+public class Cottage extends Property {
 
-    public Cottage(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice, String type) {
+    public Cottage() {}
+
+    public Cottage(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice) {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices,dailyPrice );
-
-        this.type = type;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    @Override
+    public int calculatePrice() {
+        return 0;
     }
 }

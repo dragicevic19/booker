@@ -1,19 +1,26 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class FishingInstructor extends ServiceProvider {
 
+
+    @OneToMany(mappedBy = "fishing_instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name="fishing_lessons")
     private List<FishingLesson> fishingLessons;
+
+    @Column(name="biography")
     private String biography;
 
     public FishingInstructor(){
         this.fishingLessons = new ArrayList<FishingLesson>();
     }
 
-    public FishingInstructor(Integer id, String email, String name, String lastName, Address address, String phoneNumber, String biography) {
-        super(id, email, name, lastName, address, phoneNumber);
+    public FishingInstructor(String email, String name, String lastName, Address address, String phoneNumber, String biography) {
+        super(email, name, lastName, address, phoneNumber);
         this.fishingLessons = new ArrayList<FishingLesson>();
         this.biography = biography;
     }

@@ -1,10 +1,23 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+
+@Entity
 public class Period {
 
+
+    @Id
+    @SequenceGenerator(name = "periodSeqGen", sequenceName = "periodSeq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "periodSeqGen")
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
+
+    @Column(name = "date_from", unique = false, nullable = false)
     private Date dateFrom;
+
+    @Column(name = "date_to", unique = false, nullable = false)
     private Date dateTo;
 
     public Period(){

@@ -1,22 +1,67 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Offer {
 
+    @Id
+    @SequenceGenerator(name = "offerSeqGen", sequenceName = "offerSeq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "offerSeqGen")
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
+    @Column(name = "name", unique = false, nullable = false)
     private String name;// title
+
+    @Column(name = "description", unique = false, nullable = false)
     private String description;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
+
+    @Column(name = "capacity", unique = false, nullable = false)
     private int capacity;
+
+    @Column(name = "regulations", unique = false, nullable = false)
     private String regulations;
+
+    @Column(name = "cancellation_fee", unique = false, nullable = false)
     private double cancellationFee;
+
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name="periods_of_occupancy")
     private List<Period> periodsOfOccupancy;
+
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name="additional_services")
     private List<AdditionalService> additionalServices;
+
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name="discounts")
     private List<Discount> discounts;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rating_id", nullable = true)
     private Rating rating;
-    //slike treba ubaciti
+
+    @ElementCollection
+    @Column(name="images")
+    private List<String> images;    //slike treba ubaciti
+
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name = "reservations")
+    private List<Reservation> reservations;
+
+    @Column(name="deleted")
+    private boolean deleted;
+
+    public Offer() {}
 
     public Offer(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices) {
         this.name = name;
@@ -28,6 +73,9 @@ public abstract class Offer {
         this.additionalServices = additionalServices;
         this.periodsOfOccupancy = new ArrayList<Period>();
         this.discounts = new ArrayList<Discount>();
+        this.images = new ArrayList<String>();
+        this.reservations = new ArrayList<Reservation>();
+        this.deleted = false;
     }
 
     public String getName() {
@@ -108,6 +156,27 @@ public abstract class Offer {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
     public abstract int calculatePrice();

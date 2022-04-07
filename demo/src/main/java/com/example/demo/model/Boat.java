@@ -1,19 +1,41 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
+
+
+@Entity
 public class Boat extends Property{
 
-    private String type;
+    @Column(name = "type", unique = false, nullable = false)
+    private BoatType type;
+
+    @Column(name = "length", unique = false, nullable = false)
     private int length;
-    private int engineNum;//string?
+
+    @Column(name = "engine_num", unique = false, nullable = false)
+    private int engineNum;
+
+    @Column(name = "engine_pow", unique = false, nullable = false)
     private int enginePow;
+
+    @Column(name = "max_speed", unique = false, nullable = false)
     private int maxSpeed;
+
+    @ElementCollection
+    @Column(name="nav_equipment")
     private List<String> navEquipment;
+
+    @ElementCollection
+    @Column(name="fishing_equipment")
     private List<String> fishingEquipment;
 
 
-    public Boat(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,String type, int length, int engineNum, int enginePow, int maxSpeed, List<String> navEquipment, List<String> fishingEquipment) {
+    public Boat() {}
+
+    public Boat(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,BoatType type, int length, int engineNum, int enginePow, int maxSpeed, List<String> navEquipment, List<String> fishingEquipment) {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices,dailyPrice );
         this.type = type;
         this.length = length;
@@ -24,11 +46,11 @@ public class Boat extends Property{
         this.fishingEquipment = fishingEquipment;
     }
 
-    public String getType() {
+    public BoatType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(BoatType type) {
         this.type = type;
     }
 
