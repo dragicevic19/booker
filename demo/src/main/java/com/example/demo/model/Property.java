@@ -10,9 +10,9 @@ import java.util.List;
 public abstract class Property extends Offer {
 
     @Column(name = "daily_price", unique = false, nullable = false)
-    private int dailyPrice;
+    private double dailyPrice;
 
-    public Property(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice)
+    public Property(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices, double dailyPrice)
     {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices );
         this.dailyPrice = dailyPrice;
@@ -20,11 +20,11 @@ public abstract class Property extends Offer {
 
     public Property() {}
 
-    public int getDailyPrice() {
+    public double getDailyPrice() {
         return dailyPrice;
     }
 
-    public void setDailyPrice(int dailyPrice) {
+    public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
 

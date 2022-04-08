@@ -21,8 +21,8 @@ public abstract class Offer {
     @Column(name = "description", unique = false, nullable = false)
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     @Column(name = "capacity", unique = false, nullable = false)
@@ -34,28 +34,27 @@ public abstract class Offer {
     @Column(name = "cancellation_fee", unique = false, nullable = false)
     private double cancellationFee;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name="periods_of_occupancy")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="offer_id", referencedColumnName = "id")
     private List<Period> periodsOfOccupancy;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name="additional_services")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="offer_id", referencedColumnName = "id")
     private List<AdditionalService> additionalServices;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name="discounts")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="offer_id", referencedColumnName = "id")
     private List<Discount> discounts;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rating_id", nullable = true)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rating_id", referencedColumnName = "id")
     private Rating rating;
 
     @ElementCollection
     @Column(name="images")
-    private List<String> images;    //slike treba ubaciti
+    private List<String> images;
 
     @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name = "reservations")
     private List<Reservation> reservations;
 
     @Column(name="deleted")
@@ -76,6 +75,7 @@ public abstract class Offer {
         this.images = new ArrayList<String>();
         this.reservations = new ArrayList<Reservation>();
         this.deleted = false;
+        this.rating = new Rating(0, 0);
     }
 
     public String getName() {

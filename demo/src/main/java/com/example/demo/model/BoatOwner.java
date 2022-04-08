@@ -10,17 +10,16 @@ import java.util.List;
 @Entity
 public class BoatOwner extends PropertyOwner {
 
-    //@OneToMany(mappedBy = "boat_owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name="boats")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "boat_owner_id")
     private List<Boat> boats;
 
     public BoatOwner() {
         this.boats = new ArrayList<Boat>();
     }
 
-    public BoatOwner(String email, String name, String lastName, Address address, String phoneNumber) {
-        super(email, name, lastName, address, phoneNumber);
+    public BoatOwner(String email, String password, String name, String lastName, Address address, String phoneNumber) {
+        super(email, password, name, lastName, address, phoneNumber);
         this.boats = new ArrayList<Boat>();
     }
 

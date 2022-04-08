@@ -1,12 +1,10 @@
 package com.example.demo.model;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
+@Table(name = "\"user\"")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
@@ -19,36 +17,41 @@ public abstract class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rating_id", nullable = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id", referencedColumnName = "id")
     private Rating rating;
 
-    @Column(name = "is_deleted", unique = true, nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     private boolean deleted;
 
     public User() {
     }
 
-    public User(String email, String name, String lastName, Address address, String phoneNumber) {
+    public User(String email, String password, String name, String lastName, Address address, String phoneNumber) {
         this.email = email;
+        this.password = password;
         this.name = name;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.deleted = false;
+        this.rating = new Rating(0, 0);
     }
 
     public Integer getId() {
@@ -57,6 +60,10 @@ public abstract class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getName() {

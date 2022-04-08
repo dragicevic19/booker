@@ -12,16 +12,17 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addressSeqGen")
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
-    @Column(name = "address_name", nullable = false)
-    private String address;
+    @Column(name = "street", nullable = false)
+    private String street;
     @Column(name = "city", nullable = false)
     private String city;
     @Column(name = "country", nullable = false)
     private String country;
 
     public Address() {}
-    public Address(String address, String city, String country) {
-        this.address = address;
+
+    public Address(String street, String city, String country) {
+        this.street = street;
         this.city = city;
         this.country = country;
     }
@@ -30,8 +31,8 @@ public class Address {
         return id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
     public String getCity() {

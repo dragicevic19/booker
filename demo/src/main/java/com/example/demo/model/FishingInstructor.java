@@ -8,8 +8,8 @@ import java.util.List;
 public class FishingInstructor extends ServiceProvider {
 
 
-    @OneToMany(mappedBy = "fishing_instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name="fishing_lessons")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="fishing_instructor_id", referencedColumnName = "id")
     private List<FishingLesson> fishingLessons;
 
     @Column(name="biography")
@@ -19,8 +19,8 @@ public class FishingInstructor extends ServiceProvider {
         this.fishingLessons = new ArrayList<FishingLesson>();
     }
 
-    public FishingInstructor(String email, String name, String lastName, Address address, String phoneNumber, String biography) {
-        super(email, name, lastName, address, phoneNumber);
+    public FishingInstructor(String email, String password, String name, String lastName, Address address, String phoneNumber, String biography) {
+        super(email, password, name, lastName, address, phoneNumber);
         this.fishingLessons = new ArrayList<FishingLesson>();
         this.biography = biography;
     }

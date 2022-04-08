@@ -14,15 +14,15 @@ public class Discount {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "period_id", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "period_id", referencedColumnName = "id")
     private Period period;
     //private int discount;
 
-    @Column(name = "reduced_price", unique = true, nullable = false)
+    @Column(name = "reduced_price", unique = false, nullable = false)
     private int reducedPrice;
 
-    @Column(name = "is_acitve", unique = true, nullable = false)
+    @Column(name = "is_acitve", unique = false, nullable = false)
     private boolean isActive;
 
     public Discount() {}

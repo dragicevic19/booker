@@ -14,11 +14,11 @@ public class Reservation {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+//    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "offer_id")
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
     private Offer offer;
 
     @Column(name = "price", unique = false, nullable = false)
@@ -34,17 +34,18 @@ public class Reservation {
     private boolean hasClientRated;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "period_id", nullable = false)
+    @JoinColumn(name = "period_id", referencedColumnName = "id")
     private Period reservationPeriod;
 
-    @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name="additional_services")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
     private List<AdditionalService> chosenAdditionalServices;
 
-    public Reservation(){
+    public Reservation() {
     }
 
-    public Reservation(Client client, Offer offer, double price, int numOfAttendants, boolean hasOwnerRated, boolean hasClientRated, Period reservationPeriod, List<AdditionalService> chosenAdditionalServices) {
+    public Reservation(Client client, Offer offer, double price, int numOfAttendants, boolean hasOwnerRated,
+                       boolean hasClientRated, Period reservationPeriod, List<AdditionalService> chosenAdditionalServices) {
         this.client = client;
         this.offer = offer;
         this.price = price;

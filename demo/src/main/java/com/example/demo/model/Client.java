@@ -5,24 +5,24 @@ import java.util.*;
 
 
 @Entity
-public class Client extends User{
+public class Client extends User {
 
     @Column(name = "num_of_penalties", unique = false, nullable = false)
     private int numOfPenalties;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "loyalty_id", nullable = false)
     private LoyaltyProgram loyaltyProgram;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name = "reservations")
+//    @Column(name = "reservations")
     private List<Reservation> reservations;
 
     public Client() {
     }
 
-    public Client(String email, String name, String lastName, Address address, String phoneNumber) {
-        super(email, name, lastName, address, phoneNumber);
+    public Client(String email, String password, String name, String lastName, Address address, String phoneNumber) {
+        super(email, password, name, lastName, address, phoneNumber);
         this.numOfPenalties = 0;
         this.loyaltyProgram = new LoyaltyProgram(0, LoyaltyRank.REGULAR);
         this.reservations = new ArrayList<Reservation>();
