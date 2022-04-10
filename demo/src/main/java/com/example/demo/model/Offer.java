@@ -16,12 +16,12 @@ public abstract class Offer {
     private Integer id;
 
     @Column(name = "name", unique = false, nullable = false)
-    private String name;// title
+    private String name; // title
 
     @Column(name = "description", unique = false, nullable = false)
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
@@ -35,32 +35,33 @@ public abstract class Offer {
     private double cancellationFee;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="offer_id", referencedColumnName = "id")
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
     private List<Period> periodsOfOccupancy;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="offer_id", referencedColumnName = "id")
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
     private List<AdditionalService> additionalServices;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="offer_id", referencedColumnName = "id")
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
     private List<Discount> discounts;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "rating_id", referencedColumnName = "id")
     private Rating rating;
 
     @ElementCollection
-    @Column(name="images")
+    @Column(name = "images")
     private List<String> images;
 
     @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
-    @Column(name="deleted")
+    @Column(name = "deleted")
     private boolean deleted;
 
-    public Offer() {}
+    public Offer() {
+    }
 
     public Offer(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices) {
         this.name = name;
@@ -158,6 +159,13 @@ public abstract class Offer {
         this.rating = rating;
     }
 
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 
     public Integer getId() {
         return id;

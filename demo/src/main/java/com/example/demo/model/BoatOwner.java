@@ -31,4 +31,7 @@ public class BoatOwner extends PropertyOwner {
         this.boats.add(boat);
     }
 
+    public void setBoats(List<Boat> boats) {
+        this.boats = boats;
+    }
 }

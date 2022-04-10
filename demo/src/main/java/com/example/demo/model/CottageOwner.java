@@ -16,6 +16,10 @@ public class CottageOwner extends PropertyOwner{
         this.cottages = new ArrayList<Cottage>();
     }
 
+    public void setCottages(List<Cottage> cottages) {
+        this.cottages = cottages;
+    }
+
     public CottageOwner(String email, String password, String name, String lastName, Address address, String phoneNumber) {
         super(email, password, name, lastName, address, phoneNumber);
         this.cottages = new ArrayList<Cottage>();

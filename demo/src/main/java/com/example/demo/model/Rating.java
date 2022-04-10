@@ -33,4 +33,20 @@ public class Rating {
     public double getAverage() {
         return average;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setNumOfVotes(int numOfVotes) {
+        this.numOfVotes = numOfVotes;
+    }
+
+    public void setAverage(double average) {
+        this.average = average;
+    }
 }

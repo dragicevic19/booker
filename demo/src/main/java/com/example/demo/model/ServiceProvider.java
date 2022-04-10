@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -7,7 +8,7 @@ import javax.persistence.OneToOne;
 @Entity
 public abstract class ServiceProvider extends User {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loyalty_id", referencedColumnName = "id")
     private LoyaltyProgram loyaltyProgram;
 
@@ -21,5 +22,9 @@ public abstract class ServiceProvider extends User {
 
     public LoyaltyProgram getLoyaltyProgram() {
         return loyaltyProgram;
+    }
+
+    public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
+        this.loyaltyProgram = loyaltyProgram;
     }
 }

@@ -87,4 +87,44 @@ public class Reservation {
     public List<AdditionalService> getChosenAdditionalServices() {
         return chosenAdditionalServices;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setNumOfAttendants(int numOfAttendants) {
+        this.numOfAttendants = numOfAttendants;
+    }
+
+    public void setHasOwnerRated(boolean hasOwnerRated) {
+        this.hasOwnerRated = hasOwnerRated;
+    }
+
+    public void setHasClientRated(boolean hasClientRated) {
+        this.hasClientRated = hasClientRated;
+    }
+
+    public void setReservationPeriod(Period reservationPeriod) {
+        this.reservationPeriod = reservationPeriod;
+    }
+
+    public void setChosenAdditionalServices(List<AdditionalService> chosenAdditionalServices) {
+        this.chosenAdditionalServices = chosenAdditionalServices;
+    }
 }

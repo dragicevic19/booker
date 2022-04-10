@@ -32,4 +32,16 @@ public class LoyaltyProgram {
     public LoyaltyRank getRank() {
         return rank;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setRank(LoyaltyRank rank) {
+        this.rank = rank;
+    }
 }

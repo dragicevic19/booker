@@ -7,6 +7,8 @@ import java.util.List;
 
 @Entity
 public class AdditionalService {
+    // da li u bazi da imamo tabelu sa svim mogucim dodatnim uslugama za neki Offer
+    // pa onda da u rezervaciji imamo ManyToMany vezu (one usluge koje korisnik izabere od ponudjenih za datu ponudu)?
 
     @Id
     @SequenceGenerator(name = "additionalServiceSeqGen", sequenceName = "additionalServiceSeq", initialValue = 1, allocationSize = 1)
@@ -23,12 +25,17 @@ public class AdditionalService {
     @Column(name = "description", unique = false, nullable = false)
     private String description;
 
-    public AdditionalService() {}
+    public AdditionalService() {
+    }
 
     public AdditionalService(String title, int price, String description) {
         this.title = title;
         this.price = price;
         this.description = description;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getTitle() {

@@ -19,6 +19,14 @@ public class FishingInstructor extends ServiceProvider {
         this.fishingLessons = new ArrayList<FishingLesson>();
     }
 
+    public void setFishingLessons(List<FishingLesson> fishingLessons) {
+        this.fishingLessons = fishingLessons;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
     public FishingInstructor(String email, String password, String name, String lastName, Address address, String phoneNumber, String biography) {
         super(email, password, name, lastName, address, phoneNumber);
         this.fishingLessons = new ArrayList<FishingLesson>();

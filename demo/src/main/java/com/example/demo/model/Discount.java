@@ -22,6 +22,10 @@ public class Discount {
     @Column(name = "reduced_price", unique = false, nullable = false)
     private int reducedPrice;
 
+    public Integer getId() {
+        return id;
+    }
+
     @Column(name = "is_acitve", unique = false, nullable = false)
     private boolean isActive;
 

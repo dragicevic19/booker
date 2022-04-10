@@ -21,6 +21,18 @@ public class Address {
 
     public Address() {}
 
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public Address(String street, String city, String country) {
         this.street = street;
         this.city = city;

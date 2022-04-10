@@ -39,4 +39,17 @@ public class Client extends User {
     public List<Reservation> getReservations() {
         return reservations;
     }
+
+
+    public void setNumOfPenalties(int numOfPenalties) {
+        this.numOfPenalties = numOfPenalties;
+    }
+
+    public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
+        this.loyaltyProgram = loyaltyProgram;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 }

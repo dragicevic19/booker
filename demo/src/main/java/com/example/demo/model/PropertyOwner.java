@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public abstract class PropertyOwner extends ServiceProvider {
 
     public PropertyOwner() {
