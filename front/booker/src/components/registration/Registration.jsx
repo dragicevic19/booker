@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Confirmation from './Confirmation'
+import Confirmation from '../Confirmation'
 import Success from './Success'
 import TypeOfUser from './TypeOfUser'
 import UserDetails from './UserDetails'
@@ -83,6 +83,5 @@ export default class Registration extends Component {
         }
       default:
     }
-
   }
 }
