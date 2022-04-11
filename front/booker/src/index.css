@@ -6,7 +6,7 @@
   margin: 0;
   font-family: "Poppins";
   color: #333;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   
 }
 
@@ -37,6 +37,7 @@
   max-width: 70%;
   margin: 40px auto;
   padding: 20px;
+  text-align: center;
 }
 
 .container {
@@ -52,18 +53,15 @@
 }
 
 .login-footer {
-  position: absolute;
-  bottom: 10px;
-  right: 140px;  /* ne znam kako drugacije na sredinu da stavim */
   margin-top: 30px;
-  text-align: center;
 }
 
 .user-type-picker {
   text-align: center;
   display: grid;
   grid-template-columns: auto auto;
-  gap: 30px;
+  gap: 40px 80px;
+  cursor: pointer;
 }
 
 .user-type-picker h1 {
@@ -73,114 +71,49 @@
   grid-row-end: 1;
 }
 
-.boat-owner-inactive{ 
+.boat-owner {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 2;
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.5;
+  padding: 10px 30px
 }
 
-.cottage-owner-inactive {
+.cottage-owner {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
-  
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.5;
+  padding: 10px 30px
 }
 
-.boat-owner-active {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
-
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 1;
-  border-bottom: 1px solid #f1356d;
-
-}
-
-.cottage-owner-active {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 1;
-  border-bottom: 1px solid #f1356d;
-
-}
-
-.instructor-inactive {
+.instructor {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
-
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.5;
+  padding: 10px 30px
 }
 
-.instructor-active {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 3;
-
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 1;
-  border-bottom: 1px solid #f1356d;
-
-}
-
-.client-inactive {
+.client {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 2;
   grid-row-end: 3;
+  padding: 10px 30px
+}
 
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
+.boat-owner.inactive, .cottage-owner.inactive, .instructor.inactive, .client.inactive {
   opacity: 0.5;
 }
 
-.client-active {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-
-  margin: auto;
-  margin-top: 50px;
-  padding: 5px;
-  cursor: pointer;
+.boat-owner.active, .cottage-owner.active, .instructor.active, .client.active {
   opacity: 1;
   border-bottom: 1px solid #f1356d;
+}
+
+.boat-owner:hover, .cottage-owner:hover, .instructor:hover, .client:hover {
+  opacity: 1;
 }
 
 .boat-owner-pic, .cottage-owner-pic, .instructor-pic, .client-pic {
@@ -197,7 +130,6 @@
 }
 
 .btnNext {
-  bottom: 0;
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 4;
@@ -205,50 +137,127 @@
 }
 
 
-/* 
 .reg-container {
   text-align: center;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px 40px;
   position: relative;
-  max-width: 1000px;
-  margin: 30px auto;
+  max-width: max-content;
+  margin: 50px auto;
   overflow: auto;
-  min-height: 700px;
   border: 1px solid #f1356d;
   padding: 30px;
   border-radius: 5px;
 }
 
-.create {
-  max-width: 1000px;
-  margin: 0 auto;
+.reg-container .reg-first_name {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-last_name {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-country {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-city {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-street {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-email {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-password {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-rep-password {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-phoneNum {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  padding: 5px 30px;
+}
+
+.reg-container .reg-explanation {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  padding: 5px 30px;
+}
+
+.btnBackReg {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  padding: 5px 30px;
+}
+
+.btnNextReg {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  padding: 5px 30px;
+}
+
+
+.confirmation-container {
   text-align: center;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px 40px;
+  position: relative;
+  max-width: max-content;
+  margin: 50px auto;
+  overflow: auto;
+  border: 1px solid #f1356d;
+  padding: 30px;
+  border-radius: 5px;
 }
-
-.create label {
-  text-align: left;
-  display: block;
-}
-
-.create h2 {
-  font-size: 20px;
-  color: #f1356d;
-  margin-bottom: 30px;
-}
-
-.create input, .create textarea, .create select {
-  width: 100%;
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
-  display: block;
-}
-
-.create button {
-  background: #f1356d;
-  color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-} */
