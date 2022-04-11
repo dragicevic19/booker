@@ -1,6 +1,6 @@
-const UserDetails = () => {
+const UserDetails = ({ nextStep, handleChange, values }) => {
   return (
-    <div>UserDetails</div>
+    <h1>User Details - user type: {values.type}</h1>
   )
 }
 

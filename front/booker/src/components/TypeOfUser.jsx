@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 
-const TypeOfUser = ({ nextStep, handleChange, values }) => {
+const TypeOfUser = ({ nextStep, handleChange, setType, values }) => {
 
   const [isActiveBoat, setActiveBoat] = useState(false);
   const [isActiveCottage, setActiveCottage] = useState(false);
@@ -11,6 +11,7 @@ const TypeOfUser = ({ nextStep, handleChange, values }) => {
 
 
   const toggleBoatClass = () => {
+    setType(1)
     setActiveBoat(true)
     setActiveCottage(false)
     setActiveInstructor(false)
@@ -18,6 +19,7 @@ const TypeOfUser = ({ nextStep, handleChange, values }) => {
     setBtnDisabled(false)
   }
   const toggleCottageClass = () => {
+    setType(2)
     setActiveCottage(true)
     setActiveBoat(false)
     setActiveInstructor(false)
@@ -25,6 +27,7 @@ const TypeOfUser = ({ nextStep, handleChange, values }) => {
     setBtnDisabled(false)
   }
   const toggleInstructorClass = () => {
+    setType(3)
     setActiveInstructor(true)
     setActiveBoat(false)
     setActiveCottage(false)
@@ -32,6 +35,7 @@ const TypeOfUser = ({ nextStep, handleChange, values }) => {
     setBtnDisabled(false)
   }
   const toggleClientClass = () => {
+    setType(4)    
     setActiveClient(true)
     setActiveInstructor(false)
     setActiveBoat(false)

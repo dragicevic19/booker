@@ -11,7 +11,7 @@ export default class Registration extends Component {
   // zaboravili smo u modelu godinu rodjenja korisnika
   state = {
       step: 1,
-      type: '',
+      type: 1,
       email: '',
       password: '',
       firstName: '',
@@ -33,13 +33,14 @@ export default class Registration extends Component {
       this.setState({ step: step + 1 })
   }
 
-  setType = (type) => {
-    this.setState({})
+  setType = (newType) => {
+    this.setState({ type: newType})
   }
 
   handleChange = input => e => {
     this.setState({ [input]: e.target.value })
   }
+
 
 
   render() {
@@ -53,16 +54,17 @@ export default class Registration extends Component {
           <TypeOfUser
             nextStep = { this.nextStep }
             handleChange = { this.handleChange }
+            setType = { this.setType }
             values = { values }
           />
         )
       case 2:
         return (
-          <UserDetails
-            nextStep = { this.nextStep }
-            handleChange = { this.handleChange }
-            values = { values }
-          />
+         <UserDetails
+           nextStep = { this.nextStep }
+           handleChange = { this.handleChange }
+           values = { values }
+         />
         )
       case 3:
         return (
