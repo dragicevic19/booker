@@ -141,7 +141,7 @@
   text-align: center;
   display: grid;
   grid-template-columns: auto auto;
-  gap: 10px 40px;
+  gap: 5px 40px;
   position: relative;
   max-width: max-content;
   margin: 50px auto;
