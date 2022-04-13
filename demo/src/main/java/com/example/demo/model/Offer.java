@@ -2,7 +2,9 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -40,7 +42,7 @@ public abstract class Offer {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "offer_id", referencedColumnName = "id")
-    private List<AdditionalService> additionalServices;
+    private Set<AdditionalService> additionalServices = new HashSet<AdditionalService>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "offer_id", referencedColumnName = "id")
@@ -63,7 +65,7 @@ public abstract class Offer {
     public Offer() {
     }
 
-    public Offer(String name, String description, Address address, int capacity, String regulations, double cancellationFee, List<AdditionalService> additionalServices) {
+    public Offer(String name, String description, Address address, int capacity, String regulations, double cancellationFee, Set<AdditionalService> additionalServices) {
         this.name = name;
         this.description = description;
         this.address = address;
@@ -135,11 +137,11 @@ public abstract class Offer {
         this.periodsOfOccupancy = periodsOfOccupancy;
     }
 
-    public List<AdditionalService> getAdditionalServices() {
+    public Set<AdditionalService> getAdditionalServices() {
         return additionalServices;
     }
 
-    public void setAdditionalServices(List<AdditionalService> additionalServices) {
+    public void setAdditionalServices(Set<AdditionalService> additionalServices) {
         this.additionalServices = additionalServices;
     }
 

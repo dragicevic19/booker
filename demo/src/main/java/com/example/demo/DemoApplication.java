@@ -1,21 +1,28 @@
 package com.example.demo;
 
 import com.example.demo.model.*;
-import com.example.demo.repository.ServiceProviderRepository;
+import com.example.demo.repository.BoatOwnerRepository;
+import com.example.demo.repository.CottageOwnerRepository;
+import com.example.demo.repository.FishingInstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 
     @Autowired
-    private ServiceProviderRepository serviceProviderRepo;
-
+    private BoatOwnerRepository boatOwnerRepository;
+    @Autowired
+    private CottageOwnerRepository cottageOwnerRepository;
+    @Autowired
+    private FishingInstructorRepository fishingInstructorRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
@@ -26,13 +33,12 @@ public class DemoApplication implements CommandLineRunner {
         makeTestDataBoatOwner();
         makeTestDataCottageOwner();
         makeTestDataInstructor();
-
     }
 
     private void makeTestDataInstructor() {
-        ServiceProvider i = new FishingInstructor("misa@gmail.com", "misa123", "Misa", "Misic",
+        FishingInstructor i = new FishingInstructor("misa@gmail.com", "misa123", "Misa", "Misic",
                 new Address("Jevrejska 2", "Novi Sad", "Serbia"), "0632662362", "my biography");
-        List<AdditionalService> additionalServices = new ArrayList<>();
+        Set<AdditionalService> additionalServices = new HashSet<>();
         additionalServices.add(new AdditionalService("additional service for fishing adventure 1", 0, "desc of free additional service"));
         additionalServices.add(new AdditionalService("additional service for fishing adventure 1", 100, "desc of additional service"));
         additionalServices.add(new AdditionalService("additional service for fishing adventure 1", 5, "desc of additional service"));
@@ -47,15 +53,15 @@ public class DemoApplication implements CommandLineRunner {
 
         List<FishingLesson> lessons = new ArrayList<>();
         lessons.add(f);
-        ((FishingInstructor) i).setFishingLessons(lessons);
+        i.setFishingLessons(lessons);
 
-        serviceProviderRepo.save(i);
+        fishingInstructorRepository.save(i);
     }
 
     private void makeTestDataCottageOwner() {
-        ServiceProvider co = new CottageOwner("djura@gmail.com", "test", "Djura", "Djuric",
+        CottageOwner co = new CottageOwner("djura@gmail.com", "test", "Djura", "Djuric",
                 new Address("Vuka Karadzica 1", "Novi Sad", "Serbia"), "0615211267");
-        List<AdditionalService> additionalServices = new ArrayList<>();
+        Set<AdditionalService> additionalServices = new HashSet<>();
         additionalServices.add(new AdditionalService("additional service for cottage 1", 0, "desc of free additional service"));
         additionalServices.add(new AdditionalService("additional service for cottage 1", 33, "desc of additional service"));
         additionalServices.add(new AdditionalService("additional service for cottage 1", 21, "desc of additional service"));
@@ -65,15 +71,15 @@ public class DemoApplication implements CommandLineRunner {
 
         List<Cottage> cottages = new ArrayList<>();
         cottages.add(c);
-        ((CottageOwner) co).setCottages(cottages);
-        serviceProviderRepo.save(co);
+        co.setCottages(cottages);
+        cottageOwnerRepository.save(co);
     }
 
     private void makeTestDataBoatOwner() {
-        ServiceProvider bo = new BoatOwner("mail@gmail.com", "test", "Borko", "Brodic",
+        BoatOwner bo = new BoatOwner("mail@gmail.com", "test", "Borko", "Brodic",
                 new Address("Kosovska 1", "Novi Sad", "Srbija"), "0665022124");
 
-        List<AdditionalService> additionalServices = new ArrayList<>();
+        Set<AdditionalService> additionalServices = new HashSet<>();
         additionalServices.add(new AdditionalService("additional services for boat 1", 23, "desc of additional service"));
         additionalServices.add(new AdditionalService("additional services for boat 1", 33, "desc of additional service"));
         additionalServices.add(new AdditionalService("additional services for boat 1", 243, "desc of additional service"));
@@ -83,12 +89,12 @@ public class DemoApplication implements CommandLineRunner {
                 "2412312", 100, 60, new ArrayList<>(), new ArrayList<>());
         List<Boat> boats = new ArrayList<>();
         boats.add(b);
-        ((BoatOwner) bo).setBoats(boats);
-        serviceProviderRepo.save(bo);
+        bo.setBoats(boats);
+        boatOwnerRepository.save(bo);
 
-        PropertyOwner bo2 = new BoatOwner("pero@gmail.com", "test", "Pero", "Peric",
+        BoatOwner bo2 = new BoatOwner("pero@gmail.com", "test", "Pero", "Peric",
                 new Address("Ulica 1", "Grad 2", "Drzava 2"), "0621241241");
-        List<AdditionalService> additSvc2 = new ArrayList<>();
+        Set<AdditionalService> additSvc2 = new HashSet<AdditionalService>();
         additSvc2.add(new AdditionalService("additional services for boat 2", 23, "desc of additional service"));
         additSvc2.add(new AdditionalService("additional services for boat 2", 33, "desc of additional service"));
         additSvc2.add(new AdditionalService("additional services for boat 2", 0, "desc of free additional service"));
@@ -98,7 +104,7 @@ public class DemoApplication implements CommandLineRunner {
                 "123415A2B2", 100, 60, new ArrayList<>(), new ArrayList<>());
         List<Boat> boats2 = new ArrayList<>();
         boats2.add(b2);
-        ((BoatOwner) bo2).setBoats(boats2);
-        serviceProviderRepo.save(bo2);
+        bo2.setBoats(boats2);
+        boatOwnerRepository.save(bo2);
     }
 }

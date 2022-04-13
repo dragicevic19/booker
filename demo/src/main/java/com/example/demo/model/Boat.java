@@ -36,7 +36,7 @@ public class Boat extends Property {
     }
 
     public Boat(String name, String description, Address address, int capacity, String regulations,
-                double cancellationFee, List<AdditionalService> additionalServices, int dailyPrice,
+                double cancellationFee, Set<AdditionalService> additionalServices, int dailyPrice,
                 BoatType type, int length, String engineNum, int enginePow, int maxSpeed,
                 List<String> navEquipment, List<String> fishingEquipment) {
 

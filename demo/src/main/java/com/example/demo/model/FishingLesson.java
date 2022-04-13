@@ -7,6 +7,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -22,7 +23,7 @@ public class FishingLesson extends Offer {
     public FishingLesson() {}
 
     public FishingLesson(String name, String description, Address address, int capacity, String regulations,
-                         double cancellationFee, List<AdditionalService> additionalServices,
+                         double cancellationFee, Set<AdditionalService> additionalServices,
                          int lessonPrice, List<String> fishingEquipment) {
         super(name,description, address, capacity, regulations, cancellationFee, additionalServices );
         this.lessonPrice = lessonPrice;

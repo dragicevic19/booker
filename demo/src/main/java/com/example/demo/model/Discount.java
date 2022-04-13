@@ -17,14 +17,9 @@ public class Discount {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "period_id", referencedColumnName = "id")
     private Period period;
-    //private int discount;
 
     @Column(name = "reduced_price", unique = false, nullable = false)
     private int reducedPrice;
-
-    public Integer getId() {
-        return id;
-    }
 
     @Column(name = "is_acitve", unique = false, nullable = false)
     private boolean isActive;
@@ -35,6 +30,9 @@ public class Discount {
         this.period = period;
         this.reducedPrice = reducedPrice;
         this.isActive = isActive;
+    }
+    public Integer getId() {
+        return id;
     }
 
     public Period getPeriod() {
@@ -59,5 +57,9 @@ public class Discount {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

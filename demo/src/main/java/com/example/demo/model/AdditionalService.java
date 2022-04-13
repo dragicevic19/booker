@@ -2,13 +2,13 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 public class AdditionalService {
-    // da li u bazi da imamo tabelu sa svim mogucim dodatnim uslugama za neki Offer
-    // pa onda da u rezervaciji imamo ManyToMany vezu (one usluge koje korisnik izabere od ponudjenih za datu ponudu)?
 
     @Id
     @SequenceGenerator(name = "additionalServiceSeqGen", sequenceName = "additionalServiceSeq", initialValue = 1, allocationSize = 1)
@@ -24,6 +24,13 @@ public class AdditionalService {
 
     @Column(name = "description", unique = false, nullable = false)
     private String description;
+
+    @ManyToMany(mappedBy = "chosenAdditionalServices")
+    private Set<Reservation> reservations = new HashSet<Reservation>();
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "offer_id")
+//    private Offer offer;
 
     public AdditionalService() {
     }
@@ -61,4 +68,24 @@ public class AdditionalService {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+//    public Offer getOffer() {
+//        return offer;
+//    }
+//
+//    public void setOffer(Offer offer) {
+//        this.offer = offer;
+//    }
 }

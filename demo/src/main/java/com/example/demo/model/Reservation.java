@@ -1,7 +1,9 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -14,7 +16,6 @@ public class Reservation {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,15 +38,15 @@ public class Reservation {
     @JoinColumn(name = "period_id", referencedColumnName = "id")
     private Period reservationPeriod;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
-    private List<AdditionalService> chosenAdditionalServices;
+    @ManyToMany
+    @JoinTable(name = "reservation_additional_services", joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName= "id"), inverseJoinColumns = @JoinColumn(name = "additional_service_id", referencedColumnName = "id"))
+    private Set<AdditionalService> chosenAdditionalServices = new HashSet<AdditionalService>();
 
     public Reservation() {
     }
 
     public Reservation(Client client, Offer offer, double price, int numOfAttendants, boolean hasOwnerRated,
-                       boolean hasClientRated, Period reservationPeriod, List<AdditionalService> chosenAdditionalServices) {
+                       boolean hasClientRated, Period reservationPeriod, Set<AdditionalService> chosenAdditionalServices) {
         this.client = client;
         this.offer = offer;
         this.price = price;
@@ -84,7 +85,7 @@ public class Reservation {
         return reservationPeriod;
     }
 
-    public List<AdditionalService> getChosenAdditionalServices() {
+    public Set<AdditionalService> getChosenAdditionalServices() {
         return chosenAdditionalServices;
     }
 
@@ -124,7 +125,7 @@ public class Reservation {
         this.reservationPeriod = reservationPeriod;
     }
 
-    public void setChosenAdditionalServices(List<AdditionalService> chosenAdditionalServices) {
+    public void setChosenAdditionalServices(Set<AdditionalService> chosenAdditionalServices) {
         this.chosenAdditionalServices = chosenAdditionalServices;
     }
 }
