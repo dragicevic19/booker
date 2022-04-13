@@ -189,13 +189,14 @@ export default class Registration extends Component {
          />
         )
       case 3:
-        if (values.type === 'Client') {
+        if (userType === 'Client') {
           return (
             <Confirmation
               prevStep= { this.prevStep }
               nextStep = { this.nextStep }
               handleChange = { this.handleChange }
               values = { values }
+              userType = { userType }
             />
           )
         } else {

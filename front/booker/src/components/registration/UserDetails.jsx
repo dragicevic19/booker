@@ -69,7 +69,6 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, valid
             onChange={handleChange('street')}
             defaultValue={values.street}
             helperText={ !validation.streetValid.value && validation.streetValid.enable ? validation.formErrors.street : '' }
-
           />
         </div>
 
@@ -113,7 +112,6 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, valid
             onChange={handleChange('repPassword')}
             defaultValue={values.repPassword}
             helperText={!validation.repPasswordValid.value && validation.repPasswordValid.enable ? validation.formErrors.repPassword : '' }
-
           />
         </div>
 
@@ -127,11 +125,10 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, valid
             onChange={handleChange('phoneNumber')}
             defaultValue={values.phoneNumber}
             helperText={ !validation.phoneNumberValid.value && validation.phoneNumberValid.enable ? validation.formErrors.phoneNumber : '' }
-
           />
         </div>
 
-        { values.type !== 'Client' && 
+        { userType !== 'Client' && 
           <div className="reg-explanation">
             <TextField
               fullWidth

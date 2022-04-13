@@ -33,10 +33,11 @@ const Success = ({ values, userType }) => {
 
 
   return (
-    done ? <div className="confirmation-container">
+    //done ?
+     <div className="confirmation-container">
       <h2>You successfully sent request for registration as {userType} on The Booker!</h2>
       <p>Wait for administrator to approve your request and you are ready to go!</p>
-    </div> : null
+    </div> //: null
   )
 }
 
