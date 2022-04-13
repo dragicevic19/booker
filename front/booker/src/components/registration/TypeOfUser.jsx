@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 
-const TypeOfUser = ({ nextStep, handleChange, setType, values }) => {
+const TypeOfUser = ({ nextStep, handleChange, setType, values, userType }) => {
 
   const [isActiveBoat, setActiveBoat] = useState(false);
   const [isActiveCottage, setActiveCottage] = useState(false);

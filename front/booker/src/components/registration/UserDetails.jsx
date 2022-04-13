@@ -1,75 +1,74 @@
 import { Button, TextField } from "@mui/material"
 
-const UserDetails = ({ prevStep, nextStep, handleChange, values, validation }) => {
+const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, validation }) => {
+
   return (
     <div>
-      <h1>Step 2 - Register as {values.type}</h1>
+      <h1>Step 2 - Register as {userType}</h1>
       <div className="reg-container">
 
         <div className="reg-first_name">
           <TextField
             fullWidth
-            error={!validation.firstNameValid}
+            error={ !validation.firstNameValid.value && validation.firstNameValid.enable }
             required
             placeholder="First Name"
             label="First Name"
             onChange={handleChange('firstName')}
             defaultValue={values.firstName}
-            helperText={validation.firstNameValid ? '' : validation.formErrors.firstName}
+            helperText={ !validation.firstNameValid.value && validation.firstNameValid.enable ? validation.formErrors.firstName : ''}
           />
         </div>
 
         <div className="reg-last_name">
           <TextField
             fullWidth
-            error={!validation.lastNameValid}
+            error={ !validation.lastNameValid.value && validation.lastNameValid.enable }
             required
             placeholder="Last Name"
             label="Last Name"
             onChange={handleChange('lastName')}
             defaultValue={values.lastName}
-            helperText={validation.lastNameValid ? '' : validation.formErrors.lastName}
-
+            helperText={ !validation.lastNameValid.value && validation.lastNameValid.enable ? validation.formErrors.lastName : '' }
           />
         </div>
 
         <div className="reg-country">
           <TextField
             fullWidth
-            error={!validation.countryValid}
+            error={ !validation.countryValid.value && validation.countryValid.enable }
             required
             placeholder="Country"
             label="Country"
             onChange={handleChange('country')}
             defaultValue={values.country}
-            helperText={validation.countryValid ? '' : validation.formErrors.country}
-
+            helperText={ !validation.countryValid.value && validation.countryValid.enable ? validation.formErrors.country : '' }
           />
         </div>
 
         <div className="reg-city">
           <TextField
             fullWidth
-            error={!validation.cityValid}
+            error={ !validation.cityValid.value && validation.cityValid.enable }
             required
             placeholder="City"
             label="City"
             onChange={handleChange('city')}
             defaultValue={values.city}
-            helperText={validation.cityValid ? '' : validation.formErrors.city}
+            helperText={ !validation.cityValid.value && validation.cityValid.enable ? validation.formErrors.city : '' }
           />
         </div>
 
         <div className="reg-street">
           <TextField
             fullWidth
-            error={!validation.streetValid}
+            error={ !validation.streetValid.value && validation.streetValid.enable }
             required
             placeholder="Street"
             label="Street"
             onChange={handleChange('street')}
             defaultValue={values.street}
-            helperText={validation.streetValid ? '' : validation.formErrors.street}
+            helperText={ !validation.streetValid.value && validation.streetValid.enable ? validation.formErrors.street : '' }
 
           />
         </div>
@@ -77,21 +76,20 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, validation }) =
         <div className="reg-email">
           <TextField
             fullWidth
-            error={!validation.emailValid}
+            error={!validation.emailValid.value && validation.emailValid.enable }
             required
             placeholder="Email Address"
             label="Email Address"
             onChange={handleChange('email')}
             defaultValue={values.email}
-            helperText={validation.emailValid ? '' : validation.formErrors.email}
-
+            helperText={ !validation.emailValid.value && validation.emailValid.enable ? validation.formErrors.email : '' }
           />
         </div>
 
         <div className="reg-password">
           <TextField
             fullWidth
-            error={!validation.passwordValid}
+            error={ !validation.passwordValid.value && validation.passwordValid.enable }
             required
             placeholder="Password"
             label="Password"
@@ -99,15 +97,14 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, validation }) =
             autoComplete="current-password"
             onChange={handleChange('password')}
             defaultValue={values.password}
-            helperText={validation.passwordValid ? '' : validation.formErrors.password}
-
+            helperText={ !validation.passwordValid.value && validation.passwordValid.enable ? validation.formErrors.password : ''}
           />
         </div>
 
         <div className="reg-rep-password">
           <TextField
             fullWidth
-            error={!validation.repPasswordValid}
+            error={!validation.repPasswordValid.value && validation.repPasswordValid.enable }
             required
             placeholder="Repeat Password"
             label="Repeat Password"
@@ -115,7 +112,7 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, validation }) =
             autoComplete="current-password"
             onChange={handleChange('repPassword')}
             defaultValue={values.repPassword}
-            helperText={validation.repPasswordValid ? '' : validation.formErrors.repPassword}
+            helperText={!validation.repPasswordValid.value && validation.repPasswordValid.enable ? validation.formErrors.repPassword : '' }
 
           />
         </div>
@@ -123,13 +120,13 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, validation }) =
         <div className="reg-phoneNum">
         <TextField
             fullWidth
-            error={!validation.phoneNumberValid}
+            error={!validation.phoneNumberValid.value && validation.phoneNumberValid.enable }
             required
             placeholder="Phone Number"
             label="Phone Number"
             onChange={handleChange('phoneNumber')}
             defaultValue={values.phoneNumber}
-            helperText={validation.phoneNumberValid ? '' : validation.formErrors.phoneNumber}
+            helperText={ !validation.phoneNumberValid.value && validation.phoneNumberValid.enable ? validation.formErrors.phoneNumber : '' }
 
           />
         </div>
