@@ -68,6 +68,7 @@ export default class Registration extends Component {
 
     switch(fieldName) {
       case 'email':
+        value = value.trim();
         emailValid.enable = true
         emailValid.value = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
         fieldValidationErrors.email = emailValid.value ? '' : 'Email address is invalid'
@@ -83,6 +84,7 @@ export default class Registration extends Component {
         fieldValidationErrors.repPassword = repPasswordValid.value ? '' : 'passwords do not match'
         break
       case 'firstName':
+        value = value.trim();
         firstNameValid.enable = true
         if (!value.match(/^[a-z ,.'-]+$/i)) {
           firstNameValid.value = false
@@ -93,6 +95,7 @@ export default class Registration extends Component {
         fieldValidationErrors.firstName = firstNameValid.value ? '' : 'Field cannot be empty'
         break
       case 'lastName':
+        value = value.trim();
         lastNameValid.enable = true
         lastNameValid.value = value.match(/^[a-z ,.'-]+$/i)
         if (!lastNameValid.value) {
@@ -103,8 +106,9 @@ export default class Registration extends Component {
         fieldValidationErrors.lastName = lastNameValid.value ? '' : 'Field cannot be empty'
         break
       case 'country':
+        value = value.trim();
         countryValid.enable = true
-        countryValid.value = value.match(/^[A-Za-z]+$/i)
+        countryValid.value = value.match(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/i)
         if (!countryValid.value) {
           fieldValidationErrors.country = countryValid.value ? '' : 'Invalid input'
           break
@@ -113,8 +117,9 @@ export default class Registration extends Component {
         fieldValidationErrors.country = countryValid.value ? '' : 'Field cannot be empty'
         break
       case 'city':
+        value = value.trim();
         cityValid.enable = true
-        cityValid.value = value.match(/^[A-Za-z]+$/i)
+        cityValid.value = value.match(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/i)
         if (!cityValid.value) {
           fieldValidationErrors.city = cityValid.value ? '' : 'Invalid input'
           break
@@ -123,11 +128,13 @@ export default class Registration extends Component {
         fieldValidationErrors.city = cityValid.value ? '' : 'Field cannot be empty'
         break
       case 'street':
+        value = value.trim();
         streetValid.enable = true
         streetValid.value = value.length > 0
         fieldValidationErrors.street = streetValid.value ? '' : 'Field cannot be empty'
         break
       case 'phoneNumber':
+        value = value.trim();
         phoneNumberValid.enable = true
         phoneNumberValid.value = value.match(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i)
         fieldValidationErrors.phoneNumber = phoneNumberValid.value ? '' : 'invalid format'
