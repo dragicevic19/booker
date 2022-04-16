@@ -261,3 +261,121 @@
   padding: 30px;
   border-radius: 5px;
 }
+
+.add-service-container {
+  text-align: center;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 7px 40px;
+  position: relative;
+  max-width: max-content;
+  margin: 40px auto;
+  overflow: auto;
+  border: 1px solid #f1356d;
+  padding: 40px;
+  border-radius: 5px;
+}
+
+.add-service-container .service-name{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 30px;
+}
+
+.add-service-container .address{
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 30px;
+}
+
+.add-service-container .fishing-equipment{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 5px 30px;
+}
+
+.add-service-container .max-num-attendants{
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 40px 30px;
+}
+
+.add-service-container .service-description{
+  grid-column-start: 1;
+  grid-column-end: 7;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 5px 30px;
+}
+
+.add-service-container .rules{
+  grid-column-start: 1;
+  grid-column-end: 7;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  padding: 5px 30px;
+}
+
+.add-service-container .discount-period{
+  grid-column-start: 1;
+  grid-column-end: 7;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  padding: 5px 30px;
+}
+
+.add-service-container .price{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  padding: 5px 30px;
+}
+
+.add-service-container .cancellation-fee{
+  grid-column-start: 3;
+  grid-column-end: 7;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  padding: 5px 30px;
+}
+
+.add-service-container .additional-services{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  padding: 10px 30px;
+}
+
+.add-service-container .images{
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  padding: 10px 50px;
+}
+
+.add-service-container .cancel-button{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  padding: 20px 60px;
+}
+
+.add-service-container .submit-button{
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  padding: 20px 60px;
+}
