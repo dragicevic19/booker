@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Registration from './components/registration/Registration';
-import AddFishingLesson from './components/AddFishingLesson';
+import AddFishingLesson from './components/add_fishing_lesson/AddFishingLesson';
 
 function App() {
   return (
