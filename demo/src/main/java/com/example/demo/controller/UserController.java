@@ -42,16 +42,4 @@ public class UserController {
         return this.userService.findByEmail(user.getName());
     }
 
-    @GetMapping("/foo")
-    public Map<String, String> getFoo() {
-        Map<String, String> fooObj = new HashMap<>();
-        fooObj.put("foo", "bar");
-        return fooObj;
-    }
-
-    @GetMapping("/test/{user_id}")
-    @PreAuthorize("hasRole('BOAT_OWNER')")
-    public User load(@PathVariable Integer userId) {
-        return this.userService.findById(userId);
-    }
 }

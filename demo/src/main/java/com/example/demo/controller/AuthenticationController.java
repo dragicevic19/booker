@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.util.Locale;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,7 +56,7 @@ public class AuthenticationController {
     // Endpoint za registraciju novog korisnika
     @PostMapping("/signup")
     public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
-
+        userRequest.setEmail(userRequest.getEmail().toLowerCase(Locale.ROOT));
         User existUser = this.userService.findByEmail(userRequest.getEmail());
 
         if (existUser != null) {

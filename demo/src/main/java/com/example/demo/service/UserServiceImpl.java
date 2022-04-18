@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -69,16 +71,17 @@ public class UserServiceImpl implements UserService {
         a.setCountry(userRequest.getCountry());
         u.setAddress(a);
         u.setDeleted(false);
+        u.setLastPasswordResetDate(Timestamp.valueOf(LocalDateTime.now()));
 
         // TODO: refaktorisati sa nekim nasledjivanjem mozda?
         switch (userRequest.getType()) {
-            case "boat_owner":
+            case "boat_owners":
                 return boatOwnerService.save(u);
-            case "cottage_owner":
+            case "cottage_owners":
                 return cottageOwnerService.save(u);
-            case "client":
+            case "clients":
                 return clientService.save(u);
-            case "instructor":
+            case "instructors":
                 return fishingInstructorService.save(u);
             default:
                 return null;
