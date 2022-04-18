@@ -19,8 +19,7 @@ public class Period {
 
 
     @Id
-    @SequenceGenerator(name = "periodSeqGen", sequenceName = "periodSeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "periodSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 

@@ -18,8 +18,7 @@ import java.util.List;
 public class Discount {
 
     @Id
-    @SequenceGenerator(name = "discountSeqGen", sequenceName = "discountSeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discountSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 

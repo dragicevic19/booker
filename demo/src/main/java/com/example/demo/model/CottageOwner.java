@@ -23,4 +23,7 @@ public class CottageOwner extends PropertyOwner{
     @JoinColumn(name="cottage_owner_id")
     private List<Cottage> cottages;
 
+    public CottageOwner(User user) {
+        super(user);
+    }
 }

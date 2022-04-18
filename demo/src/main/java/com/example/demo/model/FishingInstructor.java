@@ -25,4 +25,7 @@ public class FishingInstructor extends ServiceProvider {
     @Column(name="biography")
     private String biography;
 
+    public FishingInstructor(User user) {
+        super(user);
+    }
 }

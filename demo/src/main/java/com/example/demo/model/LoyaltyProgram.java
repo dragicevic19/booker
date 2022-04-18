@@ -15,8 +15,7 @@ import javax.persistence.*;
 public class LoyaltyProgram {
 
     @Id
-    @SequenceGenerator(name = "loyaltySeqGen", sequenceName = "loyaltySeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loyaltySeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 

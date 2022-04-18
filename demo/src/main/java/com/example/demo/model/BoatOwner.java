@@ -24,4 +24,7 @@ public class BoatOwner extends PropertyOwner {
     @JoinColumn(name = "boat_owner_id")
     private List<Boat> boats;
 
+    public BoatOwner(User user) {
+        super(user);
+    }
 }

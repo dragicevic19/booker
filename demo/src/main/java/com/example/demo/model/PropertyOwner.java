@@ -13,4 +13,7 @@ import javax.persistence.Entity;
 @Setter
 public abstract class PropertyOwner extends ServiceProvider {
 
+    public PropertyOwner(User user) {
+        super(user);
+    }
 }

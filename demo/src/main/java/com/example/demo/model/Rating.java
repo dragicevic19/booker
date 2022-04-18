@@ -15,8 +15,7 @@ import javax.persistence.*;
 public class Rating {
 
     @Id
-    @SequenceGenerator(name = "ratingSeqGen", sequenceName = "ratingSeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ratingSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 

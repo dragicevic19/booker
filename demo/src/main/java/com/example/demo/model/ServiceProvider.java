@@ -21,4 +21,7 @@ public abstract class ServiceProvider extends User {
     @JoinColumn(name = "loyalty_id", referencedColumnName = "id")
     protected LoyaltyProgram loyaltyProgram;
 
+    public ServiceProvider(User user) {
+        super(user);
+    }
 }

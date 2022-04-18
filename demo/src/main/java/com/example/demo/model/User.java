@@ -26,8 +26,7 @@ import java.util.Objects;
 public class User implements UserDetails {
 
     @Id
-    @SequenceGenerator(name = "userSeqGen", sequenceName = "userSeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     protected Integer id;
 
@@ -69,6 +68,16 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     protected List<Role> roles;
 
+    public User(User user) {
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.password = user.password;
+        this.phoneNumber = user.phoneNumber;
+        this.address = user.address;
+        this.rating = user.rating;
+        this.deleted = user.deleted;
+    }
 
 
     @Override

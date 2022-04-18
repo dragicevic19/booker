@@ -41,7 +41,8 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
 
     @Override
     public BoatOwner save(User user) {
-        BoatOwner b = (BoatOwner) user;
+        BoatOwner b = new BoatOwner(user);
+        b.setRating(new Rating());
         b.setBoats(new ArrayList<>());
         //b.setEnabled(true); ovo ce administrator da omoguci
         b.setLoyaltyProgram(new LoyaltyProgram());

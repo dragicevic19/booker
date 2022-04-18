@@ -39,11 +39,8 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
     @Override
     public CottageOwner save(User user) {
 
-        CottageOwner c = (CottageOwner) user;
-
-        LoyaltyProgram l = new LoyaltyProgram();
-        l.setPoints(0);
-        l.setRank(LoyaltyRank.REGULAR);
+        CottageOwner c = new CottageOwner(user);
+        c.setRating(new Rating());
         c.setLoyaltyProgram(new LoyaltyProgram());
         c.setCottages(new ArrayList<>());
         List<Role> roles = roleService.findByName("ROLE_COTTAGE_OWNER");

@@ -68,7 +68,6 @@ public class UserServiceImpl implements UserService {
         a.setCity(userRequest.getCity());
         a.setCountry(userRequest.getCountry());
         u.setAddress(a);
-        u.setRating(new Rating());
         u.setDeleted(false);
 
         // TODO: refaktorisati sa nekim nasledjivanjem mozda?
