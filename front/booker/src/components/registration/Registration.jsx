@@ -54,6 +54,18 @@ export default class Registration extends Component {
     this.setState({ [input]: e.target.value })
   }
 
+  setEmailExistsError = () => {
+    let fieldValidationErrors = this.state.formErrors
+    let emailValid = this.state.emailValid
+    emailValid.enable = true
+    emailValid.value = false;
+    fieldValidationErrors.email = 'Email already exists in our database'
+    this.setState({
+      formErrors: fieldValidationErrors,
+      emailValid: emailValid
+    }, this.validateForm)
+  }
+
   validateField = (fieldName, value) => {
     let fieldValidationErrors = this.state.formErrors
     let emailValid = this.state.emailValid
@@ -77,7 +89,9 @@ export default class Registration extends Component {
         passwordValid.enable = true
         passwordValid.value = value.length >= 8
         fieldValidationErrors.password = passwordValid.value ? '' : 'must be at least 8 characters long'
-        // namerno sam izbacio break
+        repPasswordValid.value = value === this.state.repPassword
+        fieldValidationErrors.repPassword = repPasswordValid.value ? '' : 'passwords do not match'
+        break
       case 'repPassword':
         repPasswordValid.enable = true
         repPasswordValid.value = value === this.state.password
@@ -211,6 +225,8 @@ export default class Registration extends Component {
             <Success  
               values = { values }
               userType = { userType }
+              prevStep = { this.prevStep }
+              setEmailExistsError = { this.setEmailExistsError }
             />
           )
         }

@@ -1,43 +1,50 @@
 import { useEffect, useState } from "react"
 
-const Success = ({ values, userType }) => {
+const Success = ({ values, userType, prevStep, setEmailExistsError }) => {
 
   const [done, setDone] = useState(false)
+  const [user, setUser] = useState(null)
 
   const typeOfUser = {
-    'Boat Owner': 'boat-owners',
-    'Cottage Owner': 'cottage-owners',
+    'Boat Owner': 'boat_owners',
+    'Cottage Owner': 'cottage_owners',
     'Fishing Instructor': 'instructors'
   }
 
   useEffect(() => {
-    const addNewUser = async () => {
-      const data = await addUser(values)
-      console.log(data);
-    }
-    addNewUser()
+    setTimeout(() => {
+      values.type = typeOfUser[userType]
+      fetch('http://localhost:8080/auth/signup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(values)
+      })
+        .then(res => {
+          if (!res.ok){
+            if (res.status == 409){
+              setEmailExistsError()
+              prevStep()
+            }
+            throw Error('could not fetch data')
+          } 
+          return res.json()
+        })
+        .then(data => {
+          setUser(data)
+          setDone(true)
+        })
+        .catch(err => {
+          console.log(err.message)
+        })
+    }, 500)
   }, [])
 
-
-  const addUser = async (values) => {
-    console.log(values);
-    const res = await fetch('http://localhost:8080/api/' + typeOfUser[userType], {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(values)
-    })
-    const data = await res.json()
-    setDone(true)
-    return data
-  }
-
-
   return (
-    //done ?
+    done ?
      <div className="confirmation-container">
       <h2>You successfully sent request for registration as {userType} on The Booker!</h2>
       <p>Wait for administrator to approve your request and you are ready to go!</p>
-    </div> //: null
+    </div> : <h2>Loading...</h2>
   )
 }
 

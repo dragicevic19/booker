@@ -1,14 +1,21 @@
 package com.example.demo.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@AllArgsConstructor
+@Getter
+@Setter
 public class Rating {
 
     @Id
-    @SequenceGenerator(name = "ratingSeqGen", sequenceName = "ratingSeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ratingSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
@@ -18,35 +25,8 @@ public class Rating {
     @Column(name = "average", unique = false, nullable = false)
     private double average;
 
-    public Rating() {
-    }
-
-    public Rating(int numOfVotes, double average) {
-        this.numOfVotes = numOfVotes;
-        this.average = average;
-    }
-
-    public int getNumOfVotes() {
-        return numOfVotes;
-    }
-
-    public double getAverage() {
-        return average;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setNumOfVotes(int numOfVotes) {
-        this.numOfVotes = numOfVotes;
-    }
-
-    public void setAverage(double average) {
-        this.average = average;
+    public Rating(){
+        numOfVotes = 0;
+        average = 0;
     }
 }

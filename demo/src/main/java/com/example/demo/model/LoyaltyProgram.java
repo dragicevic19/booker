@@ -1,14 +1,20 @@
 package com.example.demo.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@AllArgsConstructor
+@Getter
+@Setter
 public class LoyaltyProgram {
 
     @Id
-    @SequenceGenerator(name = "loyaltySeqGen", sequenceName = "loyaltySeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loyaltySeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
@@ -18,30 +24,9 @@ public class LoyaltyProgram {
     @Column(name = "rank", unique = false, nullable = false)
     private LoyaltyRank rank;
 
-    public LoyaltyProgram() {}
-
-    public LoyaltyProgram(int points, LoyaltyRank rank) {
-        this.points = points;
-        this.rank = rank;
+    public LoyaltyProgram(){
+        points = 0;
+        rank = LoyaltyRank.REGULAR;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public LoyaltyRank getRank() {
-        return rank;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public void setRank(LoyaltyRank rank) {
-        this.rank = rank;
-    }
 }

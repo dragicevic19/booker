@@ -1,35 +1,29 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class CottageOwner extends PropertyOwner{
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="cottage_owner_id")
     private List<Cottage> cottages;
 
-    public CottageOwner() {
-        this.cottages = new ArrayList<Cottage>();
-    }
-
-    public void setCottages(List<Cottage> cottages) {
-        this.cottages = cottages;
-    }
-
-    public CottageOwner(String email, String password, String name, String lastName, Address address, String phoneNumber) {
-        super(email, password, name, lastName, address, phoneNumber);
-        this.cottages = new ArrayList<Cottage>();
-    }
-
-    public List<Cottage> getCottages() {
-        return cottages;
-    }
-
-    public void addCottage(Cottage cottage) {
-        this.cottages.add(cottage);
+    public CottageOwner(User user) {
+        super(user);
     }
 }
