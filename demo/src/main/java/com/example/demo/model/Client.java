@@ -1,10 +1,19 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.*;
 
-
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class Client extends User {
 
     @Column(name = "num_of_penalties", unique = false, nullable = false)
@@ -15,41 +24,35 @@ public class Client extends User {
     private LoyaltyProgram loyaltyProgram;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @Column(name = "reservations")
     private List<Reservation> reservations;
 
-    public Client() {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.getRoles();
     }
 
-    public Client(String email, String password, String name, String lastName, Address address, String phoneNumber) {
-        super(email, password, name, lastName, address, phoneNumber);
-        this.numOfPenalties = 0;
-        this.loyaltyProgram = new LoyaltyProgram(0, LoyaltyRank.REGULAR);
-        this.reservations = new ArrayList<Reservation>();
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public int getNumOfPenalties() {
-        return numOfPenalties;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public LoyaltyProgram getLoyaltyProgram() {
-        return loyaltyProgram;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-
-    public void setNumOfPenalties(int numOfPenalties) {
-        this.numOfPenalties = numOfPenalties;
-    }
-
-    public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
-        this.loyaltyProgram = loyaltyProgram;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }

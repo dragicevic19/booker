@@ -1,5 +1,10 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,6 +13,10 @@ import java.util.Set;
 
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class AdditionalService {
 
     @Id
@@ -28,64 +37,4 @@ public class AdditionalService {
     @ManyToMany(mappedBy = "chosenAdditionalServices")
     private Set<Reservation> reservations = new HashSet<Reservation>();
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "offer_id")
-//    private Offer offer;
-
-    public AdditionalService() {
-    }
-
-    public AdditionalService(String title, int price, String description) {
-        this.title = title;
-        this.price = price;
-        this.description = description;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Set<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
-//    public Offer getOffer() {
-//        return offer;
-//    }
-//
-//    public void setOffer(Offer offer) {
-//        this.offer = offer;
-//    }
 }

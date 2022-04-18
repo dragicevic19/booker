@@ -1,14 +1,16 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class SuperAdmin extends Administrator{
 
-    public SuperAdmin() {
-    }
-
-    public SuperAdmin(String email, String password, String name, String lastName, Address address, String phoneNumber) {
-        super(email, password, name, lastName, address, phoneNumber);
-    }
 }

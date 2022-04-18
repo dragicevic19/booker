@@ -5,8 +5,8 @@ const Success = ({ values, userType }) => {
   const [done, setDone] = useState(false)
 
   const typeOfUser = {
-    'Boat Owner': 'boat-owners',
-    'Cottage Owner': 'cottage-owners',
+    'Boat Owner': 'boat_owners',
+    'Cottage Owner': 'cottage_owners',
     'Fishing Instructor': 'instructors'
   }
 
@@ -21,7 +21,7 @@ const Success = ({ values, userType }) => {
 
   const addUser = async (values) => {
     console.log(values);
-    const res = await fetch('http://localhost:8080/api/' + typeOfUser[userType], {
+    const res = await fetch('http://localhost:8080/auth/signup', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(values)
@@ -33,11 +33,11 @@ const Success = ({ values, userType }) => {
 
 
   return (
-    //done ?
+    done ?
      <div className="confirmation-container">
       <h2>You successfully sent request for registration as {userType} on The Booker!</h2>
       <p>Wait for administrator to approve your request and you are ready to go!</p>
-    </div> //: null
+    </div> : null
   )
 }
 

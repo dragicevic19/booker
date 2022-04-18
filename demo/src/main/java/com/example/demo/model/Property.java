@@ -1,5 +1,10 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.ArrayList;
@@ -8,26 +13,13 @@ import java.util.Set;
 
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public abstract class Property extends Offer {
 
     @Column(name = "daily_price", unique = false, nullable = false)
-    private double dailyPrice;
+    protected double dailyPrice;
 
-    public Property(String name, String description, Address address, int capacity, String regulations, double cancellationFee, Set<AdditionalService> additionalServices, double dailyPrice)
-    {
-        super(name,description, address, capacity, regulations, cancellationFee, additionalServices );
-        this.dailyPrice = dailyPrice;
-    }
-
-    public Property() {}
-
-    public double getDailyPrice() {
-        return dailyPrice;
-    }
-
-    public void setDailyPrice(double dailyPrice) {
-        this.dailyPrice = dailyPrice;
-    }
-
-    public abstract int calculatePrice();
 }

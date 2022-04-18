@@ -1,10 +1,20 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Period {
 
 
@@ -20,35 +30,4 @@ public class Period {
     @Column(name = "date_to", unique = false, nullable = false)
     private Date dateTo;
 
-    public Period(){
-    }
-
-    public Period(Date dateFrom, Date dateTo) {
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
-    }
-
-    public Date getDateFrom() {
-        return dateFrom;
-    }
-
-    public Date getDateTo() {
-        return dateTo;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-    }
 }
