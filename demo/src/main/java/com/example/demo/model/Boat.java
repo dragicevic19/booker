@@ -1,11 +1,20 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Boat extends Property {
 
     @Column(name = "type", unique = false, nullable = false)
@@ -32,83 +41,10 @@ public class Boat extends Property {
     private List<String> fishingEquipment;
 
 
-    public Boat() {
-    }
-
-    public Boat(String name, String description, Address address, int capacity, String regulations,
-                double cancellationFee, Set<AdditionalService> additionalServices, int dailyPrice,
-                BoatType type, int length, String engineNum, int enginePow, int maxSpeed,
-                List<String> navEquipment, List<String> fishingEquipment) {
-
-        super(name, description, address, capacity, regulations, cancellationFee, additionalServices, dailyPrice);
-        this.type = type;
-        this.length = length;
-        this.engineNum = engineNum;
-        this.enginePow = enginePow;
-        this.maxSpeed = maxSpeed;
-        this.navEquipment = navEquipment;
-        this.fishingEquipment = fishingEquipment;
-    }
-
-    public BoatType getType() {
-        return type;
-    }
-
-    public void setType(BoatType type) {
-        this.type = type;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public String getEngineNum() {
-        return engineNum;
-    }
-
-    public void setEngineNum(String engineNum) {
-        this.engineNum = engineNum;
-    }
-
-    public int getEnginePow() {
-        return enginePow;
-    }
-
-    public void setEnginePow(int enginePow) {
-        this.enginePow = enginePow;
-    }
-
-    public int getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    public void setMaxSpeed(int maxSpeed) {
-        this.maxSpeed = maxSpeed;
-    }
-
-    public List<String> getNavEquipment() {
-        return navEquipment;
-    }
-
-    public void setNavEquipment(List<String> navEquipment) {
-        this.navEquipment = navEquipment;
-    }
-
-    public List<String> getFishingEquipment() {
-        return fishingEquipment;
-    }
-
-    public void setFishingEquipment(List<String> fishingEquipment) {
-        this.fishingEquipment = fishingEquipment;
-    }
-
     @Override
     public int calculatePrice() {
         // TODO
         return 0;
     }
+
 }

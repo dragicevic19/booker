@@ -1,16 +1,24 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Discount {
 
     @Id
-    @SequenceGenerator(name = "discountSeqGen", sequenceName = "discountSeq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discountSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
@@ -24,42 +32,4 @@ public class Discount {
     @Column(name = "is_acitve", unique = false, nullable = false)
     private boolean isActive;
 
-    public Discount() {}
-
-    public Discount(Period period, int reducedPrice, boolean isActive) {
-        this.period = period;
-        this.reducedPrice = reducedPrice;
-        this.isActive = isActive;
-    }
-    public Integer getId() {
-        return id;
-    }
-
-    public Period getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(Period period) {
-        this.period = period;
-    }
-
-    public int getReducedPrice() {
-        return reducedPrice;
-    }
-
-    public void setReducedPrice(int reducedPrice) {
-        this.reducedPrice = reducedPrice;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

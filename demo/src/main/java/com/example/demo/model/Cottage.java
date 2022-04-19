@@ -1,5 +1,10 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.ArrayList;
@@ -8,13 +13,10 @@ import java.util.Set;
 
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Cottage extends Property {
-
-    public Cottage() {}
-
-    public Cottage(String name, String description, Address address, int capacity, String regulations, double cancellationFee, Set<AdditionalService> additionalServices, int dailyPrice) {
-        super(name,description, address, capacity, regulations, cancellationFee, additionalServices,dailyPrice );
-    }
 
     @Override
     public int calculatePrice() {
