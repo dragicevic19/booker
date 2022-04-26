@@ -9,25 +9,25 @@ export const mainNavbarItems = {
         id: 0,
         icon: <AddCircleOutlineIcon />,
         label: 'Add New Boat',
-        route: 'addNewBoat',
+        route: '/addNewBoat',
     },
     {
         id: 1,
         icon: <DirectionsBoatIcon />,
         label: 'My Boats',
-        route: 'myBoats',
+        route: '/myBoats',
     },
     {
         id: 2,
         icon: <CalendarMonthIcon />,
         label: 'Calendar',
-        route: 'calendar',
+        route: '/calendar',
     },
     {
         id: 3,
         icon: <PersonIcon />,
         label: 'My Profile',
-        route: 'profile'
+        route: '/profile'
     }
     ],
     'cottage_owner': [
@@ -35,25 +35,25 @@ export const mainNavbarItems = {
             id: 0,
             icon: <AddCircleOutlineIcon />,
             label: 'Add New Cottage',
-            route: 'addNewCottage',
+            route: '/addNewCottage',
         },
         {
             id: 1,
             icon: <BungalowIcon />,
             label: 'My Cottages',
-            route: 'myCottages',
+            route: '/myCottages',
         },
         {
             id: 2,
             icon: <CalendarMonthIcon />,
             label: 'Calendar',
-            route: 'calendar',
+            route: '/calendar',
         },
         {
             id: 3,
             icon: <PersonIcon />,
             label: 'My Profile',
-            route: 'profile'
+            route: '/profile'
         }
     ]
 }

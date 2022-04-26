@@ -8,6 +8,7 @@ const Login = ({onLogin}) => {  // pozvati ovu metodu onLogin kada dobijemo ulog
 
   const fakeLogin = () => {
     const user = {
+      'id': '1',
       'firstName': 'Marko',
       'lastName': 'Markovic',
       'email': 'marko@gmail.com',
