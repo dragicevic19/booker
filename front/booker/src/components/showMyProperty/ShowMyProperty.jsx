@@ -1,21 +1,10 @@
-import { Button, IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchBar from '../searchBar/SearchBar';
 
 const ShowMyProperty = ({user}) => {
-
-	const [properties, setProperties] = useState([
-		{
-			id: 1, name: 'Boat 1', description: 'Description gfffffff ffffffffffffffffgf ddddddddddddddd ddddddddddddddddddddd ddddddddd ddddddddddddd dddddddddddd dddddddddddd ddffffffffff fffff ffff fffffff fffffffffffff ffffffff fffffffffof Boat 1. Lep brod odlican sve kul dugacak opis tralalallsdj ajsldkj aslkdja lsk djal.fsalkfjasljf alkfjlaksjflkaj skflj alksfjajs fkajlk sf jalksjfka', capacity: 5, regulations: 'No regulations',
-			cancellationFee: 50, dailyPrice: 100, type: 'Huge Boat', enginePow: 100 
-		},
-		{
-			id: 2, name: 'Boat 2', description: 'Description of Boat 2', capacity: 2, regulations: 'No regulations',
-			cancellationFee: 25, dailyPrice: 50, type: 'Small Boat', enginePow: 50
-		}
-	]);
-
 	// useEffect(() => {
 	// 	const getProperties = async () => {
 	// 		const propertiesFromServer = await fetchProperties()
@@ -31,8 +20,58 @@ const ShowMyProperty = ({user}) => {
 	// 	return data
 	// }
 
+	const [properties, setProperties] = useState([
+		{
+			id: 1, name: 'Boat 1', description: 'Description gfffffff ffffffffffffffffgf ddddddddddddddd ddddddddddddddddddddd ddddddddd ddddddddddddd dddddddddddd dddddddddddd ddffffffffff fffff ffff fffffff fffffffffffff ffffffff fffffffffof Boat 1. Lep brod odlican sve kul dugacak opis tralalallsdj ajsldkj aslkdja lsk djal.fsalkfjasljf alkfjlaksjflkaj skflj alksfjajs fkajlk sf jalksjfka', capacity: 5, regulations: 'No regulations',
+			cancellationFee: 50, dailyPrice: 100, type: 'Huge Boat', enginePow: 100 
+		},
+		{
+			id: 2, name: 'Boat 2', description: 'Description of Boat 2', capacity: 2, regulations: 'No regulations',
+			cancellationFee: 25, dailyPrice: 50, type: 'Small Boat', enginePow: 50
+		}
+	]);
+
+	const [searchResults, setSearchResults] = useState(properties)
+
+	const handleSearch = (value) => {
+		filterData(value)
+	}
+
+	const filterData = (value) => {
+		const lowercasedValue = value.toLowerCase().trim()
+		if (lowercasedValue === '') setProperties(searchResults)
+		else {
+			const filteredData = searchResults.filter((item) => {
+				return Object.keys(item).some((key) => 
+				item[key].toString().toLowerCase().includes(lowercasedValue)
+				);
+			})
+			setProperties(filteredData)
+		}
+	}
+
+	const searchStyles = {
+		wrapper: {
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'space-between',
+			paddingLeft: '20px',
+			paddingRight: '20px',
+			height: '65px',
+			backgroundColor: '#f5f5f5',
+			borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+		},
+	}
+
   return (
     <div className="showProp">
+			<Box sx={searchStyles.wrapper}>
+				<SearchBar 
+					placeholder='Search your properties...'
+					onChange={(event) => handleSearch(event.target.value)}
+					searchBarWidth='720px'
+				/>
+			</Box>
 			{properties.map((property) => (
 				<div className='prop-preview' key={property.id}>
 					<div className='prop-info'>

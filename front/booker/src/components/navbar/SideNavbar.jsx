@@ -28,7 +28,7 @@ const SideNavbar = ({user}) => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          >
+        >
             <MenuIcon onClick={ toggleDrawer(true)}/>
 
         </IconButton>
