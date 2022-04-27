@@ -52,4 +52,9 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
 
         return this.boatOwnerRepository.save(b);
     }
+
+    @Override
+    public List<Boat> findAllMyBoats(BoatOwner u) {
+        return u.getBoats();
+    }
 }
