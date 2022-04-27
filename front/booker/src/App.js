@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Registration from './components/registration/Registration';
-import AddFishingLesson from './components/add_fishing_lesson/AddFishingLesson';
+import Validation from './components/add_fishing_lesson/FishingLessonValidation'
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element= {<Home />} />
             <Route path="/login" element = {<Login />} />
             <Route path='/register' element = {<Registration />} />
-            <Route path='/AddFishingLesson' element = {<AddFishingLesson />}/>
+            <Route path='/FishingLessonValidation' element = {<Validation />}/>
           </Routes>
         </div>
       </div>

@@ -1,0 +1,23 @@
+{
+  "additionalServices": [
+    {
+      "name": "Pecanje dubinkom",
+      "description": "feafga",
+      "price": "$34",
+      "id": 2
+    },
+    {
+      "name": "Pecanje somova",
+      "description": "opasno",
+      "price": "$432",
+      "id": 3
+    },
+    {
+      "name": "hgdsh",
+      "description": "fdhdsf",
+      "price": "$564",
+      "id": 4
+    }
+  ],
+  "images": []
+}

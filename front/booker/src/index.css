@@ -266,14 +266,14 @@
   text-align: center;
   display: grid;
   grid-template-columns: auto auto;
-  gap: 7px 40px;
+  gap: 7px 0px;
   position: relative;
   max-width: max-content;
   margin: 40px auto;
   overflow: auto;
   border: 1px solid #f1356d;
-  padding: 40px;
-  border-radius: 5px;
+  padding: 30px;
+  border-radius: 10px;
 }
 
 .add-service-container .service-name{
@@ -284,7 +284,7 @@
   padding: 5px 30px;
 }
 
-.add-service-container .address{
+.add-service-container .country{
   grid-column-start: 4;
   grid-column-end: 7;
   grid-row-start: 1;
@@ -292,31 +292,39 @@
   padding: 5px 30px;
 }
 
-.add-service-container .fishing-equipment{
+.add-service-container .price{
   grid-column-start: 1;
   grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 15px 0px;
+}
+
+.add-service-container .city{
+  grid-column-start: 4;
+  grid-column-end: 7;
   grid-row-start: 2;
   grid-row-end: 3;
   padding: 5px 30px;
 }
 
-.add-service-container .max-num-attendants{
-  grid-column-start: 4;
-  grid-column-end: 7;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  padding: 40px 30px;
+.add-service-container .cancellation-fee{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 5px 30px;
 }
 
-.add-service-container .service-description{
-  grid-column-start: 1;
+.add-service-container .address{
+  grid-column-start: 4;
   grid-column-end: 7;
   grid-row-start: 3;
   grid-row-end: 4;
   padding: 5px 30px;
 }
 
-.add-service-container .rules{
+.add-service-container .service-description{
   grid-column-start: 1;
   grid-column-end: 7;
   grid-row-start: 4;
@@ -324,7 +332,7 @@
   padding: 5px 30px;
 }
 
-.add-service-container .discount-period{
+.add-service-container .rules{
   grid-column-start: 1;
   grid-column-end: 7;
   grid-row-start: 5;
@@ -332,20 +340,20 @@
   padding: 5px 30px;
 }
 
-.add-service-container .price{
+.add-service-container .fishing-equipment{
   grid-column-start: 1;
   grid-column-end: 4;
   grid-row-start: 6;
   grid-row-end: 7;
-  padding: 5px 30px;
+  padding: 25px 30px;
 }
 
-.add-service-container .cancellation-fee{
-  grid-column-start: 3;
+.add-service-container .max-num-attendants{
+  grid-column-start: 4;
   grid-column-end: 7;
   grid-row-start: 6;
   grid-row-end: 7;
-  padding: 5px 30px;
+  padding: 40px 70px;
 }
 
 .add-service-container .additional-services{
@@ -353,29 +361,85 @@
   grid-column-end: 3;
   grid-row-start: 7;
   grid-row-end: 8;
-  padding: 10px 30px;
+  padding: 0px 80px;
 }
 
 .add-service-container .images{
-  grid-column-start: 4;
+  grid-column-start: 3;
   grid-column-end: 7;
   grid-row-start: 7;
   grid-row-end: 8;
-  padding: 10px 50px;
+  padding: 0px 50px;
+}
+
+.add-service-container .show-additional-services{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  padding: 0px 60px;
 }
 
 .add-service-container .cancel-button{
   grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 8;
-  grid-row-end: 9;
-  padding: 20px 60px;
+  grid-column-end: 2;
+  grid-row-start: 9;
+  grid-row-end: 10;
+  padding: 60px 60px;
 }
 
 .add-service-container .submit-button{
-  grid-column-start: 4;
+  grid-column-start: 5;
   grid-column-end: 7;
-  grid-row-start: 8;
-  grid-row-end: 9;
-  padding: 20px 60px;
+  grid-row-start: 9;
+  grid-row-end: 10;
+  padding: 60px 60px;
+}
+
+.add-additional-service-dialog {
+  text-align: center;
+  gap: 10px 15px;
+  position: relative;
+  max-width: max-content;
+  margin: 50px auto;
+  padding: 30px;
+}
+
+.add-additional-service-dialog .name{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 60px;
+}
+
+.add-additional-service-dialog .description{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 60px;
+}
+
+.add-additional-service-dialog .subtitle{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 15px 60px;
+}
+
+.add-additional-service-dialog .price{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 35px 80px;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }

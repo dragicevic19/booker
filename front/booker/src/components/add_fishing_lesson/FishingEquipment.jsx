@@ -15,11 +15,55 @@ import PhishingIcon from '@mui/icons-material/Phishing';
 import { Checkbox } from '@mui/material';
 
 export default function NestedList() {
-  const [open, setOpen] = React.useState(true);
 
+  const checkboxes = [
+    {
+        name: 'fishing-stick',
+        checked: false,
+        label: 'Fishing stick',
+    },
+    {
+        name: 'worms',
+        checked: false,
+        label: 'Worms',
+    },
+    {
+        name: 'catfish-net',
+        checked: false,
+        label: 'Catfish net',
+    },
+    {
+        name: 'fish-food',
+        checked: false,
+        label: 'Fish food',
+    },
+    {
+        name: 'parasol',
+        checked: false,
+        label: 'Parasol',
+    }
+];
+
+  const [open, setOpen] = React.useState(false);
+  
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const [checkedItems, setCheckedItems] = React.useState({}); //plain object as state
+
+  const handleChange = (event) => {
+    setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
+    // mutate the current Map
+    checkedItems.set(event.target.name, event.target.checked)
+    // update the state by creating a new Map
+  }
+
+    React.useEffect(() => {
+      console.log("checkedItems: ", checkedItems);
+    }, [checkedItems]);  
+  
+
 
   return (
     <List
@@ -35,40 +79,16 @@ export default function NestedList() {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <ListItemButton>
-          <ListItemIcon>
-            <Checkbox/>
-          </ListItemIcon>
-          <ListItemText primary="Fishing stick" />
-        </ListItemButton>
-
-        <ListItemButton>
-          <ListItemIcon>
-            <Checkbox/>
-          </ListItemIcon>
-          <ListItemText primary="Worms" />
-        </ListItemButton>
-
-        <ListItemButton>
-          <ListItemIcon>
-            <Checkbox/>
-          </ListItemIcon>
-          <ListItemText primary="Catfish net" />
-        </ListItemButton>
-
-        <ListItemButton>
-          <ListItemIcon>
-            <Checkbox/>
-          </ListItemIcon>
-          <ListItemText primary="Fish food" />
-        </ListItemButton>
-
-        <ListItemButton>
-          <ListItemIcon>
-            <Checkbox/>
-          </ListItemIcon>
-          <ListItemText primary="Parasol" />
-        </ListItemButton>
+        
+        {
+          checkboxes.map(item => (
+            <ListItemButton>
+            <ListItemIcon>
+            <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleChange}/>
+            </ListItemIcon>
+            <ListItemText primary={item.label} />
+            </ListItemButton>))
+        }
 
       </Collapse>
     </List>
