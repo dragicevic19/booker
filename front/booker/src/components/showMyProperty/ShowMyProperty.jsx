@@ -3,35 +3,43 @@ import React, { useEffect, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchBar from '../searchBar/SearchBar';
+import Login from '../Login';
 
-const ShowMyProperty = ({user}) => {
-	// useEffect(() => {
-	// 	const getProperties = async () => {
-	// 		const propertiesFromServer = await fetchProperties()
-	// 		setProperties(propertiesFromServer)
-	// 	}
-	// 	getProperties()
-	// }, [])
-
-	// const fetchProperties = async () => {
-	// 	const res = await fetch('http://localhost:8080/api/' + user.type + '/myProperty/' + user.id)
-	// 	const data = await res.json()
-
-	// 	return data
-	// }
+const ShowMyProperty = ({user, onLogin}) => {
 
 	const [properties, setProperties] = useState([
-		{
-			id: 1, name: 'Boat 1', description: 'Description gfffffff ffffffffffffffffgf ddddddddddddddd ddddddddddddddddddddd ddddddddd ddddddddddddd dddddddddddd dddddddddddd ddffffffffff fffff ffff fffffff fffffffffffff ffffffff fffffffffof Boat 1. Lep brod odlican sve kul dugacak opis tralalallsdj ajsldkj aslkdja lsk djal.fsalkfjasljf alkfjlaksjflkaj skflj alksfjajs fkajlk sf jalksjfka', capacity: 5, regulations: 'No regulations',
-			cancellationFee: 50, dailyPrice: 100, type: 'Huge Boat', enginePow: 100 
-		},
-		{
-			id: 2, name: 'Boat 2', description: 'Description of Boat 2', capacity: 2, regulations: 'No regulations',
-			cancellationFee: 25, dailyPrice: 50, type: 'Small Boat', enginePow: 50
-		}
+		// {
+		// 	id: 1, name: 'Boat 1', description: 'Description gfffffff ffffffffffffffffgf ddddddddddddddd ddddddddddddddddddddd ddddddddd ddddddddddddd dddddddddddd dddddddddddd ddffffffffff fffff ffff fffffff fffffffffffff ffffffff fffffffffof Boat 1. Lep brod odlican sve kul dugacak opis tralalallsdj ajsldkj aslkdja lsk djal.fsalkfjasljf alkfjlaksjflkaj skflj alksfjajs fkajlk sf jalksjfka', capacity: 5, regulations: 'No regulations',
+		// 	cancellationFee: 50, dailyPrice: 100, type: 'Huge Boat', enginePow: 100 
+		// },
+		// {
+		// 	id: 2, name: 'Boat 2', description: 'Description of Boat 2', capacity: 2, regulations: 'No regulations',
+		// 	cancellationFee: 25, dailyPrice: 50, type: 'Small Boat', enginePow: 50
+		// }
 	]);
 
 	const [searchResults, setSearchResults] = useState(properties)
+
+	useEffect(() => {
+		const getProperties = async () => {
+			const propertiesFromServer = await fetchProperties()
+			setProperties(propertiesFromServer)
+			setSearchResults(propertiesFromServer)
+		}
+		getProperties()
+	}, [])
+
+	const fetchProperties = async () => {
+		const res = await fetch('http://localhost:8080/api/my-offers/' + user.id, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${user.accessToken}`
+			}
+		})
+		const data = await res.json()
+		return data
+	}
 
 	const handleSearch = (value) => {
 		filterData(value)
@@ -48,6 +56,8 @@ const ShowMyProperty = ({user}) => {
 			})
 			setProperties(filteredData)
 		}
+
+		console.log(searchResults);
 	}
 
 	const searchStyles = {
@@ -62,6 +72,10 @@ const ShowMyProperty = ({user}) => {
 			borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
 		},
 	}
+
+	if (!user) {
+		return <Login setLoggedInUser={onLogin} />
+	} 
 
   return (
     <div className="showProp">

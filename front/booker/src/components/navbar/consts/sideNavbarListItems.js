@@ -5,7 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import BungalowIcon from '@mui/icons-material/Bungalow';
 
 export const mainNavbarItems = {
-    'boat_owner': [{
+    'ROLE_BOAT_OWNER': [{
         id: 0,
         icon: <AddCircleOutlineIcon />,
         label: 'Add New Boat',
@@ -15,7 +15,7 @@ export const mainNavbarItems = {
         id: 1,
         icon: <DirectionsBoatIcon />,
         label: 'My Boats',
-        route: '/myBoats',
+        route: '/my-offers',
     },
     {
         id: 2,
@@ -30,7 +30,7 @@ export const mainNavbarItems = {
         route: '/profile'
     }
     ],
-    'cottage_owner': [
+    'ROLE_COTTAGE_OWNER': [
         {
             id: 0,
             icon: <AddCircleOutlineIcon />,
@@ -41,7 +41,7 @@ export const mainNavbarItems = {
             id: 1,
             icon: <BungalowIcon />,
             label: 'My Cottages',
-            route: '/myCottages',
+            route: '/my-offers',
         },
         {
             id: 2,

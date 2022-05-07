@@ -11,10 +11,6 @@ function App() {
 
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-  const onUserLogin = (user) => {
-    setLoggedInUser(user)
-  }
-
   return (
     <Router>
       <div className="App">
@@ -22,9 +18,9 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element= {<Home />} />
-            <Route path="/login" element = {<Login onLogin={onUserLogin}/>} />
+            <Route path="/login" element = {<Login onLogin={setLoggedInUser}/>} />
             <Route path='/register' element = {<Registration />} />
-            <Route path='/myBoats' element = {<ShowMyProperty user={loggedInUser} />} />
+            <Route path='/my-offers' element = {<ShowMyProperty user={loggedInUser} onLogin={setLoggedInUser}/>} />
           </Routes>
         </div>
       </div>
