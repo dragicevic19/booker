@@ -27,16 +27,16 @@ public class BoatOwnerController {
     @Autowired
     private BoatOwnerService boatOwnerService;
 
-    @GetMapping("/myProperty/{userId}")
-    @PreAuthorize("hasRole('BOAT_OWNER')")
-    public ResponseEntity<List<Boat>> loadUsersBoats(@PathVariable Integer userId) {
-        BoatOwner u = (BoatOwner) userService.findById(userId);
-
-        if (u == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        List<Boat> properties = boatOwnerService.findAllMyBoats(u);
-        return new ResponseEntity<>(properties, HttpStatus.OK);
-    }
+//    @GetMapping("/myProperty/{userId}")
+//    @PreAuthorize("hasRole('BOAT_OWNER')")
+//    public ResponseEntity<List<Boat>> loadUsersBoats(@PathVariable Integer userId) {
+//        BoatOwner u = (BoatOwner) userService.findById(userId);
+//
+//        if (u == null) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        //List<Boat> properties = boatOwnerService.findAllMyBoats(u);
+//        return new ResponseEntity<>(properties, HttpStatus.OK);
+//    }
 }

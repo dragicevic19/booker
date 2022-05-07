@@ -15,5 +15,5 @@ public interface BoatOwnerService {
     List<BoatOwner> findAll ();
     BoatOwner save(User user);
 
-    List<Boat> findAllMyBoats(BoatOwner u);
+//    List<Boat> findAllMyBoats(BoatOwner u);
 }

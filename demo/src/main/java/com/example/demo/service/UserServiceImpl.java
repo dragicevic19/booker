@@ -2,11 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.*;
+import com.example.demo.repository.OfferRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,8 +32,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private FishingInstructorService fishingInstructorService;
 
+    @Autowired
+    private OfferRepository offerRepository;
+
+
+
+//    @Autowired
+//    private PropertyOwnerRepository propOwnerRepo;
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Offer> findUsersOffers(ServiceProvider owner) {
+        return owner.getOffers();
     }
 
     @Override
