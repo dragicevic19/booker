@@ -8,7 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class CottageOwnerServiceImpl implements CottageOwnerService {
 
@@ -42,7 +45,7 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         CottageOwner c = new CottageOwner(user);
         c.setRating(new Rating());
         c.setLoyaltyProgram(new LoyaltyProgram());
-        c.setCottages(new ArrayList<>());
+//        c.setOffers(new HashSet<>());
         List<Role> roles = roleService.findByName("ROLE_COTTAGE_OWNER");
         c.setRoles(roles);
 

@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Property;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +44,6 @@ public class UserController {
     public User user(Principal user) {
         return this.userService.findByEmail(user.getName());
     }
+
 
 }

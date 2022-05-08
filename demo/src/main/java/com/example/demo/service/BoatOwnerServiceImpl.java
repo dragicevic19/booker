@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     public BoatOwner save(User user) {
         BoatOwner b = new BoatOwner(user);
         b.setRating(new Rating());
-        b.setBoats(new ArrayList<>());
+//        b.setOffers(new HashSet<>());
         //b.setEnabled(true); ovo ce administrator da omoguci
         b.setLoyaltyProgram(new LoyaltyProgram());
 
@@ -52,4 +53,9 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
 
         return this.boatOwnerRepository.save(b);
     }
+
+//    @Override
+//    public List<Boat> findAllMyBoats(BoatOwner u) {
+//        return u.getBoats();
+//    }
 }

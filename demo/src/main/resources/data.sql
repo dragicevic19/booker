@@ -49,11 +49,11 @@ insert into service_provider (id, loyalty_id) values (1, 1);
 insert into property_owner (id) values (1);
 insert into boat_owner (id) values (1);
 
-insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id)
-    values (40, 5, false, 'desc of boat', 'brodic', 'no regulations', 3, 5);
-insert into property (daily_price, id) values (50, 1);
-insert into boat (engine_num, engine_pow, length, max_speed, type, id, boat_owner_id)
-    values ('241241', 100, 9, 60, 1, 1, 1);
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id)
+    values (40, 5, false, 'desc of boat', 'brodic', 'no regulations', 3, 5, 1);
+insert into property (daily_price,  id) values (50, 1);
+insert into boat (engine_num, engine_pow, length, max_speed, type, id)
+    values ('241241', 100, 9, 60, 1, 1);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for boat 1', 1);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 12, 'Additional Service 2 for boat 1', 1);
 insert into boat_fishing_equipment (boat_id, fishing_equipment) values (1, 'stap');
@@ -72,10 +72,10 @@ insert into service_provider (id, loyalty_id) values (2, 2);
 insert into property_owner (id) values (2);
 insert into cottage_owner (id) values (2);
 
-insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id)
-    values (40, 3, false, 'desc of cottage', 'vikendica naziv', 'no party', 4, 6);
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id)
+    values (40, 3, false, 'desc of cottage', 'vikendica naziv', 'no party', 4, 6, 2);
 insert into property (daily_price, id) values (90, 2);
-insert into cottage (id, cottage_owner_id) values (2, 2);
+insert into cottage (id) values (2);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for cottage 1', 2);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 15, 'Additional Service 2 for cottage 1', 2);
 
@@ -89,9 +89,9 @@ insert into user_role (user_id, role_id) values (3, 3);
 insert into service_provider (id, loyalty_id) values (3, 3);
 insert into fishing_instructor (biography, id) values ('Short biography', 3);
 
-insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id)
-    values (80, 2, false, 'desc of lesson', 'casovi pecanja', '18+', 5, 7);
-insert into fishing_lesson (lesson_price, id, fishing_instructor_id) values (100, 3, 3);
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id)
+    values (80, 2, false, 'desc of lesson', 'casovi pecanja', '18+', 5, 7, 3);
+insert into fishing_lesson (lesson_price, id) values (100, 3);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 3);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 3);
 insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (3, 'stap');
