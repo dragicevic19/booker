@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchBar from '../searchBar/SearchBar';
-import Login from '../Login';
+import Login from '../LoginData';
 
 const ShowMyProperty = ({user, onLogin}) => {
 
