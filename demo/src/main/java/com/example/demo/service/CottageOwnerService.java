@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-//import com.example.demo.dto.CottageRequest;
+import com.example.demo.dto.CottageRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.BoatOwner;
 import com.example.demo.model.Cottage;
@@ -15,5 +15,5 @@ public interface CottageOwnerService {
     List<CottageOwner> findAll ();
     CottageOwner save(User user);
 
-//    Cottage addCottage(CottageRequest cottageRequest, CottageOwner c);
+    Cottage addCottage(CottageRequest cottageRequest, CottageOwner c);
 }
