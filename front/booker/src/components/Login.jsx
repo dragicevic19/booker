@@ -26,8 +26,6 @@ const Login = ({onLogin}) => {  // pozvati ovu metodu onLogin kada dobijemo ulog
     onLogin(user)
     navigate('/')
   }
-
-
   
   return (
         <div className="container">

@@ -5,7 +5,7 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, valid
   return (
     <div>
       <h1>Step 2 - Register as {userType}</h1>
-      <div className="reg-container">
+      <div className="red-container">
 
         <div className="reg-first_name">
           <TextField

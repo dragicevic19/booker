@@ -9,7 +9,7 @@ export const mainNavbarItems = {
         id: 0,
         icon: <AddCircleOutlineIcon />,
         label: 'Add New Boat',
-        route: '/addNewBoat',
+        route: '/add-boat',
     },
     {
         id: 1,
@@ -35,7 +35,7 @@ export const mainNavbarItems = {
             id: 0,
             icon: <AddCircleOutlineIcon />,
             label: 'Add New Cottage',
-            route: '/addNewCottage',
+            route: '/add-cottage',
         },
         {
             id: 1,

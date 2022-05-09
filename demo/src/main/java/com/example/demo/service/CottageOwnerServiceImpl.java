@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+//import com.example.demo.dto.CottageRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.*;
 import com.example.demo.repository.CottageOwnerRepository;
+//import com.example.demo.repository.CottageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
 
     @Autowired
     private CottageOwnerRepository cottageOwnerRepository;
+//    @Autowired
+//    private CottageRepository cottageRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -51,4 +55,31 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
 
         return this.cottageOwnerRepository.save(c);
     }
+
+//    @Override
+//    public Cottage addCottage(CottageRequest cottageRequest, CottageOwner c) {
+//        Cottage cottage = new Cottage();
+//        cottage.setName(cottageRequest.getCottageName());
+//        Address a = new Address();
+//        a.setStreet(cottageRequest.getStreet());
+//        a.setCountry(cottageRequest.getCountry());
+//        a.setCity(cottageRequest.getCity());
+//        cottage.setAddress(a);
+//        cottage.setDailyPrice(cottageRequest.getPrice());
+//        cottage.setCapacity(cottageRequest.getCapacity());
+//        cottage.setDeleted(false);
+//        cottage.setDescription(cottageRequest.getDescription());
+//        cottage.setCancellationFee(cottageRequest.getFee());
+//        cottage.setRating(new Rating());
+////        cottage.setNumOfRooms(cottageRequest.getNumOfRooms());
+//        cottage.setRegulations(cottageRequest.getRegulations());
+//        cottage.setPeriodsOfOccupancy(new ArrayList<Period>());
+//        cottage.setDiscounts(new ArrayList<>());
+//        cottage.setImages(new ArrayList<String>());
+//        cottage.setReservations(new ArrayList<>());
+//        c.getOffers().add(cottage);
+//
+//        return this.cottageRepository.save(cottage);
+//
+//    }
 }
