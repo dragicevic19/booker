@@ -14,14 +14,14 @@ const LoginForm = ({onLogin,  handleChange ,values,validation}) => {  // pozvati
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
-    const user = await fakeLogin(
+    const user = await Login(
  
     )
     onLogin(user)
     navigate('/')
   }
 
-  async function fakeLogin() {
+  async function Login() {
     return fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: {
