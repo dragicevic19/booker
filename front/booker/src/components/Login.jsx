@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { TextField } from '@mui/material';
 
 
 async function fakeLogin() {
@@ -32,7 +33,13 @@ const Login = ({onLogin}) => {  // pozvati ovu metodu onLogin kada dobijemo ulog
   return (
         <div className="container">
             <div className="login">
-              <h2>Login Form...</h2>
+              <h2>Login Form</h2>
+                <div className="email">
+                  <TextField id="email" label="Email" variant="outlined" />
+                </div>
+                <div className="pass">
+                  <TextField id="pass" label="Password" variant="outlined" />
+                </div>
               <Button onClick={handleSubmit}>Login</Button>
             </div>
             <div className="login-footer">

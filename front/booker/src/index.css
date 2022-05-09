@@ -53,9 +53,21 @@
   border-radius: 5px;
 }
 
+.container .login{
+  margin-top: 20px;
+}
+
+.pass{
+  margin-top: 20px;
+}
+.email{
+  margin-top: 20px;
+}
+
 .login-footer {
   margin-top: 30px;
 }
+
 
 .user-type-picker {
   text-align: center;
@@ -316,4 +328,6 @@
   margin-top: 30px;
   margin-left: auto;
 }
+
+
 
