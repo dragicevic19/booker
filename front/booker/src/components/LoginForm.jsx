@@ -42,7 +42,7 @@ const LoginForm = ({onLogin,  handleChange ,values,validation}) => {  // pozvati
                   <TextField id="email" label="Email" variant="outlined" onChange={handleChange("email")}/>
                 </div>
                 <div className="pass">
-                  <TextField id="pass" label="Password" variant="outlined" onChange={handleChange("password")} />
+                  <TextField id="pass" label="Password" type="password" variant="outlined" onChange={handleChange("password") } />
                 </div>
               <Button onClick={handleSubmit}>Login</Button>
             </div>
