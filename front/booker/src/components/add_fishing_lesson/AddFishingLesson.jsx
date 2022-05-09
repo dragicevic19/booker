@@ -243,7 +243,7 @@ const AddFishingLesson = ({handleChange, uploadMultipleFiles, uploadFiles, fileO
 
             <div className="fishing-equipment">
                 <NestedList
-
+                  handleChange={handleChange}
                 ></NestedList>
             </div>
 

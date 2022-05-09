@@ -14,7 +14,7 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import PhishingIcon from '@mui/icons-material/Phishing';
 import { Checkbox } from '@mui/material';
 
-export default function NestedList() {
+export default function NestedList({handleChange}) {
 
   const checkboxes = [
     {
@@ -52,7 +52,7 @@ export default function NestedList() {
 
   const [checkedItems, setCheckedItems] = React.useState({}); //plain object as state
 
-  const handleChange = (event) => {
+  const handleChange2 = (event) => {
     setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
     // mutate the current Map
     checkedItems.set(event.target.name, event.target.checked)
@@ -63,7 +63,6 @@ export default function NestedList() {
       console.log("checkedItems: ", checkedItems);
     }, [checkedItems]);  
   
-
 
   return (
     <List
@@ -84,7 +83,7 @@ export default function NestedList() {
           checkboxes.map(item => (
             <ListItemButton>
             <ListItemIcon>
-            <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleChange}/>
+            <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleChange('includedEquipment')}/>
             </ListItemIcon>
             <ListItemText primary={item.label} />
             </ListItemButton>))

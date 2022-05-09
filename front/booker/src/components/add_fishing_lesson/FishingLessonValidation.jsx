@@ -35,7 +35,36 @@ export default class Validation extends Component {
 
     //niz za fishing equipment (checkbox)
 
+        checkboxes = [
+        {
+            name: 'fishing-stick',
+            checked: false,
+            label: 'Fishing stick',
+        },
+        {
+            name: 'worms',
+            checked: false,
+            label: 'Worms',
+        },
+        {
+            name: 'catfish-net',
+            checked: false,
+            label: 'Catfish net',
+        },
+        {
+            name: 'fish-food',
+            checked: false,
+            label: 'Fish food',
+        },
+        {
+            name: 'parasol',
+            checked: false,
+            label: 'Parasol',
+        }
+    ]; 
 
+
+    //nizovi za cuvanje slika
     fileObj = [];
     fileArray = [];
 
@@ -59,7 +88,14 @@ export default class Validation extends Component {
         const data = await res.json()
     
         return data
-      }
+    }
+
+    fetchEquipment = async() => {
+        const res = await fetch('http://localhost:5000/includedEquipment')
+        const data = await res.json()
+    
+        return data
+    }
 
     handleChange = input => e => {
         console.log(e.target.value)
@@ -183,6 +219,7 @@ export default class Validation extends Component {
         
         console.log(values);
         values.additionalServices = this.fetchAdditionalServices();
+        values.includedEquipment = this.fetchEquipment();
 
           return (
             <AddFishingLesson

@@ -32,7 +32,8 @@ export class ImageUploadPreviewComponent extends Component {
     render() {  //probati sa key = index kod .map funkcije
         return (
             <form>
-                <div defaultValue={this.props.images} onChange={this.uploadMultipleFiles} className="form-group multi-preview">
+                <div defaultValue={this.props.images} onChange={this.props.uploadMultipleFiles} 
+                className="form-group multi-preview">
                     {(this.fileArray || []).map(url => (
                         <img width="60" height="30" src={url} alt="" key={url} />
                     ))}
@@ -43,7 +44,8 @@ export class ImageUploadPreviewComponent extends Component {
                 <br></br>
                 <div className="form-group">
                     <label class="custom-file-upload">
-                      <input variant="outlined" color='primary' type="file" className="form-control" onChange= {this.uploadMultipleFiles} multiple />
+                      <input variant="outlined" 
+                      color='primary' type="file" className="form-control" onChange= {this.props.handleChange('images')} multiple />
                     </label>
                 </div>
             </form >
