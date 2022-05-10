@@ -1,12 +1,6 @@
 {
   "additionalServices": [
     {
-      "name": "Pecanje dubinkom",
-      "description": "feafga",
-      "price": "$34",
-      "id": 2
-    },
-    {
       "name": "Pecanje somova",
       "description": "opasno",
       "price": "$432",

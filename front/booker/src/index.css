@@ -367,7 +367,7 @@
 .add-service-container .images{
   grid-column-start: 3;
   grid-column-end: 7;
-  grid-row-start: 7;
+  grid-row-start: 8;
   grid-row-end: 8;
   padding: 0px 50px;
 }

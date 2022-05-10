@@ -2,9 +2,11 @@ import AddFishingLesson from "./AddFishingLesson"
 import React, { Component } from 'react'
 
 export default class Validation extends Component {
-
-    state = {
-        name: '',
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
         country: '',
         city: '',
         address: '',
@@ -15,9 +17,7 @@ export default class Validation extends Component {
         includedEquipment: '',
         maxNumAttendants: '',
         additionalServices: '',
-        images: {
-            file: [null]
-        },
+        images: '',
   
         formErrors: {name: '', city: '', address: '', price: '', fee: '', description: '', rules: '', maxNumAttendants: ''},
         nameValid: {enable: false, value: false},
@@ -31,6 +31,7 @@ export default class Validation extends Component {
         maxNumAttendantsValid: {enable: false, value: false},
   
         formValid: false,
+        }
     }
 
     //niz za fishing equipment (checkbox)
@@ -64,23 +65,10 @@ export default class Validation extends Component {
     ]; 
 
 
-    //nizovi za cuvanje slika
-    fileObj = [];
-    fileArray = [];
+    //cuvanje slika
 
-    
-
-    uploadMultipleFiles(e) {
-        this.fileObj.push(e.target.files)
-        for (let i = 0; i < this.fileObj[0].length; i++) {
-            this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
-        }
-        this.setState({ file: this.fileArray })
-    }
- 
-    uploadFiles(e) {
-        e.preventDefault()
-        console.log(this.state.file)
+    handleImages = input => e => {
+        this.setState({[input]: e.target.files})
     }
 
     fetchAdditionalServices = async() => {
@@ -223,11 +211,9 @@ export default class Validation extends Component {
 
           return (
             <AddFishingLesson
+              user={ this.props.user }
               handleChange = { this.handleChange }
-              uploadMultipleFiles={this.uploadMultipleFiles}
-              uploadFiles={this.uploadFiles}
-              fileObj = {this.fileObj}
-              fileArray={this.fileArray}
+              handleImages = {this.handleImages}
               values = { values }
               validation = { validation }
             />

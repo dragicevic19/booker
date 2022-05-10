@@ -10,15 +10,59 @@ import { Label } from "@mui/icons-material"
 import DeletableChips from "./AdditionalService"
 import { useState, useEffect } from "react"
 import ShowAdditionalServices from "./ShowAdditionalServices"
+import { useNavigate } from 'react-router'
 
 
-const AddFishingLesson = ({handleChange, uploadMultipleFiles, uploadFiles, fileObj, fileArray, values, validation}) => {
+const AddFishingLesson = ({user, handleChange, handleImages, values, validation}) => {
 
-    //Additional services section
+    const navigate = useNavigate()
 
     const clickOutput = () => {
-      console.log(values.country)
+      values.owner_id = user.id
+
+		let images = new FormData()
+		for(var i = 0; i < values.images.length; i++) {
+			images.append("images", values.images[i])
+		}
+
+		fetch('http://localhost:8080/api/upload', {
+			method: 'POST',
+			headers: {
+				'Authorization': `Bearer ${user.accessToken}`
+			},
+			body: images
+		}).then(function (res) {
+			if (res.ok) {
+				return res.json()
+			} else {throw Error('failed to save images')}
+
+		}).then(function(data) {
+			values.images = data
+			fetch('http://localhost:8080/api/add-cottage', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${user.accessToken}`
+				},
+				body: JSON.stringify(values)
+			}).then(res => {
+				if (!res.ok) {
+					throw Error('could not fetch data')
+				}
+				return res.json()
+			}).then(data => {
+				navigate('/my-offers')
+			}).catch(err => {
+				console.log(err.message);
+			})
+			})
     }
+
+    const backBtnClick = () => {
+      navigate('/')
+    }
+
+    //Additional services section
 
     const [additionalServices, setAdditionalServices] = useState([])
 
@@ -260,10 +304,16 @@ const AddFishingLesson = ({handleChange, uploadMultipleFiles, uploadFiles, fileO
                  ></ShowAdditionalServices> 
             </div>
 
-            <div className="images">
-                <ImageUploadPreviewComponent onAddImage={addImages} values={values} handleChange={handleChange} uploadMultipleFiles={uploadMultipleFiles} uploadFiles={uploadFiles} fileObj={fileObj} fileArray={fileArray}
-                ></ImageUploadPreviewComponent>
-            </div>
+            <div className='images'>
+							Select images:<br/>
+							<input 
+								type="file" 
+								// inputProps={{ multiple: true }} 
+								accept="image/*"
+								multiple
+								onChange={handleImages('images')}
+							/>
+						</div>
 
             <div className='cancel-button'>
                 <Button variant='contained' component="span" color='error' size='large'>Cancel</Button>
