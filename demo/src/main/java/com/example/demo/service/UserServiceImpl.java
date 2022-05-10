@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.UserData;
 import com.example.demo.dto.UserRequest;
-import com.example.demo.model.*;
+import com.example.demo.model.Address;
+import com.example.demo.model.Offer;
+import com.example.demo.model.ServiceProvider;
+import com.example.demo.model.User;
 import com.example.demo.repository.OfferRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +65,12 @@ public class UserServiceImpl implements UserService {
 
     public User findById(Integer id) throws AccessDeniedException {
         return userRepository.findById(id).orElseGet(null);
+    }
+    public UserData findByIdData(Integer id) throws AccessDeniedException {
+        User u =userRepository.findById(id).orElseGet(null);
+        UserData ud = new UserData(u);
+
+        return ud;
     }
 
     public List<User> findAll() throws AccessDeniedException {

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserData;
 import com.example.demo.model.User;
 import com.example.demo.model.Offer;
 import com.example.demo.model.ServiceProvider;
@@ -36,9 +37,9 @@ public class ServiceProviderController {
     }
 
     @GetMapping("/profile/{userId}")
-    public ResponseEntity<User> loadUserData(@PathVariable Integer userId) {
+    public ResponseEntity<UserData> loadUserData(@PathVariable Integer userId) {
 
-        User usr =userService.findById(userId);
+        UserData usr =userService.findByIdData(userId);
 
 
         return new ResponseEntity<>(usr, HttpStatus.OK);

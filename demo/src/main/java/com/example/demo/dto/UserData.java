@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,6 @@ import lombok.Setter;
 @Setter
 public class UserData {
 
-    private String password;
 
     private String firstName;
 
@@ -24,6 +24,16 @@ public class UserData {
 
     private String phoneNumber;
 
-    private String type;
+
+    public UserData(User u){
+        this.firstName = u.getFirstName();
+        this.lastName = u.getLastName();
+        this.email = u.getEmail();
+        this.phoneNumber = u.getPhoneNumber();
+        this.country = u.getAddress().getCountry();
+        this.city = u.getAddress().getCity();
+        this.street = u.getAddress().getStreet();
+
+    }
 }
 
