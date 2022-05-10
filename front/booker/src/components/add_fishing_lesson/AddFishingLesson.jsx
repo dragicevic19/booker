@@ -19,9 +19,11 @@ const AddFishingLesson = ({user, handleChange, handleImages, values, validation}
 
     const clickOutput = () => {
       values.owner_id = user.id
+      console.log(values);
 
 		let images = new FormData()
 		for(var i = 0; i < values.images.length; i++) {
+      console.log(values.images[i])
 			images.append("images", values.images[i])
 		}
 
@@ -38,7 +40,7 @@ const AddFishingLesson = ({user, handleChange, handleImages, values, validation}
 
 		}).then(function(data) {
 			values.images = data
-			fetch('http://localhost:8080/api/add-cottage', {
+			fetch('http://localhost:8080/api/add-lesson', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -188,13 +190,13 @@ const AddFishingLesson = ({user, handleChange, handleImages, values, validation}
             </div>  
 
             <div className="price">
-                <label>Price   </label>
+                <label>Price [€]   </label>
                 <CurrencyInput
                     error={ !validation.priceValid.value && validation.priceValid.enable }
                     helperText={ !validation.priceValid.value && validation.priceValid.enable ? validation.formErrors.price : '' }
                     onChangeCapture={handleChange('price')}
                     maxLength={5}
-                    prefix="$"
+                    prefix=""
                     allowNegativeValue={false}
                     aria-errormessage="Invalid input"
                     required
@@ -217,11 +219,11 @@ const AddFishingLesson = ({user, handleChange, handleImages, values, validation}
             </div>
 
             <div className="cancellation-fee">
-                <label>Fee                                                  </label>
+                <label>Fee[€]                                                  </label>
                 <CurrencyInput
                     maxLength={3}
                     onChangeCapture={handleChange('fee')}
-                    prefix="$"
+                    prefix=""
                     required
                     allowNegativeValue={false}
                     fullWidth

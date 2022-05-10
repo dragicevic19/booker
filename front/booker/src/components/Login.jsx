@@ -9,7 +9,7 @@ async function fakeLogin() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({email:'djura@gmail.com', password: '123'})
+    body: JSON.stringify({email:'pera@gmail.com', password: '123'})
   })
     .then(data => data.json())
 }

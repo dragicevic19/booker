@@ -22,7 +22,7 @@ import java.util.Set;
 public class FishingLesson extends Offer {
 
     @Column(name = "lesson_price", unique = false, nullable = false)
-    protected int lessonPrice;
+    protected Double lessonPrice;
 
     @ElementCollection
     @Column(name="fishing_equipment")

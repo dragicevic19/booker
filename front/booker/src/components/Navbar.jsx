@@ -10,7 +10,6 @@ const Navbar = ({loggedInUser}) => {
             <div className="links">
                 <Link to={"/"}>Home</Link>
                 <Link to={"/something"}>Something</Link>
-                <Link to={"/login"}>Login</Link>
                 { loggedInUser ? <Link to={"/logout"}>Logout</Link> : <Link to={"/login"}>Login</Link> }
             </div>
         </nav>

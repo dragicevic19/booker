@@ -86,7 +86,6 @@ export default class Validation extends Component {
     }
 
     handleChange = input => e => {
-        console.log(e.target.value)
         this.validateField(input, e.target.value)
         this.setState({ [input]: e.target.value })
     }
@@ -205,7 +204,6 @@ export default class Validation extends Component {
         const validation = { formErrors, nameValid, countryValid, cityValid, addressValid, priceValid, feeValid, descriptionValid,
             rulesValid, maxNumAttendantsValid, formValid }
         
-        console.log(values);
         values.additionalServices = this.fetchAdditionalServices();
         values.includedEquipment = this.fetchEquipment();
 

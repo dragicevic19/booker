@@ -280,7 +280,8 @@
 
 .add-service-container .service-name{
   grid-column-start: 1;
-  grid-column-end: 4;
+  grid-column-end: 3;
+  padding: 5px 30px;
 }
 
 .list {
@@ -363,6 +364,8 @@
 .add-service-container .country{
   grid-column-start: 4;
   grid-column-end: 7;
+  margin: 5px 5px;
+  padding: 5px 30px;
 }
 
 .new-cottage-container .cottage-country {
@@ -378,12 +381,13 @@
   grid-column-end: 4;
   grid-row-start: 2;
   grid-row-end: 3;
-  padding: 15px 0px;
+  padding: 5px 30px;
 }
 
 .add-service-container .city{
   grid-column-start: 4;
   grid-column-end: 7;
+  padding: 5px 30px;
 }
 
 .new-cottage-container .cottage-city {
@@ -418,6 +422,7 @@
 .add-service-container .address{
   grid-column-start: 4;
   grid-column-end: 7;
+  padding: 5px 30px;
 }
 
 .new-cottage-container .cottage-capacity {
@@ -432,6 +437,7 @@
 .add-service-container .service-description{
   grid-column-start: 1;
   grid-column-end: 7;
+  margin-top: 10px;
 }
 
 .new-cottage-container .cottage-price {
@@ -445,6 +451,7 @@
 .add-service-container .rules{
   grid-column-start: 1;
   grid-column-end: 7;
+  margin-top: 10px;
 }
 
 .new-cottage-container .cottage-fee {

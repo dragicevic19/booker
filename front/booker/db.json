@@ -11,6 +11,12 @@
       "description": "fdhdsf",
       "price": "$564",
       "id": 4
+    },
+    {
+      "name": "fdsa",
+      "description": "fhdgs",
+      "price": "$43",
+      "id": 5
     }
   ],
   "includedEquipment": []
