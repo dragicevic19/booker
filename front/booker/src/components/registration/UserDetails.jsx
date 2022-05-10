@@ -147,7 +147,7 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, valid
             marginLeft: 30,
             borderRadius: 5,
           }} 
-          className="btnBackReg"
+          className="btnBack"
           variant="contained"
           onClick={prevStep}
         >BACK
@@ -159,7 +159,7 @@ const UserDetails = ({ prevStep, nextStep, handleChange, values, userType, valid
             marginRight: 30,
             borderRadius: 5,
           }} 
-          className="btnNextReg"
+          className="btnNext"
           variant="contained"
           color="success"
           disabled={!validation.formValid}

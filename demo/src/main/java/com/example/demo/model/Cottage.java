@@ -17,8 +17,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class Cottage extends Property {
-//    @Column(name = "num_of_rooms")
-//    private int numOfRooms;
+
+    @Column(name = "num_of_rooms")
+    private int numOfRooms;
 
     @Override
     public int calculatePrice() {

@@ -49,7 +49,7 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         CottageOwner c = new CottageOwner(user);
         c.setRating(new Rating());
         c.setLoyaltyProgram(new LoyaltyProgram());
-//        c.setOffers(new HashSet<>());
+        c.setOffers(new ArrayList<>());
         List<Role> roles = roleService.findByName("ROLE_COTTAGE_OWNER");
         c.setRoles(roles);
 
@@ -71,12 +71,13 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         cottage.setDescription(cottageRequest.getDescription());
         cottage.setCancellationFee(cottageRequest.getFee());
         cottage.setRating(new Rating());
-//        cottage.setNumOfRooms(cottageRequest.getNumOfRooms());
+        cottage.setNumOfRooms(cottageRequest.getNumOfRooms());
         cottage.setRegulations(cottageRequest.getRegulations());
         cottage.setPeriodsOfOccupancy(new ArrayList<Period>());
         cottage.setDiscounts(new ArrayList<>());
-        cottage.setImages(new ArrayList<String>());
+        cottage.setImages(cottageRequest.getImages());
         cottage.setReservations(new ArrayList<>());
+
         c.getOffers().add(cottage);
 
         return this.cottageRepository.save(cottage);

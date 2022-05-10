@@ -3,6 +3,8 @@ package com.example.demo.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 
@@ -18,4 +20,6 @@ public class CottageRequest {
     private double price;
     private double fee;
     private Integer owner_id;
+    private List<String> images;
+
 }

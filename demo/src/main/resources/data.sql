@@ -75,7 +75,7 @@ insert into cottage_owner (id) values (2);
 insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id)
     values (40, 3, false, 'desc of cottage', 'vikendica naziv', 'no party', 4, 6, 2);
 insert into property (daily_price, id) values (90, 2);
-insert into cottage (id) values (2);
+insert into cottage (id, num_of_rooms) values (2, 2);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for cottage 1', 2);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 15, 'Additional Service 2 for cottage 1', 2);
 
