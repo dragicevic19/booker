@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchBar from '../searchBar/SearchBar';
 import Login from '../Login';
+import { AlternateEmail } from '@mui/icons-material';
 
 const ShowMyProperty = ({user, onLogin}) => {
 
@@ -56,9 +57,9 @@ const ShowMyProperty = ({user, onLogin}) => {
 			})
 			setProperties(filteredData)
 		}
-
-		console.log(searchResults);
 	}
+
+
 
 	const searchStyles = {
 		wrapper: {
@@ -92,7 +93,9 @@ const ShowMyProperty = ({user, onLogin}) => {
 						<h2 className='prop-name'>{ property.name }</h2>
 						<p className='prop-price'>Daily price: {property.dailyPrice}$</p>
 						<p className='prop-capacity'>Capacity: {property.capacity}</p>
-						<p className='prop-regulations'>Regulations: { property.regulations }</p>
+						{/* <p className='prop-regulations'>Regulations: { property.regulations }</p> */}
+						<p className='prop-regulations'>Address: {property.address.city}, {property.address.country}</p>
+
 					</div>
 					<div className='prop-desc'>
 						<p>{property.description}</p>

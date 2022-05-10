@@ -130,7 +130,7 @@
   height: 90%;
 }
 
-.btnNext {
+.user-type-picker .btnNext {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 4;
@@ -138,7 +138,7 @@
 }
 
 
-.reg-container {
+.red-container {
   text-align: center;
   display: grid;
   grid-template-columns: auto auto;
@@ -152,7 +152,7 @@
   border-radius: 5px;
 }
 
-.reg-container .reg-first_name {
+.red-container .reg-first_name {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -160,7 +160,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-last_name {
+.red-container .reg-last_name {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -168,7 +168,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-country {
+.red-container .reg-country {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
@@ -176,7 +176,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-city {
+.red-container .reg-city {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 2;
@@ -184,7 +184,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-street {
+.red-container .reg-street {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 3;
@@ -192,7 +192,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-email {
+.red-container .reg-email {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 3;
@@ -200,7 +200,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-password {
+.red-container .reg-password {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 4;
@@ -208,7 +208,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-rep-password {
+.red-container .reg-rep-password {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 4;
@@ -216,7 +216,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-phoneNum {
+.red-container .reg-phoneNum {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 5;
@@ -224,7 +224,7 @@
   padding: 5px 30px;
 }
 
-.reg-container .reg-explanation {
+.red-container .reg-explanation {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 6;
@@ -232,7 +232,7 @@
   padding: 5px 30px;
 }
 
-.btnBackReg {
+.btnBack {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 7;
@@ -240,7 +240,7 @@
   padding: 5px 30px;
 }
 
-.btnNextReg {
+.btnNext {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 7;
@@ -317,3 +317,107 @@
   margin-left: auto;
 }
 
+.new-cottage-container {
+  text-align: center;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 5px 40px;
+  position: relative;
+  max-width: max-content;
+  margin: 50px auto;
+  overflow: auto;
+  border: 1px solid #f1356d;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.new-cottage-container .cottage-name {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-country {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-city {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-street {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-rooms {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-capacity {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-price {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-fee {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-regulations {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  padding: 5px 30px;
+}
+
+.new-cottage-container .cottage-description {
+  grid-column-start: 3;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 5;
+  padding: 5px 30px;
+}
+
+
+.new-cottage-container .cottage-images {
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  padding: 5px 30px;
+  margin-top: 20px;
+  
+}
