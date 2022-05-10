@@ -49,7 +49,7 @@ public class AuthenticationController {
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, user));
     }
 
 

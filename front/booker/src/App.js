@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from './components/registration/Registration';
 import Validation from './components/add_fishing_lesson/FishingLessonValidation'
 import { useState } from 'react';
+import ShowMyProperty from './components/showMyProperty/ShowMyProperty';
+import NewCottage from './components/addCottage/NewCottage';
+
 
 function App() {
 
@@ -19,7 +22,9 @@ function App() {
             <Route path="/" element= {<Home />} />
             <Route path="/login" element = {<Login onLogin={setLoggedInUser}/>} />
             <Route path='/register' element = {<Registration />} />
-            <Route path='/FishingLessonValidation' element = {<Validation  user={loggedInUser}/>}/>
+            <Route path='/add-lesson' element = {<Validation  user={loggedInUser}/>}/>
+            <Route path='/my-offers' element = {<ShowMyProperty user={loggedInUser} onLogin={setLoggedInUser}/>} />
+            <Route path='/add-cottage' element = {<NewCottage user={loggedInUser}/>} />
           </Routes>
         </div>
       </div>
