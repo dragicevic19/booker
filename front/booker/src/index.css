@@ -53,6 +53,24 @@
   border-radius: 5px;
 }
 
+.my-profile-container {
+
+  text-align: center;
+  position: relative;
+  max-width: 500px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 500px;
+  border: 1px solid #f1356d;
+  padding: 60px 30px;
+  border-radius: 5px;
+}
+.my-profile-container .txtField{
+  margin: 10px 5px;
+  position: left;
+
+}
+
 .login-footer {
   margin-top: 30px;
 }

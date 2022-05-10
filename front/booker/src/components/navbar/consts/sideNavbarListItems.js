@@ -3,6 +3,7 @@ import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
 import BungalowIcon from '@mui/icons-material/Bungalow';
+import MyProfile from '../../navbarcontent/MyProfile';
 
 export const mainNavbarItems = {
     'ROLE_BOAT_OWNER': [{
@@ -27,7 +28,7 @@ export const mainNavbarItems = {
         id: 3,
         icon: <PersonIcon />,
         label: 'My Profile',
-        route: '/profile'
+        route: '/profile',
     }
     ],
     'ROLE_COTTAGE_OWNER': [

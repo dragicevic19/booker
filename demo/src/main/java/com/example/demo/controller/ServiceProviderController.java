@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.User;
 import com.example.demo.model.Offer;
-import com.example.demo.model.Property;
-import com.example.demo.model.PropertyOwner;
 import com.example.demo.model.ServiceProvider;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/")
@@ -36,4 +34,17 @@ public class ServiceProviderController {
         List<Offer> offers = userService.findUsersOffers(u);
         return new ResponseEntity<>(offers, HttpStatus.OK);
     }
+
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<User> loadUserData(@PathVariable Integer userId) {
+
+        User usr =userService.findById(userId);
+
+
+        return new ResponseEntity<>(usr, HttpStatus.OK);
+    }
+
+
+
+
 }
