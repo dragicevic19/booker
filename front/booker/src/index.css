@@ -5,11 +5,11 @@
 * {
   margin: 0;
   font-family: "Poppins";
-  color: #333;
+ /* color: #333;*/
   /* box-sizing: border-box; */
   
 }
-
+/* 
 .navbar {
   padding: 20px;
   display: flex;
@@ -32,12 +32,12 @@
 }
 .navbar a:hover {
   color: #f1356d;
-}
+} */
 .content {
-  max-width: 70%;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
+  max-width: 100%;
+ /* margin: 10px auto;
+  padding: 10px;          SKINUTE MARGINE      */
+  /* text-align: center; */
 
 }
 
@@ -51,6 +51,23 @@
   border: 1px solid #f1356d;
   padding: 30px;
   border-radius: 5px;
+}
+
+.my-profile-container {
+
+  text-align: center;
+  position: relative;
+  max-width: 500px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 500px;
+  border: 1px solid #f1356d;
+  padding: 60px 30px;
+  border-radius: 5px;
+}
+.my-profile-container .txtField{
+  margin: 10px 5px;
+
 }
 
 .login-footer {
@@ -130,7 +147,7 @@
   height: 90%;
 }
 
-.user-type-picker .btnNext {
+.btnNext {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 4;
@@ -138,7 +155,7 @@
 }
 
 
-.red-container {
+.reg-container {
   text-align: center;
   display: grid;
   grid-template-columns: auto auto;
@@ -152,7 +169,7 @@
   border-radius: 5px;
 }
 
-.red-container .reg-first_name {
+.reg-container .reg-first_name {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -160,7 +177,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-last_name {
+.reg-container .reg-last_name {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -168,7 +185,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-country {
+.reg-container .reg-country {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
@@ -176,7 +193,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-city {
+.reg-container .reg-city {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 2;
@@ -184,7 +201,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-street {
+.reg-container .reg-street {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 3;
@@ -192,7 +209,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-email {
+.reg-container .reg-email {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 3;
@@ -200,7 +217,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-password {
+.reg-container .reg-password {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 4;
@@ -208,7 +225,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-rep-password {
+.reg-container .reg-rep-password {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 4;
@@ -216,7 +233,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-phoneNum {
+.reg-container .reg-phoneNum {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 5;
@@ -224,7 +241,7 @@
   padding: 5px 30px;
 }
 
-.red-container .reg-explanation {
+.reg-container .reg-explanation {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 6;
@@ -232,7 +249,7 @@
   padding: 5px 30px;
 }
 
-.btnBack {
+.btnBackReg {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 7;
@@ -240,7 +257,7 @@
   padding: 5px 30px;
 }
 
-.btnNext {
+.btnNextReg {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 7;
@@ -317,107 +334,3 @@
   margin-left: auto;
 }
 
-.new-cottage-container {
-  text-align: center;
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  gap: 5px 40px;
-  position: relative;
-  max-width: max-content;
-  margin: 50px auto;
-  overflow: auto;
-  border: 1px solid #f1356d;
-  padding: 30px;
-  border-radius: 5px;
-}
-
-.new-cottage-container .cottage-name {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-country {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-city {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-street {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-rooms {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-capacity {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-price {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 4;
-  grid-row-end: 5;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-fee {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 4;
-  grid-row-end: 5;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-regulations {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 5;
-  grid-row-end: 6;
-  padding: 5px 30px;
-}
-
-.new-cottage-container .cottage-description {
-  grid-column-start: 3;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 5;
-  padding: 5px 30px;
-}
-
-
-.new-cottage-container .cottage-images {
-  grid-column-start: 4;
-  grid-column-end: 5;
-  grid-row-start: 5;
-  grid-row-end: 6;
-  padding: 5px 30px;
-  margin-top: 20px;
-  
-}
