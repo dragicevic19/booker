@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-/* base styles */
+/* base styles
 * {
   margin: 0;
-  font-family: "Poppins";
-  color: #333;
+  /* font-family: "Poppins"; */
+  /* color: #333; */
   /* box-sizing: border-box; */
   
-}
-
+/* } */
+/* 
 .navbar {
   padding: 20px;
   display: flex;
@@ -270,10 +270,10 @@
 .prop-preview {
   display: grid;
   /* grid-template-columns: auto auto auto auto; */
-  gap: 5px 40px;
-  position: relative;
+  /* gap: 5px 40px;
+  position: relative; */
   /* max-width: max-content; */
-  overflow: auto;
+  /* overflow: auto;
   border-radius: 5px;
   text-align: left;
   padding: 10px 16px;
@@ -308,6 +308,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
   /* width: auto; */
+/*
 }
 
 .prop-buttons {
@@ -418,6 +419,6 @@
   grid-row-start: 5;
   grid-row-end: 6;
   padding: 5px 30px;
-  margin-top: 20px;
+  margin-top: 20px; */
   
-}
+/* } */
