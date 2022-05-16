@@ -1,11 +1,12 @@
 import Home from './components/Home';
-import Navbar from './components/Navbar';
+//import Navbar from './components/Navbar';
 import Login from './components/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Registration from './components/registration/Registration';
 import { useState } from "react"
 import ShowMyProperty from './components/showMyProperty/ShowMyProperty';
 import NewCottage from './components/addCottage/NewCottage';
+import NavbarHome from './components/navbarHome/Navbar';
 
 
 function App() {
@@ -14,8 +15,8 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Navbar loggedInUser={loggedInUser} />
+      <div className="App">  
+      <NavbarHome/>
         <div className="content">
           <Routes>
             <Route path="/" element= {<Home />} />
