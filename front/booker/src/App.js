@@ -1,33 +1,42 @@
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Login from './components/Login';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
-import Registration from './components/registration/Registration';
-import { useState } from "react"
-import ShowMyProperty from './components/showMyProperty/ShowMyProperty';
-import NewCottage from './components/addCottage/NewCottage';
-
+import Home from "./pages/home/Home";
+import List from "./pages/list/List";
+import Single from "./pages/single/Single";
+import New from "./pages/new/New";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { productInputs, userInputs } from "./formSource";
+import "./style/dark.scss";
+import { useContext } from "react";
+import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
-
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const { darkMode } = useContext(DarkModeContext);
 
   return (
-    <Router>
-      <div className="App">
-        <Navbar loggedInUser={loggedInUser} />
-        <div className="content">
-          <Routes>
-            <Route path="/" element= {<Home />} />
-            <Route path="/login" element = {<Login onLogin={setLoggedInUser}/>} />
-            <Route path='/register' element = {<Registration />} />
-            <Route path='/my-offers' element = {<ShowMyProperty user={loggedInUser} onLogin={setLoggedInUser}/>} />
-            <Route path='/add-cottage' element = {<NewCottage user={loggedInUser}/>} />
-
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <div className={darkMode ? "app dark" : "app"}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="users">
+              <Route index element={<List />} />
+              <Route path=":userId" element={<Single />} />
+              <Route
+                path="new"
+                element={<New inputs={userInputs} title="Fishing Lessons" />}
+              />
+            </Route>
+            <Route path="products">
+              <Route index element={<List />} />
+              <Route path=":productId" element={<Single />} />
+              <Route
+                path="new"
+                element={<New inputs={productInputs} title="Add New Product" />}
+              />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
