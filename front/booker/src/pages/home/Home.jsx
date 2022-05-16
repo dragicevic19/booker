@@ -1,7 +1,7 @@
 import "./home.css"
-import NavbarHome from "./navbarHome/Navbar";
-import Header from "./header/Header"
-import Featured from "./featured/Featured"
+import NavbarHome from "../../components/navbarHome/Navbar"
+import Header from "../../components/header/Header"
+import Featured from "../../components/featured/Featured"
 
 
 const Home = () => {
