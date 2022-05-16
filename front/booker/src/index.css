@@ -5,11 +5,11 @@
 * {
   margin: 0;
   font-family: "Poppins";
-  color: #333;
+ /* color: #333;*/
   /* box-sizing: border-box; */
   
 }
-
+/* 
 .navbar {
   padding: 20px;
   display: flex;
@@ -32,12 +32,12 @@
 }
 .navbar a:hover {
   color: #f1356d;
-}
+} */
 .content {
   max-width: 100%;
-  margin: 10px auto;
-  padding: 10px;
-  text-align: center;
+ /* margin: 10px auto;
+  padding: 10px;          SKINUTE MARGINE      */
+  /* text-align: center; */
 
 }
 

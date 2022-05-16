@@ -1,6 +1,7 @@
 import "./home.css"
 import NavbarHome from "./navbarHome/Navbar";
 import Header from "./header/Header"
+import Featured from "./featured/Featured"
 
 
 const Home = () => {
@@ -10,7 +11,7 @@ const Home = () => {
             <NavbarHome/>
             <Header />
             <div className="homeContainer">
-              
+                <Featured />
             </div>
            
         </div>
