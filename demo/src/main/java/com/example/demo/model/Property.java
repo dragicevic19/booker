@@ -14,12 +14,11 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public abstract class Property extends Offer {
 
-    @Column(name = "daily_price", unique = false, nullable = false)
-    protected double dailyPrice;
+//    @Column(name = "daily_price", unique = false, nullable = false)
+//    protected double dailyPrice;
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -24,9 +25,9 @@ public class Period {
     private Integer id;
 
     @Column(name = "date_from", unique = false, nullable = false)
-    private Date dateFrom;
+    private LocalDate dateFrom;
 
     @Column(name = "date_to", unique = false, nullable = false)
-    private Date dateTo;
+    private LocalDate dateTo;
 
 }
