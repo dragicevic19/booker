@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.OfferToList;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Property;
 import com.example.demo.model.PropertyOwner;
@@ -14,19 +15,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "api/")
+@RequestMapping(value = "auth/")
 public class ServiceProviderController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/my-offers/{userId}")
-    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
-    public ResponseEntity<List<Offer>> loadOffers(@PathVariable Integer userId) {
+//    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<List<OfferToList>> loadOffers(@PathVariable Integer userId) {
+        List<OfferToList> retList = new ArrayList<>();
         ServiceProvider u = (ServiceProvider) userService.findById(userId);
 
         if (u == null) {
@@ -34,6 +37,10 @@ public class ServiceProviderController {
         }
 
         List<Offer> offers = userService.findUsersOffers(u);
-        return new ResponseEntity<>(offers, HttpStatus.OK);
+        for (Offer o : offers) {
+            retList.add(new OfferToList(o));
+        }
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
     }
 }

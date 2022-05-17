@@ -70,6 +70,9 @@ public abstract class Offer {
     @Column(name = "deleted")
     protected boolean deleted;
 
+    @Column(name = "price", unique = false, nullable = false)
+    protected double price;
+
     public abstract int calculatePrice();
 
 }

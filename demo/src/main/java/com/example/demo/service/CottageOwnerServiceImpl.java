@@ -65,7 +65,7 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         a.setCountry(cottageRequest.getCountry());
         a.setCity(cottageRequest.getCity());
         cottage.setAddress(a);
-        cottage.setDailyPrice(cottageRequest.getPrice());
+        cottage.setPrice(cottageRequest.getPrice());
         cottage.setCapacity(cottageRequest.getCapacity());
         cottage.setDeleted(false);
         cottage.setDescription(cottageRequest.getDescription());

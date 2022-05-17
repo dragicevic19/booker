@@ -10,7 +10,7 @@ import DirectionsBoatFilledOutlinedIcon from '@mui/icons-material/DirectionsBoat
 import {Link} from "react-router-dom"
 
 const Sidebar = () => {
-  const user = {type:'BOAT_OWNER'}
+  const user = {type:'COTTAGE_OWNER'}
 
   return (
     <div className="sidebar">

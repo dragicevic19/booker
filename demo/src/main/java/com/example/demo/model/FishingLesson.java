@@ -21,8 +21,8 @@ import java.util.Set;
 @Setter
 public class FishingLesson extends Offer {
 
-    @Column(name = "lesson_price", unique = false, nullable = false)
-    protected int lessonPrice;
+//    @Column(name = "lesson_price", unique = false, nullable = false)
+//    protected int lessonPrice;
 
     @ElementCollection
     @Column(name="fishing_equipment")
