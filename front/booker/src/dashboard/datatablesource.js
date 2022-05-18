@@ -96,5 +96,54 @@ export const columnsData =
           );
         },
       }
+    ],
+    'instructor':
+    [
+      { field: "id", headerName: "ID", width: 100 },
+      {
+        field: "name",
+        headerName: "Name",
+        width: 250,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn-icons-png.flaticon.com/512/71/71543.png"} alt="avatar" />
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "city",
+        headerName: "City",
+        width: 150,
+      },
+      {
+        field: "rating",
+        headerName: "Rating",
+        width: 100,
+      },
+      {
+        field: "price",
+        headerName: "Price [$]",
+        width: 100,
+      },
+      {
+        field: "capacity",
+        headerName: "Max People",
+        width: 120,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 130,
+        renderCell: (params) => {
+          return (
+            <div className={`cellWithStatus ${params.row.status}`}>
+              {params.row.status}
+            </div>
+          );
+        },
+      }
     ]
 };

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from "./pages/registration/Registration"
 import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
+import New from './dashboard/pages/new/New';
 // import NewCottage from './dashboard/pages/newCottage/NewCottage';
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path='logout' element={<></>}/>
               <Route path='logout' element={<></>} />
-              <Route path='service-reg' element={<Registration />} />
+              <Route path='host-register' element={<Registration />} />
             </Route>
 
             <Route path='/dashboard'>
@@ -24,7 +25,7 @@ function App() {
               <Route path='my-offers'>
                 <Route index element={<List />} />
                 <Route path=':id' element />
-                {/* <Route path='new' element={<NewCottage />} /> */}
+                <Route path='new' element={<New />} />
               </Route> 
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />
