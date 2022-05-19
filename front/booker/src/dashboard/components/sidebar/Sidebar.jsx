@@ -8,6 +8,16 @@ import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import PhishingOutlinedIcon from '@mui/icons-material/PhishingOutlined';
 import DirectionsBoatFilledOutlinedIcon from '@mui/icons-material/DirectionsBoatFilledOutlined';
 import {Link} from "react-router-dom"
+import WorkspacesIcon from '@mui/icons-material/Workspaces';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PhishingIcon from '@mui/icons-material/Phishing';
+import SailingIcon from '@mui/icons-material/Sailing';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import GroupIcon from '@mui/icons-material/Group';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 const Sidebar = () => {
   const user = {type:'COTTAGE_OWNER'}
@@ -72,44 +82,79 @@ const Sidebar = () => {
           </li>
         </Link>
       </ul></>)}
+          
+      { user.type === 'ADMIN' && (<><ul>
+      <p className="title">OFFERS</p>
 
+      <li>
+        <CottageOutlinedIcon className="icon" />
+        <span>Cottages</span>
+      </li>
+      <li>
+        <SailingIcon className="icon" />
+        <span>Boats</span>
+      </li>
+      <li>
+        <PhishingIcon className="icon" />
+        <span>Fishing Lessons</span>
+      </li>
 
-      {/* { user.type === 'ADMIN' && (<><ul>
-        <p className="title">LISTS</p>
+      <p className="title">USERS</p>
+      <li>
+        <GroupIcon className="icon" />
+        <span>Clients</span>
+      </li>
+      <li>
+        <SupervisedUserCircleIcon className="icon" />
+        <span>Service Providers</span>
+      </li>
+      <li>
+        <AdminPanelSettingsIcon className="icon" />
+        <span>Administrators</span>
+      </li>
 
-        <li>
-          <CottageOutlinedIcon className="icon" />
-          <span>My Offers</span>
-        </li>
-        <li>
-          <ViewListOutlinedIcon className="icon" />
-          <span>Reservations History</span>
-        </li>
-        <li>
-          <ViewListOutlinedIcon className="icon" />
-          <span>Future Reservations</span>
-        </li>
+      <p className="title">REQUESTS</p>
+      <li>
+        <ContactMailIcon className="icon" />
+        <span>Registration Requests</span>
+      </li>
+      <li>
+        <ThumbDownAltIcon className="icon" />
+        <span>Complaints</span>
+      </li>
+      
+      <p className="title">FINANCIAL</p>
+      <li>
+        <AttachMoneyIcon className="icon" />
+        <span>Financial</span>
+      </li>
 
-        <p className="title">REPORTS</p>
-        <li>
-          <AssessmentOutlinedIcon className="icon" />
-          <span>Reports</span>
-        </li>
+      <p className="title">LOYALTY PROGRAM</p>
+      <li>
+        <MilitaryTechIcon className="icon" />
+        <span>Loyalty Program</span>
+      </li>
 
-        <p className="title">USER</p>
-        <li>
-          <NotificationsActiveOutlinedIcon className="icon" />
-          <span>Notifications</span>
-        </li>
-        <li>
-          <PersonOutlinedIcon className="icon" />
-          <span>Profile</span>
-        </li>
-        <li>
-          <LogoutOutlinedIcon className="icon" />
-          <span>Logout</span>
-        </li>
-      </ul></>)} */}
+      <p className="title">REPORTS</p>
+      <li>
+        <AssessmentOutlinedIcon className="icon" />
+        <span>Reports</span>
+      </li>
+
+      <p className="title">USER</p>
+      <li>
+        <NotificationsActiveOutlinedIcon className="icon" />
+        <span>Notifications</span>
+      </li>
+      <li>
+        <PersonOutlinedIcon className="icon" />
+        <span>Profile</span>
+      </li>
+      <li>
+        <LogoutOutlinedIcon className="icon" />
+        <span>Logout</span>
+      </li>
+    </ul></>)}
     </div> 
   </div>
   )
