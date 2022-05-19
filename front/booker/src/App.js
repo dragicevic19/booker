@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from "./pages/registration/Registration"
 import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
+import Login from './pages/login/Login';
 // import NewCottage from './dashboard/pages/newCottage/NewCottage';
 
 function App() {
@@ -14,8 +15,7 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />
-              <Route path='logout' element={<></>}/>
-              <Route path='logout' element={<></>} />
+              <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
             </Route>
 
