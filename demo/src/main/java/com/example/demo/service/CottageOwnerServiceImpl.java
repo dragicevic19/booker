@@ -75,8 +75,9 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         cottage.setRegulations(cottageRequest.getRegulations());
         cottage.setPeriodsOfOccupancy(new ArrayList<Period>());
         cottage.setDiscounts(new ArrayList<>());
-        cottage.setImages(cottageRequest.getImages());
+        cottage.setImages(cottageRequest.getPhotos());
         cottage.setReservations(new ArrayList<>());
+        cottage.setAdditionalServices(cottageRequest.getAdditionalServices());
 
         c.getOffers().add(cottage);
 

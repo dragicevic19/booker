@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "api/")
+@RequestMapping(value = "auth/")
 public class CottageOwnerController {
 
     @Autowired
@@ -25,8 +25,8 @@ public class CottageOwnerController {
     @Autowired
     private CottageOwnerService cottageOwnerService;
 
-    @PostMapping("/add-cottage")
-    @PreAuthorize("hasRole('COTTAGE_OWNER')")
+    @PostMapping("add-cottage")
+//    @PreAuthorize("hasRole('COTTAGE_OWNER')")
     public ResponseEntity<Boolean> addCottage(@RequestBody CottageRequest cottageRequest) {
 
         CottageOwner c = (CottageOwner) userService.findById(cottageRequest.getOwner_id());

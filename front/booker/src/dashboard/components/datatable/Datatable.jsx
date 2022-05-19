@@ -6,7 +6,6 @@ import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
-import { YoutubeSearchedFor } from "@mui/icons-material";
 
 
 const Datatable = () => {
@@ -25,7 +24,7 @@ const Datatable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/${path}/${id}`);
+      await axios.delete(`http://localhost:8080/api/${path}/${id}`);
       setList(list.filter((item) => item.id !== id));
     } catch (err) {}
   };

@@ -25,7 +25,7 @@ public class AdditionalService {
     private Integer id;
 
     @Column(name = "title", unique = false, nullable = false)
-    private String title;
+    private String name;
 
     @Column(name = "price", unique = false, nullable = false)
     private int price;
