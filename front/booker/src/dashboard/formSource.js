@@ -11,12 +11,12 @@ export const cottageInputs = [
   {
     id:2,
     name:"country",
-      type:"text",
-      placeholder:"Serbia",
-      errorMessage:"Invalid input!",
-      label:"Country",
-      required: true,
-      pattern: `^.{1,}$`,
+    type:"text",
+    placeholder:"Serbia",
+    errorMessage:"Invalid input!",
+    label:"Country",
+    required: true,
+    pattern: `^.{1,}$`,
   },
   {
     id:3,
@@ -78,12 +78,12 @@ export const cottageInputs = [
     id:9,
     name:"regulations",
     type:"text",
-    placeholder:"No parties",
+    placeholder:"No regulations...",
     errorMessage: "This field is required!",
     label:"Regulations",
     required: true,
     multiline: true,
-    rows: 10,
+    rows: 5,
   },
   {
     id:10,
@@ -94,6 +94,6 @@ export const cottageInputs = [
     label:"Description",
     required: true,
     multiline:true,
-    rows: 10,
+    rows: 5,
   }
 ];

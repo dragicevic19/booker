@@ -1,25 +1,23 @@
-import { useState } from "react";
-import "./formInput.css"
+import "./formTextArea.scss"
+import React, { useState } from 'react'
 
-const FormInput = (props) => {
-  
+const FormTextArea = (props) => {
   const [focused, setFocused] = useState(false);
   const {label, errorMessage, onChange, id, ...inputProps} = props;
 
 
   const handleFocus = (e) => {
     setFocused(true);
-    inputProps.enableErrors = true;
   };
 
   return (
-    <div className="formInput">
+    <div className="formTextArea">
       <label className="formLabel">{label}</label>
-      <input className="formInputInput"
+      <textarea className="formInputInput"
         {...inputProps}
         onChange={onChange}
         onBlur={handleFocus}
-        onFocus={() => inputProps.name==="confirmPassword" && setFocused(true) && inputProps.enableErrors}
+        onFocus={() => (inputProps.name==="description" || inputProps.name ==="regulations") && setFocused(true)}
         focused={focused.toString()}
       />
       <span className="errorSpan">{errorMessage}</span>
@@ -27,4 +25,4 @@ const FormInput = (props) => {
   )
 }
 
-export default FormInput
+export default FormTextArea

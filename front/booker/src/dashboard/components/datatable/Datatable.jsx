@@ -6,14 +6,13 @@ import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
-import { YoutubeSearchedFor } from "@mui/icons-material";
 
 
 const Datatable = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
-  const user = {id: 3, type: 'instructor'} // ...
+  const user = {id: 2, type: 'cottage_owner'} // ...
   const { data, loading, error } = useFetch(`http://localhost:8080/auth/${path}/${user.id}`);
 
   const columns = columnsData[user.type];
@@ -25,7 +24,7 @@ const Datatable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/${path}/${id}`);
+      await axios.delete(`http://localhost:8080/api/${path}/${id}`);
       setList(list.filter((item) => item.id !== id));
     } catch (err) {}
   };

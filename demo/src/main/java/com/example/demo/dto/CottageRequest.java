@@ -1,9 +1,11 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.AdditionalService;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +22,7 @@ public class CottageRequest {
     private double price;
     private double fee;
     private Integer owner_id;
-    private List<String> images;
+    private List<String> photos;
+    private Set<AdditionalService> additionalServices;
 
 }
