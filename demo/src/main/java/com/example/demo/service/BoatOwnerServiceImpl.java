@@ -75,7 +75,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
         boat.setFishingEquipment(boatRequest.getFishingGear());
         boat.setNavEquipment(boatRequest.getNavGear());
         boat.setLength(boatRequest.getLength());
-        boat.setMaxSpeed(boat.getMaxSpeed());
+        boat.setMaxSpeed(boatRequest.getMaxSpeed());
         boat.setPrice(boatRequest.getPrice());
         boat.setCapacity(boatRequest.getCapacity());
         boat.setDescription(boatRequest.getDescription());

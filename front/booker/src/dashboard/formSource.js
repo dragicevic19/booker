@@ -189,7 +189,7 @@ export const boatInputs = [
     type:"number",
     placeholder:"100",
     errorMessage:"Invalid input!",
-    label:"Engine Power",
+    label:"Engine Power [kW]",
     required: true,
   },
   {
@@ -234,8 +234,8 @@ export const boatInputs = [
 export const boatTypes = [
   {
     id:1,
-    type:"Flat Boat",
-    value:"FLAT_BOAT"
+    type:"Flats Boat",
+    value:"FLATS_BOAT"
   },
   {
     id:2,

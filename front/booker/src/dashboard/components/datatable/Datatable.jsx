@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
@@ -9,6 +9,7 @@ import { columnsData } from "../../datatablesource";
 
 
 const Datatable = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
@@ -23,6 +24,7 @@ const Datatable = () => {
   }, [data]);
 
   const handleDelete = async (id) => {
+    console.log('tralla');
     try {
       await axios.delete(`http://localhost:8080/api/${path}/${id}`);
       setList(list.filter((item) => item.id !== id));
@@ -37,12 +39,15 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/dashboard/${path}/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
+            <div 
+              onClick={()=>navigate(`/dashboard/${path}/${params.row.id}`)}
+              className="viewButton"
+            >View
+            </div>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
+              disabled={params.row.status === "reserved"}
             >
               Delete
             </div>

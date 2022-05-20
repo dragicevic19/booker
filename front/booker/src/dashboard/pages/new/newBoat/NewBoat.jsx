@@ -218,8 +218,8 @@ const NewBoat = () => {
               </div>
               <div className="buttons">
                 <div className="modalsBtns">
-                  <button onClick={navGearModal}>Navigation Gear</button> 
-                  <button onClick={fishingGearModal}>Fishing Gear</button> 
+                  <button onClick={navGearModal}>Navigation Equipment</button> 
+                  <button onClick={fishingGearModal}>Fishing Equipment</button> 
                   <button onClick={additionalServices}>Additional Services</button>
                 </div>
                 <div className="sendBtnWrapper">
@@ -234,14 +234,14 @@ const NewBoat = () => {
               setShowAddServices={setShowAddServices}
             />
             <GearModalInput
-              title="Add Navigation Gear"
+              title="Add Navigation Equipment"
               gear={navGear}
               setGear={setNavGear}
               showGear={showNavGear}
               setShowGear={setShowNavGear}
             />
             <GearModalInput
-              title="Add Fishing Gear"
+              title="Add Fishing Equipment"
               gear={fishingGear}
               setGear={setFishingGear}
               showGear={showFishingGear}
