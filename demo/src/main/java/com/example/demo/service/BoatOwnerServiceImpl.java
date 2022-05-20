@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BoatRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.*;
 import com.example.demo.repository.BoatOwnerRepository;
+import com.example.demo.repository.BoatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,9 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
 
     @Autowired
     private BoatOwnerRepository boatOwnerRepository;
+
+    @Autowired
+    private BoatRepository boatRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,7 +49,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     public BoatOwner save(User user) {
         BoatOwner b = new BoatOwner(user);
         b.setRating(new Rating());
-//        b.setOffers(new HashSet<>());
+        b.setOffers(new ArrayList<>());
         //b.setEnabled(true); ovo ce administrator da omoguci
         b.setLoyaltyProgram(new LoyaltyProgram());
 
@@ -52,6 +57,41 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
         b.setRoles(roles);
 
         return this.boatOwnerRepository.save(b);
+    }
+
+    @Override
+    public Boat addBoat(BoatRequest boatRequest, BoatOwner boatOwner) {
+        Boat boat = new Boat();
+        boat.setName(boatRequest.getName());
+        Address a = new Address();
+        a.setStreet(boatRequest.getStreet());
+        a.setCountry(boatRequest.getCountry());
+        a.setCity(boatRequest.getCity());
+        boat.setAddress(a);
+        boat.setAdditionalServices(boatRequest.getAdditionalServices());
+        boat.setEngineNum(boatRequest.getEngineNum());
+        boat.setType(BoatType.valueOf(boatRequest.getBoatType()));
+        boat.setEnginePow(boatRequest.getEnginePow());
+        boat.setFishingEquipment(boatRequest.getFishingGear());
+        boat.setNavEquipment(boatRequest.getNavGear());
+        boat.setLength(boatRequest.getLength());
+        boat.setMaxSpeed(boatRequest.getMaxSpeed());
+        boat.setPrice(boatRequest.getPrice());
+        boat.setCapacity(boatRequest.getCapacity());
+        boat.setDescription(boatRequest.getDescription());
+        boat.setCancellationFee(boatRequest.getFee());
+        boat.setRegulations(boatRequest.getRegulations());
+        boat.setImages(boatRequest.getPhotos());
+
+        boat.setDeleted(false);
+        boat.setRating(new Rating());
+        boat.setPeriodsOfOccupancy(new ArrayList<Period>());
+        boat.setDiscounts(new ArrayList<>());
+        boat.setReservations(new ArrayList<>());
+
+        boatOwner.getOffers().add(boat);
+
+        return this.boatRepository.save(boat);
     }
 
 //    @Override

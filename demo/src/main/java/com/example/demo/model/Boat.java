@@ -21,24 +21,24 @@ public class Boat extends Property {
     private BoatType type;
 
     @Column(name = "length", unique = false, nullable = false)
-    private int length;
+    private double length;
 
     @Column(name = "engine_num", unique = true, nullable = false)
     private String engineNum;
 
     @Column(name = "engine_pow", unique = false, nullable = false)
-    private int enginePow;
+    private double enginePow;
 
     @Column(name = "max_speed", unique = false, nullable = false)
-    private int maxSpeed;
+    private double maxSpeed;
 
     @ElementCollection
     @Column(name = "nav_equipment")
-    private List<String> navEquipment;
+    private Set<String> navEquipment;
 
     @ElementCollection
     @Column(name = "fishing_equipment")
-    private List<String> fishingEquipment;
+    private Set<String> fishingEquipment;
 
 
     @Override

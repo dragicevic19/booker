@@ -1,26 +1,25 @@
-import "./AddServiceList.scss"
+import "./gearModalList.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons" 
 
-
-const AddServiceList = ({services, setServices}) => {
+const GearModalList = ({gear, setGear}) => {
 
   const handleDelete = (id) => {
-    setServices(services.filter((service) => service.id !== id))
+    setGear(gear.filter((g) => g.id !== id))
   }
-  
+
   return (
     <div>
-      {services.map((service)=> (
-        <li className="list-item" key={service.id}>
+      {gear.map((g)=> (
+        <li className="list-item" key={g.id}>
           <input 
             type="text"
-            value={service.name}
+            value={g.name}
             className="list"
             onChange={(e)=>e.preventDefault()}
           />
             <div className="icon">
-              <FontAwesomeIcon icon={faTrash} onClick={()=>handleDelete(service.id)}/>
+              <FontAwesomeIcon icon={faTrash} onClick={()=>handleDelete(g.id)}/>
             </div>
         </li>
       ))}
@@ -29,4 +28,4 @@ const AddServiceList = ({services, setServices}) => {
   )
 }
 
-export default AddServiceList
+export default GearModalList

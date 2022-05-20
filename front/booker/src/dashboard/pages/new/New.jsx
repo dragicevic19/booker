@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import "./new.scss"
 import NewCottage from './newCottage/NewCottage'
+import NewBoat from './newBoat/NewBoat'
+import { useState } from "react"
 
 const New = () => {
 
   const [user, setUser] = useState({
-    id: 2,
-    type: "cottage_owner"
+    id: 1,
+    type: "boat_owner"
   })
 
   return (
-    <div>
+    <div className='new'>
       { user.type === "cottage_owner" && <NewCottage /> }
-      {/* { user.type === "boat_owner" && <NewBoat /> }
-      { user.type === "instructor" && <NewLesson /> } */}
+      { user.type === "boat_owner" && <NewBoat /> }
+      {/* { user.type === "instructor" && <NewLesson /> } */}
     </div>
   )
 }
