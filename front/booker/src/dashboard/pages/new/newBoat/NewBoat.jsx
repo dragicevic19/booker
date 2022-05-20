@@ -1,39 +1,48 @@
-import "./newCottage.scss"
-import { DriveFolderUploadOutlined } from '@mui/icons-material';
-import axios from 'axios';
-import React, { useState } from 'react'
-import DashNavbar from '../../../components/navbar/DashNavbar';
-import Sidebar from '../../../components/sidebar/Sidebar';
-import { cottageInputs } from "../../../formSource";
-import FormInput from '../../../../components/formInput/FormInput';
-import FormTextArea from "../../../../components/formTextArea/FormTextArea";
-import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
+import { DriveFolderUploadOutlined } from "@mui/icons-material";
+import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
+import FormInput from "../../../../components/formInput/FormInput";
+import FormTextArea from "../../../../components/formTextArea/FormTextArea";
+import GearModalInput from "../../../../components/gearModal/gearModalInput/GearModalInput";
+import DashNavbar from "../../../components/navbar/DashNavbar";
+import Sidebar from "../../../components/sidebar/Sidebar";
+import { boatInputs } from "../../../formSource";
+import {boatTypes} from "../../../formSource";
+import "./newBoat.scss"
 
-const NewCottage = () => {
-
+const NewBoat = () => {
   const navigate = useNavigate();
 
-  const user = {id: 2, type:"cottage_owner"}
+  const user = {id: 1, type:"boat_owner"}
 
   const [showAddServices, setShowAddServices] = useState(false);
+  const [showFishingGear, setShowFishingGear] = useState(false);
+  const [showNavGear, setShowNavGear] = useState(false);
+
   const [services, setServices] = useState([])
+  const [fishingGear, setFishingGear] = useState([])
+  const [navGear, setNavGear] = useState([])
 
   const [files, setFiles] = useState("");
   
   const [values, setValues] = useState({
-    cottageName: "",
+    name: "",
     country: "",
     city: "",
     street: "",
     description: "",
-    numOfRooms: "",
     capacity: "",
     regulations: "",
     price: "",
     fee: "",
+    boatType: "",
+    length: "",
+    engineNum: "",
+    enginePow: "",
+    maxSpeed: "",
   })
-
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -53,17 +62,21 @@ const NewCottage = () => {
         })
       );
 
-      const newCottage = {
+      const newBoat = {
         ...values,
         additionalServices: services.map(function(item){
           delete item.id;
           return item;
         }),
+        navGear: navGear.map(({name}) => name),
+        fishingGear: fishingGear.map(({name}) => name),
         photos: list,
         owner_id: user.id,
       };
 
-      await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
+      console.log(newBoat)
+
+      await axios.post("http://localhost:8080/auth/add-boat", newBoat);
 
       navigate('/dashboard/my-offers')
     } catch (err) {console.log(err)}
@@ -77,6 +90,20 @@ const NewCottage = () => {
   const additionalServices = (e) => {
     e.preventDefault();
     setShowAddServices(!showAddServices);
+  }
+
+  const navGearModal = (e) => {
+    e.preventDefault();
+    setShowNavGear(!showNavGear);
+  }
+
+  const fishingGearModal = (e) => {
+    e.preventDefault();
+    setShowFishingGear(!showFishingGear);
+  }
+
+  const handleSelect = (e) => {
+    setValues({...values, ["boatType"]: e.target.value}); 
   }
 
   // const handleImages = async (e) => {
@@ -113,12 +140,12 @@ const NewCottage = () => {
   // }
 
   return (
-    <div className="newCottage">
+    <div className="newBoat">
       <Sidebar />
       <div className="newContainer">
         <DashNavbar />
         <div className="top">
-          <h1>Add New Cottage</h1>
+          <h1>Add New Boat</h1>
         </div>
         <div className="bottom">
           <div className="left">
@@ -146,14 +173,29 @@ const NewCottage = () => {
           </div>
           <div className="right">
             <form onSubmit={handleClick}>
-              {cottageInputs.map((input) => (
-                  !input.multiline ? <FormInput 
+              {boatInputs.map((input) => (
+                !input.multiline ? (<>
+                  {!input.select ? <FormInput 
                     key={input.id}
                     {...input}
                     value={values[input.name]}
                     onChange={onChange}
                   />
                   :
+                  <div className="boatTypeSelect"> 
+                    <label>Boat Type</label>
+                    <select onChange={handleSelect}>
+                      {boatTypes.map((type) => (
+                        <option key={type.id} value={type.value}>
+                          {type.type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  }
+                  
+                </>)
+                :
                   <FormTextArea 
                     key={input.id}
                     {...input}
@@ -175,8 +217,14 @@ const NewCottage = () => {
                 />
               </div>
               <div className="buttons">
-                <button onClick={additionalServices}>Additional Services</button>
-                <button className="sendBtn">ADD</button>
+                <div className="modalsBtns">
+                  <button onClick={navGearModal}>Navigation Gear</button> 
+                  <button onClick={fishingGearModal}>Fishing Gear</button> 
+                  <button onClick={additionalServices}>Additional Services</button>
+                </div>
+                <div className="sendBtnWrapper">
+                  <button className="sendBtn">ADD</button>
+                </div>
               </div>
             </form>
             <AdditionalServicesModal 
@@ -185,11 +233,25 @@ const NewCottage = () => {
               showAddServices={showAddServices}
               setShowAddServices={setShowAddServices}
             />
+            <GearModalInput
+              title="Add Navigation Gear"
+              gear={navGear}
+              setGear={setNavGear}
+              showGear={showNavGear}
+              setShowGear={setShowNavGear}
+            />
+            <GearModalInput
+              title="Add Fishing Gear"
+              gear={fishingGear}
+              setGear={setFishingGear}
+              showGear={showFishingGear}
+              setShowGear={setShowFishingGear}
+            />
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default NewCottage
+export default NewBoat

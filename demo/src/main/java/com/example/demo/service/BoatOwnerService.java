@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BoatRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.Boat;
 import com.example.demo.model.BoatOwner;
@@ -14,6 +15,8 @@ public interface BoatOwnerService {
     BoatOwner findByEmail(String email);
     List<BoatOwner> findAll ();
     BoatOwner save(User user);
+
+    Boat addBoat(BoatRequest boatRequest, BoatOwner boatOwner);
 
 //    List<Boat> findAllMyBoats(BoatOwner u);
 }
