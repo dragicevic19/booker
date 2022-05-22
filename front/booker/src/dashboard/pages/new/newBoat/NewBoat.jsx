@@ -1,11 +1,11 @@
 import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
 import FormInput from "../../../../components/formInput/FormInput";
 import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import GearModalInput from "../../../../components/gearModal/gearModalInput/GearModalInput";
+import { useNotification } from "../../../../components/notification/NotificationProvider";
 import DashNavbar from "../../../components/navbar/DashNavbar";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import { boatInputs } from "../../../formSource";
@@ -13,7 +13,8 @@ import {boatTypes} from "../../../formSource";
 import "./newBoat.scss"
 
 const NewBoat = () => {
-  const navigate = useNavigate();
+
+  const dispatch = useNotification();
 
   const user = {id: 1, type:"boat_owner"}
 
@@ -37,7 +38,7 @@ const NewBoat = () => {
     regulations: "",
     price: "",
     fee: "",
-    boatType: "",
+    boatType: boatTypes[0].value,
     length: "",
     engineNum: "",
     enginePow: "",
@@ -74,14 +75,23 @@ const NewBoat = () => {
         owner_id: user.id,
       };
 
-      console.log(newBoat)
-
       await axios.post("http://localhost:8080/auth/add-boat", newBoat);
 
-      navigate('/dashboard/my-offers')
-    } catch (err) {console.log(err)}
+      sendNotification("success", "You successfully added a new boat!");
+
+    } catch (err) {
+      console.log(err)
+      sendNotification("error", err.message);
+    }
   };
 
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: '/dashboard/my-offers'
+    });
+  }
 
   const onChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})

@@ -8,11 +8,8 @@ import { cottageInputs } from "../../../formSource";
 import FormInput from '../../../../components/formInput/FormInput';
 import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
-import { useNavigate } from "react-router";
 
 const NewCottage = () => {
-
-  const navigate = useNavigate();
 
   const user = {id: 2, type:"cottage_owner"}
 
@@ -64,11 +61,22 @@ const NewCottage = () => {
       };
 
       await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
+      sendNotification("success", "You successfully added a new boat!");
 
-      navigate('/dashboard/my-offers')
-    } catch (err) {console.log(err)}
+    } catch (err) {
+      console.log(err)
+      sendNotification("error", err.message);
+    }
   };
 
+
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: '/dashboard/my-offers'
+    });
+  }
 
   const onChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
