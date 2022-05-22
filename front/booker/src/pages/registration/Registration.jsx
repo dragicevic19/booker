@@ -1,8 +1,11 @@
 import "./registration.css"
 import FormInput from '../../components/formInput/FormInput'
 import { useState } from "react"
+import { useNotification } from "../../components/notification/NotificationProvider";
 
 const Registration = () => {
+
+  const dispatch = useNotification();
 
   const [values, setValues] = useState({
     email:"",
@@ -14,8 +17,7 @@ const Registration = () => {
     city:"",
     street:"",
     phoneNumber:"",
-    type:""
-    //img?
+    type:"cottage_owners"
   })
 
   const inputs = [
@@ -124,17 +126,29 @@ const Registration = () => {
           if (!res.ok){
             if (res.status == 409){
               console.log('email exists error');
+              throw Error('E-mail already exists!');
             }
-            throw Error('could not fetch data')
+            console.log('unknown error')
+            throw Error('Unknown fetch error occurred!')
           } 
+          console.log(res)
           return res.json()
         })
         .then(data => {
+          sendNotification("success", "You successfully sent a request for registration. Please wait for administrator to approve your request!");
           console.log(data);
         })
         .catch(err => {
-          console.log(err.message)
+          sendNotification("error", err.message)
         })
+  }
+
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: '/'
+    });
   }
 
   const onChange = (e) => {
