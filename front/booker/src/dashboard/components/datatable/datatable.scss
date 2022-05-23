@@ -98,5 +98,21 @@
       border: 1px dotted rgba(0, 128, 0, 0.6);
       cursor: pointer;
     }
+
+    .acceptButton {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: green;
+      border: 1px dotted rgba(0, 128, 0, 0.6);
+      cursor: pointer;
+    }
+
+    .rejectButton {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: crimson;
+      border: 1px dotted rgba(220, 20, 60, 0.6);
+      cursor: pointer;
+    }
   }
 }

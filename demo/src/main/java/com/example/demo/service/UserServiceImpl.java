@@ -50,6 +50,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findDisabledUsers(boolean enabled) {
+        return userRepository.findByEnabled(enabled);
+    }
+
+    @Override
+    public User enableUser(User user) {
+        user.setEnabled(true);
+
+        switch (user.getRoles().get(0).getName()) {
+            case "ROLE_BOAT_OWNER":
+                return boatOwnerService.updateUser(user);
+            case "ROLE_COTTAGE_OWNER":
+                return cottageOwnerService.updateUser(user);
+            case "ROLE_CLIENT":
+                return clientService.updateUser(user);
+            case "ROLE_INSTRUCTOR":
+                return fishingInstructorService.updateUser(user);
+            default:
+                return null;
+        }
+
+    }
+
+    @Override
+    public User rejectRequest(User user) {
+        user.setDeleted(true);
+
+        switch (user.getRoles().get(0).getName()) {
+            case "ROLE_BOAT_OWNER":
+                return boatOwnerService.updateUser(user);
+            case "ROLE_COTTAGE_OWNER":
+                return cottageOwnerService.updateUser(user);
+            case "ROLE_CLIENT":
+                return clientService.updateUser(user);
+            case "ROLE_INSTRUCTOR":
+                return fishingInstructorService.updateUser(user);
+            default:
+                return null;
+        }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null) {

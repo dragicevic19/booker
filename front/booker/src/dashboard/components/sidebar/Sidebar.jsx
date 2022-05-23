@@ -114,10 +114,12 @@ const Sidebar = () => {
       </li>
 
       <p className="title">REQUESTS</p>
-      <li>
-        <ContactMailIcon className="icon" />
-        <span>Registration Requests</span>
-      </li>
+      <Link to="/dashboard/reg-req" style={{textDecoration: "none"}}>
+        <li>
+          <ContactMailIcon className="icon" />
+          <span>Registration Requests</span>
+        </li>
+      </Link>
       <li>
         <ThumbDownAltIcon className="icon" />
         <span>Complaints</span>

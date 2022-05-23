@@ -12,4 +12,6 @@ public interface ClientService {
     Client findByEmail(String email);
     List<Client> findAll ();
     Client save(User user);
+
+    User updateUser(User user);
 }
