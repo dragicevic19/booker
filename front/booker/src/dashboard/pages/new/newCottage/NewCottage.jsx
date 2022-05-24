@@ -8,8 +8,11 @@ import { cottageInputs } from "../../../formSource";
 import FormInput from '../../../../components/formInput/FormInput';
 import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
+import { useNotification } from "../../../../components/notification/NotificationProvider";
 
 const NewCottage = () => {
+
+  const dispatch = useNotification();
 
   const user = {id: 2, type:"cottage_owner"}
 
