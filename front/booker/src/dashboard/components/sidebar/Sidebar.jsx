@@ -20,7 +20,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 const Sidebar = () => {
-  const user = {type:'COTTAGE_OWNER'}
+  const user = {type:'ADMIN'}
 
   return (
     <div className="sidebar">
