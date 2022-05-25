@@ -16,4 +16,6 @@ public interface CottageOwnerService {
     CottageOwner save(User user);
 
     Cottage addCottage(CottageRequest cottageRequest, CottageOwner c);
+
+    User updateUser(User user);
 }

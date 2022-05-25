@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
@@ -17,4 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT * FROM USERS AS u WHERE u.is_deleted = true", nativeQuery = true)
     List<User> findAllOnlyDeleted();
 
+    //@Query(value = "SELECT * FROM USERS AS u WHERE u.enabled = true", nativeQuery = true)
+    //List<User> findDisabledUsers();
+
+    List<User> findByEnabled(boolean enabled);
 }

@@ -3,8 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from "./pages/registration/Registration"
 import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
+import RegReqList from './dashboard/pages/list/RegReqList';
+// import NewCottage from './dashboard/pages/newCottage/NewCottage';
 import New from './dashboard/pages/new/New';
 import NotificationProvider from './components/notification/NotificationProvider';
+
 
 function App() {
 
@@ -31,6 +34,7 @@ function App() {
               <Route path='future-res' element={<></>} />
               <Route path='reports' element={<></>} />
               <Route path='profile' element={<></>} />
+              <Route path="reg-req" element={<RegReqList />}/>
             </Route>
           </Routes>
         </div>

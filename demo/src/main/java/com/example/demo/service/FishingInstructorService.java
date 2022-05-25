@@ -12,4 +12,6 @@ public interface FishingInstructorService {
     FishingInstructor findByEmail(String email);
     List<FishingInstructor> findAll ();
     FishingInstructor save(User user);
+
+    User updateUser(User user);
 }

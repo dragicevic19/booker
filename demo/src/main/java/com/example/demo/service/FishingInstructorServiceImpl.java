@@ -46,4 +46,17 @@ public class FishingInstructorServiceImpl implements FishingInstructorService{
 
         return this.fishingInstructorRepository.save(f);
     }
+
+    @Override
+    public FishingInstructor updateUser(User user) {
+
+        ((FishingInstructor) user).setRating(new Rating());
+        ((FishingInstructor) user).setLoyaltyProgram(new LoyaltyProgram());
+        ((FishingInstructor) user).setFishingLessons(new ArrayList<>());
+        ((FishingInstructor) user).setBiography("");
+        List<Role> roles = roleService.findByName("ROLE_INSTRUCTOR");
+        ((FishingInstructor) user).setRoles(roles);
+
+        return this.fishingInstructorRepository.save(((FishingInstructor) user));
+    }
 }

@@ -20,7 +20,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 const Sidebar = () => {
-  const user = {type:'COTTAGE_OWNER'}
+  const user = {type:'ADMIN'}
 
   return (
     <div className="sidebar">
@@ -114,10 +114,12 @@ const Sidebar = () => {
       </li>
 
       <p className="title">REQUESTS</p>
-      <li>
-        <ContactMailIcon className="icon" />
-        <span>Registration Requests</span>
-      </li>
+      <Link to="/dashboard/reg-req" style={{textDecoration: "none"}}>
+        <li>
+          <ContactMailIcon className="icon" />
+          <span>Registration Requests</span>
+        </li>
+      </Link>
       <li>
         <ThumbDownAltIcon className="icon" />
         <span>Complaints</span>

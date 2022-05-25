@@ -85,4 +85,16 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         return this.cottageRepository.save(cottage);
 
     }
+
+    @Override
+    public User updateUser(User user) {
+
+        ((CottageOwner) user).setRating(new Rating());
+        ((CottageOwner) user).setLoyaltyProgram(new LoyaltyProgram());
+        ((CottageOwner) user).setOffers(new ArrayList<>());
+        List<Role> roles = roleService.findByName("ROLE_COTTAGE_OWNER");
+        ((CottageOwner) user).setRoles(roles);
+
+        return this.cottageOwnerRepository.save(((CottageOwner) user));
+    }
 }
