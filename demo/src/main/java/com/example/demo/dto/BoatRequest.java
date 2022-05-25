@@ -9,20 +9,30 @@ import java.util.Set;
 
 @Getter
 @Setter
+public class BoatRequest {
 
-public class CottageRequest {
-    private String cottageName;
+    private String name;
     private String country;
     private String city;
     private String street;
     private String description;
-    private int numOfRooms;
-    private int capacity;
     private String regulations;
+    private String boatType;
+    private String engineNum;
+
+    private int capacity;
+    private Integer owner_id;
+
     private double price;
     private double fee;
-    private Integer owner_id;
+    private double length;
+    private double enginePow;
+    private double maxSpeed;
+
     private List<String> photos;
+
     private Set<AdditionalService> additionalServices;
+    private Set<String> fishingGear;
+    private Set<String> navGear;
 
 }

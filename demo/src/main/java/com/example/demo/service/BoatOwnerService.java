@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BoatRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.Boat;
 import com.example.demo.model.BoatOwner;
@@ -16,6 +17,8 @@ public interface BoatOwnerService {
     BoatOwner save(User user);
 
     User updateUser(User user);
+
+    Boat addBoat(BoatRequest boatRequest, BoatOwner boatOwner);
 
 //    List<Boat> findAllMyBoats(BoatOwner u);
 }

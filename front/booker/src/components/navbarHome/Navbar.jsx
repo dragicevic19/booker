@@ -10,6 +10,7 @@ const NavbarHome = () => {
         <div className="navContainer">
             <span className="logo"><h1 onClick={()=>navigate('/')}>The Booker</h1></span>
             <div className="navItems">
+              <button className="navButton" onClick={()=>navigate('/host-register')}>Become a Host</button>
               <button className="navButton">Register</button>
               <button className="navButton">Login</button>
             </div>

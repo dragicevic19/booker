@@ -42,6 +42,8 @@
     }
   }
 
+  
+
   .cellWithStatus {
     padding: 5px;
     border-radius: 5px;
@@ -99,6 +101,7 @@
       cursor: pointer;
     }
 
+
     .acceptButton {
       padding: 2px 5px;
       border-radius: 5px;
@@ -113,6 +116,13 @@
       color: crimson;
       border: 1px dotted rgba(220, 20, 60, 0.6);
       cursor: pointer;
+    }
+
+    div[disabled]
+    {
+      pointer-events: none;
+      opacity: 0.3;
+      cursor: not-allowed;
     }
   }
 }
