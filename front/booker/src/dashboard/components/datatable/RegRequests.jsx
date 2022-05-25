@@ -6,6 +6,7 @@ import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
+import FormDialog from "../datatable/ExplanationDialog";
 
 
 const RegRequests = () => {
@@ -21,6 +22,16 @@ const RegRequests = () => {
   useEffect(() => {
     setList(data);
   }, [data]);
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (id) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleAccept = async (id) => {
     fetch(`http://localhost:8080/auth/user/enable/${id}`, {
@@ -41,7 +52,6 @@ const RegRequests = () => {
     } catch (err) {}
   };
 
-
   const actionColumn = [
     {
       field: "action",
@@ -49,11 +59,7 @@ const RegRequests = () => {
       width: 140,
       renderCell: (params) => {
         return (
-          <div className="cellAction">
-              <div className="acceptButton" onClick={() => handleAccept(params.row.id)}>Accept</div>
-              <div className="rejectButton" onClick={() => handleReject(params.row.id)}>Reject</div>
-          </div>
-          
+          <FormDialog userId={params.row.id} handleAccept={handleAccept} handleReject={handleReject}/>
         );
       },
     },

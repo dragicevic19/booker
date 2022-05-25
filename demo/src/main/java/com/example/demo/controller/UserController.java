@@ -5,6 +5,7 @@ import com.example.demo.dto.UserDataTable;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.Property;
 import com.example.demo.model.User;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     // Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
     // Ukoliko nema, server ce vratiti gresku 403 Forbidden
@@ -78,5 +84,16 @@ public class UserController {
         User userToBeFound = loadById(userId);
         User user = this.userService.rejectRequest(userToBeFound);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/send-email/async")
+    public String sendemail(@RequestParam(name = "userId", required = true) String userId, @RequestParam(name = "accepted", required = true) boolean accepted, @RequestParam(name = "explanation", required = false) String explanation) throws InterruptedException, MessagingException, IOException {
+
+        //slanje email-a
+        Integer id = Integer.parseInt(userId);
+        User user = userService.findById(id);
+        emailService.sendmail(user, accepted, explanation);
+
+        return "success";
     }
 }
