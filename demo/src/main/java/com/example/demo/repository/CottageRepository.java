@@ -8,4 +8,5 @@ import java.util.List;
 public interface CottageRepository extends JpaRepository<Cottage, Integer> {
 
     List<Cottage> findByAddressCityIgnoreCase(String city);
+    List<Cottage> getAllByOrderByRating();
 }
