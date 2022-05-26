@@ -1,3 +1,4 @@
+import { CommentsDisabledOutlined } from "@mui/icons-material";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const Login = () => {
   });
 
   const {  loading, error, dispatch } = useContext(AuthContext);
+
  
 
   const navigate = useNavigate()
@@ -35,13 +37,12 @@ const Login = () => {
       
 
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      console.log(res.data.details)
-      console.log(res)
+      
       
       navigate("/")
-    } catch (err) {
-        console.log(error);
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+    } catch (error) {
+ 
+      dispatch({ type: "LOGIN_FAILURE", payload: error });
     }
   };
 
@@ -66,7 +67,7 @@ const Login = () => {
         <button disabled={loading} onClick={handleClick} className="lButton">
           Login
         </button>
-        {error && <span>{error.message}</span>}
+        {error && <span className="wrong">The username or password is incorrect</span>}
       </div>
     </div>
   );
