@@ -46,6 +46,7 @@ export const cottageInputs = [
     errorMessage: "Invalid input!",
     label:"Number of Rooms",
     required: true,
+    min: "0"
   },
   {
     id:6,
@@ -55,6 +56,7 @@ export const cottageInputs = [
     errorMessage: "Invalid input!",
     label:"Max People",
     required: true,
+    min: "0"
   },
   {
     id: 7,
@@ -64,6 +66,7 @@ export const cottageInputs = [
     errorMessage:"Invalid input!",
     label:"Price per Night [$]",
     required: true,
+    min: "0"
   },
   {
     id: 8,
@@ -73,6 +76,7 @@ export const cottageInputs = [
     errorMessage:"Invalid input!",
     label:"Cancellation Fee [$]",
     required: true,
+    min: "0"
   },
   {
     id:9,
@@ -90,6 +94,100 @@ export const cottageInputs = [
     name:"description",
     type:"text",
     placeholder:"Description of cottage...",
+    errorMessage: "This field is required!",
+    label:"Description",
+    required: true,
+    multiline:true,
+    rows: 5,
+  }
+];
+
+export const lessonInputs = [
+  {
+    id:1,
+    name:"lessonName",
+    type:"text",
+    placeholder:"New Lesson",
+    errorMessage: "This field is required!",
+    label:"Lesson name",
+    required: true,
+  },
+  {
+    id:2,
+    name:"country",
+    type:"text",
+    placeholder:"Serbia",
+    errorMessage:"Invalid input!",
+    label:"Country",
+    required: true,
+    pattern: `^.{1,}$`,
+  },
+  {
+    id:3,
+    name:"city",
+    type:"text",
+    placeholder:"Belgrade",
+    errorMessage:"Invalid input!",
+    label:"City",
+    required: true,
+    pattern: `^.{1,}$`
+  },
+  {
+    id:4,
+    name:"street",
+    type:"text",
+    placeholder:"Ribnjak Donji put 44",
+    errorMessage:"Invalid input!",
+    label:"Street",
+    required: true,
+    pattern: `^.{1,}$`
+  },
+  {
+    id:5,
+    name:"capacity",
+    type:"number",
+    placeholder:"10",
+    errorMessage: "Invalid input!",
+    label:"Max People",
+    required: true,
+    min: "0"
+  },
+  {
+    id: 6,
+    name:"price",
+    type:"number",
+    placeholder:"100",
+    errorMessage:"Invalid input!",
+    label:"Price [$]",
+    required: true,
+    min: "0"
+  },
+  {
+    id: 7,
+    name:"fee",
+    type:"number",
+    placeholder:"50",
+    errorMessage:"Invalid input!",
+    label:"Cancellation Fee [$]",
+    required: true,
+    min: "0"
+  },
+  {
+    id:8,
+    name:"regulations",
+    type:"text",
+    placeholder:"No regulations...",
+    errorMessage: "This field is required!",
+    label:"Regulations",
+    required: true,
+    multiline: true,
+    rows: 5,
+  },
+  {
+    id:9,
+    name:"description",
+    type:"text",
+    placeholder:"Description of lesson...",
     errorMessage: "This field is required!",
     label:"Description",
     required: true,
@@ -146,6 +244,7 @@ export const boatInputs = [
     errorMessage: "Invalid input!",
     label:"Max People",
     required: true,
+    min: "0"
   },
   {
     id: 6,
@@ -155,6 +254,7 @@ export const boatInputs = [
     errorMessage:"Invalid input!",
     label:"Price per Night [$]",
     required: true,
+    min: "0"
   },
   {
     id: 7,
@@ -164,6 +264,7 @@ export const boatInputs = [
     errorMessage:"Invalid input!",
     label:"Cancellation Fee [$]",
     required: true,
+    min: "0"
   },
   {
     id: 8,
@@ -173,6 +274,7 @@ export const boatInputs = [
     errorMessage:"Invalid input!",
     label:"Length of Boat [m]",
     required: true,
+    min: "0"
   },
   {
     id: 9,
@@ -191,6 +293,7 @@ export const boatInputs = [
     errorMessage:"Invalid input!",
     label:"Engine Power [kW]",
     required: true,
+    min: "0"
   },
   {
     id: 11,
@@ -200,6 +303,7 @@ export const boatInputs = [
     errorMessage:"Invalid input!",
     label:"Max Speed [km/h]",
     required: true,
+    min: "0"
   },
   {
     id: 12,
