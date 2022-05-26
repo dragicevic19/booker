@@ -33,7 +33,7 @@ const NavbarHome = () => {
         ) 
         : (
           <div className="navItems">
-            <Button className="navButton" onClick={()=>navigate('/host-register')}>Become a Host</Button>
+            <Button className="navButton" component ={Link} to ="/host-register">Become a Host</Button>
             <Button className="navButton">Register</Button>
             <Button className="navButton" component ={Link} to ="/login">Login</Button>
           </div>
