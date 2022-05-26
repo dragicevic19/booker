@@ -20,7 +20,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 const Sidebar = () => {
-  const user = {type:'ADMIN'}
+  const user = {type:'INSTRUCTOR'}
 
   return (
     <div className="sidebar">
@@ -38,8 +38,8 @@ const Sidebar = () => {
         <Link to="/dashboard/my-offers" style={{textDecoration: "none"}}>
           <li>
             { user.type === 'COTTAGE_OWNER' && <CottageOutlinedIcon className="icon" /> }
-            { user.type === 'BOAT_OWNER' && <PhishingOutlinedIcon className="icon" /> }
-            { user.type === 'INSTRUCTOR' && <DirectionsBoatFilledOutlinedIcon className="icon" /> }
+            { user.type === 'INSTRUCTOR' && <PhishingOutlinedIcon className="icon" /> }
+            { user.type === 'BOAT_OWNER' && <DirectionsBoatFilledOutlinedIcon className="icon" /> }
             <span>My Offers</span>
           </li>
         </Link>

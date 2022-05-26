@@ -1,39 +1,47 @@
-import "./newCottage.scss"
+import "./newLesson.scss"
 import { DriveFolderUploadOutlined } from '@mui/icons-material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import DashNavbar from '../../../components/navbar/DashNavbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
-import { cottageInputs } from "../../../formSource";
+import { lessonInputs } from "../../../formSource";
 import FormInput from '../../../../components/formInput/FormInput';
 import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
 import { useNotification } from "../../../../components/notification/NotificationProvider";
+import GearModalInput from "../../../../components/gearModal/gearModalInput/GearModalInput";
 
-const NewCottage = () => {
+const NewLesson = () => {
 
   const dispatch = useNotification();
 
-  const user = {id: 2, type:"cottage_owner"}
+  const user = {id: 3, type:"instructor"}
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [services, setServices] = useState([])
 
   const [files, setFiles] = useState("");
+
+  const [fishingGear, setFishingGear] = useState([])
+
+  const [showFishingGear, setShowFishingGear] = useState(false);
   
   const [values, setValues] = useState({
-    cottageName: "",
+    lessonName: "",
     country: "",
     city: "",
     street: "",
     description: "",
-    numOfRooms: "",
     capacity: "",
     regulations: "",
     price: "",
     fee: "",
   })
 
+  const fishingGearModal = (e) => {
+    e.preventDefault();
+    setShowFishingGear(!showFishingGear);
+  }
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -53,18 +61,19 @@ const NewCottage = () => {
         })
       );
 
-      const newCottage = {
+      const newLesson = {
         ...values,
         additionalServices: services.map(function(item){
           delete item.id;
           return item;
         }),
+        fishingGear: fishingGear.map(({name}) => name),
         photos: list,
-        owner_id: user.id,
+        instructor_id: user.id,
       };
 
-      await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
-      sendNotification("success", "You successfully added a new cottage!");
+      await axios.post("http://localhost:8080/auth/add-lesson", newLesson);
+      sendNotification("success", "You successfully added a new lesson!");
 
     } catch (err) {
       console.log(err)
@@ -124,12 +133,12 @@ const NewCottage = () => {
   // }
 
   return (
-    <div className="newCottage">
+    <div className="newLesson">
       <Sidebar />
       <div className="newContainer">
         <DashNavbar />
         <div className="top">
-          <h1>Add New Cottage</h1>
+          <h1>Add New Lesson</h1>
         </div>
         <div className="bottom">
           <div className="left">
@@ -157,7 +166,7 @@ const NewCottage = () => {
           </div>
           <div className="right">
             <form onSubmit={handleClick}>
-              {cottageInputs.map((input) => (
+              {lessonInputs.map((input) => (
                   !input.multiline ? <FormInput 
                     key={input.id}
                     {...input}
@@ -186,8 +195,13 @@ const NewCottage = () => {
                 />
               </div>
               <div className="buttons">
-                <button onClick={additionalServices}>Additional Services</button>
-                <button className="sendBtn">ADD</button>
+                <div className="modalsBtns">
+                  <button onClick={fishingGearModal}>Fishing Equipment</button> 
+                  <button onClick={additionalServices}>Additional Services</button>
+                </div>
+                <div className="sendBtnWrapper">
+                  <button className="sendBtn">ADD</button>
+                </div>
               </div>
             </form>
             <AdditionalServicesModal 
@@ -196,6 +210,13 @@ const NewCottage = () => {
               showAddServices={showAddServices}
               setShowAddServices={setShowAddServices}
             />
+            <GearModalInput
+              title="Add Fishing Equipment"
+              gear={fishingGear}
+              setGear={setFishingGear}
+              showGear={showFishingGear}
+              setShowGear={setShowFishingGear}
+            />
           </div>
         </div>
       </div>
@@ -203,4 +224,4 @@ const NewCottage = () => {
   );
 };
 
-export default NewCottage
+export default NewLesson
