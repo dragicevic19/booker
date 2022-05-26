@@ -4,6 +4,8 @@ import Registration from "./pages/registration/Registration"
 import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
 import RegReqList from './dashboard/pages/list/RegReqList';
+import Login from './pages/login/Login';
+ 
 // import NewCottage from './dashboard/pages/newCottage/NewCottage';
 import New from './dashboard/pages/new/New';
 import NotificationProvider from './components/notification/NotificationProvider';
@@ -18,8 +20,8 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />
-              <Route path='logout' element={<></>}/>
-              <Route path='logout' element={<></>} />
+              <Route path="login" element={<Login/>}/>
+              <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
             </Route>
 

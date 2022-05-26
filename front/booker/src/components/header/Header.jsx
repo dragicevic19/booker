@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import NavbarHome from "../navbarHome/Navbar"
 import "./header.css"
 import {DateRange} from 'react-date-range'
-import { useState } from "react"
+import { useContext,useState } from "react"
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import {format} from "date-fns"
 import { useNavigate, useNavigationType } from "react-router-dom"
-
+import { AuthContext } from "../context/AuthContext";
 
 const Header = ({type}) => {
 
@@ -30,7 +30,7 @@ const Header = ({type}) => {
 	})
 
 	const navigate = useNavigate()
-
+	const { user } = useContext(AuthContext);
 	const handleOption = (name, operation) => {
 		setOptions(prev => {
 			 return {
@@ -69,7 +69,7 @@ const Header = ({type}) => {
 					<p className="headerDesc">
 						Napravi naloga za vise mogucnosti
 					</p>
-					<button className="headerBtn">Sign in / Register</button>
+					{!user && <button className="headerBtn">Sign in / Register</button>}
 					<div className="headerSearch">
 						<div className="headerSearchItem">
 							<FontAwesomeIcon icon={faBed} className="headerIcon" />
