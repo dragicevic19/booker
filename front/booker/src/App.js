@@ -5,6 +5,7 @@ import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
 import New from './dashboard/pages/new/New';
 import NotificationProvider from './components/notification/NotificationProvider';
+import Single from './dashboard/pages/single/Single';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
               <Route index element={<DashboardHome />} />
               <Route path='my-offers'>
                 <Route index element={<List />} />
-                <Route path=':id' element />
+                <Route path=':id' element={<Single />} />
                 <Route path='new' element={<NotificationProvider><New /></NotificationProvider>} />
               </Route> 
               <Route path='res-hist' element={<></>} />
