@@ -10,7 +10,7 @@ import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
 import { useNotification } from "../../../../components/notification/NotificationProvider";
 
-const NewCottage = () => {
+const NewCottage = ({edit}) => {
 
   const dispatch = useNotification();
 
@@ -33,7 +33,6 @@ const NewCottage = () => {
     price: "",
     fee: "",
   })
-
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -64,7 +63,7 @@ const NewCottage = () => {
       };
 
       await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
-      sendNotification("success", "You successfully added a new boat!");
+      sendNotification("success", "You successfully added a new cottage!");
 
     } catch (err) {
       console.log(err)

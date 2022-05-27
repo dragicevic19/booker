@@ -14,8 +14,8 @@ insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
-insert into rating (average, num_of_votes) values (0, 0);
-insert into rating (average, num_of_votes) values (0, 0);
+insert into rating (average, num_of_votes) values (8.8, 10);
+insert into rating (average, num_of_votes) values (7.7, 5);
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
@@ -73,12 +73,15 @@ insert into property_owner (id) values (2);
 insert into cottage_owner (id) values (2);
 
 insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
-    values (40, 3, false, 'desc of cottage', 'vikendica naziv', 'no party', 4, 6, 2, 90);
+    values (40, 3, false, 'desc of cottage', 'Cozy Cottage', 'no party', 4, 6, 2, 90);
 insert into property (id) values (2);
 insert into cottage (id, num_of_rooms) values (2, 2);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for cottage 1', 2);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 15, 'Additional Service 2 for cottage 1', 2);
-
+insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1');
+insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707367.jpg?k=cbacfdeb8404af56a1a94812575d96f6b80f6740fd491d02c6fc3912a16d8757&o=&hp=1');
+insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1');
+insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1');
 
 
 

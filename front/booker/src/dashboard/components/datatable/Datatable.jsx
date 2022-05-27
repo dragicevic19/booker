@@ -13,7 +13,7 @@ const Datatable = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
-  const user = {id: 1, type: 'boat_owner'} // ...
+  const user = {id: 2, type: 'cottage_owner'} // ...
   const { data, loading, error } = useFetch(`http://localhost:8080/auth/${path}/${user.id}`);
 
   const columns = columnsData[user.type];

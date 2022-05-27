@@ -22,7 +22,7 @@ const Notification = (props) => {
         return prev
       })
       
-    }, 15);
+    }, 10);
 
     setIntervalID(id)
   }

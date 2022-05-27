@@ -2,15 +2,15 @@ import "./rating.scss"
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const Rating = () => {
+const Rating = ({rating}) => {
   return (
     <div className="featured">
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar value={7.8*10} text={"7.8"} strokeWidth={5} />
+          <CircularProgressbar value={rating.average*10} text={rating.average} strokeWidth={5} />
         </div>
         <p className="title">Number of votes</p>
-        <p className="amount">200</p>
+        <p className="amount">{rating.numOfVotes}</p>
       </div>
     </div>
   );

@@ -1,25 +1,24 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Cottage;
+import com.example.demo.model.Offer;
 import com.example.demo.service.CottageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "auth/")
+@RequestMapping(value = "auth/")    // promeniti u api kasnije
 public class OfferControler {
 
     @Autowired
     CottageService cottageService;
 
-    @GetMapping("cottages/countByCity")
+    @GetMapping("cottages/countByCity") // ova funkcija treba biti u nekom drugom kontroleru koji nece imati autentifikaciju i autorizaciju
     public ResponseEntity<List<Integer>> countCottagesByCity(@RequestParam String[] cities){
         List<Integer> retList = new ArrayList<>();
         for (String c : cities) {
@@ -27,5 +26,18 @@ public class OfferControler {
         }
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("cottage/{cottageId}")
+//    @PreAuthorize("hasRole('COTTAGE_OWNER')")
+    public ResponseEntity<Cottage> loadCottage(@PathVariable Integer cottageId) {
+
+        Cottage cottage = cottageService.findById(cottageId);
+        if (cottage == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(cottage, HttpStatus.OK);
     }
 }
