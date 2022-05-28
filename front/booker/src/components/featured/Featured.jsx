@@ -13,7 +13,7 @@ const Featured = () => {
       initial={{opacity: 0}}
       animate={{opacity: 1}}>
         <img
-            src="https://cf.bstatic.com/xdata/images/city/max500/957801.webp?k=a969e39bcd40cdcc21786ba92826063e3cb09bf307bcfeac2aa392b838e9b7a5&o="
+            src="https://media.timeout.com/images/105741308/750/422/image.jpg"
             alt=""
             className="featuredImg"
         />
@@ -27,7 +27,7 @@ const Featured = () => {
         animate={{opacity: 1}}
       >
         <img
-          src="https://cf.bstatic.com/xdata/images/city/max500/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o="
+          src="https://dynamic-media-cdn.tripadvisor.com/media/photo-c/2560x500/1d/64/1b/11/caption.jpg?w=600&h=600&s=1"
           alt=""
           className="featuredImg"
         />
@@ -41,7 +41,7 @@ const Featured = () => {
         animate={{opacity: 1}}
       >
         <img
-          src="https://cf.bstatic.com/xdata/images/city/max500/689422.webp?k=2595c93e7e067b9ba95f90713f80ba6e5fa88a66e6e55600bd27a5128808fdf2&o="
+          src="https://www.montenegro.com/w_2560//images/uploads/montenegro/stock/montenegro/primorje/hercegnovi/AdobeStock_162039643.jpg"
           alt=""
           className="featuredImg"
         />

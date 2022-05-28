@@ -1,7 +1,8 @@
 import "./newCottage.scss"
 import { DriveFolderUploadOutlined } from '@mui/icons-material';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AuthContext } from "../../../../components/context/AuthContext";
 import DashNavbar from '../../../components/navbar/DashNavbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { cottageInputs } from "../../../formSource";
@@ -9,17 +10,31 @@ import FormInput from '../../../../components/formInput/FormInput';
 import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
 import { useNotification } from "../../../../components/notification/NotificationProvider";
+import { useLocation } from "react-router"
+import { useEffect } from "react"
+import useFetch from "../../../../hooks/useFetch"
+import Gallery from "../../../../components/gallery/Gallery";
 
-const NewCottage = () => {
+
+const NewCottage = ({edit, title}) => {
+
+  const location = useLocation();
+
+  const id = location.pathname.split("/")[4];
+
+  const { data, load, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
 
   const dispatch = useNotification();
 
-  const user = {id: 2, type:"cottage_owner"}
+  const { user } = useContext(AuthContext);
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [services, setServices] = useState([])
 
   const [files, setFiles] = useState("");
+
+  const [photos, setPhotos] = useState([]);
+
   
   const [values, setValues] = useState({
     cottageName: "",
@@ -34,38 +49,50 @@ const NewCottage = () => {
     fee: "",
   })
 
+  useEffect(() => {
+    if (Object.keys(data).length !== 0 && edit){
+      const val = {
+        'cottageName': data.name,
+        'country': data.address.country,
+        'city': data.address.city,
+        'street': data.address.street,
+        'description': data.description,
+        'numOfRooms': data.numOfRooms,
+        'capacity': data.capacity,
+        'regulations': data.regulations,
+        'price': data.price,
+        'fee': data.cancellationFee,
+      }
+      setValues(val);
+      setServices(data.additionalServices);
+      setPhotos(data.images);
+
+    } 
+  }, [data])
+
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const list = await Promise.all(
-        Object.values(files).map(async (file) => {
-          const data = new FormData();
-          data.append("file", file);
-          data.append("upload_preset", "upload");
-          const uploadRes = await axios.post(
-            "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
-            data
-          );
-
-          const { url } = uploadRes.data;
-          return url;
-        })
-      );
-
       const newCottage = {
         ...values,
         additionalServices: services.map(function(item){
           delete item.id;
           return item;
         }),
-        photos: list,
+        photos: photos,
         owner_id: user.id,
       };
 
-      await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
-      sendNotification("success", "You successfully added a new cottage!");
-
+      if (edit){
+        await axios.post(`http://localhost:8080/auth/edit-cottage/${id}`, newCottage);  // put ne radi ???
+        sendNotification("success", "You successfully edit your cottage!");
+      }
+      else{
+        await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
+        sendNotification("success", "You successfully added a new cottage!");  
+      }
+      
     } catch (err) {
       console.log(err)
       sendNotification("error", err.message);
@@ -90,38 +117,35 @@ const NewCottage = () => {
     setShowAddServices(!showAddServices);
   }
 
-  // const handleImages = async (e) => {
-  //   console.log("handleImages");
-  //   console.log(files);
-    
-  //   try {
-  //     const list = await Promise.all(
-  //       Object.values(files).map(async (file) => {
-  //         console.log('usao ovde')
-  //         const data = new FormData();
-  //         data.append("file", file);
-  //         data.append("upload_preset", "upload");
-  //         const uploadRes = await axios.post(
-  //           "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
-  //           data
-  //         );
+  const deleteImages = () => {
+    setPhotos([]);
+    setFiles("");
+  }
 
-  //         const { url } = uploadRes.data;
-  //         return url;
-  //       })
-  //     ).then((list) => {
-  //       setValues({ ['images']: list })
-  //       console.log(values.images)
-  //     });
+  const onUploadImg = (e) => {
+    try {
+      const list = Promise.all(
+        Object.values(e.target.files).map(async (file) => {
+          const data = new FormData();
+          data.append("file", file);
+          data.append("upload_preset", "upload");
+          const uploadRes = await axios.post(
+            "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
+            data
+          );
+
+          const { url } = uploadRes.data;
+          return url;
+        })
+      ).then((list)=>{
+        setPhotos(photos.concat(list));
+        setFiles(files.concat(e.target.files))
+      });
       
-  //   } catch (err) {console.log(err)}
-  // };
-
-  // const onBtn = (e) => {
-  //   e.preventDefault();
-  //   console.log('btn')
-  //   console.log(files)
-  // }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
   return (
     <div className="newCottage">
@@ -129,30 +153,27 @@ const NewCottage = () => {
       <div className="newContainer">
         <DashNavbar />
         <div className="top">
-          <h1>Add New Cottage</h1>
+          <h1>{title}</h1>
         </div>
         <div className="bottom">
           <div className="left">
             <div className="images">
-              <span>Uploaded images:</span>
-              {/* {values.images.map((photo, i) => (
-                <div className="imgWrapper" key={i}>
-                  <img
-                    className="img"
-                    src={URL.createObjectURL(photo)}
-                    alt=""  
-                  />
-                </div>
-              ))} */}
-              <img
-                src={
-                  files
-                    ? URL.createObjectURL(files[0])
-                    : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-                }
-                alt=""
-              />
-
+              <div>Uploaded images:</div>
+              {photos.length ? <><Gallery photos={photos} />
+              <button className="deleteImgsBtn" onClick={deleteImages}>Delete images</button></>
+              :
+              <div className="oneImgWrapper">
+                <img
+                  className="oneImg"
+                  src={
+                    files
+                      ? URL.createObjectURL(files[0])
+                      : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                  }
+                  alt=""
+                />
+              </div>
+              }
             </div>
           </div>
           <div className="right">
@@ -181,7 +202,7 @@ const NewCottage = () => {
                   accept="image/png, image/gif, image/jpeg"
                   id="file"
                   multiple
-                  onChange={(e) => setFiles(e.target.files)}
+                  onChange={onUploadImg}
                   style={{ display: "none" }}
                 />
               </div>

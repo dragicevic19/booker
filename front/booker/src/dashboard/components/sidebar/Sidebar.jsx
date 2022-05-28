@@ -18,28 +18,40 @@ import GroupIcon from '@mui/icons-material/Group';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import { useContext } from "react";
+import { AuthContext } from "../../../components/context/AuthContext";
+import { useNavigate } from "react-router";
 
 const Sidebar = () => {
-  const user = {type:'INSTRUCTOR'}
+
+  const navigate = useNavigate();
+
+  const { user, dispatch } = useContext(AuthContext);
+
+  const logout = async (e) => {
+    e.preventDefault();
+    dispatch({ type: "LOGOUT" });
+    navigate('/login');
+  }
 
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/dashboard" style={{textDecoration: "none"}}>
+        <Link to="/" style={{textDecoration: "none"}}>
           <span className="logo">the booker</span>
         </Link>
       </div>
       <hr />
       <div className="center">
 
-        { user.type !== 'ADMIN' && user.type!=='CLIENT' && (<><ul>
+        { user.type !== 'ROLE_ADMIN' && user.type!=='ROLE_CLIENT' && (<><ul>
         <p className="title">LISTS</p>
         
         <Link to="/dashboard/my-offers" style={{textDecoration: "none"}}>
           <li>
-            { user.type === 'COTTAGE_OWNER' && <CottageOutlinedIcon className="icon" /> }
-            { user.type === 'INSTRUCTOR' && <PhishingOutlinedIcon className="icon" /> }
-            { user.type === 'BOAT_OWNER' && <DirectionsBoatFilledOutlinedIcon className="icon" /> }
+            { user.type === 'ROLE_COTTAGE_OWNER' && <CottageOutlinedIcon className="icon" /> }
+            { user.type === 'ROLE_INSTRUCTOR' && <PhishingOutlinedIcon className="icon" /> }
+            { user.type === 'ROLE_BOAT_OWNER' && <DirectionsBoatFilledOutlinedIcon className="icon" /> }
             <span>My Offers</span>
           </li>
         </Link>
@@ -75,15 +87,13 @@ const Sidebar = () => {
             <span>Profile</span>
           </li>
         </Link>
-        <Link to="/logout" style={{textDecoration: "none"}}>
-          <li>
+          <li onClick={logout}>
             <LogoutOutlinedIcon className="icon" />
             <span>Logout</span>
           </li>
-        </Link>
       </ul></>)}
           
-      { user.type === 'ADMIN' && (<><ul>
+      { user.type === 'ROLE_ADMIN' && (<><ul>
       <p className="title">OFFERS</p>
 
       <li>
@@ -152,7 +162,7 @@ const Sidebar = () => {
         <PersonOutlinedIcon className="icon" />
         <span>Profile</span>
       </li>
-      <li>
+      <li onClick={logout}>
         <LogoutOutlinedIcon className="icon" />
         <span>Logout</span>
       </li>

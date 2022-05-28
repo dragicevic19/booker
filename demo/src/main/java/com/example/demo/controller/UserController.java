@@ -6,7 +6,6 @@ import com.example.demo.dto.UserRequest;
 import com.example.demo.model.Property;
 import com.example.demo.model.User;
 import com.example.demo.service.EmailService;
-import com.example.demo.service.EmailService2;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,5 @@
 export const columnsData = 
-  { 'cottage_owner': 
+  { 'ROLE_COTTAGE_OWNER': 
     [
       { field: "id", headerName: "ID", width: 100 },
       {
@@ -48,7 +48,7 @@ export const columnsData =
         },
       }
     ],
-    'boat_owner':
+    'ROLE_BOAT_OWNER':
     [
       { field: "id", headerName: "ID", width: 100 },
       {
@@ -97,7 +97,7 @@ export const columnsData =
         },
       }
     ],
-    'admin':
+    'ROLE_ADMIN':
     [
       { field: "id", 
       headerName: "ID", 
@@ -157,7 +157,7 @@ export const columnsData =
         width: 120,
       }
     ],
-    'instructor':
+    'ROLE_INSTRUCTOR':
     [
       { field: "id", headerName: "ID", width: 100 },
       {

@@ -1,7 +1,7 @@
 import "./newLesson.scss"
 import { DriveFolderUploadOutlined } from '@mui/icons-material';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import DashNavbar from '../../../components/navbar/DashNavbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { lessonInputs } from "../../../formSource";
@@ -10,12 +10,13 @@ import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
 import { useNotification } from "../../../../components/notification/NotificationProvider";
 import GearModalInput from "../../../../components/gearModal/gearModalInput/GearModalInput";
+import { AuthContext } from "../../../../components/context/AuthContext";
 
 const NewLesson = () => {
 
   const dispatch = useNotification();
 
-  const user = {id: 3, type:"instructor"}
+	const { user } = useContext(AuthContext);
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [services, setServices] = useState([])
@@ -99,39 +100,6 @@ const NewLesson = () => {
     setShowAddServices(!showAddServices);
   }
 
-  // const handleImages = async (e) => {
-  //   console.log("handleImages");
-  //   console.log(files);
-    
-  //   try {
-  //     const list = await Promise.all(
-  //       Object.values(files).map(async (file) => {
-  //         console.log('usao ovde')
-  //         const data = new FormData();
-  //         data.append("file", file);
-  //         data.append("upload_preset", "upload");
-  //         const uploadRes = await axios.post(
-  //           "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
-  //           data
-  //         );
-
-  //         const { url } = uploadRes.data;
-  //         return url;
-  //       })
-  //     ).then((list) => {
-  //       setValues({ ['images']: list })
-  //       console.log(values.images)
-  //     });
-      
-  //   } catch (err) {console.log(err)}
-  // };
-
-  // const onBtn = (e) => {
-  //   e.preventDefault();
-  //   console.log('btn')
-  //   console.log(files)
-  // }
-
   return (
     <div className="newLesson">
       <Sidebar />
@@ -144,15 +112,6 @@ const NewLesson = () => {
           <div className="left">
             <div className="images">
               <span>Uploaded images:</span>
-              {/* {values.images.map((photo, i) => (
-                <div className="imgWrapper" key={i}>
-                  <img
-                    className="img"
-                    src={URL.createObjectURL(photo)}
-                    alt=""  
-                  />
-                </div>
-              ))} */}
               <img
                 src={
                   files
@@ -161,7 +120,6 @@ const NewLesson = () => {
                 }
                 alt=""
               />
-
             </div>
           </div>
           <div className="right">
