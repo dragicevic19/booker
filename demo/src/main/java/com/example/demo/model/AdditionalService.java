@@ -33,7 +33,7 @@ public class AdditionalService {
     @Column(name = "description", unique = false, nullable = false)
     private String description;
 
-    @ManyToMany(mappedBy = "chosenAdditionalServices")
-    private Set<Reservation> reservations = new HashSet<Reservation>();
+//    @ManyToMany(mappedBy = "chosenAdditionalServices")
+//    private Set<Reservation> reservations = new HashSet<Reservation>();
 
 }

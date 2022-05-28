@@ -14,13 +14,13 @@ const SingleCottage = () => {
 
   const location = useLocation();
 
-  const path = location.pathname.split("/")[3];
+  const id = location.pathname.split("/")[3];
 
   const [offer, setOffer] = useState();
 
   const [loading, setLoading] = useState(true);
 
-  const { data, load, error} = useFetch(`http://localhost:8080/auth/cottage/${path}`)
+  const { data, load, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
 
   useEffect(() => {
     setOffer(data);
@@ -46,7 +46,7 @@ const SingleCottage = () => {
         <DashNavbar />
         <div className="top">
           <div className="left">
-            <Link to='/dashboard/my-offers/edit/2' style={{textDecoration: "none"}}>
+            <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}>
               <div className="editButton">Edit</div>
             </Link>
             <h1 className="title">Informations</h1>

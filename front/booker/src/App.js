@@ -26,8 +26,8 @@ function App() {
               <Route path='my-offers'>
                 <Route index element={<List />} />
                 <Route path=':id' element={<SingleCottage />} />
-                <Route path='new' element={<NotificationProvider><New /></NotificationProvider>} />
-                <Route path='edit/:id' element={<NotificationProvider> <New /> </NotificationProvider>} />
+                <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
+                <Route path='edit/:id' element={<NotificationProvider> <New edit={true} title={'Edit Cottage'}/> </NotificationProvider>} />
               </Route> 
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />
