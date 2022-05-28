@@ -60,6 +60,18 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     }
 
     @Override
+    public User updateUser(User user) {
+
+        ((BoatOwner) user).setRating(new Rating());
+//        b.setOffers(new HashSet<>());
+        //b.setEnabled(true); ovo ce administrator da omoguci
+        ((BoatOwner) user).setLoyaltyProgram(new LoyaltyProgram());
+
+        List<Role> roles = roleService.findByName("ROLE_BOAT_OWNER");
+        ((BoatOwner) user).setRoles(roles);
+
+        return this.boatOwnerRepository.save(((BoatOwner) user));
+    }
     public Boat addBoat(BoatRequest boatRequest, BoatOwner boatOwner) {
         Boat boat = new Boat();
         boat.setName(boatRequest.getName());

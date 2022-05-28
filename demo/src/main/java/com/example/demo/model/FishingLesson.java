@@ -26,7 +26,7 @@ public class FishingLesson extends Offer {
 
     @ElementCollection
     @Column(name="fishing_equipment")
-    protected List<String> fishingEquipment;
+    protected Set<String> fishingEquipment;
 
     @Override
     public int calculatePrice() {

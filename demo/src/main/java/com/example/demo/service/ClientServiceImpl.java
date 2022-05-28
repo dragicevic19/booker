@@ -42,4 +42,9 @@ public class ClientServiceImpl implements ClientService {
         // TODO
         return null;
     }
+
+    @Override
+    public User updateUser(User user) {
+        return null;    //TODO
+    }
 }

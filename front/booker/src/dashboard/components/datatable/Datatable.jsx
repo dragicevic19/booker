@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
+import { AuthContext } from "../../../components/context/AuthContext";
 
 
 const Datatable = () => {
@@ -13,18 +14,17 @@ const Datatable = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
-  const user = {id: 2, type: 'cottage_owner'} // ...
+	const { user } = useContext(AuthContext);
+
   const { data, loading, error } = useFetch(`http://localhost:8080/auth/${path}/${user.id}`);
 
   const columns = columnsData[user.type];
-
 
   useEffect(() => {
     setList(data);
   }, [data]);
 
   const handleDelete = async (id) => {
-    console.log('tralla');
     try {
       await axios.delete(`http://localhost:8080/api/${path}/${id}`);
       setList(list.filter((item) => item.id !== id));

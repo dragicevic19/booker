@@ -11,6 +11,9 @@ public interface UserService extends UserDetailsService {
     List<User> findAll ();
     User save(UserRequest userRequest);
     User findByEmail(String email);
-
     List<Offer> findUsersOffers(ServiceProvider s);
+    List<User> findDisabledUsers(boolean enabled);
+    User enableUser(User user);
+
+    User rejectRequest(User user);
 }

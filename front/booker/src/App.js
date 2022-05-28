@@ -3,9 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from "./pages/registration/Registration"
 import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
+import RegReqList from './dashboard/pages/list/RegReqList';
+import Login from './pages/login/Login';
 import New from './dashboard/pages/new/New';
 import NotificationProvider from './components/notification/NotificationProvider';
 import SingleCottage from './dashboard/pages/single/SingleCottage';
+
 
 function App() {
 
@@ -16,8 +19,8 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />
-              <Route path='logout' element={<></>}/>
-              <Route path='logout' element={<></>} />
+              <Route path="login" element={<Login/>}/>
+              <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
             </Route>
 
@@ -33,6 +36,7 @@ function App() {
               <Route path='future-res' element={<></>} />
               <Route path='reports' element={<></>} />
               <Route path='profile' element={<></>} />
+              <Route path="reg-req" element={<RegReqList />}/>
             </Route>
           </Routes>
         </div>

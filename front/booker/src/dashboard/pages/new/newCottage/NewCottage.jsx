@@ -1,7 +1,8 @@
 import "./newCottage.scss"
 import { DriveFolderUploadOutlined } from '@mui/icons-material';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AuthContext } from "../../../../components/context/AuthContext";
 import DashNavbar from '../../../components/navbar/DashNavbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { cottageInputs } from "../../../formSource";
@@ -13,7 +14,6 @@ import { useLocation } from "react-router"
 import { useEffect } from "react"
 import useFetch from "../../../../hooks/useFetch"
 import Gallery from "../../../../components/gallery/Gallery";
-import { Button } from "@mui/material";
 
 
 const NewCottage = ({edit, title}) => {
@@ -26,17 +26,14 @@ const NewCottage = ({edit, title}) => {
 
   const dispatch = useNotification();
 
-  const user = {id: 2, type:"cottage_owner"}
+  const { user } = useContext(AuthContext);
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [services, setServices] = useState([])
 
   const [files, setFiles] = useState("");
 
-  console.log("render files: " , files);
-
   const [photos, setPhotos] = useState([]);
-  console.log("photos: ", photos)
 
   
   const [values, setValues] = useState({
@@ -77,21 +74,6 @@ const NewCottage = ({edit, title}) => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      // const list = await Promise.all(
-      //   Object.values(files).map(async (file) => {
-      //     const data = new FormData();
-      //     data.append("file", file);
-      //     data.append("upload_preset", "upload");
-      //     const uploadRes = await axios.post(
-      //       "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
-      //       data
-      //     );
-
-      //     const { url } = uploadRes.data;
-      //     return url;
-      //   })
-      // );
-
       const newCottage = {
         ...values,
         additionalServices: services.map(function(item){
@@ -103,7 +85,7 @@ const NewCottage = ({edit, title}) => {
       };
 
       if (edit){
-        await axios.post(`http://localhost:8080/auth/edit-cottage/${id}`, newCottage);
+        await axios.post(`http://localhost:8080/auth/edit-cottage/${id}`, newCottage);  // put ne radi ???
         sendNotification("success", "You successfully edit your cottage!");
       }
       else{
@@ -221,7 +203,6 @@ const NewCottage = ({edit, title}) => {
                   id="file"
                   multiple
                   onChange={onUploadImg}
-                  // onChange={(e) => setFiles(...files, e.target.files)}
                   style={{ display: "none" }}
                 />
               </div>

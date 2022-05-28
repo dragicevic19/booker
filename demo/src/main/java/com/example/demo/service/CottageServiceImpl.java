@@ -7,6 +7,8 @@ import com.example.demo.repository.CottageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CottageServiceImpl implements CottageService{
 
@@ -40,8 +42,10 @@ public class CottageServiceImpl implements CottageService{
         cottage.setImages(cottageRequest.getPhotos());
         cottage.setAdditionalServices(cottageRequest.getAdditionalServices());
 
-        cottage.setDeleted(false);
-
         return this.cottageRepository.save(cottage);
     }
+    public List<Cottage> fourOffers() {
+        return cottageRepository.getAllByOrderByRating();
+    }
+
 }

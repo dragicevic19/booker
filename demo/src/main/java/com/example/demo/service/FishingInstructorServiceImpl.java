@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.FishingLessonRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.*;
 import com.example.demo.repository.FishingInstructorRepository;
+import com.example.demo.repository.FishingLessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class FishingInstructorServiceImpl implements FishingInstructorService{
     private FishingInstructorRepository fishingInstructorRepository;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private FishingLessonRepository fishingLessonRepository;
 
     @Override
     public FishingInstructor findById(Integer id) {
@@ -45,5 +49,47 @@ public class FishingInstructorServiceImpl implements FishingInstructorService{
         f.setRoles(roles);
 
         return this.fishingInstructorRepository.save(f);
+    }
+
+    @Override
+    public FishingInstructor updateUser(User user) {
+
+        ((FishingInstructor) user).setRating(new Rating());
+        ((FishingInstructor) user).setLoyaltyProgram(new LoyaltyProgram());
+        ((FishingInstructor) user).setFishingLessons(new ArrayList<>());
+        ((FishingInstructor) user).setBiography("");
+        List<Role> roles = roleService.findByName("ROLE_INSTRUCTOR");
+        ((FishingInstructor) user).setRoles(roles);
+
+        return this.fishingInstructorRepository.save(((FishingInstructor) user));
+    }
+
+    @Override
+    public FishingLesson addFishingLesson(FishingLessonRequest fishingLessonRequest, FishingInstructor fI) {
+        FishingLesson fishingLesson = new FishingLesson();
+        fishingLesson.setName(fishingLessonRequest.getLessonName());
+        Address a = new Address();
+        a.setStreet(fishingLessonRequest.getStreet());
+        a.setCountry(fishingLessonRequest.getCountry());
+        a.setCity(fishingLessonRequest.getCity());
+        fishingLesson.setAddress(a);
+        fishingLesson.setPrice(fishingLessonRequest.getPrice());
+        fishingLesson.setCapacity(fishingLessonRequest.getCapacity());
+        fishingLesson.setDescription(fishingLessonRequest.getDescription());
+        fishingLesson.setCancellationFee(fishingLessonRequest.getFee());
+        fishingLesson.setRegulations(fishingLessonRequest.getRegulations());
+        fishingLesson.setImages(fishingLessonRequest.getPhotos());
+        fishingLesson.setFishingEquipment(fishingLessonRequest.getFishingGear());
+        fishingLesson.setAdditionalServices(fishingLessonRequest.getAdditionalServices());
+
+        fishingLesson.setDeleted(false);
+        fishingLesson.setReservations(new ArrayList<>());
+        fishingLesson.setDiscounts(new ArrayList<>());
+        fishingLesson.setPeriodsOfOccupancy(new ArrayList<Period>());
+        fishingLesson.setRating(new Rating());
+
+        fI.getOffers().add(fishingLesson);
+
+        return this.fishingLessonRepository.save(fishingLesson);
     }
 }

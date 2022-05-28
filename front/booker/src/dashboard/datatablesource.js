@@ -1,5 +1,5 @@
 export const columnsData = 
-  { 'cottage_owner': 
+  { 'ROLE_COTTAGE_OWNER': 
     [
       { field: "id", headerName: "ID", width: 100 },
       {
@@ -48,7 +48,7 @@ export const columnsData =
         },
       }
     ],
-    'boat_owner':
+    'ROLE_BOAT_OWNER':
     [
       { field: "id", headerName: "ID", width: 100 },
       {
@@ -97,7 +97,67 @@ export const columnsData =
         },
       }
     ],
-    'instructor':
+    'ROLE_ADMIN':
+    [
+      { field: "id", 
+      headerName: "ID", 
+      width: 60 },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "type",
+        headerName: "User Type",
+        width: 150,
+      },
+      {
+        field: "email",
+        headerName: "Email",
+        width: 220,
+      },
+      {
+        field: "firstName",
+        headerName: "First Name",
+        width: 100,
+      },
+      {
+        field: "lastName",
+        headerName: "Last Name",
+        width: 100,
+      },
+      {
+        field: "country",
+        headerName: "Country",
+        width: 100,
+      },
+      {
+        field: "city",
+        headerName: "City",
+        width: 100,
+      },
+      {
+        field: "street",
+        headerName: "Street",
+        width: 150,
+      },
+      {
+        field: "phoneNumber",
+        headerName: "Phone Number",
+        width: 120,
+      }
+    ],
+    'ROLE_INSTRUCTOR':
     [
       { field: "id", headerName: "ID", width: 100 },
       {
