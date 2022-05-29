@@ -44,7 +44,7 @@ const Sidebar = () => {
       <hr />
       <div className="center">
 
-        { user.type !== 'ROLE_ADMIN' && user.type!=='ROLE_CLIENT' && (<><ul>
+        {user.type !== 'ROLE_SUPER_ADMIN' && user.type !== 'ROLE_ADMIN' && user.type!=='ROLE_CLIENT' && (<><ul>
         <p className="title">LISTS</p>
         
         <Link to="/dashboard/my-offers" style={{textDecoration: "none"}}>
@@ -93,7 +93,7 @@ const Sidebar = () => {
           </li>
       </ul></>)}
           
-      { user.type === 'ROLE_ADMIN' && (<><ul>
+      { (user.type === 'ROLE_ADMIN' || user.type === 'ROLE_SUPER_ADMIN') && (<><ul>
       <p className="title">OFFERS</p>
 
       <li>

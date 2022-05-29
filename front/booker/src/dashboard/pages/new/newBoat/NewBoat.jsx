@@ -19,6 +19,11 @@ const NewBoat = () => {
 
   const { user } = useContext(AuthContext);
 
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.accessToken}`,
+  }
+
   const [showAddServices, setShowAddServices] = useState(false);
   const [showFishingGear, setShowFishingGear] = useState(false);
   const [showNavGear, setShowNavGear] = useState(false);
@@ -76,7 +81,9 @@ const NewBoat = () => {
         owner_id: user.id,
       };
 
-      await axios.post("http://localhost:8080/auth/add-boat", newBoat);
+      await axios.post("http://localhost:8080/api/add-boat", newBoat, {
+        headers: headers
+      });
 
       sendNotification("success", "You successfully added a new boat!");
 

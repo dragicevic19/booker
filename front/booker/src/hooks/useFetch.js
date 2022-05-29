@@ -1,16 +1,37 @@
 import axios from "axios"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useContext} from "react"
+import {AuthContext} from "../components/context/AuthContext";
 
-const useFetch = (url) => {
+const useFetch = (passedUrl) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [url, setUrl] = useState(passedUrl); // da bi mi se reload svaki put kad se pozove ovaj useFetch zbog usera
+
+  const {user} = useContext(AuthContext)
+  let headers = {};
+  if (user){
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user.accessToken}`,
+    }
+  }
+
+  // console.log("USER: ", user);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       try{
-        const res = await axios.get(url)
+        let res;
+        if (user){
+          res = await axios.get(url, {
+            headers: headers
+          })
+        }
+        else{
+          res = await axios.get(url)
+        }
         setData(res.data)
       } catch(err) {
         setError(err)
@@ -24,7 +45,9 @@ const useFetch = (url) => {
   const reFetch = async () => {
     setLoading(true)
     try{
-      const res = await axios.get(url)
+      const res = await axios.get(url, {
+        headers: headers
+      })
       setData(res.data)
     } catch(err) {
       setError(err)

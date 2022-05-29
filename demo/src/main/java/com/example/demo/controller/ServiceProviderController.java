@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "auth/")
+@RequestMapping(value = "api/")
 public class ServiceProviderController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/my-offers/{userId}")
-//    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<List<OfferToList>> loadOffers(@PathVariable Integer userId) {
         List<OfferToList> retList = new ArrayList<>();
         ServiceProvider u = (ServiceProvider) userService.findById(userId);

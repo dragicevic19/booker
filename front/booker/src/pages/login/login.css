@@ -18,6 +18,10 @@
     flex-direction: column;
     gap: 10px;
   }
+
+  .loginTitle{
+    cursor: pointer;
+  }
   
   .lInput{
     height: 30px;

@@ -8,6 +8,11 @@ insert into address (country, city, street) values ('Serbia', 'Belgrade', 'Kneza
 insert into address (country, city, street) values ('Serbia', 'Zrenjanin', 'VUka Karadzica 11');
 insert into address (country, city, street) values ('Serbia', 'Sabac', 'Nikole Pasica 21');
 insert into address (country, city, street) values ('Serbia', 'Loznica', 'Vuka Karadzica 62');
+insert into address (country, city, street) values ('Serbia', 'Novi Sad', 'Vuka Karadzica 2');
+insert into address (country, city, street) values ('Serbia', 'Beograd', 'Nikole Tesle 22');
+insert into address (country, city, street) values ('Serbia', 'Novi Sad', 'Dunavska 59');
+
+
 
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
@@ -19,6 +24,10 @@ insert into rating (average, num_of_votes) values (7.7, 5);
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
 insert into rating (average, num_of_votes) values (0, 0);
+insert into rating (average, num_of_votes) values (9, 2);
+insert into rating (average, num_of_votes) values (6.5, 5);
+insert into rating (average, num_of_votes) values (9.2, 4);
+
 
 insert into role (name) values ('ROLE_BOAT_OWNER');
 insert into role (name) values ('ROLE_COTTAGE_OWNER');
@@ -83,6 +92,38 @@ insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/x
 insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1');
 insert into offer_images (offer_id, images) values (2, 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1');
 
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
+values (50, 5, false, 'desc of cottage', 'Cool Cottage', 'No regulations', 11, 11, 2, 90);
+insert into property (id) values (3);
+insert into cottage (id, num_of_rooms) values (3, 3);
+insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for cottage 1', 3);
+insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 15, 'Additional Service 2 for cottage 1', 3);
+insert into offer_images (offer_id, images) values (3, 'https://res.cloudinary.com/bookerapp/image/upload/v1653823038/upload/udqs0yyg526owhvec7c7.webp');
+insert into offer_images (offer_id, images) values (3, 'https://res.cloudinary.com/bookerapp/image/upload/v1653823038/upload/nmxqc40qef08gjmfpj83.webp');
+insert into offer_images (offer_id, images) values (3, 'https://res.cloudinary.com/bookerapp/image/upload/v1653823038/upload/al93g5pqb0sjclqktvsn.webp');
+insert into offer_images (offer_id, images) values (3, 'https://res.cloudinary.com/bookerapp/image/upload/v1653823038/upload/vqyxovcjdodvaz6hjplg.webp');
+
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
+values (50, 5, false, 'desc of cottage', 'Test Cottage', 'No regulations', 12, 12, 2, 76);
+insert into property (id) values (4);
+insert into cottage (id, num_of_rooms) values (4, 2);
+insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for cottage 1', 4);
+insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 15, 'Additional Service 2 for cottage 1', 4);
+insert into offer_images (offer_id, images) values (4, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780050/upload/q9aoizc8aoa0otemhupl.webp');
+insert into offer_images (offer_id, images) values (4, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780050/upload/iokfie8ojypk7pnb2rea.webp');
+insert into offer_images (offer_id, images) values (4, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780050/upload/mupd6jescw6zdltsqbd4.webp');
+insert into offer_images (offer_id, images) values (4, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780051/upload/qzctnbn3owzrawm1qfbd.webp');
+
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
+values (50, 5, false, 'desc of cottage', 'Nova Cottage', 'No regulations', 13, 13, 2, 95);
+insert into property (id) values (5);
+insert into cottage (id, num_of_rooms) values (5, 2);
+insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for cottage 1', 5);
+insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 15, 'Additional Service 2 for cottage 1', 5);
+insert into offer_images (offer_id, images) values (5, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780232/upload/olerxyei1nh0cgyyzhnw.webp');
+insert into offer_images (offer_id, images) values (5, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780024/upload/clrbiphmmfpsgbt0kdug.webp');
+insert into offer_images (offer_id, images) values (5, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780023/upload/y18ebutbtdvmxvoblpwk.webp');
+insert into offer_images (offer_id, images) values (5, 'https://res.cloudinary.com/bookerapp/image/upload/v1653780023/upload/cqflt2cx8s55n2p5ekru.webp');
 
 
 insert into users (
@@ -94,12 +135,12 @@ insert into fishing_instructor (biography, id) values ('Short biography', 3);
 
 insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
     values (80, 2, false, 'desc of lesson', 'casovi pecanja', '18+', 5, 7, 3, 100);
-insert into fishing_lesson (id) values (3);
-insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 3);
-insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 3);
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (3, 'stap');
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (3, 'mamac');
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (3, 'masinica');
+insert into fishing_lesson (id) values (6);
+insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 6);
+insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 6);
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'stap');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'mamac');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'masinica');
 
 
 

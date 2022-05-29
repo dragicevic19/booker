@@ -38,6 +38,7 @@ const Login = () => {
   return (
     <div className="login">
       <div className="lContainer">
+        <h1 className="loginTitle" onClick={()=>navigate('/')}>the booker</h1>
         <FormInput
           errorMessage="It should be a valid email address!"
           label="Email"

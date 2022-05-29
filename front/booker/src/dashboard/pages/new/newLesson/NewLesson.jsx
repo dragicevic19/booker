@@ -17,6 +17,10 @@ const NewLesson = () => {
   const dispatch = useNotification();
 
 	const { user } = useContext(AuthContext);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.accessToken}`,
+  }
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [services, setServices] = useState([])
@@ -73,7 +77,9 @@ const NewLesson = () => {
         instructor_id: user.id,
       };
 
-      await axios.post("http://localhost:8080/auth/add-lesson", newLesson);
+      await axios.post("http://localhost:8080/api/add-lesson", newLesson, {
+        headers: headers
+      });
       sendNotification("success", "You successfully added a new lesson!");
 
     } catch (err) {
