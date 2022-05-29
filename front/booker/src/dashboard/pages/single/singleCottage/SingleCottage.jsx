@@ -24,8 +24,12 @@ const SingleCottage = () => {
 
   useEffect(() => {
     setOffer(data);
-    if (offer) setLoading(false);
+    if (offer) {
+      setLoading(false);
+    }
   }, [data])
+
+  console.log(offer);
 
   // samo za prikaz jer nemamo jos uvek rezervacije uradjene
   const bookings = [
@@ -46,9 +50,9 @@ const SingleCottage = () => {
         <DashNavbar />
         <div className="top">
           <div className="left">
-            <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}>
-              <div className="editButton">Edit</div>
-            </Link>
+            {/* <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}> */}
+              {/* <div disabled className="editButton">Edit</div> */}
+            {/* </Link> */}
             <h1 className="title">Informations</h1>
             <div className="item">
               <div className="details">

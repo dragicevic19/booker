@@ -45,7 +45,7 @@ const Datatable = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 250,
+      width: 280,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -53,6 +53,12 @@ const Datatable = () => {
               onClick={()=>navigate(`/dashboard/${path}/${params.row.id}`)}
               className="viewButton"
             >View
+            </div>
+            <div 
+              onClick={()=>navigate(`/dashboard/${path}/edit/${params.row.id}`)}
+              className="editButton"
+              disabled={params.row.status ==="reserved"}
+            >Edit
             </div>
             <div
               className="deleteButton"

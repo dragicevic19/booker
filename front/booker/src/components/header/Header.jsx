@@ -66,9 +66,9 @@ const Header = ({type}) => {
 				{ type !== "list" && 
 					<>
 					<h1 className="headerTitle">Welcome to The Booker!</h1>
-					<p className="headerDesc">
+					{!user && <p className="headerDesc">
 						Sign in and enjoy our accommodations!
-					</p>
+					</p>}
 					{!user && <button className="headerBtn">Sign in / Register</button>}
 					<div className="headerSearch">
 						<div className="headerSearchItem">
