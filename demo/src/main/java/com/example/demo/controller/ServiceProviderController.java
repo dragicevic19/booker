@@ -5,15 +5,13 @@ import com.example.demo.model.Offer;
 import com.example.demo.model.Property;
 import com.example.demo.model.PropertyOwner;
 import com.example.demo.model.ServiceProvider;
+import com.example.demo.service.OfferService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,9 @@ public class ServiceProviderController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OfferService offerService;
 
     @GetMapping("/my-offers/{userId}")
     @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
@@ -42,5 +43,21 @@ public class ServiceProviderController {
         }
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/my-offers/{offerId}")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity deleteOffer(@PathVariable Integer offerId) {
+        try {
+            Offer offer = offerService.findById(offerId);
+            if (offer == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            offerService.deleteOffer(offer);
+
+        } catch (Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

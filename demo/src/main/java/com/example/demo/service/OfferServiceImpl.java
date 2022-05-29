@@ -15,4 +15,10 @@ public class OfferServiceImpl implements OfferService {
     public Offer findById(Integer id) {
         return offerRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void deleteOffer(Offer offer) {
+        offer.setDeleted(true);
+        offerRepository.save(offer);
+    }
 }
