@@ -22,11 +22,15 @@ const NewCottage = ({edit, title}) => {
 
   const id = location.pathname.split("/")[4];
 
-  const { data, load, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
+  const { data, load, error} = useFetch(`http://localhost:8080/api/cottage/${id}`)
 
   const dispatch = useNotification();
 
   const { user } = useContext(AuthContext);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.accessToken}`,
+  }
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [services, setServices] = useState([])
@@ -85,11 +89,15 @@ const NewCottage = ({edit, title}) => {
       };
 
       if (edit){
-        await axios.post(`http://localhost:8080/auth/edit-cottage/${id}`, newCottage);  // put ne radi ???
-        sendNotification("success", "You successfully edit your cottage!");
+        await axios.post(`http://localhost:8080/api/edit-cottage/${id}`, newCottage, {
+          headers: headers
+        });  // put ne radi ???
+        sendNotification("success", "You successfully edited your cottage!");
       }
       else{
-        await axios.post("http://localhost:8080/auth/add-cottage", newCottage);
+        await axios.post("http://localhost:8080/api/add-cottage", newCottage, {
+          headers: headers
+        });
         sendNotification("success", "You successfully added a new cottage!");  
       }
       

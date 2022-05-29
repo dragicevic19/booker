@@ -6,4 +6,5 @@ public interface OfferService {
 
     Offer findById(Integer id);
 
+    void deleteOffer(Offer offer);
 }

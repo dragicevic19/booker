@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "auth/")
+@RequestMapping(value = "api/")
 public class CottageOwnerController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class CottageOwnerController {
 
 
     @PostMapping("add-cottage")
-//    @PreAuthorize("hasRole('COTTAGE_OWNER')")
+    @PreAuthorize("hasRole('COTTAGE_OWNER')")
     public ResponseEntity<Boolean> addCottage(@RequestBody CottageRequest cottageRequest) {
 
         CottageOwner c = (CottageOwner) userService.findById(cottageRequest.getOwner_id());
@@ -43,16 +43,14 @@ public class CottageOwnerController {
     }
 
     @PostMapping("edit-cottage/{cottageId}")
-//    @PreAuthorize("hasRole('COTTAGE_OWNER')")
+    @PreAuthorize("hasRole('COTTAGE_OWNER')")
     public ResponseEntity<Cottage> editCottage(@PathVariable Integer cottageId, @RequestBody CottageRequest cottageRequest){
 
         Cottage cottage = cottageService.findById(cottageId);
         if (cottage == null){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-
         cottage = cottageService.editCottage(cottage, cottageRequest);
-
         return new ResponseEntity<>(cottage, HttpStatus.OK);
     }
 }

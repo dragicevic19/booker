@@ -1,21 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
 import FormDialog from "../datatable/ExplanationDialog";
+import { AuthContext } from "../../../components/context/AuthContext";
 
 
 const RegRequests = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
-  const user = {id: 4, type: 'admin'} // ...
+  const {user} = useContext(AuthContext);
 
-  const { data, loading, error } = useFetch(`http://localhost:8080/auth/user/requests?enabled=false`);
+  const { data, loading, error } = useFetch(`http://localhost:8080/api/user/requests?enabled=false`);
 
   const columns = columnsData[user.type];
 
@@ -34,8 +33,12 @@ const RegRequests = () => {
   };
 
   const handleAccept = async (id) => {
-    fetch(`http://localhost:8080/auth/user/enable/${id}`, {
+    fetch(`http://localhost:8080/api/user/enable/${id}`, {
         //uspeo sam azurirati i bez method: PUT (sa tim sam imao problema pa sam ga pokusao izbeci)
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.accessToken}`,
+        },
       })
       try {
         setList(list.filter((item) => item.id !== id));
@@ -44,8 +47,11 @@ const RegRequests = () => {
 
   const handleReject = async (id) => {
 
-    fetch(`http://localhost:8080/auth/user/reject-request/${id}`, {
-        
+    fetch(`http://localhost:8080/api/user/reject-request/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.accessToken}`,
+      },
       })
     try {
       setList(list.filter((item) => item.id !== id));

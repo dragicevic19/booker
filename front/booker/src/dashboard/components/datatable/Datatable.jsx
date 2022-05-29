@@ -15,8 +15,13 @@ const Datatable = () => {
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
 	const { user } = useContext(AuthContext);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.accessToken}`,
+  }
 
-  const { data, loading, error } = useFetch(`http://localhost:8080/auth/${path}/${user.id}`);
+
+  const { data, loading, error } = useFetch(`http://localhost:8080/api/${path}/${user.id}`);
 
   const columns = columnsData[user.type];
 
@@ -26,9 +31,14 @@ const Datatable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/api/${path}/${id}`);
+      await axios.delete(`http://localhost:8080/api/${path}/${id}`, {
+        headers: headers
+      });
       setList(list.filter((item) => item.id !== id));
-    } catch (err) {}
+
+    } catch (err) {
+
+    }
   };
 
   const actionColumn = [

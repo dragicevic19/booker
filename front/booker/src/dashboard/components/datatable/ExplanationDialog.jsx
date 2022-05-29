@@ -6,10 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { TextareaAutosize } from '@mui/material';
+import { AuthContext } from '../../../components/context/AuthContext';
 
 export default function FormDialog({userId, handleAccept, handleReject}) {
+
+  const { user } = useContext(AuthContext);
 
   const [explanation, setExplanation] = useState('');
 
@@ -29,15 +32,24 @@ export default function FormDialog({userId, handleAccept, handleReject}) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch(`http://localhost:8080/auth/send-email/async?userId=${userId}&accepted=false&explanation=${explanation}`, {
+    const data = {
+      id: userId,
+      accepted: false,
+      explanation: explanation
+    }
+
+    fetch('http://localhost:8080/api/send-email', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(userId)
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.accessToken}`,
+        },
+        body: JSON.stringify(data)
       })
         .then(res => {
           if (!res.ok){
             if (res.status == 409){
-              console.log('email exists error');
+              console.log('email exists error'); // ?
             }
             throw Error('could not fetch data')
           } 
@@ -55,10 +67,20 @@ export default function FormDialog({userId, handleAccept, handleReject}) {
 
   const handleSubmitAccept = (e) => {
     e.preventDefault()
-    fetch(`http://localhost:8080/auth/send-email/async?userId=${userId}&accepted=true`, {
+
+    const data = {
+      id: userId,
+      accepted: true,
+      explanation: "",
+    }
+
+    fetch('http://localhost:8080/api/send-email', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(userId)
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.accessToken}`,
+        },
+        body: JSON.stringify(data)
       })
         .then(res => {
           if (!res.ok){

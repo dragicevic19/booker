@@ -65,9 +65,9 @@ const Header = ({type}) => {
 				</div>
 				{ type !== "list" && 
 					<>
-					<h1 className="headerTitle">Text</h1>
+					<h1 className="headerTitle">Welcome to The Booker!</h1>
 					<p className="headerDesc">
-						Napravi naloga za vise mogucnosti
+						Sign in and enjoy our accommodations!
 					</p>
 					{!user && <button className="headerBtn">Sign in / Register</button>}
 					<div className="headerSearch">

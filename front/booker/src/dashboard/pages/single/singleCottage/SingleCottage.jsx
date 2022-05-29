@@ -1,13 +1,13 @@
-import DashNavbar from "../../components/navbar/DashNavbar"
-import Sidebar from "../../components/sidebar/Sidebar"
+import DashNavbar from "../../../components/navbar/DashNavbar"
+import Sidebar from "../../../components/sidebar/Sidebar"
 import "./singleCottage.scss"
 
-import Gallery from "../../../components/gallery/Gallery";
-import Rating from "../../components/rating/Rating";
-import useFetch from "../../../hooks/useFetch"
+import Gallery from "../../../../components/gallery/Gallery";
+import Rating from "../../../components/rating/Rating";
+import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
-import BookingCalendar from "../../components/calendar/BookingCalendar"
+import BookingCalendar from "../../../components/calendar/BookingCalendar"
 import { Link } from "react-router-dom";
 
 const SingleCottage = () => {
@@ -20,7 +20,7 @@ const SingleCottage = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const { data, load, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
+  const { data, load, error} = useFetch(`http://localhost:8080/api/cottage/${id}`)
 
   useEffect(() => {
     setOffer(data);
