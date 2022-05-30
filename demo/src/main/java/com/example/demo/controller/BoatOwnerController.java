@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "auth/") // vrati na api/
+@RequestMapping(value = "api/") // vrati na api/
 public class BoatOwnerController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class BoatOwnerController {
     private BoatOwnerService boatOwnerService;
 
     @PostMapping("add-boat")
-//    @PreAuthorize("hasRole('BOAT_OWNER')")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Boolean> addBoat(@RequestBody BoatRequest boatRequest) {
 
         BoatOwner boatOwner = (BoatOwner) userService.findById(boatRequest.getOwner_id());

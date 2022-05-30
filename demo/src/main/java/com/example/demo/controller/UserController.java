@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.OfferToList;
+import com.example.demo.dto.RegRequestResponseDTO;
 import com.example.demo.dto.UserDataTable;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.Property;
 import com.example.demo.model.User;
 import com.example.demo.service.EmailService;
-import com.example.demo.service.EmailService2;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
 public class UserController {
 
@@ -39,13 +39,13 @@ public class UserController {
     // Ukoliko nema, server ce vratiti gresku 403 Forbidden
     // Korisnik jeste autentifikovan, ali nije autorizovan da pristupi resursu
     @GetMapping("/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public User loadById(@PathVariable Integer userId) {
         return this.userService.findById(userId);
     }
 
     @GetMapping("/user/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public List<User> loadAll() {
         return this.userService.findAll();
     }
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/user/requests")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<List<UserDataTable>> userRequests(@RequestParam("enabled") boolean enabled) {
         List<User> users = this.userService.findDisabledUsers(enabled);
         List<UserDataTable> userDataTableDTO = new ArrayList<>();
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @RequestMapping("/user/enable/{userId}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<User> enableUserAcc(@PathVariable Integer userId)
     {
         User userToBeFound = loadById(userId);
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @RequestMapping("/user/reject-request/{userId}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<User> rejectRequest(@PathVariable Integer userId)
     {
         User userToBeFound = loadById(userId);
@@ -87,13 +87,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/send-email/async")
-    public String sendemail(@RequestParam(name = "userId", required = true) String userId, @RequestParam(name = "accepted", required = true) boolean accepted, @RequestParam(name = "explanation", required = false) String explanation) throws InterruptedException, MessagingException, IOException {
+    @PostMapping("/send-email")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String sendEmail(@RequestBody RegRequestResponseDTO regReqRes) throws InterruptedException, MessagingException, IOException {
 
-        //slanje email-a
-        Integer id = Integer.parseInt(userId);
-        User user = userService.findById(id);
-        emailService.sendmail(user, accepted, explanation);
+        User user = userService.findById(regReqRes.getId());
+        emailService.sendmail(user, regReqRes.isAccepted(), regReqRes.getExplanation());
 
         return "success";
     }

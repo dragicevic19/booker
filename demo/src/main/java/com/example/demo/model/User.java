@@ -30,8 +30,8 @@ public class User implements UserDetails {
     @Column(name = "id", unique = true, nullable = false)
     protected Integer id;
 
-    @Column(name = "email", unique = true, nullable = false)
-    protected String email;
+    @Column(name = "email", unique = false, nullable = false)   // unique je false jer to proveravamo rucno kod
+    protected String email;                                     // registracije, a moze se desiti da obrisan korisnik ponovo trazi zahtev za reg? ili ne
 
     @Column(name = "password", nullable = false)
     protected String password;

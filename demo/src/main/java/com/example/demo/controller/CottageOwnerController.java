@@ -4,19 +4,17 @@ import com.example.demo.dto.CottageRequest;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.CottageOwner;
 import com.example.demo.service.CottageOwnerService;
+import com.example.demo.service.CottageService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "auth/")
+@RequestMapping(value = "api/")
 public class CottageOwnerController {
 
     @Autowired
@@ -25,8 +23,12 @@ public class CottageOwnerController {
     @Autowired
     private CottageOwnerService cottageOwnerService;
 
+    @Autowired
+    private CottageService cottageService;
+
+
     @PostMapping("add-cottage")
-//    @PreAuthorize("hasRole('COTTAGE_OWNER')")
+    @PreAuthorize("hasRole('COTTAGE_OWNER')")
     public ResponseEntity<Boolean> addCottage(@RequestBody CottageRequest cottageRequest) {
 
         CottageOwner c = (CottageOwner) userService.findById(cottageRequest.getOwner_id());
@@ -40,4 +42,15 @@ public class CottageOwnerController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @PostMapping("edit-cottage/{cottageId}")
+    @PreAuthorize("hasRole('COTTAGE_OWNER')")
+    public ResponseEntity<Cottage> editCottage(@PathVariable Integer cottageId, @RequestBody CottageRequest cottageRequest){
+
+        Cottage cottage = cottageService.findById(cottageId);
+        if (cottage == null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        cottage = cottageService.editCottage(cottage, cottageRequest);
+        return new ResponseEntity<>(cottage, HttpStatus.OK);
+    }
 }

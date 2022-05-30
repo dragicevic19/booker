@@ -1,25 +1,23 @@
-import { CommentsDisabledOutlined } from "@mui/icons-material";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/context/AuthContext";
 import "./login.css";
+import FormInput from "../../components/formInput/FormInput";
  
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
-    username: undefined,
+    email: undefined,
     password: undefined,
   });
 
-  const {  loading, error, dispatch } = useContext(AuthContext);
-
- 
+  const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate()
 
   const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleClick = async (e) => {
@@ -28,20 +26,10 @@ const Login = () => {
     dispatch({ type: "LOGIN_START" });
     
     try {
-      const res = await axios.post("http://localhost:8080/auth/login", {email:credentials.username, password:credentials.password});
-    //     const res =fetch('http://localhost:8080/auth/login', {
-    //     method: 'POST',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify({email:credentials.username, password:credentials.password})
-    //   })
-      
-
+      const res = await axios.post("http://localhost:8080/auth/login", {email:credentials.email, password:credentials.password});
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      
-      
       navigate("/")
     } catch (error) {
- 
       dispatch({ type: "LOGIN_FAILURE", payload: error });
     }
   };
@@ -50,24 +38,29 @@ const Login = () => {
   return (
     <div className="login">
       <div className="lContainer">
-        <input
-          type="text"
-          placeholder="username"
-          id="username"
+        <h1 className="loginTitle" onClick={()=>navigate('/')}>the booker</h1>
+        <FormInput
+          errorMessage="It should be a valid email address!"
+          label="Email"
+          required 
+          type="email"
+          placeholder="Email"
+          name="email"
           onChange={handleChange}
-          className="lInput"
+          // className="lInput"
         />
-        <input
+        <FormInput
+          label="Password"
           type="password"
-          placeholder="password"
-          id="password"
+          placeholder="Password"
+          name="password"
           onChange={handleChange}
-          className="lInput"
+          // className="lInput"
         />
         <button disabled={loading} onClick={handleClick} className="lButton">
           Login
         </button>
-        {error && <span className="wrong">The username or password is incorrect</span>}
+        {error && <span className="wrong">The email or password is incorrect</span>}
       </div>
     </div>
   );

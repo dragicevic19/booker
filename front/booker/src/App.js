@@ -5,10 +5,9 @@ import DashboardHome from "./dashboard/pages/home/DashboardHome"
 import List from './dashboard/pages/list/List';
 import RegReqList from './dashboard/pages/list/RegReqList';
 import Login from './pages/login/Login';
- 
-// import NewCottage from './dashboard/pages/newCottage/NewCottage';
 import New from './dashboard/pages/new/New';
 import NotificationProvider from './components/notification/NotificationProvider';
+import Single from './dashboard/pages/single/Single';
 
 
 function App() {
@@ -29,8 +28,9 @@ function App() {
               <Route index element={<DashboardHome />} />
               <Route path='my-offers'>
                 <Route index element={<List />} />
-                <Route path=':id' element />
-                <Route path='new' element={<NotificationProvider><New /></NotificationProvider>} />
+                <Route path=':id' element={<Single />} />
+                <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
+                <Route path='edit/:id' element={<NotificationProvider> <New edit={true} title={'Edit Cottage'}/> </NotificationProvider>} />
               </Route> 
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />

@@ -36,10 +36,6 @@ public class UserServiceImpl implements UserService {
     private OfferRepository offerRepository;
 
 
-
-//    @Autowired
-//    private PropertyOwnerRepository propOwnerRepo;
-
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -57,38 +53,40 @@ public class UserServiceImpl implements UserService {
     @Override
     public User enableUser(User user) {
         user.setEnabled(true);
+        return this.userRepository.save(user);
 
-        switch (user.getRoles().get(0).getName()) {
-            case "ROLE_BOAT_OWNER":
-                return boatOwnerService.updateUser(user);
-            case "ROLE_COTTAGE_OWNER":
-                return cottageOwnerService.updateUser(user);
-            case "ROLE_CLIENT":
-                return clientService.updateUser(user);
-            case "ROLE_INSTRUCTOR":
-                return fishingInstructorService.updateUser(user);
-            default:
-                return null;
-        }
+//        switch (user.getRoles().get(0).getName()) {
+//            case "ROLE_BOAT_OWNER":
+//                return boatOwnerService.updateUser(user);
+//            case "ROLE_COTTAGE_OWNER":
+//                return cottageOwnerService.updateUser(user);
+//            case "ROLE_CLIENT":
+//                return clientService.updateUser(user);
+//            case "ROLE_INSTRUCTOR":
+//                return fishingInstructorService.updateUser(user);
+//            default:
+//                return null;
+//        }
 
     }
 
     @Override
     public User rejectRequest(User user) {
         user.setDeleted(true);
+        return this.userRepository.save(user);
 
-        switch (user.getRoles().get(0).getName()) {
-            case "ROLE_BOAT_OWNER":
-                return boatOwnerService.updateUser(user);
-            case "ROLE_COTTAGE_OWNER":
-                return cottageOwnerService.updateUser(user);
-            case "ROLE_CLIENT":
-                return clientService.updateUser(user);
-            case "ROLE_INSTRUCTOR":
-                return fishingInstructorService.updateUser(user);
-            default:
-                return null;
-        }
+//        switch (user.getRoles().get(0).getName()) {
+//            case "ROLE_BOAT_OWNER":
+//                return boatOwnerService.updateUser(user);
+//            case "ROLE_COTTAGE_OWNER":
+//                return cottageOwnerService.updateUser(user);
+//            case "ROLE_CLIENT":
+//                return clientService.updateUser(user);
+//            case "ROLE_INSTRUCTOR":
+//                return fishingInstructorService.updateUser(user);
+//            default:
+//                return null;
+//        }
     }
 
     @Override

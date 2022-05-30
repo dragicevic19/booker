@@ -131,12 +131,10 @@ const Registration = () => {
             console.log('unknown error')
             throw Error('Unknown fetch error occurred!')
           } 
-          console.log(res)
           return res.json()
         })
         .then(data => {
           sendNotification("success", "You successfully sent a request for registration. Please wait for administrator to approve your request!");
-          console.log(data);
         })
         .catch(err => {
           sendNotification("error", err.message)

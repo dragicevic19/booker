@@ -1,20 +1,20 @@
 import "./new.scss"
 import NewCottage from './newCottage/NewCottage'
 import NewBoat from './newBoat/NewBoat'
-import { useState } from "react"
+import NewLesson from "./newLesson/NewLesson"
+import { useContext, useState } from "react"
+import { AuthContext } from "../../../components/context/AuthContext"
 
-const New = () => {
 
-  const [user, setUser] = useState({
-    id: 2,
-    type: "cottage_owner"
-  })
+  const New = ({edit, title}) => {
+
+	const { user } = useContext(AuthContext);
 
   return (
     <div className='new'>
-      { user.type === "cottage_owner" && <NewCottage /> }
-      { user.type === "boat_owner" && <NewBoat /> }
-      {/* { user.type === "instructor" && <NewLesson /> } */}
+      { user.type === "ROLE_COTTAGE_OWNER" && <NewCottage edit={edit} title={title}/> }
+      { user.type === "ROLE_BOAT_OWNER" && <NewBoat /> }
+      { user.type === "ROLE_INSTRUCTOR" && <NewLesson /> }
     </div>
   )
 }

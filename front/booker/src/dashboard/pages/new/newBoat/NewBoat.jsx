@@ -1,7 +1,8 @@
 import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AdditionalServicesModal from "../../../../components/additionalServicesModal/AdditionalServicesModal";
+import { AuthContext } from "../../../../components/context/AuthContext";
 import FormInput from "../../../../components/formInput/FormInput";
 import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 import GearModalInput from "../../../../components/gearModal/gearModalInput/GearModalInput";
@@ -16,7 +17,12 @@ const NewBoat = () => {
 
   const dispatch = useNotification();
 
-  const user = {id: 1, type:"boat_owner"}
+  const { user } = useContext(AuthContext);
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.accessToken}`,
+  }
 
   const [showAddServices, setShowAddServices] = useState(false);
   const [showFishingGear, setShowFishingGear] = useState(false);
@@ -75,7 +81,9 @@ const NewBoat = () => {
         owner_id: user.id,
       };
 
-      await axios.post("http://localhost:8080/auth/add-boat", newBoat);
+      await axios.post("http://localhost:8080/api/add-boat", newBoat, {
+        headers: headers
+      });
 
       sendNotification("success", "You successfully added a new boat!");
 
@@ -116,39 +124,6 @@ const NewBoat = () => {
     setValues({...values, ["boatType"]: e.target.value}); 
   }
 
-  // const handleImages = async (e) => {
-  //   console.log("handleImages");
-  //   console.log(files);
-    
-  //   try {
-  //     const list = await Promise.all(
-  //       Object.values(files).map(async (file) => {
-  //         console.log('usao ovde')
-  //         const data = new FormData();
-  //         data.append("file", file);
-  //         data.append("upload_preset", "upload");
-  //         const uploadRes = await axios.post(
-  //           "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
-  //           data
-  //         );
-
-  //         const { url } = uploadRes.data;
-  //         return url;
-  //       })
-  //     ).then((list) => {
-  //       setValues({ ['images']: list })
-  //       console.log(values.images)
-  //     });
-      
-  //   } catch (err) {console.log(err)}
-  // };
-
-  // const onBtn = (e) => {
-  //   e.preventDefault();
-  //   console.log('btn')
-  //   console.log(files)
-  // }
-
   return (
     <div className="newBoat">
       <Sidebar />
@@ -161,15 +136,6 @@ const NewBoat = () => {
           <div className="left">
             <div className="images">
               <span>Uploaded images:</span>
-              {/* {values.images.map((photo, i) => (
-                <div className="imgWrapper" key={i}>
-                  <img
-                    className="img"
-                    src={URL.createObjectURL(photo)}
-                    alt=""  
-                  />
-                </div>
-              ))} */}
               <img
                 src={
                   files
@@ -178,7 +144,6 @@ const NewBoat = () => {
                 }
                 alt=""
               />
-
             </div>
           </div>
           <div className="right">
