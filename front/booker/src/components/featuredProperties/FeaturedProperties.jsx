@@ -3,7 +3,7 @@ import useFetch from "../../hooks/useFetch";
 
 const FeaturedProperties = () => {
   const {  data, loading, error } = useFetch("http://localhost:8080/auth/cottages/4offers");
-  
+ 
   return (
     <div className="fp">
     {loading ? (

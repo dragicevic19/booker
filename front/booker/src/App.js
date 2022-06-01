@@ -8,7 +8,7 @@ import Login from './pages/login/Login';
 import New from './dashboard/pages/new/New';
 import NotificationProvider from './components/notification/NotificationProvider';
 import Single from './dashboard/pages/single/Single';
-
+import Hotels from './pages/hotels/Hotels';
 
 function App() {
 
@@ -22,6 +22,7 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
+              <Route path="/hotels" element={<Hotels/>}/>
             </Route>
 
             <Route path='/dashboard'>
