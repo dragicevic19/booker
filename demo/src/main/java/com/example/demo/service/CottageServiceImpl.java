@@ -26,6 +26,11 @@ public class CottageServiceImpl implements CottageService{
     }
 
     @Override
+    public List<Cottage> findAll() {
+        return cottageRepository.findAll();
+    }
+
+    @Override
     public Cottage editCottage(Cottage cottage, CottageRequest cottageRequest) {
         cottage.setName(cottageRequest.getCottageName());
         Address a = new Address();
