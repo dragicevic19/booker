@@ -23,8 +23,8 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
-              <Route path="/hotels" element={<Hotels/>}/>
-              <Route path="/hotels/:id" element={<Cottage/>}/>
+              <Route path="/cottages" element={<Hotels/>}/>
+              <Route path="/cottages/:id" element={<Cottage/>}/>
             </Route>
 
             <Route path='/dashboard'>

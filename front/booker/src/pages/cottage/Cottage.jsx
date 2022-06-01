@@ -91,7 +91,7 @@ const Cottage = () => {
               Book a stay for ${data.price} at this property.
             </span>
             <div className="cottageImages">
-             <img src={data.images[0]}/> 
+             <img className="photo" src={data.images[0]}/> 
               <Gallery photos={data.images}/> 
               
               

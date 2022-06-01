@@ -1,9 +1,12 @@
 import "./featuredProperties.css"
 import useFetch from "../../hooks/useFetch";
+import { useNavigate } from "react-router";
 
 const FeaturedProperties = () => {
   const {  data, loading, error } = useFetch("http://localhost:8080/auth/cottages/4offers");
  
+  const navigate = useNavigate();
+
   return (
     <div className="fp">
     {loading ? (
@@ -11,7 +14,7 @@ const FeaturedProperties = () => {
     ) : (
       <>
         {data.map((item) => (
-          <div className="fpItem" key={item.id}>
+          <div className="fpItem" onClick={() => navigate(`/cottages/${item.id}`)} key={item.id}>
             <img
               src={item.images[0]}
               alt=""
