@@ -82,7 +82,7 @@ const Cottage = () => {
             <h1 className="cottageTitle">{data.name}</h1>
             <div className="cottageAddress">
               <FontAwesomeIcon icon={faLocationDot} />
-             
+              {data.address.city}, {data.address.street}
             </div>
             <span className="cottageDistance">
               Excellent location – {}m from center
