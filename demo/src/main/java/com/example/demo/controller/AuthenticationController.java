@@ -101,6 +101,13 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
+
+    @GetMapping("cottages")
+    public ResponseEntity<List<Cottage>> getOffers(){
+        List<Cottage> cotlist = cottageService.findAll();
+        return new ResponseEntity<>(cotlist, HttpStatus.OK);
+    }
+
     @GetMapping("cottage/{cottageId}")
     public ResponseEntity<Cottage> loadCottage(@PathVariable Integer cottageId) {
 

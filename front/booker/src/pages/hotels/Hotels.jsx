@@ -22,7 +22,7 @@ const Hotels = () => {
   //  "http://localhost:8080/auth/cottages/4offers"                 //ovo je metoda za pocetnu prava treba da vrati sve ili paramterizovano
   // );
 
-  const {  data, loading, error,reFetch } = useFetch("http://localhost:8080/auth/cottages/4offers");
+  const {  data, loading, error,reFetch } = useFetch("http://localhost:8080/auth/cottages");
  console.log(data);
   
  
