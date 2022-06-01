@@ -3,15 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.dto.JwtAuthenticationRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
-import com.example.demo.exception.ResourceConflictException;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.User;
-import com.example.demo.service.BoatOwnerService;
 import com.example.demo.service.CottageService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -105,4 +101,16 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
+    @GetMapping("cottage/{cottageId}")
+    public ResponseEntity<Cottage> loadCottage(@PathVariable Integer cottageId) {
+
+        Cottage cottage = cottageService.findById(cottageId);
+        if (cottage == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(cottage, HttpStatus.OK);
+    }
+
+
 }
