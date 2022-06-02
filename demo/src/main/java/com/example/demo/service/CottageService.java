@@ -10,7 +10,7 @@ public interface CottageService {
 
     public Cottage findById(Integer id);
     public Integer countCottagesByCity(String c);
-
+    public List<Cottage> findAll();
     Cottage editCottage(Cottage cottage, CottageRequest cottageRequest);
     public List<Cottage> fourOffers();
 
