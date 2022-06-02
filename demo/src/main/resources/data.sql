@@ -134,13 +134,29 @@ insert into service_provider (id, loyalty_id) values (3, 3);
 insert into fishing_instructor (biography, id) values ('Short biography', 3);
 
 insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
-    values (80, 2, false, 'desc of lesson', 'casovi pecanja', '18+', 5, 7, 3, 100);
+    values (80, 2, false, 'desc of lesson', 'Casovi pecanja', '18+', 5, 7, 3, 100);
 insert into fishing_lesson (id) values (6);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 6);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 6);
 insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'stap');
 insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'mamac');
 insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'masinica');
+insert into offer_images (offer_id, images) values (6, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207558/upload/hatycpo2fbzvyjwrhyrn.jpg');
+insert into offer_images (offer_id, images) values (6, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207558/upload/gaffi6jy3sxkkcis8low.jpg');
+insert into offer_images (offer_id, images) values (6, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207559/upload/yhnsffkpf9hjzomol0vx.jpg');
+
+
+insert into offer (cancellation_fee, capacity, deleted, description, name, regulations, address_id, rating_id, offer_owner_id, price)
+values (80, 2, false, 'desc of lesson', 'Catfish fishing', '18+', 5, 7, 3, 100);
+insert into fishing_lesson (id) values (7);
+insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 6);
+insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 6);
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, 'stap');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, 'mamac');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, 'masinica');
+insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207212/upload/ligzj6z6r8zgu0pvartj.jpg');
+insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207212/upload/moc6hektueywjn7ewmgn.jpg');
+insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207213/upload/obdgznczhsoq64tjb4ip.jpg');
 
 
 
