@@ -141,7 +141,6 @@ const NewCottage = ({edit, title}) => {
             "https://api.cloudinary.com/v1_1/bookerapp/image/upload",
             data
           );
-
           const { url } = uploadRes.data;
           return url;
         })
