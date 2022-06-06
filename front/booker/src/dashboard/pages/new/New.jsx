@@ -13,7 +13,7 @@ import { AuthContext } from "../../../components/context/AuthContext"
   return (
     <div className='new'>
       { user.type === "ROLE_COTTAGE_OWNER" && <NewCottage edit={edit} title={title}/> }
-      { user.type === "ROLE_BOAT_OWNER" && <NewBoat /> }
+      { user.type === "ROLE_BOAT_OWNER" && <NewBoat edit={edit} title={title}/> }
       { user.type === "ROLE_INSTRUCTOR" && <NewLesson edit={edit} title={title} /> }
     </div>
   )

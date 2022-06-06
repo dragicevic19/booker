@@ -4,6 +4,7 @@ import com.example.demo.dto.BoatRequest;
 import com.example.demo.dto.CottageRequest;
 import com.example.demo.model.*;
 import com.example.demo.service.BoatOwnerService;
+import com.example.demo.service.BoatService;
 import com.example.demo.service.UserService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,13 @@ public class BoatOwnerController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private BoatOwnerService boatOwnerService;
+
+    @Autowired
+    private BoatService boatService;
+
 
     @PostMapping("add-boat")
     @PreAuthorize("hasRole('BOAT_OWNER')")
@@ -36,6 +42,18 @@ public class BoatOwnerController {
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("edit-boat/{boatId}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
+    public ResponseEntity<Boat> editBoat(@PathVariable Integer boatId, @RequestBody BoatRequest boatRequest){
+
+        Boat boat = boatService.findById(boatId);
+        if (boat == null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        boat = boatService.editBoat(boat, boatRequest);
+        return new ResponseEntity<>(boat, HttpStatus.OK);
     }
 
 

@@ -9,20 +9,21 @@ import { columnsData } from "../../datatablesource";
 import { AuthContext } from "../../../components/context/AuthContext";
 
 
-const Datatable = () => {
+const DatatableAdmin = ({userType, entityType}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [list, setList] = useState();
-	const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${user.accessToken}`,
   }
-
-  const { data, loading, error } = useFetch(`http://localhost:8080/api/${path}/${user.id}`);
-
-  const columns = columnsData[user.type];
+  
+  const { data, loading, error } = useFetch(`http://localhost:8080/api/${entityType}`);
+  
+  const columns = columnsData[userType];
 
   useEffect(() => {
     setList(data);
@@ -40,6 +41,11 @@ const Datatable = () => {
     }
   };
 
+  const capitalize = (str) =>
+  {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   const actionColumn = [
     {
       field: "action",
@@ -53,12 +59,6 @@ const Datatable = () => {
               className="viewButton"
             >View
             </div>
-            <div 
-              onClick={()=>navigate(`/dashboard/${path}/edit/${params.row.id}`)}
-              className="editButton"
-              disabled={params.row.status ==="reserved"}
-            >Edit
-            </div>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
@@ -66,9 +66,6 @@ const Datatable = () => {
             >
               Delete
             </div>
-            <Link to={`/dashboard/${path}/new-action/${params.row.id}`} style={{ textDecoration: "none"}}>
-              <div className="newActionButton">New Action</div>
-            </Link>
           </div>
         );
       },
@@ -77,9 +74,9 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        <Link to={`/dashboard/${path}/new`} className="link">
-          Add New
-        </Link>
+        {entityType === "service_providers" && "Service Providers"}
+        {entityType === "lessons" && "Fishing Lessons"}
+        {entityType !== "service_providers" && entityType !== "lessons" && capitalize(entityType)}
       </div>
       <DataGrid
         className="datagrid"
@@ -94,4 +91,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable
+export default DatatableAdmin

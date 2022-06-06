@@ -14,6 +14,7 @@ public interface UserService extends UserDetailsService {
     List<Offer> findUsersOffers(ServiceProvider s);
     List<User> findDisabledUsers(boolean enabled);
     User enableUser(User user);
-
     User rejectRequest(User user);
+
+    void deleteUser(User serviceProvider);
 }

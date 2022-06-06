@@ -1,6 +1,6 @@
 import DashNavbar from "../../../components/navbar/DashNavbar"
 import Sidebar from "../../../components/sidebar/Sidebar"
-import "./singleLesson.scss"
+import "./singleBoat.scss"
 
 import Gallery from "../../../../components/gallery/Gallery";
 import Rating from "../../../components/rating/Rating";
@@ -9,8 +9,9 @@ import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
 import BookingCalendar from "../../../components/calendar/BookingCalendar"
 import { Link } from "react-router-dom";
+import { boatTypes } from "../../../formSource";
 
-const SingleLesson = () => {
+const SingleBoat = () => {
 
   const location = useLocation();
 
@@ -20,7 +21,7 @@ const SingleLesson = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const { data, load, error} = useFetch(`http://localhost:8080/api/lesson/${id}`)
+  const { data, load, error} = useFetch(`http://localhost:8080/api/boat/${id}`)
 
   useEffect(() => {
     setOffer(data);
@@ -30,6 +31,15 @@ const SingleLesson = () => {
   }, [data])
 
   console.log(offer);
+
+  const formatBoatType = (rawType) => 
+  {
+    for(let i in boatTypes)
+    {
+      if (boatTypes[i].value === rawType)
+        return boatTypes[i].type;
+    }
+  }
 
   // samo za prikaz jer nemamo jos uvek rezervacije uradjene
   const bookings = [
@@ -44,7 +54,7 @@ const SingleLesson = () => {
   
   
   return (
-    <div className="singleLesson">
+    <div className="singleBoat">
       <Sidebar />
       {!loading && <div className="singleContainer">
         <DashNavbar />
@@ -90,8 +100,32 @@ const SingleLesson = () => {
                   <span className="itemValue">{offer.description}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Included equipment:</span><br/>
-                  <span className="itemValue">{offer.fishingEquipment}</span>
+                  <span className="itemKey">Type:</span><br/>
+                  <span className="itemValue">{formatBoatType(offer.type)}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Length:</span><br/>
+                  <span className="itemValue">{offer.length}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Engine Number:</span><br/>
+                  <span className="itemValue">{offer.engineNum}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Engine Power:</span><br/>
+                  <span className="itemValue">{offer.enginePow}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Max Speed:</span><br/>
+                  <span className="itemValue">{offer.maxSpeed}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Navigation Equipment:</span><br/>
+                  <span className="itemValue">{offer.navEquipment}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Fishing Equipment:</span><br/>
+                  <span className="itemValue">{offer.description}</span>
                 </div>
               </div>
             </div>
@@ -117,4 +151,4 @@ const SingleLesson = () => {
   )
 }
 
-export default SingleLesson
+export default SingleBoat

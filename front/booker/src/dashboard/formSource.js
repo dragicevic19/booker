@@ -309,7 +309,7 @@ export const boatInputs = [
     id: 12,
     name:"boatType",
     select: true,
-
+    type: "select",
   },
   {
     id:13,

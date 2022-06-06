@@ -96,32 +96,47 @@ const Sidebar = () => {
       { (user.type === 'ROLE_ADMIN' || user.type === 'ROLE_SUPER_ADMIN') && (<><ul>
       <p className="title">OFFERS</p>
 
-      <li>
-        <CottageOutlinedIcon className="icon" />
-        <span>Cottages</span>
-      </li>
-      <li>
-        <SailingIcon className="icon" />
-        <span>Boats</span>
-      </li>
-      <li>
-        <PhishingIcon className="icon" />
-        <span>Fishing Lessons</span>
-      </li>
+      <Link to="/dashboard/cottages" style={{textDecoration: "none"}}>
+        <li>
+          <CottageOutlinedIcon className="icon"/>
+          <span>Cottages</span>
+        </li>
+      </Link>
+      
+      <Link to="/dashboard/boats" style={{textDecoration: "none"}}>
+        <li>
+          <SailingIcon className="icon" />
+          <span>Boats</span>
+        </li>
+      </Link>
+      
+      <Link to="/dashboard/lessons" style={{textDecoration: "none"}}>
+        <li>
+          <PhishingIcon className="icon" />
+          <span>Fishing Lessons</span>
+        </li>
+      </Link>
 
       <p className="title">USERS</p>
-      <li>
-        <GroupIcon className="icon" />
-        <span>Clients</span>
-      </li>
-      <li>
-        <SupervisedUserCircleIcon className="icon" />
-        <span>Service Providers</span>
-      </li>
-      <li>
-        <AdminPanelSettingsIcon className="icon" />
-        <span>Administrators</span>
-      </li>
+      <Link to="/dashboard/clients" style={{textDecoration: "none"}}>
+        <li>
+          <GroupIcon className="icon" />
+          <span>Clients</span>
+        </li>
+      </Link>
+
+      <Link to="/dashboard/service_providers" style={{textDecoration: "none"}}>
+        <li>
+          <SupervisedUserCircleIcon className="icon" />
+          <span>Service Providers</span>
+        </li>
+      </Link>
+      <Link to="/dashboard/administrators" style={{textDecoration: "none"}}>
+        {user.type === 'ROLE_SUPER_ADMIN' && <li>
+          <AdminPanelSettingsIcon className="icon" />
+          <span>Administrators</span>
+        </li>}
+      </Link>
 
       <p className="title">REQUESTS</p>
       <Link to="/dashboard/reg-req" style={{textDecoration: "none"}}>
