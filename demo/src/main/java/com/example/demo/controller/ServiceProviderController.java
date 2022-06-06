@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.OfferToList;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Property;
-import com.example.demo.model.PropertyOwner;
-import com.example.demo.model.ServiceProvider;
+import com.example.demo.model.*;
 import com.example.demo.service.OfferService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

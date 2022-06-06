@@ -10,4 +10,8 @@ import java.util.List;
 public interface FishingLessonService {
     public FishingLesson findById(Integer id);
     FishingLesson editFishingLesson(FishingLesson fishingLesson, FishingLessonRequest fishingLessonRequest);
+
+    List<FishingLesson> findAll();
+
+    void deleteFishingLesson(FishingLesson fishingLesson);
 }

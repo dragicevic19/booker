@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.FishingLesson;
+import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
 import com.example.demo.service.FishingLessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class OfferControler {
 
     @Autowired
     FishingLessonService fishingLessonService;
+
+    @Autowired
+    BoatService boatService;
 
 
    // @PreAuthorize("hasRole('COTTAGE_OWNER')")   // da li za ovu funkciju treba autorizacija i autentifikacija jer ce je koristiti i neulogovani verovatno?
@@ -44,6 +49,17 @@ public class OfferControler {
         }
 
         return new ResponseEntity<>(fishingLesson, HttpStatus.OK);
+    }
+
+    @GetMapping("boat/{boatId}")
+    public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
+
+        Boat boat = boatService.findById(boatId);
+        if (boat == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(boat, HttpStatus.OK);
     }
 
 }

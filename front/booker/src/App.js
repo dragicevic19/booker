@@ -10,6 +10,7 @@ import NotificationProvider from './components/notification/NotificationProvider
 import Single from './dashboard/pages/single/Single';
 import Hotels from './pages/hotels/Hotels';
 import Cottage from './pages/cottage/Cottage';
+import { Switch } from '@mui/material';
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
             <Route path='/dashboard'>
               <Route index element={<DashboardHome />} />
               <Route path='my-offers'>
-                <Route index element={<List />} />
+                <Route index element={<List adminRequest={false} serviceType={"offers"}/>} />
                 <Route path=':id' element={<Single />} />
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
                 <Route path='edit/:id' element={<NotificationProvider> <New edit={true} title={'Edit Cottage'}/> </NotificationProvider>} />
@@ -40,6 +41,37 @@ function App() {
               <Route path='reports' element={<></>} />
               <Route path='profile' element={<></>} />
               <Route path="reg-req" element={<RegReqList />}/>
+              
+              <Route path="cottages"> 
+                <Route index element={<List adminRequest={true} userType={'ROLE_COTTAGE_OWNER'} entityType={"cottages"}/>}/>
+                <Route path=':id' element={<Single singleType="single_cottage"/>} />
+              </Route> 
+
+              <Route path="boats">
+                <Route index element={<List adminRequest={true} userType={'ROLE_BOAT_OWNER'} entityType={"boats"}/>}/>
+                <Route path=':id' element={<Single singleType="single_boat"/>} />
+              </Route> 
+              
+              <Route path="lessons">
+                <Route index element={<List adminRequest={true} userType={'ROLE_INSTRUCTOR'} entityType={"lessons"}/>}/>
+                <Route path=':id' element={<Single singleType="single_lesson"/>} />
+              </Route> 
+
+              <Route path="service_providers">
+                <Route index element={<List adminRequest={true} userType={'ROLE_ADMIN'} entityType={"service_providers"}/>}/>
+                <Route path=':id' element={<Single singleType="single_service_provider"/>} />
+              </Route> 
+
+              <Route path="clients">
+                <Route index element={<List adminRequest={true} userType={'ROLE_ADMIN'} entityType={"clients"}/>}/>
+                <Route path=':id' element={<Single singleType="single_client"/>} />
+              </Route> 
+
+              <Route path="administrators">
+                <Route index element={<List adminRequest={true} userType={'ROLE_SUPER_ADMIN'} entityType={"administrators"}/>}/>
+                <Route path=':id' element={<Single singleType="single_administrator"/>} />
+              </Route> 
+
             </Route>
           </Routes>
         </div>

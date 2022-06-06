@@ -7,7 +7,9 @@ import FormInput from "../../formInput/FormInput";
 
 const GearModalInput = ({title, gear, setGear, showGear, setShowGear}) => {
 
-  const [gearName, setGearName] = useState("");
+  //ostaviti space zbog razdvajanja pojedine opreme 
+  //najjednostavnije je bilo ovako raditi, nisam se hteo cimati
+  const [gearName, setGearName] = useState(" ");
 
   const handleSubmit = () => {
   }

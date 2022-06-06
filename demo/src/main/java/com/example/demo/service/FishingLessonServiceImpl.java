@@ -8,6 +8,8 @@ import com.example.demo.repository.FishingLessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class FishingLessonServiceImpl implements FishingLessonService{
@@ -38,5 +40,16 @@ public class FishingLessonServiceImpl implements FishingLessonService{
         fishingLesson.setFishingEquipment(fishingLessonRequest.getFishingGear());
 
         return this.fishingLessonRepository.save(fishingLesson);
+    }
+
+    @Override
+    public List<FishingLesson> findAll() {
+        return fishingLessonRepository.findAll();
+    }
+
+    @Override
+    public void deleteFishingLesson(FishingLesson fishingLesson) {
+        fishingLesson.setDeleted(true);
+        fishingLessonRepository.save(fishingLesson);
     }
 }

@@ -138,9 +138,9 @@ insert into offer (cancellation_fee, capacity, deleted, description, name, regul
 insert into fishing_lesson (id) values (6);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 6);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 6);
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'stap');
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'mamac');
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, 'masinica');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, ' stap');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, ' mamac');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (6, ' masinica');
 insert into offer_images (offer_id, images) values (6, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207558/upload/hatycpo2fbzvyjwrhyrn.jpg');
 insert into offer_images (offer_id, images) values (6, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207558/upload/gaffi6jy3sxkkcis8low.jpg');
 insert into offer_images (offer_id, images) values (6, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207559/upload/yhnsffkpf9hjzomol0vx.jpg');
@@ -151,9 +151,9 @@ values (80, 2, false, 'desc of lesson', 'Catfish fishing', '18+', 5, 7, 3, 100);
 insert into fishing_lesson (id) values (7);
 insert into additional_service (description, price, title, offer_id) values ('desc of free additional service', 0, 'Additional Service 1 for lesson 1', 6);
 insert into additional_service (description, price, title, offer_id) values ('desc of additional service2', 29, 'Additional Service 2 for lesson', 6);
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, 'stap');
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, 'mamac');
-insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, 'masinica');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, ' stap');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, ' mamac');
+insert into fishing_lesson_fishing_equipment (fishing_lesson_id, fishing_equipment) values (7, ' masinica');
 insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207212/upload/ligzj6z6r8zgu0pvartj.jpg');
 insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207212/upload/moc6hektueywjn7ewmgn.jpg');
 insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.com/bookerapp/image/upload/v1654207213/upload/obdgznczhsoq64tjb4ip.jpg');
@@ -167,5 +167,27 @@ insert into users (
 insert into administrator (id) values (4);
 insert into super_admin (id) values (4);
 insert into user_role (user_id, role_id) values (4, 6);
+
+
+
+insert into users (
+    is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
+VALUES (false, 'obicanadmin@gmail.com', true, 'Admin', 'Adminic', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0632333236', 7, 4);
+insert into administrator (id) values (5);
+insert into user_role (user_id, role_id) values (5, 5);
+
+
+insert into users (
+    is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
+VALUES (false, 'klijent1@gmail.com', true, 'Milenko', 'Savic', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0632313236', 7, 4);
+insert into client (id, num_of_penalties, loyalty_id) values (6, 0, 1);
+insert into user_role (user_id, role_id) values (6, 4);
+
+
+insert into users (
+    is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
+VALUES (false, 'klijent2@gmail.com', true, 'Isidor', 'Stefanovski', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0612313236', 7, 4);
+insert into client (id, num_of_penalties, loyalty_id) values (7, 0, 2);
+insert into user_role (user_id, role_id) values (7, 4);
 
 

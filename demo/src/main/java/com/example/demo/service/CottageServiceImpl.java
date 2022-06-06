@@ -53,4 +53,10 @@ public class CottageServiceImpl implements CottageService{
         return cottageRepository.getAllByOrderByRating();
     }
 
+    @Override
+    public void deleteCottage(Cottage cottage) {
+        cottage.setDeleted(true);
+        cottageRepository.save(cottage);
+    }
+
 }

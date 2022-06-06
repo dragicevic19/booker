@@ -14,4 +14,5 @@ public interface CottageService {
     Cottage editCottage(Cottage cottage, CottageRequest cottageRequest);
     public List<Cottage> fourOffers();
 
+    void deleteCottage(Cottage cottage);
 }
