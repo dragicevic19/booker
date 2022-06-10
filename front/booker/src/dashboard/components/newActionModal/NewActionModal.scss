@@ -27,6 +27,19 @@
       flex-direction: column;
       gap: 10px;
 
+      .addBtn {
+        width: 450px;
+        height: 50px;
+        padding: 10px;
+        margin: 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
       .inputsWrapper{
         display: flex;
         flex-direction: row;
@@ -73,17 +86,6 @@
       }
     }
 
-    .addBtn {
-      width: 650px;
-      height: 50px;
-      padding: 10px;
-      margin: 15px;
-      border: none;
-      border-radius: 5px;
-      background-color: green;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    
   }
 }

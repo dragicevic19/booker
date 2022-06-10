@@ -1,34 +1,69 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./NewActionModal.scss";
 import DateBox from 'devextreme-react/date-box';
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import Calendar from "../calendar/Calendar"
 import FormInput from "../../../components/formInput/FormInput";
 import { SelectBox } from "devextreme-react";
+import axios from "axios";
+import { AuthContext } from "../../../components/context/AuthContext";
 
-const NewActionModal = ({action, setAction, showAddActionModal, setShowAddActionModal}) => {
+const NewActionModal = ({offerId, setAction, showAddActionModal, setShowAddActionModal}) => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
+
+  const { user } = useContext(AuthContext);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.accessToken}`,
+  }
   
-  const [showPrice, setShowPrice] = useState(false);
   const addBtnClick = (e) => {
     e.preventDefault();
+    try{
+      let newPeriod = null;
+      if (type==='SALE - Fast Reservation'){
+        newPeriod = {
+          startDate: startDate,
+          endDate: endDate,
+          price: price,
+        }
+        axios.post(`http://localhost:8080/api/newDiscount/${offerId}`, newPeriod, {
+          headers: headers
+        });
+      }
+      else{
+        newPeriod = {
+          startDate: startDate,
+          endDate: endDate
+        }
+        axios.post(`http://localhost:8080/api/unavailable-period/${offerId}`, newPeriod, {
+          headers: headers
+        });
+      }
+      
+    } catch(error){
+      console.log(error)
+    }
   }
 
   const handleSubmit = () => {
-
   }
 
-  const handleSelect = () => {
-
+  const onClose = () => {
+    setStartDate("");
+    setEndDate("");
+    setPrice("");
+    setType("");
+    setShowAddActionModal(!showAddActionModal);
   }
 
   return (
     <>
-    <Dialog fullWidth maxWidth="xl" className="dialog" open={showAddActionModal} onClose={() => setShowAddActionModal(!showAddActionModal)} onSubmit={handleSubmit}>
+    <Dialog fullWidth maxWidth="xl" className="dialog" open={showAddActionModal} onClose={onClose} onSubmit={handleSubmit}>
       <DialogTitle className="dialogTitle">Add new period of occupancy</DialogTitle>
       <hr/>
       <DialogContent className="dialogContent">
@@ -41,15 +76,16 @@ const NewActionModal = ({action, setAction, showAddActionModal, setShowAddAction
                   defaultValue={new Date()}
                   type="date"
                   min={Date.now()}
+                  onValueChanged={(e)=>{setStartDate(e.value)}}
                 />
               </div>
-
               <div className="inputs">
                 <label>End Date</label>
                 <DateBox 
                   defaultValue={new Date()}
                   type="date"
-                  min={Date.now()}
+                  min={startDate}
+                  onValueChanged={(e)=>{setEndDate(e.value)}}
                 />
               </div>
             </div>
@@ -58,35 +94,26 @@ const NewActionModal = ({action, setAction, showAddActionModal, setShowAddAction
                 <label>Type</label>
                 <SelectBox 
                   width={215}
-                  items={['fast', 'nofast']}
-                  onValueChange={(e)=>{setType(e.value); setShowPrice(true);}}
+                  items={['SALE - Fast Reservation', 'Unavailable Period']}
+                  onValueChange={(e)=>{setType(e)}}
                  />
-                {/* <select onChange={handleSelect}>
-                  <option value="SALE - Fast Reservation">
-                    SALE - Fast Reservation
-                  </option>
-                  <option value="Unavaliable">
-                    Unavaliable
-                  </option>
-                </select> */}
               </div>
-              {showPrice && <div className="inputs">
-                <label>Price</label>
+              {type==='SALE - Fast Reservation' && <div className="inputs">
+                <label>Price [$]</label>
                 <input className="input"
                   name={"price"}
                   type={"number"}
-                  placeholder={"1500"}
+                  placeholder={"1000"}
                   required={true}
                   min={0}
+                  onChange={(e)=>{setPrice(e.target.value)}}
                 />
               </div>}
             </div>
+            <button className="addBtn">ADD</button>
           </div>
-          <button className="addBtn">ADD</button>
         </form>
-
         <Calendar />
-
       </DialogContent>
 
     </Dialog>

@@ -28,7 +28,7 @@ const Datatable = () => {
 
   const columns = columnsData[user.type];
 
-  let selectedItem = null;
+  const [selectedItem, setSelectedItem] = useState();
 
   useEffect(() => {
     setList(data);
@@ -47,7 +47,7 @@ const Datatable = () => {
   };
 
   const newActionClick = (id) => {
-    selectedItem = id;
+    setSelectedItem(id);
     setShowAddActionModal(!showAddActionModal);
   }
 
@@ -100,7 +100,8 @@ const Datatable = () => {
         getRowId={(row) => row.id}
       />
 
-      <NewActionModal 
+      <NewActionModal
+        offerId={selectedItem}
         setAction={setAction}
         showAddActionModal={showAddActionModal}
         setShowAddActionModal={setShowAddActionModal}
