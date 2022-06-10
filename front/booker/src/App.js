@@ -21,6 +21,9 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />
+              <Route path='cott' element = {<Home page='1'/>} />
+              <Route path='boa' element = {<Home page='2'/>} />
+              <Route path='fis' element = {<Home page='3'/>} />
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />

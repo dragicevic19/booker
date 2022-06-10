@@ -10,7 +10,7 @@ import {format} from "date-fns"
 import { useNavigate, useNavigationType } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext";
 
-const Header = ({type}) => {
+const Header = ({type,activePage ="1"}) => {
 
 	const [destination, setDestination] = useState("")
 	const [openDate, setOpenDate] = useState(false)
@@ -48,17 +48,17 @@ const Header = ({type}) => {
 
   return (
     <div className="header">
-			<div className={type === "list" ? "headerContainer listMode" : "headerContainer" }>
+			<div className={type === "list" ? "headerContainer listMode" : "headerContainer" } >
 				<div className="headerList">
-					<div className="headerListItem active">
+					<div className={activePage === "1" ? "headerListItem active" : "headerListItem" } onClick={()=>navigate('/cott')} >
 						<FontAwesomeIcon icon={faBed} />
 						<span>Stays</span>
 					</div>
-					<div className="headerListItem">
+					<div className={activePage === "2" ? "headerListItem active" : "headerListItem" } onClick={()=>navigate('/boa')}>
 						<FontAwesomeIcon icon={faSailboat} />
 						<span>Boats</span>
 					</div>
-					<div className="headerListItem">
+					<div className={activePage === "3" ? "headerListItem active" : "headerListItem" } onClick={()=>navigate('/fis')}>
 						<FontAwesomeIcon icon={faFish} />
 						<span>Fishing Adventures</span>
 					</div>
