@@ -11,6 +11,7 @@ import Single from './dashboard/pages/single/Single';
 import Hotels from './pages/hotels/Hotels';
 import Cottage from './pages/cottage/Cottage';
 import { Switch } from '@mui/material';
+import Boat from './pages/boats/boat';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
               <Route path="/cottages" element={<Hotels/>}/>
               <Route path="/cottages/:id" element={<Cottage/>}/>
+              <Route path="/boat/:id" element={<Boat/>}/>
             </Route>
 
             <Route path='/dashboard'>

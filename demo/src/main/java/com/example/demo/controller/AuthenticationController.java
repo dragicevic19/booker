@@ -3,8 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.dto.JwtAuthenticationRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
+import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.User;
+import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.TokenUtils;
@@ -40,6 +42,8 @@ public class AuthenticationController {
     @Autowired
     CottageService cottageService;
 
+    @Autowired
+    BoatService boatService;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -91,16 +95,35 @@ public class AuthenticationController {
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
 
-    @GetMapping("cottages/4offers")
-    public ResponseEntity<List<Cottage>> fourOffers(){
-        List<Cottage> cotlist = cottageService.fourOffers();
-        List<Cottage> retList = new ArrayList<>();
-        for (int i = 0; i < 4 && i < cotlist.size(); i++) {
-            retList.add(cotlist.get(i));
+
+    @GetMapping("boats/countByCity")
+    public ResponseEntity<java.util.List<Integer>> countBoatsByCity(@RequestParam String[] cities){
+        List<Integer> retList = new ArrayList<>();
+        for (String c : cities) {
+            retList.add(boatService.countBoatsByCity(c));
         }
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
+
+    @GetMapping("cottages/4offers")
+    public ResponseEntity<List<Cottage>> fourOffers(){
+
+        List<Cottage> cotlist = cottageService.fourOffers();
+
+
+        return new ResponseEntity<>(cotlist, HttpStatus.OK);
+    }
+
+    @GetMapping("boats/4offers")
+    public ResponseEntity<List<Boat>> fourOffersBoat(){
+
+        List<Boat> cotlist = boatService.fourOffersBoat();
+
+
+        return new ResponseEntity<>(cotlist, HttpStatus.OK);
+    }
+
 
     @GetMapping("cottages")
     public ResponseEntity<List<Cottage>> getOffers(){
@@ -118,6 +141,8 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(cottage, HttpStatus.OK);
     }
+
+
 
 
 }

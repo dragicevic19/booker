@@ -50,7 +50,7 @@ public class CottageServiceImpl implements CottageService{
         return this.cottageRepository.save(cottage);
     }
     public List<Cottage> fourOffers() {
-        return cottageRepository.getAllByOrderByRating();
+        return cottageRepository.findTop4ByOrderByRatingAverageAsc();
     }
 
     @Override
