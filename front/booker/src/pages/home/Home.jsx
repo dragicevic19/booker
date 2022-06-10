@@ -12,7 +12,6 @@ const Home = () => {
             <NavbarHome/>
             <Header />
             <div className="homeContainer">
-                <Calendar />
                 <Featured />
                 <h1 className="homeTitle">Cottages guests love</h1>
                 <FeaturedProperties />

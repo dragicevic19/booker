@@ -29,8 +29,6 @@ const SingleBoat = () => {
     }
   }, [data])
 
-  console.log(offer);
-
   const formatBoatType = (rawType) => 
   {
     for(let i in boatTypes)
@@ -40,18 +38,6 @@ const SingleBoat = () => {
     }
   }
 
-  // samo za prikaz jer nemamo jos uvek rezervacije uradjene
-  const bookings = [
-    new Date(2022, 4, 21),
-    new Date(2022, 4, 22),
-    new Date(2022, 4, 23),
-    new Date(2022, 4, 29),
-    new Date(2022, 4, 30),
-    new Date(2022, 4, 31),
-    new Date(2022, 5, 1),
-  ];
-  
-  
   return (
     <div className="singleBoat">
       <Sidebar />
@@ -59,9 +45,6 @@ const SingleBoat = () => {
         <DashNavbar />
         <div className="top">
           <div className="left">
-            {/* <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}> */}
-              {/* <div disabled className="editButton">Edit</div> */}
-            {/* </Link> */}
             <h1 className="title">Informations</h1>
             <div className="item">
               <div className="details">
@@ -95,10 +78,6 @@ const SingleBoat = () => {
                   <span className="itemValue">{offer.regulations}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Description:</span><br/>
-                  <span className="itemValue">{offer.description}</span>
-                </div>
-                <div className="detailItem">
                   <span className="itemKey">Type:</span><br/>
                   <span className="itemValue">{formatBoatType(offer.type)}</span>
                 </div>
@@ -126,6 +105,10 @@ const SingleBoat = () => {
                   <span className="itemKey">Fishing Equipment:</span><br/>
                   <span className="itemValue">{offer.description}</span>
                 </div>
+                <div className="detailItem">
+                  <span className="itemKey">Description:</span><br/>
+                  <span className="itemValue">{offer.description}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -142,7 +125,7 @@ const SingleBoat = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <Calendar bookings={bookings} />
+            <Calendar data={offer.periodsOfOccupancy.discounts} />
           </div>
         </div>
       </div>}

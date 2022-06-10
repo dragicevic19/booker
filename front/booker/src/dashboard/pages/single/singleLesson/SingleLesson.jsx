@@ -28,20 +28,6 @@ const SingleLesson = () => {
     }
   }, [data])
 
-  console.log(offer);
-
-  // samo za prikaz jer nemamo jos uvek rezervacije uradjene
-  const bookings = [
-    new Date(2022, 4, 21),
-    new Date(2022, 4, 22),
-    new Date(2022, 4, 23),
-    new Date(2022, 4, 29),
-    new Date(2022, 4, 30),
-    new Date(2022, 4, 31),
-    new Date(2022, 5, 1),
-  ];
-  
-  
   return (
     <div className="singleLesson">
       <Sidebar />
@@ -49,9 +35,6 @@ const SingleLesson = () => {
         <DashNavbar />
         <div className="top">
           <div className="left">
-            {/* <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}> */}
-              {/* <div disabled className="editButton">Edit</div> */}
-            {/* </Link> */}
             <h1 className="title">Informations</h1>
             <div className="item">
               <div className="details">
@@ -108,7 +91,7 @@ const SingleLesson = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <Calendar bookings={bookings} />
+            <Calendar data={offer.periodsOfOccupancy.discounts}/>
           </div>
         </div>
       </div>}

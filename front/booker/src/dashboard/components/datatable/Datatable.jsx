@@ -26,6 +26,7 @@ const Datatable = () => {
 
   const { data, loading, error } = useFetch(`http://localhost:8080/api/${path}/${user.id}`);
 
+
   const columns = columnsData[user.type];
 
   const [selectedItem, setSelectedItem] = useState();
@@ -96,13 +97,11 @@ const Datatable = () => {
         columns={columns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
         getRowId={(row) => row.id}
       />
 
       <NewActionModal
         offerId={selectedItem}
-        setAction={setAction}
         showAddActionModal={showAddActionModal}
         setShowAddActionModal={setShowAddActionModal}
       />

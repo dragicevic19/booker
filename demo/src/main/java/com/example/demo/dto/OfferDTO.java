@@ -1,0 +1,48 @@
+package com.example.demo.dto;
+
+import com.example.demo.model.AdditionalService;
+import com.example.demo.model.Address;
+import com.example.demo.model.Offer;
+import com.example.demo.model.Rating;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class OfferDTO {
+
+    private String name;
+    private Address address;
+    private int capacity;
+    private double price;
+    private double cancellationFee;
+    private String regulations;
+    private String description;
+    private Rating rating;
+    private List<String> images;
+    private PeriodsOfOccupancy periodsOfOccupancy;
+    private Set<AdditionalService> additionalServices;
+
+    public OfferDTO(Offer offer){
+        name = offer.getName();
+        address = offer.getAddress();
+        capacity = offer.getCapacity();
+        price = offer.getPrice();
+        cancellationFee = offer.getCancellationFee();
+        regulations = offer.getRegulations();
+        description = offer.getDescription();
+        rating = offer.getRating();
+        images = offer.getImages();
+        periodsOfOccupancy = new PeriodsOfOccupancy(offer.getReservations(), offer.getDiscounts(), offer.getPeriodsOfOccupancy());
+        additionalServices = offer.getAdditionalServices();
+    }
+
+
+}

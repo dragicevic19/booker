@@ -77,6 +77,7 @@ const NewLesson = ({edit, title}) => {
       }
       setValues(val);
       setServices(data.additionalServices);
+      setFishingGear(data.fishingEquipment);
       setPhotos(data.images);
 
     } 
