@@ -1,3 +1,5 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import Home from './pages/home/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Registration from "./pages/registration/Registration"

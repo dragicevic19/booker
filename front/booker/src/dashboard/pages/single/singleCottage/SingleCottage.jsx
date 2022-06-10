@@ -7,8 +7,8 @@ import Rating from "../../../components/rating/Rating";
 import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
-import BookingCalendar from "../../../components/calendar/BookingCalendar"
 import { Link } from "react-router-dom";
+import Calendar from "../../../components/calendar/Calendar";
 
 const SingleCottage = () => {
 
@@ -109,7 +109,7 @@ const SingleCottage = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <BookingCalendar bookings={bookings} />
+            <Calendar bookings={bookings} />
           </div>
         </div>
       </div>}

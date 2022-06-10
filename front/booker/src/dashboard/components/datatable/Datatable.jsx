@@ -7,6 +7,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
 import { AuthContext } from "../../../components/context/AuthContext";
+import NewActionModal from "../newActionModal/NewActionModal";
 
 
 const Datatable = () => {
@@ -20,9 +21,14 @@ const Datatable = () => {
     'Authorization': `Bearer ${user.accessToken}`,
   }
 
+  const [showAddActionModal, setShowAddActionModal] = useState(false);
+  const [action, setAction] = useState({})
+
   const { data, loading, error } = useFetch(`http://localhost:8080/api/${path}/${user.id}`);
 
   const columns = columnsData[user.type];
+
+  let selectedItem = null;
 
   useEffect(() => {
     setList(data);
@@ -39,6 +45,11 @@ const Datatable = () => {
 
     }
   };
+
+  const newActionClick = (id) => {
+    selectedItem = id;
+    setShowAddActionModal(!showAddActionModal);
+  }
 
   const actionColumn = [
     {
@@ -66,9 +77,7 @@ const Datatable = () => {
             >
               Delete
             </div>
-            <Link to={`/dashboard/${path}/new-action/${params.row.id}`} style={{ textDecoration: "none"}}>
-              <div className="newActionButton">New Action</div>
-            </Link>
+              <div className="newActionButton" onClick={()=>newActionClick(params.row.id)}>New Action</div>
           </div>
         );
       },
@@ -89,6 +98,12 @@ const Datatable = () => {
         rowsPerPageOptions={[9]}
         checkboxSelection
         getRowId={(row) => row.id}
+      />
+
+      <NewActionModal 
+        setAction={setAction}
+        showAddActionModal={showAddActionModal}
+        setShowAddActionModal={setShowAddActionModal}
       />
     </div>
   );
