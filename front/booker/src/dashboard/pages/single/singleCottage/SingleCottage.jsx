@@ -8,6 +8,7 @@ import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
 import Calendar from "../../../components/calendar/Calendar";
+import MapComp from "../../../../components/map/MapComp";
 
 const SingleCottage = () => {
 
@@ -83,10 +84,10 @@ const SingleCottage = () => {
               <h1 className="title">Rating</h1>
               <Rating rating={offer.rating}/>
             </div>
-            {/* <div className="bottomRight">
+            <div className="bottomRight">
               <h1 className="title">Location</h1>
-              <Map location={offer.address}/>
-            </div> */}
+              <MapComp location={offer.address}/>
+            </div>
           </div>
         </div>
 
