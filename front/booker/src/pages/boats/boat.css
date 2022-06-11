@@ -115,5 +115,13 @@
   .photo {
     max-width: 1024px;
   }
+  .addser{
+      background-color: #0071c2;
+      outline: black;
+      border: 2px solid black 
+  }
+  .addser > h{ 
+    font-size: 25px;
+}
   
   

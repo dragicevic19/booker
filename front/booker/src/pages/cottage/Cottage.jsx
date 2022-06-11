@@ -31,7 +31,7 @@ const Cottage = () => {
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
-  console.log(dates);
+  console.log(data);
 
   // const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   // function dayDifference(date1, date2) {
@@ -91,7 +91,7 @@ const Cottage = () => {
               Book a stay for ${data.price} at this property.
             </span>
             <div className="cottageImages">
-             <img className="photo" src={data.images[0]}/> 
+             
               <Gallery photos={data.images}/> 
               
               

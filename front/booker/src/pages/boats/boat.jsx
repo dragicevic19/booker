@@ -15,6 +15,9 @@ import {
   faFishFins,
   faLocationCrosshairs,
   faFileLines,
+  faMoneyCheck,
+  faMoneyBill1Wave,
+  faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -110,14 +113,19 @@ const Boat = () => {
                     <FontAwesomeIcon size="2x" icon ={faSailboat}/> Engine number- {data.engineNum}<br/>
                     <FontAwesomeIcon size="2x" icon ={faShip}/> Engine power- {data.enginePow}kW<br/>
                     <FontAwesomeIcon size="2x" icon ={faRulerHorizontal}/> Boat lenght- {data.length}m<br/>
-                    <FontAwesomeIcon size="2x" icon ={faGaugeHigh}/> Max speed- {data.maxSpeed}knots<br/>
+                    <FontAwesomeIcon size="2x" icon ={faGaugeHigh}/> Max speed- {data.maxSpeed}km/h<br/>
                     <FontAwesomeIcon size="2x" icon ={faPeopleGroup}/> Capacity- {data.capacity} people<br/>
                     <FontAwesomeIcon size="2x" icon ={faFishFins}/> Fishing equipment- {data.fishingEquipment.map(t => {return t+", " })}<br/>
                     <FontAwesomeIcon size="2x" icon ={faCircleXmark}/> Regulations- {data.regulations}<br/>
                     <FontAwesomeIcon size="2x" icon ={faLocationCrosshairs}/> Navigation equipment- {data.navEquipment.map(t => {return t+", " })}<br/>
-                    
-               
-                </p>
+                    <FontAwesomeIcon size="2x" icon ={faMoneyBill1Wave}/> Price per day- {data.price}$<br/>
+                    <FontAwesomeIcon size="2x" icon ={faMoneyCheck}/> Cancellation fee- {data.cancellationFee}$<br/>
+                    <FontAwesomeIcon size="2x" icon ={faCartPlus}/> Additional services- {data.additionalServices.map(t => {return (<div className="addser"><h>{t.name}</h><br/>   Price- {t.price}$<br/>  Description- {t.description}</div>)})}
+                        
+                        
+                  
+
+                  </p>
               </div>
               <div className="boatDetailsPrice">
                 <h1>Perfect for a {days}-night stay!</h1>
