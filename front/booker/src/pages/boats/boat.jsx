@@ -12,6 +12,9 @@ import {
   faRulerHorizontal,
   faGaugeHigh,
   faPeopleGroup,
+  faFishFins,
+  faLocationCrosshairs,
+  faFileLines,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -31,6 +34,7 @@ const Boat = () => {
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/boat/${id}`)
 
     console.log(data);
+    console.log(data.fishingEquipment);
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -102,13 +106,15 @@ const Boat = () => {
               <div className="boatDetailsTexts">
                 <h1 className="boatTitle">{data.title}</h1>
                 <p className="boatDesc">
-                    {data.description}<br/>
-                    <FontAwesomeIcon icon ={faSailboat}/>Engine number- {data.engineNum}<br/>
-                    <FontAwesomeIcon icon ={faShip}/>Engine power- {data.enginePow}kW<br/>
-                    <FontAwesomeIcon icon ={faRulerHorizontal}/>Boat lenght- {data.length}m<br/>
-                    <FontAwesomeIcon icon ={faGaugeHigh}/>Max speed- {data.maxSpeed}knots<br/>
-                    <FontAwesomeIcon icon ={faPeopleGroup}/>Capacity- {data.capacity} people<br/>
-                    <FontAwesomeIcon icon ={faPeopleGroup}/>Capacity-{data.fishingEquipment.map((t) => ({t}))} people<br/>
+                    <FontAwesomeIcon size="2x" icon ={faFileLines}/> Description- {data.description}<br/><br/><br/>
+                    <FontAwesomeIcon size="2x" icon ={faSailboat}/> Engine number- {data.engineNum}<br/>
+                    <FontAwesomeIcon size="2x" icon ={faShip}/> Engine power- {data.enginePow}kW<br/>
+                    <FontAwesomeIcon size="2x" icon ={faRulerHorizontal}/> Boat lenght- {data.length}m<br/>
+                    <FontAwesomeIcon size="2x" icon ={faGaugeHigh}/> Max speed- {data.maxSpeed}knots<br/>
+                    <FontAwesomeIcon size="2x" icon ={faPeopleGroup}/> Capacity- {data.capacity} people<br/>
+                    <FontAwesomeIcon size="2x" icon ={faFishFins}/> Fishing equipment- {data.fishingEquipment.map(t => {return t+", " })}<br/>
+                    <FontAwesomeIcon size="2x" icon ={faCircleXmark}/> Regulations- {data.regulations}<br/>
+                    <FontAwesomeIcon size="2x" icon ={faLocationCrosshairs}/> Navigation equipment- {data.navEquipment.map(t => {return t+", " })}<br/>
                     
                
                 </p>
