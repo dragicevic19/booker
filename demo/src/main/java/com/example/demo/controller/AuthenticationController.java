@@ -142,6 +142,17 @@ public class AuthenticationController {
         return new ResponseEntity<>(cottage, HttpStatus.OK);
     }
 
+    @GetMapping("boat/{boatId}")
+    public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
+
+        Boat boat = boatService.findById(boatId);
+        if (boat == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(boat, HttpStatus.OK);
+    }
+
 
 
 

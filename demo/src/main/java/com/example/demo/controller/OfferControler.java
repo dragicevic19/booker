@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.FishingLesson;
 import com.example.demo.service.BoatService;
@@ -51,15 +50,6 @@ public class OfferControler {
         return new ResponseEntity<>(fishingLesson, HttpStatus.OK);
     }
 
-    @GetMapping("boat/{boatId}")
-    public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
 
-        Boat boat = boatService.findById(boatId);
-        if (boat == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(boat, HttpStatus.OK);
-    }
 
 }
