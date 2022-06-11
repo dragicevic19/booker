@@ -125,7 +125,7 @@ const SingleBoat = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <Calendar data={offer.periodsOfOccupancy.discounts} />
+            <Calendar data={offer.periodsOfOccupancy.discounts.concat(offer.periodsOfOccupancy.reservations).concat(offer.periodsOfOccupancy.unavailablePeriods)}/>
           </div>
         </div>
       </div>}

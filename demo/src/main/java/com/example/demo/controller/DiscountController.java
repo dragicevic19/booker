@@ -32,6 +32,9 @@ public class DiscountController {
         }
 
         offer = offerService.addDiscountToOffer(offer, newDiscount);
+        if (offer == null){
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 

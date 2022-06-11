@@ -2,6 +2,7 @@ import axios from 'axios';
 import { DateBox, SelectBox } from 'devextreme-react'
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../components/context/AuthContext';
+import { useNotification } from '../../../components/notification/NotificationProvider';
 
 const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods, setUnavailablePeriods}) => {
 
@@ -15,6 +16,8 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${user.accessToken}`,
   }
+  const dispatch = useNotification();
+
   
   const addBtnClick = async (e) => {
     e.preventDefault();
@@ -46,9 +49,19 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
         setUnavailablePeriods([...unavailablePeriods, newPeriod]);
       }
 
+      sendNotification("success", 'Period is successfully added!');
     } catch(error){
-      console.log(error)
+
+      sendNotification("error", 'Entered period is unavailable!');
     }
+  }
+
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: false
+    });
   }
 
   return (

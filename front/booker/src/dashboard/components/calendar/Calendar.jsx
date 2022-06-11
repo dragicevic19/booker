@@ -27,6 +27,8 @@ const Calendar = ({data}) => {
       defaultCurrentView='Month'
       defaultCurrentDate={currentDate}
       firstDayOfWeek={1}
+      startDayHour={9}
+      endDayHour={19}
       onAppointmentFormOpening={onAppointmentFormOpening}>
 
         <Resource

@@ -7,7 +7,6 @@ import Rating from "../../../components/rating/Rating";
 import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
 import Calendar from "../../../components/calendar/Calendar";
 
 const SingleCottage = () => {
@@ -28,8 +27,6 @@ const SingleCottage = () => {
       setLoading(false);
     }
   }, [data])
-
-  console.log(offer);
   
   return (
     <div className="singleCottage">
@@ -82,8 +79,14 @@ const SingleCottage = () => {
             </div>
           </div>
           <div className="right">
-            <h1 className="title">Rating</h1>
-            <Rating rating={offer.rating}/>
+            <div className="topRight">
+              <h1 className="title">Rating</h1>
+              <Rating rating={offer.rating}/>
+            </div>
+            {/* <div className="bottomRight">
+              <h1 className="title">Location</h1>
+              <Map location={offer.address}/>
+            </div> */}
           </div>
         </div>
 
@@ -94,7 +97,7 @@ const SingleCottage = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <Calendar data={offer.periodsOfOccupancy.discounts}/>
+            <Calendar data={offer.periodsOfOccupancy.discounts.concat(offer.periodsOfOccupancy.reservations).concat(offer.periodsOfOccupancy.unavailablePeriods)}/>
           </div>
         </div>
       </div>}

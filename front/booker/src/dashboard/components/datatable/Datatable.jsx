@@ -100,11 +100,11 @@ const Datatable = () => {
         getRowId={(row) => row.id}
       />
 
-      <NewActionModal
+      {selectedItem && <NewActionModal
         offerId={selectedItem}
         showAddActionModal={showAddActionModal}
         setShowAddActionModal={setShowAddActionModal}
-      />
+      />}
     </div>
   );
 };

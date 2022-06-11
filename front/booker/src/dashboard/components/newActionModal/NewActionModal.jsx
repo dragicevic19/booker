@@ -5,13 +5,14 @@ import Calendar from "../calendar/Calendar"
 import NewActionDetails from "./NewActionDetails";
 import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
+import NotificationProvider from "../../../components/notification/NotificationProvider";
 
 const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) => {
 
-  const [discounts, setDiscounts] = useState();
-  const [reservedDiscounts, setReservedDiscounts] = useState();
-  const [reservations, setReservations] = useState();
-  const [unavailablePeriods, setUnavailablePeriods] = useState();
+  const [discounts, setDiscounts] = useState([]);
+  const [reservedDiscounts, setReservedDiscounts] = useState([]);
+  const [reservations, setReservations] = useState([]);
+  const [unavailablePeriods, setUnavailablePeriods] = useState([]);
 
 
   const [loading, setLoading] = useState(true)
@@ -19,15 +20,23 @@ const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) =>
 
   const { data, load, error, reFetch} = useFetch(`http://localhost:8080/api/offer/${offerId}`);
 
+  const calendarData = discounts.concat(reservations).concat(unavailablePeriods); 
+
   useEffect(() => {
     setOffer(data);
-    if (offer) {
-      setDiscounts(offer.periodsOfOccupancy.discounts);
-      //setReservedDiscounts(offer) ... kad dodas na beku ubaci i ovo
-      // i ostale periode.. 
-      setLoading(false);
-    }
   }, [data]);
+
+  useEffect(() => {
+    try{
+      if ('periodsOfOccupancy' in offer){
+        setDiscounts(offer.periodsOfOccupancy.discounts);
+        setReservedDiscounts(offer.periodsOfOccupancy.reservedDiscounts);
+        setReservations(offer.periodsOfOccupancy.reservations);
+        setUnavailablePeriods(offer.periodsOfOccupancy.unavailablePeriods);
+        setLoading(false);
+      }
+    }catch(err){} // catch prazan jer offer nece na pocetku biti objekat
+  }, [offer])
 
   const handleSubmit = () => {
   }
@@ -42,15 +51,16 @@ const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) =>
       <DialogTitle className="dialogTitle">Add new period of occupancy</DialogTitle>
       <hr/>
       <DialogContent className="dialogContent">
-        <NewActionDetails 
+        {!loading && <><NotificationProvider><NewActionDetails 
           offerId={offerId} 
           discounts={discounts} 
           setDiscounts={setDiscounts} 
           unavailablePeriods={unavailablePeriods}
           setUnavailablePeriods={setUnavailablePeriods}
-        />
+        /></NotificationProvider>
 
-        <Calendar data={discounts} />
+        <Calendar data={calendarData} />
+        </>}
       </DialogContent>
 
     </Dialog>
