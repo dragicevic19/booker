@@ -1,9 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.AdditionalService;
-import com.example.demo.model.Address;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Rating;
+import com.example.demo.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +26,7 @@ public class OfferDTO {
     private List<String> images;
     private PeriodsOfOccupancy periodsOfOccupancy;
     private Set<AdditionalService> additionalServices;
+    private List<ClientDTO> subscribedClients;
 
     public OfferDTO(Offer offer){
         name = offer.getName();
@@ -42,7 +40,9 @@ public class OfferDTO {
         images = offer.getImages();
         periodsOfOccupancy = new PeriodsOfOccupancy(offer.getReservations(), offer.getDiscounts(), offer.getPeriodsOfOccupancy());
         additionalServices = offer.getAdditionalServices();
+        for(Client c : offer.getSubscribedClients()){
+            subscribedClients.add(new ClientDTO(c));
+        }
     }
-
 
 }

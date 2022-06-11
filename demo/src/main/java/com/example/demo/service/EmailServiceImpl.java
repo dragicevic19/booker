@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.NewDiscountDTO;
+import com.example.demo.model.Client;
+import com.example.demo.model.Offer;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -46,5 +49,21 @@ public class EmailServiceImpl implements EmailService{
             mail.setText("Congratulations! Your account has been accepted!");
         }
         javaMailSender.send(mail);
+    }
+
+    @Override
+    @Async
+    public void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount) {
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        for(Client client : offer.getSubscribedClients()){
+            mail.setTo(client.getEmail());
+            mail.setFrom(env.getProperty("spring.mail.username"));
+            mail.setSubject("New discount for offer: " + offer.getName());
+            mail.setText("An offer you are subscribed to gets new discount!\nFrom: " + newDiscount.getStartDate().toString() +
+                    " to: " + newDiscount.getEndDate().toString() + " for only " +  "$" + newDiscount.getPrice() +
+                    "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
+            javaMailSender.send(mail);
+        }
     }
 }

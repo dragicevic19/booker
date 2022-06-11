@@ -100,6 +100,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
         boat.setPeriodsOfOccupancy(new ArrayList<Period>());
         boat.setDiscounts(new ArrayList<>());
         boat.setReservations(new ArrayList<>());
+        boat.setSubscribedClients(new HashSet<>());
 
         boatOwner.getOffers().add(boat);
 

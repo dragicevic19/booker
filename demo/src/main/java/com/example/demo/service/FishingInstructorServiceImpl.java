@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 @Service
 public class FishingInstructorServiceImpl implements FishingInstructorService{
@@ -85,8 +86,9 @@ public class FishingInstructorServiceImpl implements FishingInstructorService{
         fishingLesson.setDeleted(false);
         fishingLesson.setReservations(new ArrayList<>());
         fishingLesson.setDiscounts(new ArrayList<>());
-        fishingLesson.setPeriodsOfOccupancy(new ArrayList<Period>());
+        fishingLesson.setPeriodsOfOccupancy(new ArrayList<>());
         fishingLesson.setRating(new Rating());
+        fishingLesson.setSubscribedClients(new HashSet<>());
 
         fI.getOffers().add(fishingLesson);
 

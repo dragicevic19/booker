@@ -5,6 +5,7 @@ import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.Discount;
 import com.example.demo.model.Offer;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class DiscountController {
     @Autowired
     private OfferService offerService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
     @PostMapping("newDiscount/{offerId}")
     public ResponseEntity<Offer> newDiscount(@PathVariable Integer offerId, @RequestBody NewDiscountDTO newDiscount) {
@@ -35,6 +39,9 @@ public class DiscountController {
         if (offer == null){
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
+
+        emailService.sendEmailToSubscribedClients(offer, newDiscount);
+
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
