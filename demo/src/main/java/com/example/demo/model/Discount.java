@@ -22,12 +22,12 @@ public class Discount {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "period_id", referencedColumnName = "id")
     private Period period;
 
-    @Column(name = "reduced_price", unique = false, nullable = false)
-    private int reducedPrice;
+    @Column(name = "price", unique = false, nullable = false)
+    private double price;
 
     @Column(name = "is_acitve", unique = false, nullable = false)
     private boolean isActive;

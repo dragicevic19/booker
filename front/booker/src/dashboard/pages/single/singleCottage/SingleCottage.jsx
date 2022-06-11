@@ -7,8 +7,7 @@ import Rating from "../../../components/rating/Rating";
 import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
-import BookingCalendar from "../../../components/calendar/BookingCalendar"
-import { Link } from "react-router-dom";
+import Calendar from "../../../components/calendar/Calendar";
 
 const SingleCottage = () => {
 
@@ -28,20 +27,6 @@ const SingleCottage = () => {
       setLoading(false);
     }
   }, [data])
-
-  console.log(offer);
-
-  // samo za prikaz jer nemamo jos uvek rezervacije uradjene
-  const bookings = [
-    new Date(2022, 4, 21),
-    new Date(2022, 4, 22),
-    new Date(2022, 4, 23),
-    new Date(2022, 4, 29),
-    new Date(2022, 4, 30),
-    new Date(2022, 4, 31),
-    new Date(2022, 5, 1),
-  ];
-  
   
   return (
     <div className="singleCottage">
@@ -50,9 +35,6 @@ const SingleCottage = () => {
         <DashNavbar />
         <div className="top">
           <div className="left">
-            {/* <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}> */}
-              {/* <div disabled className="editButton">Edit</div> */}
-            {/* </Link> */}
             <h1 className="title">Informations</h1>
             <div className="item">
               <div className="details">
@@ -97,8 +79,14 @@ const SingleCottage = () => {
             </div>
           </div>
           <div className="right">
-            <h1 className="title">Rating</h1>
-            <Rating rating={offer.rating}/>
+            <div className="topRight">
+              <h1 className="title">Rating</h1>
+              <Rating rating={offer.rating}/>
+            </div>
+            {/* <div className="bottomRight">
+              <h1 className="title">Location</h1>
+              <Map location={offer.address}/>
+            </div> */}
           </div>
         </div>
 
@@ -109,7 +97,7 @@ const SingleCottage = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <BookingCalendar bookings={bookings} />
+            <Calendar data={offer.periodsOfOccupancy.discounts.concat(offer.periodsOfOccupancy.reservations).concat(offer.periodsOfOccupancy.unavailablePeriods)}/>
           </div>
         </div>
       </div>}

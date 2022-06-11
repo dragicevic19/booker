@@ -1,3 +1,5 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import Home from './pages/home/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Registration from "./pages/registration/Registration"
@@ -34,7 +36,7 @@ function App() {
                 <Route index element={<List adminRequest={false} serviceType={"offers"}/>} />
                 <Route path=':id' element={<Single />} />
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
-                <Route path='edit/:id' element={<NotificationProvider> <New edit={true} title={'Edit Cottage'}/> </NotificationProvider>} />
+                <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />

@@ -77,6 +77,11 @@ public abstract class Offer {
     @Column(name = "price", unique = false, nullable = false)
     protected double price;
 
+    @ManyToMany
+    @JoinTable(name = "offer_subscribed_clients", joinColumns = @JoinColumn(name = "offer_id", referencedColumnName= "id"), inverseJoinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"))
+    protected Set<Client> subscribedClients;
+
+
     public abstract int calculatePrice();
 
 }

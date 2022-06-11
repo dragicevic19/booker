@@ -17,7 +17,6 @@ const useFetch = (passedUrl) => {
       'Authorization': `Bearer ${user.accessToken}`,
     }
   }
-  console.log(url);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
@@ -25,7 +24,6 @@ const useFetch = (passedUrl) => {
         let res;
       
         if (user){
-          console.log("USER: ");
           res = await axios.get(url, {
             headers: headers
           })

@@ -3,6 +3,7 @@ import NavbarHome from "../../components/navbarHome/Navbar"
 import Header from "../../components/header/Header"
 import Featured from "../../components/featured/Featured"
 import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties"
+import Calendar from "../../dashboard/components/calendar/Calendar"
 
 const Home = () => {
 

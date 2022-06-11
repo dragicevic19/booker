@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CottageDTO;
 import com.example.demo.dto.JwtAuthenticationRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
@@ -109,14 +110,14 @@ public class AuthenticationController {
     }
 
     @GetMapping("cottage/{cottageId}")
-    public ResponseEntity<Cottage> loadCottage(@PathVariable Integer cottageId) {
+    public ResponseEntity<CottageDTO> loadCottage(@PathVariable Integer cottageId) {
 
         Cottage cottage = cottageService.findById(cottageId);
         if (cottage == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(cottage, HttpStatus.OK);
+        return new ResponseEntity<>(new CottageDTO(cottage), HttpStatus.OK);
     }
 
 

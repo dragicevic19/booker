@@ -54,39 +54,12 @@ public class UserServiceImpl implements UserService {
     public User enableUser(User user) {
         user.setEnabled(true);
         return this.userRepository.save(user);
-
-//        switch (user.getRoles().get(0).getName()) {
-//            case "ROLE_BOAT_OWNER":
-//                return boatOwnerService.updateUser(user);
-//            case "ROLE_COTTAGE_OWNER":
-//                return cottageOwnerService.updateUser(user);
-//            case "ROLE_CLIENT":
-//                return clientService.updateUser(user);
-//            case "ROLE_INSTRUCTOR":
-//                return fishingInstructorService.updateUser(user);
-//            default:
-//                return null;
-//        }
-
     }
 
     @Override
     public User rejectRequest(User user) {
         user.setDeleted(true);
         return this.userRepository.save(user);
-
-//        switch (user.getRoles().get(0).getName()) {
-//            case "ROLE_BOAT_OWNER":
-//                return boatOwnerService.updateUser(user);
-//            case "ROLE_COTTAGE_OWNER":
-//                return cottageOwnerService.updateUser(user);
-//            case "ROLE_CLIENT":
-//                return clientService.updateUser(user);
-//            case "ROLE_INSTRUCTOR":
-//                return fishingInstructorService.updateUser(user);
-//            default:
-//                return null;
-//        }
     }
 
     @Override

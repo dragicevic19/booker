@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/") // vrati na api/
+@RequestMapping(value = "api/")
 public class BoatOwnerController {
 
     @Autowired
