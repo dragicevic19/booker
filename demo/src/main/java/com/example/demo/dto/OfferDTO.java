@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,8 @@ public class OfferDTO {
         images = offer.getImages();
         periodsOfOccupancy = new PeriodsOfOccupancy(offer.getReservations(), offer.getDiscounts(), offer.getPeriodsOfOccupancy());
         additionalServices = offer.getAdditionalServices();
+        subscribedClients = new ArrayList<>();
+
         for(Client c : offer.getSubscribedClients()){
             subscribedClients.add(new ClientDTO(c));
         }
