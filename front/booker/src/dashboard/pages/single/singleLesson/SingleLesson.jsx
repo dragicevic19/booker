@@ -8,6 +8,7 @@ import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
 import Calendar from "../../../components/calendar/Calendar";
+import MapComp from "../../../../components/map/MapComp";
 
 const SingleLesson = () => {
 
@@ -79,8 +80,14 @@ const SingleLesson = () => {
             </div>
           </div>
           <div className="right">
-            <h1 className="title">Rating</h1>
-            <Rating rating={offer.rating}/>
+            <div className="topRight">
+              <h1 className="title">Rating</h1>
+              <Rating rating={offer.rating}/>
+            </div>
+            <div className="bottomRight">
+              <h1 className="title">Location</h1>
+              <MapComp location={offer.address}/>
+            </div>
           </div>
         </div>
 
