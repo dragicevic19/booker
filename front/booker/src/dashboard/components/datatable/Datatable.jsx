@@ -78,7 +78,7 @@ const Datatable = () => {
             >
               Delete
             </div>
-              <div className="newActionButton" onClick={()=>newActionClick(params.row.id)}>New Action</div>
+              <div className="newActionButton" onClick={()=>newActionClick(params.row.id)}>New Period</div>
           </div>
         );
       },

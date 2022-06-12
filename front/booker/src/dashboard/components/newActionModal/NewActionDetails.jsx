@@ -51,7 +51,6 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
 
       sendNotification("success", 'Period is successfully added!');
     } catch(error){
-
       sendNotification("error", 'Entered period is unavailable!');
     }
   }

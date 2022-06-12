@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.NewDiscountDTO;
+import com.example.demo.dto.PeriodDTO;
 import com.example.demo.model.Discount;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Period;
@@ -53,6 +54,21 @@ public class OfferServiceImpl implements OfferService {
         return offer;
     }
 
+    @Override
+    public Offer addUnavailablePeriod(Offer offer, PeriodDTO newPeriod) {
+        if (!isPeriodAvailable(newPeriod.getStartDate(), newPeriod.getEndDate(), offer))
+            return null;
+
+        Period unavailablePeriod = new Period();
+        unavailablePeriod.setDateFrom(newPeriod.getStartDate());
+        unavailablePeriod.setDateTo(newPeriod.getEndDate());
+
+        offer.getPeriodsOfOccupancy().add(unavailablePeriod);
+        offerRepository.save(offer);
+
+        return offer;
+    }
+
     private boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer) {
 
         for(Period period : offer.getPeriodsOfOccupancy()){
@@ -76,7 +92,7 @@ public class OfferServiceImpl implements OfferService {
 
     private boolean checkPeriod(Period period, LocalDate startDate, LocalDate endDate){
 
-        if (startDate.isAfter(period.getDateFrom()) && startDate.isBefore(period.getDateTo()))
+        if ((startDate.isAfter(period.getDateFrom()) || startDate.isEqual(period.getDateFrom())) && startDate.isBefore(period.getDateTo()))
             return true;
         if (endDate.isAfter(period.getDateFrom())  && endDate.isBefore(period.getDateTo()))
             return true;
