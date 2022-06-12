@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.OfferToList;
-import com.example.demo.dto.RegRequestResponseDTO;
-import com.example.demo.dto.UserDataTable;
-import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.*;
 import com.example.demo.model.Property;
 import com.example.demo.model.User;
 import com.example.demo.service.EmailService;
@@ -14,14 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
@@ -95,5 +90,13 @@ public class UserController {
         emailService.sendmail(user, regReqRes.isAccepted(), regReqRes.getExplanation());
 
         return "success";
+    }
+
+    @PostMapping("/create-deletion-request{userId}")
+    public ResponseEntity<DeletionRequest> createDeletionRequest(@PathVariable Integer userId) {
+
+        User u = userService.findById(userId);
+        DeletionRequest dr = new DeletionRequest(u);
+        return new ResponseEntity<>(dr, HttpStatus.CREATED);
     }
 }

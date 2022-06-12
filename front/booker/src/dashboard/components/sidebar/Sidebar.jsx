@@ -21,6 +21,7 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import { useContext } from "react";
 import { AuthContext } from "../../../components/context/AuthContext";
 import { useNavigate } from "react-router";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Sidebar = () => {
 
@@ -143,6 +144,12 @@ const Sidebar = () => {
         <li>
           <ContactMailIcon className="icon" />
           <span>Registration Requests</span>
+        </li>
+      </Link>
+      <Link to="/dashboard/del-req" style={{textDecoration: "none"}}>
+        <li>
+          <DeleteIcon className="icon" />
+          <span>Deletion Requests</span>
         </li>
       </Link>
       <li>
