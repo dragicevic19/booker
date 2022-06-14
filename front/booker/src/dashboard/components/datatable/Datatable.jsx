@@ -26,7 +26,6 @@ const Datatable = () => {
 
   const { data, loading, error } = useFetch(`http://localhost:8080/api/${path}/${user.id}`);
 
-
   const columns = columnsData[user.type];
 
   const [selectedItem, setSelectedItem] = useState();

@@ -6,6 +6,8 @@ import "./datatable.scss"
 import { columnsData } from "../../datatablesource";
 import FormDialog from "../datatable/ExplanationDialog";
 import { AuthContext } from "../../../components/context/AuthContext";
+import { useNavigate } from "react-router";
+import "./datatable.scss"
 
 
 const DeleteRequests = () => {
@@ -14,7 +16,9 @@ const DeleteRequests = () => {
   const [list, setList] = useState();
   const {user} = useContext(AuthContext);
 
-  const { data, loading, error } = useFetch(`http://localhost:8080/api/user/requests?enabled=false`);
+  const { data, loading, error } = useFetch(`http://localhost:8080/api/user/deletion-requests?active=true`);
+
+  const navigate = useNavigate();
 
   const columns = columnsData[user.type];
 
@@ -22,18 +26,8 @@ const DeleteRequests = () => {
     setList(data);
   }, [data]);
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = (id) => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleAccept = async (id) => {
-    fetch(`http://localhost:8080/api/user/enable/${id}`, {
+    fetch(`http://localhost:8080/api/user/accept-deletion/${id}`, {
         //uspeo sam azurirati i bez method: PUT (sa tim sam imao problema pa sam ga pokusao izbeci)
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +41,7 @@ const DeleteRequests = () => {
 
   const handleReject = async (id) => {
 
-    fetch(`http://localhost:8080/api/user/reject-request/${id}`, {
+    fetch(`http://localhost:8080/api/user/reject-deletion/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${user.accessToken}`,
@@ -62,13 +56,28 @@ const DeleteRequests = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 140,
+      width: 200,
       renderCell: (params) => {
         return (
-          <FormDialog userId={params.row.id} handleAccept={handleAccept} handleReject={handleReject}/>
+          <div className="cellAction">
+            <div 
+              onClick={()=>navigate(`/dashboard/${path}/${params.row.id}`)}
+              className="viewButton"
+            >View               
+            </div>
+            <FormDialog userId={params.row.id} handleAccept={handleAccept} handleReject={handleReject} requestType="deletionRequest"/>
+          </div>
         );
       },
     },
+  ];
+
+  const requestTextColumn = [
+    {
+      field: "requestText",
+      headerName: "Request Text",
+      width: 550,
+    }
   ];
   return (
     <div className="datatable">
@@ -78,7 +87,7 @@ const DeleteRequests = () => {
       <DataGrid
         className="datagrid"
         rows={list}
-        columns={columns.concat(actionColumn)}
+        columns={columns.slice(0, 6).concat(requestTextColumn).concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

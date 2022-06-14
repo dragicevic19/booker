@@ -32,7 +32,8 @@ function App() {
               <Route path="/cottages/:id" element={<Cottage/>}/>
             </Route>
 
-            <Route path='/client-profile' element={<UserProfile/>}></Route>
+            <Route path='/client-profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
+              </NotificationProvider>}/>
 
             <Route path='/dashboard'>
               <Route index element={<DashboardHome />} />
@@ -45,7 +46,8 @@ function App() {
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />
               <Route path='reports' element={<></>} />
-              <Route path='profile' element={<></>} />
+              <Route path='profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
+              </NotificationProvider>}/>
               <Route path="reg-req" element={<RegReqList />}/>
               <Route path="del-req" element={<DeleteReqList />}/>
               

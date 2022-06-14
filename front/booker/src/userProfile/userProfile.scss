@@ -1,14 +1,28 @@
-.deleteButton {
-    padding: 10px;
-    // margin: 20px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 25px;
-    background-color: rgba(255, 0, 0, 0.829);
-    margin-top: 90%;
-    margin-left: 80%;
-    width: 12%;
-  }
+.deleteButtonClient {
+  width: 160px;
+  height: 50px;
+  padding: 10px;
+  margin-top: 850px;
+  margin-left: 60px;
+  border: none;
+  border-radius: 5px;
+  background-color: #DC143C;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.rejectDeletion{
+  width: 160px;
+  height: 50px;
+  padding: 10px;
+  margin-top: 850px;
+  margin-left: 60px;
+  border-radius: 5px;
+  border-style: solid;
+  background-color: white;
+  border-color: #DC143C;
+  color: #DC143C;
+  font-weight: bold;
+  cursor: pointer;
+}

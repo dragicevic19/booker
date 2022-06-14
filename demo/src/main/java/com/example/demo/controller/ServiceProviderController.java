@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -56,5 +57,14 @@ public class ServiceProviderController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/provider-reserved/{providerId}")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<Boolean> isServiceProviderReserved(@PathVariable Integer providerId)
+    {
+        ServiceProvider serviceProvider = (ServiceProvider) userService.findById(providerId);
+        boolean isReserved = this.userService.isProviderReserved(serviceProvider);
+        return new ResponseEntity<>(isReserved, HttpStatus.OK);
     }
 }

@@ -180,10 +180,12 @@ const Sidebar = () => {
         <NotificationsActiveOutlinedIcon className="icon" />
         <span>Notifications</span>
       </li>
-      <li>
-        <PersonOutlinedIcon className="icon" />
-        <span>Profile</span>
-      </li>
+      <Link to="/dashboard/profile" style={{textDecoration: "none"}}>
+        <li>
+          <PersonOutlinedIcon className="icon" />
+          <span>Profile</span>
+        </li>
+      </Link>
       <li onClick={logout}>
         <LogoutOutlinedIcon className="icon" />
         <span>Logout</span>

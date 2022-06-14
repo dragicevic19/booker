@@ -9,7 +9,9 @@ import javax.mail.internet.AddressException;
 import java.io.IOException;
 
 public interface EmailService {
-    void sendmail(User user, boolean accepted, String explanation) throws InterruptedException, MessagingException, IOException;
+    void sendmailRegistration(User user, boolean accepted, String explanation) throws InterruptedException, MessagingException, IOException;
 
     void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount);
+
+    void sendmailDeletion(User user, boolean accepted, String requestText);
 }

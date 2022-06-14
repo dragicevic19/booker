@@ -120,5 +120,12 @@ public class AuthenticationController {
         return new ResponseEntity<>(new CottageDTO(cottage), HttpStatus.OK);
     }
 
+    @PostMapping("create-deletion-request/{userId}")
+    public ResponseEntity<Boolean> createDeletionRequest(@PathVariable Integer userId, @RequestParam("request_text") String requestText) {
+
+        User user = userService.findById(userId);
+        userService.createDeletionRequest(user, requestText);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
 
 }

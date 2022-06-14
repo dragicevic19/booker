@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -66,6 +67,49 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(User serviceProvider) {
         serviceProvider.setDeleted(true);
         userRepository.save(serviceProvider);
+    }
+
+    @Override
+    public void createDeletionRequest(User user, String requestText) {
+        user.setDeletionRequest(new DeletionRequest(user.getId(), requestText));
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findDeleteRequestUsers(boolean active) {
+        return userRepository.findByDeletionRequestActive(active);
+    }
+
+    @Override
+    public void acceptDeletionRequest(User userToBeFound) {
+        userToBeFound.setDeleted(true);
+        userToBeFound.getDeletionRequest().setActive(false);
+        userToBeFound.getDeletionRequest().setRequestText("");
+        this.userRepository.save(userToBeFound);
+    }
+
+    @Override
+    public void rejectDeletionRequest(User userToBeFound) {
+        userToBeFound.getDeletionRequest().setActive(false);
+        userToBeFound.getDeletionRequest().setRequestText("");
+        this.userRepository.save(userToBeFound);
+    }
+
+    @Override
+    public boolean isProviderReserved(ServiceProvider serviceProvider) {
+
+        boolean isReserved = false;
+
+        for(Offer offer : serviceProvider.getOffers())
+        {
+            for (Reservation reservation : offer.getReservations())
+            {
+                if (reservation.getReservationPeriod().getDateTo().isAfter(LocalDate.now())){
+                    isReserved = true;
+                }
+            }
+        }
+        return isReserved;
     }
 
     @Override

@@ -9,11 +9,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState, useContext } from 'react';
 import { TextareaAutosize } from '@mui/material';
 import { AuthContext } from '../components/context/AuthContext';
+import { useNotification } from '../components/notification/NotificationProvider';
 
-export default function DeleteUserDialog({userId, handleDelete, sendNotification}) {
-
+export default function DeleteUserDialog({userId, handleDelete, isProviderReserved}) {
+  
   const { user } = useContext(AuthContext);
-
+  
   const [explanation, setExplanation] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -36,40 +37,19 @@ export default function DeleteUserDialog({userId, handleDelete, sendNotification
       id: userId,
       explanation: explanation
     }
-
-    fetch(`http://localhost:8080/api/create-deletion-request${user.id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.accessToken}`,
-        },
-        body: JSON.stringify(data)
-      })
-        .then(res => {
-          if (!res.ok){
-            if (res.status == 409){
-              console.log('email exists error'); // ?
-            }
-            throw Error('could not fetch data')
-          } 
-          return res.json()
-        })
-        .then(data => {
-            sendNotification("success", "You successfully sent a request for deletion. Please wait for administrator to approve your request!");
-        })
-        .catch(err => {
-            sendNotification("error");
-        })
     setOpen(false);
-    handleDelete(userId);
+    handleDelete(userId, explanation);
   }
 
   return (
     <div>
       <div className="cellAction">
-      <div className="deleteButton" onClick={() => handleClickOpen(userId)}>
+        {!isProviderReserved  && <div className="deleteButtonClient" onClick={() =>  handleClickOpen(userId)}>
                   Delete Account
-        </div>
+        </div>}
+        {isProviderReserved == true && <div className="rejectDeletion">
+             You have reservations running!
+        </div>}
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Explanation of deletion</DialogTitle>
