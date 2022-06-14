@@ -17,7 +17,7 @@ const UserProfile = ({authOrApi}) => {
   const { user } = useContext(AuthContext);
 
   const isProviderReserved = useFetch(`http://localhost:8080/api/provider-reserved/${user.id}`)
- 
+
   const handleDelete = (id, explanation) =>
     {
       fetch(`http://localhost:8080/${authOrApi}/create-deletion-request/${id}?request_text=${explanation}`, {
@@ -52,7 +52,7 @@ const UserProfile = ({authOrApi}) => {
   }
 
   return (
-      <DeleteUserDialog userId={user.id} handleDelete={handleDelete} isProviderReserved={isProviderReserved.data}/>
+      <DeleteUserDialog userId={user.id} handleDelete={handleDelete} isProviderReserved={isProviderReserved.data} authOrApi={authOrApi}/>
   )
 }
 

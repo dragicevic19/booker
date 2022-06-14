@@ -11,7 +11,7 @@ import { TextareaAutosize } from '@mui/material';
 import { AuthContext } from '../components/context/AuthContext';
 import { useNotification } from '../components/notification/NotificationProvider';
 
-export default function DeleteUserDialog({userId, handleDelete, isProviderReserved}) {
+export default function DeleteUserDialog({userId, handleDelete, isProviderReserved, authOrApi}) {
   
   const { user } = useContext(AuthContext);
   
@@ -44,7 +44,10 @@ export default function DeleteUserDialog({userId, handleDelete, isProviderReserv
   return (
     <div>
       <div className="cellAction">
-        {!isProviderReserved  && <div className="deleteButtonClient" onClick={() =>  handleClickOpen(userId)}>
+        {!isProviderReserved && <div className="deleteButtonClient" onClick={() =>  handleClickOpen(userId)}>
+                  Delete Account
+        </div>}
+        {authOrApi === "auth" && <div className="deleteButtonClient" onClick={() =>  handleClickOpen(userId)}>
                   Delete Account
         </div>}
         {isProviderReserved == true && <div className="rejectDeletion">

@@ -46,7 +46,7 @@ function App() {
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />
               <Route path='reports' element={<></>} />
-              <Route path='profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
+              <Route path='profile' element={<NotificationProvider><UserProfile authOrApi={"api"}/>
               </NotificationProvider>}/>
               <Route path="reg-req" element={<RegReqList />}/>
               <Route path="del-req" element={<DeleteReqList />}/>
