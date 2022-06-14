@@ -31,13 +31,12 @@ public class EmailServiceImpl implements EmailService{
     private Environment env;
 
     @Async
-    public void sendmail(User user, boolean accepted, String explanation) throws IOException, MessagingException {
+    public void sendmailRegistration(User user, boolean accepted, String explanation) throws IOException, MessagingException {
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("User registration feedback");
-
         System.out.println("Email poslat!");
 
         if (!accepted)
@@ -65,5 +64,24 @@ public class EmailServiceImpl implements EmailService{
                     "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
             javaMailSender.send(mail);
         }
+    }
+
+    @Override
+    public void sendmailDeletion(User user, boolean accepted, String requestText) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom(env.getProperty("spring.mail.username"));
+        mail.setSubject("User deletion feedback");
+        System.out.println("Email poslat!");
+
+        if (!accepted)
+        {
+            mail.setText("Your deletion request has not been accepted! \nExplanation: " + requestText);
+        }
+        else
+        {
+            mail.setText("Your deletion request is accepted! The account has been deleted. \nComment: " + requestText);
+        }
+        javaMailSender.send(mail);
     }
 }

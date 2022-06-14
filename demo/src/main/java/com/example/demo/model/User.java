@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @SQLDelete(sql = "UPDATE USERS SET deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
@@ -67,6 +66,10 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     protected List<Role> roles;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "deletion_request_id", referencedColumnName = "id")
+    protected DeletionRequest deletionRequest;
 
     public User(User user) {
         this.firstName = user.firstName;

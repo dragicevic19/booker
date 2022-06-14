@@ -30,3 +30,8 @@
     background-color: #003580;
     color: white;
   }
+
+  .accBtn
+  {
+    align-items: center;
+  }

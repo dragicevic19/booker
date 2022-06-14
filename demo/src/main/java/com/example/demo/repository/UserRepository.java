@@ -22,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     //List<User> findDisabledUsers();
 
     List<User> findByEnabled(boolean enabled);
+
+    List<User> findByDeletionRequestActive(boolean active);
 }

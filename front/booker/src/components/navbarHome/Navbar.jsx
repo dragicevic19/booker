@@ -5,6 +5,7 @@ import {AuthContext} from "../context/AuthContext";
 import { Link } from 'react-router-dom';
 import { Button } from "@mui/material";
 
+
 const NavbarHome = () => {
   const { user,dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ const NavbarHome = () => {
         {user ?  (
           <div>
             {usersWithDashboard.indexOf(user.type) > -1 && <button onClick={()=>navigate('/dashboard')} className="navButton">Dashboard</button>}
+
+            {user.type === "ROLE_CLIENT" && <button onClick={()=>navigate('/client-profile')} className="navButton">
+              Profile</button>}
           {/* {user.email} */}
           <button className="navButton"onClick={handleClick}>Logout</button>
           </div>

@@ -10,7 +10,9 @@ import { useState, useContext } from 'react';
 import { TextareaAutosize } from '@mui/material';
 import { AuthContext } from '../../../components/context/AuthContext';
 
-export default function FormDialog({userId, handleAccept, handleReject}) {
+export default function FormDialog({userId, handleAccept, handleReject, requestType}) {
+
+  const [response, setResponse] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -30,15 +32,16 @@ export default function FormDialog({userId, handleAccept, handleReject}) {
     setExplanation(e.target.value)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const submitRegistration = (e) =>
+  {
+    e.preventDefault();
     const data = {
       id: userId,
-      accepted: false,
+      accepted: response,
       explanation: explanation
     }
 
-    fetch('http://localhost:8080/api/send-email', {
+    fetch(`http://localhost:8080/api/send-email-registration`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,11 +64,99 @@ export default function FormDialog({userId, handleAccept, handleReject}) {
         .catch(err => {
           console.log(err.message)
         })
-    setOpen(false);
-    handleReject(userId);
+
+    if (response === false)
+    {
+      setOpen(false);
+      handleReject(userId);
+    }
+
+    else
+    {
+      handleAccept(userId);
+    }
+
   }
 
-  const handleSubmitAccept = (e) => {
+  const submitDeletion = (e) =>
+  {
+    e.preventDefault();
+    const data = {
+      id: userId,
+      accepted: response,
+      requestText: explanation
+    }
+    console.log(response)
+    fetch(`http://localhost:8080/api/send-email-deletion`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.accessToken}`,
+        },
+        body: JSON.stringify(data)
+      })
+        .then(res => {
+          if (!res.ok){
+            if (res.status == 409){
+              console.log('email exists error'); // ?
+            }
+            throw Error('could not fetch data')
+          } 
+          return res.json()
+        })
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err.message)
+        })
+      
+    setOpen(false);
+    if (response === false)
+    {
+      handleReject(userId);
+    }
+
+    else
+    {
+      handleAccept(userId);
+    }
+
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(requestType)
+    if (requestType === "registrationRequest")
+    {
+      submitRegistration(e);
+    }
+
+    else
+    {
+      submitDeletion(e);
+    }
+  }
+
+  const handleRejectRegistration = () =>
+  {
+    handleClickOpen();
+    setResponse(false);
+  }
+
+  const handleAcceptDeletion = () =>
+  {
+    handleClickOpen();
+    setResponse(true);
+  }
+
+  const handleRejectDeletion = () =>
+  {
+    handleClickOpen();
+    setResponse(false);
+  }
+
+  const handleAcceptRegistration = (e) => {
     e.preventDefault()
 
     const data = {
@@ -74,7 +165,7 @@ export default function FormDialog({userId, handleAccept, handleReject}) {
       explanation: "",
     }
 
-    fetch('http://localhost:8080/api/send-email', {
+    fetch('http://localhost:8080/api/send-email-registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,12 +194,18 @@ export default function FormDialog({userId, handleAccept, handleReject}) {
   return (
     <div>
       <div className="cellAction">
-        <div className="acceptButton" onClick={handleSubmitAccept}>
+        {requestType === "registrationRequest" && <div className="acceptButton" onClick={handleAcceptRegistration}>
                   Accept
-        </div>
-        <div className="rejectButton" onClick={() => handleClickOpen(userId)}>
+        </div>}
+        {requestType === "deletionRequest" && <div className="acceptButton" onClick={handleAcceptDeletion}>
+                  Accept
+        </div>}
+        {requestType === "registrationRequest" && <div className="rejectButton" onClick={ handleRejectRegistration}>
                   Reject
-        </div>
+        </div>}
+        {requestType === "deletionRequest" && <div className="rejectButton" onClick={handleRejectDeletion}>
+                  Reject
+        </div>}
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Explanation of rejection</DialogTitle>

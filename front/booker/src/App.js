@@ -13,6 +13,8 @@ import Single from './dashboard/pages/single/Single';
 import Hotels from './pages/hotels/Hotels';
 import Cottage from './pages/cottage/Cottage';
 import { Switch } from '@mui/material';
+import UserProfile from '../src//userProfile/UserProfile';
+import DeleteReqList from './dashboard/pages/list/DeleteReqList';
 
 function App() {
 
@@ -30,6 +32,9 @@ function App() {
               <Route path="/cottages/:id" element={<Cottage/>}/>
             </Route>
 
+            <Route path='/client-profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
+              </NotificationProvider>}/>
+
             <Route path='/dashboard'>
               <Route index element={<DashboardHome />} />
               <Route path='my-offers'>
@@ -41,8 +46,10 @@ function App() {
               <Route path='res-hist' element={<></>} />
               <Route path='future-res' element={<></>} />
               <Route path='reports' element={<></>} />
-              <Route path='profile' element={<></>} />
+              <Route path='profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
+              </NotificationProvider>}/>
               <Route path="reg-req" element={<RegReqList />}/>
+              <Route path="del-req" element={<DeleteReqList />}/>
               
               <Route path="cottages"> 
                 <Route index element={<List adminRequest={true} userType={'ROLE_COTTAGE_OWNER'} entityType={"cottages"}/>}/>
