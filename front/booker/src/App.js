@@ -13,6 +13,7 @@ import Cottage from './pages/cottage/Cottage';
 import { Switch } from '@mui/material';
 import Boat from './pages/boat/boat';
 import Boats from './pages/boats/boats';
+import FishingLesson from './pages/fishinglesson/FishingLesson';
 
 function App() {
 
@@ -36,10 +37,12 @@ function App() {
               <Route path="/cott/cottages/:id"  element={<Cottage/>}/>
               <Route path="/boa/boats" element={<Boats/>}/>
               <Route path="/boa/boats/:id" element={<Boat/>}/>
+              <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
+              <Route path="/fishinglessons/:id" element={<FishingLesson/>}/>
           
             </Route>
 
-             
+          
 
 
             <Route path='/dashboard'>

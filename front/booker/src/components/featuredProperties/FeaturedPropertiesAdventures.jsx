@@ -15,7 +15,7 @@ const FeaturedPropertiesAdventures = () => {
     ) : (
       <>
         {data.map((item) => (
-          <div className="fpItem" onClick={() => navigate(`/cottages/${item.id}`)} key={item.id}>
+          <div className="fpItem" onClick={() => navigate(`/fishinglessons/${item.id}`)} key={item.id}>
             <img
               src={item.images[0]}
               alt=""
