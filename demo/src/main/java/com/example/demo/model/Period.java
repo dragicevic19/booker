@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Period {
 
 
@@ -30,4 +32,8 @@ public class Period {
     @Column(name = "date_to", unique = false, nullable = false)
     private LocalDate dateTo;
 
+    @Override
+    public String toString() {
+        return dateFrom.toString() + " - " + dateTo.toString();
+    }
 }

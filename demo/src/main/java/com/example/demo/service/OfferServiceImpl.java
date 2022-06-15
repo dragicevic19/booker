@@ -69,6 +69,17 @@ public class OfferServiceImpl implements OfferService {
         return offer;
     }
 
+    @Override
+    public Offer findOfferForReservation(Reservation r) {
+        for(Offer offer: offerRepository.findAll()){
+            for(Reservation res : offer.getReservations()){
+                if (res.getId() == r.getId())
+                    return offer;
+            }
+        }
+        return null;
+    }
+
     private boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer) {
 
         for(Period period : offer.getPeriodsOfOccupancy()){

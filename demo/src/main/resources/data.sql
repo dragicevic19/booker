@@ -192,3 +192,11 @@ insert into client (id, num_of_penalties, loyalty_id) values (7, 0, 2);
 insert into user_role (user_id, role_id) values (7, 4);
 
 
+insert into period (
+    date_from, date_to, offer_id)
+VALUES ('2022-05-21', '2022-05-26', 2);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 2, 304, 1, 6, 2);
+
