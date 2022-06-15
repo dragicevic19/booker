@@ -13,5 +13,8 @@ public interface FishingLessonService {
 
     public Integer countFishingLessonByCity(String c);
 
+    public List<FishingLesson> fourOffers();
+
+
     void deleteFishingLesson(FishingLesson fishingLesson);
 }

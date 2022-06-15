@@ -5,6 +5,7 @@ import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
 import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
+import com.example.demo.model.FishingLesson;
 import com.example.demo.model.User;
 import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
@@ -127,6 +128,19 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
+
+    @GetMapping("adventures/4offers")
+    public ResponseEntity<List<FishingLesson>> fourOffersAdventure(){
+
+        List<FishingLesson> fislist = fishingLessonService.fourOffers();
+
+
+        return new ResponseEntity<>(fislist, HttpStatus.OK);
+    }
+
+
+
+
 
     @GetMapping("boats/4offers")
     public ResponseEntity<List<Boat>> fourOffersBoat(){
