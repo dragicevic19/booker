@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService {
     private ClientService clientService;
     @Autowired
     private FishingInstructorService fishingInstructorService;
+    @Autowired
+    private AdministratorService administratorService;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -159,6 +161,8 @@ public class UserServiceImpl implements UserService {
                 return clientService.save(u);
             case "instructors":
                 return fishingInstructorService.save(u);
+            case "administrators":
+                return administratorService.save(u);
             default:
                 return null;
         }

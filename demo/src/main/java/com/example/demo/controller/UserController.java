@@ -54,7 +54,7 @@ public class UserController {
 
     @GetMapping("/user/requests")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ResponseEntity<List<UserDataTable>> userRequests(@RequestParam("enabled") boolean enabled) {
+    public ResponseEntity<List<UserDataTable>> userRequests(@RequestParam("enabled") boolean enabled, @RequestParam("user_type") String userType) {
         List<User> users = this.userService.findDisabledUsers(enabled);
         List<UserDataTable> userDataTableDTO = new ArrayList<>();
         for(User user : users)

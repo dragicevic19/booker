@@ -16,5 +16,7 @@ import java.util.Collection;
 @Getter
 @Setter
 public class Administrator extends User{
-
+    public Administrator(User user) {
+        super(user);
+    }
 }
