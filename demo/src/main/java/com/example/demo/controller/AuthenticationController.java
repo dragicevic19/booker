@@ -174,6 +174,18 @@ public class AuthenticationController {
         return new ResponseEntity<>(cottage, HttpStatus.OK);
     }
 
+    @GetMapping("fishinglesson/{fishinglessonId}")
+    public ResponseEntity<FishingLesson> loadFishingLesson(@PathVariable Integer fishinglessonId) {
+
+        FishingLesson fishinglesson = fishingLessonService.findById(fishinglessonId);
+        if (fishinglesson == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(fishinglesson, HttpStatus.OK);
+    }
+
+
     @GetMapping("boat/{boatId}")
     public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
 
