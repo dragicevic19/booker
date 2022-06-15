@@ -19,7 +19,7 @@ const FeaturedBoats = () => {
         />
         <div className="featuredTitles">
           <h1>Belgrade</h1>
-          <h2>{data[0]} properties</h2>
+          <h2>{data[0]} boats</h2>
         </div>
       </motion.div>
       <motion.div className="featuredItem"
@@ -33,7 +33,7 @@ const FeaturedBoats = () => {
         />
         <div className="featuredTitles">
           <h1>Novi Sad</h1>
-          <h2>{data[1]} properties</h2>
+          <h2>{data[1]} boats</h2>
         </div>
       </motion.div>
       <motion.div className="featuredItem"
@@ -47,7 +47,7 @@ const FeaturedBoats = () => {
         />
         <div className="featuredTitles">
           <h1>Herceg Novi</h1>
-          <h2>{data[2]} properties</h2>
+          <h2>{data[2]} boats</h2>
         </div>
       </motion.div></>)}
     </div>

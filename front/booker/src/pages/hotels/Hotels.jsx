@@ -18,12 +18,9 @@ const Hotels = () => {
   const [max, setMax] = useState(undefined);
 
   
-  // const { data, loading, error, reFetch } = useFetch(
-  //  "http://localhost:8080/auth/cottages/4offers"                 //ovo je metoda za pocetnu prava treba da vrati sve ili paramterizovano
-  // );
 
   const {  data, loading, error,reFetch } = useFetch("http://localhost:8080/auth/cottages");
- console.log(data);
+
   
  
   const handleClick = () => {

@@ -26,6 +26,8 @@ import { SearchContext } from "../../components/context/SearchContext";
 import { AuthContext } from "../../components/context/AuthContext";
 import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
+import Rating from "../../dashboard/components/rating/Rating"
+
 
 const Boat = () => {
   const location = useLocation();
@@ -128,6 +130,7 @@ const Boat = () => {
                   </p>
               </div>
               <div className="boatDetailsPrice">
+              <Rating className="rating" rating = {data.rating}></Rating>
                 <h1>Perfect for a {days}-night stay!</h1>
                   
                 <h2>
