@@ -18,7 +18,7 @@ const Reservations = ({history}) => {
     'Authorization': `Bearer ${user.accessToken}`,
   }
 
-  const link = history ? `http://localhost:8080/api/reservations/history/${user.id}` : `http://localhost:8080/api/reservations/${user.id}`
+  const link = history ? `http://localhost:8080/api/reservations/history/${user.id}` : `http://localhost:8080/api/reservations/future/${user.id}`
 
   const { data, loading, error } = useFetch(link);
   
@@ -48,7 +48,7 @@ const Reservations = ({history}) => {
     setShowReportModal(!showReportModal);
   }
 
-  
+  console.log(data);
   const actionColumn = [
     {
       field: "action",
@@ -60,12 +60,12 @@ const Reservations = ({history}) => {
             <div 
               onClick={()=> newReportClick(params.row.id)}
               className="viewButton"
-              disabled = {history === false}
+              disabled = {history === false || params.row.status === "now"}
             >Fill Report
             </div>
             <div 
               onClick={()=>newReservationClick(params.row.id)}
-              className="editButton"
+              className="newActionButton"
               disabled={params.row.status !== "now"}
             >New Reservation
             </div>

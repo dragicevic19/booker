@@ -67,9 +67,9 @@ public class ServiceProviderController {
         return new ResponseEntity<>(isReserved, HttpStatus.OK);
     }
 
-    @GetMapping("/reservations/history/{userId}")
+    @GetMapping("/reservations/{history}/{userId}")
     @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
-    public ResponseEntity<List<ReservationToList>> loadReservationHistory(@PathVariable Integer userId) {
+    public ResponseEntity<List<ReservationToList>> loadReservationHistory(@PathVariable String history, @PathVariable Integer userId) {
         List<ReservationToList> retList = new ArrayList<>();
         ServiceProvider u = (ServiceProvider) userService.findById(userId);
 
@@ -77,7 +77,10 @@ public class ServiceProviderController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<Reservation> reservations = userService.getReservationHistory(userService.findUsersReservations(u));
+        List<Reservation> reservations = (history.equalsIgnoreCase("history")) ?
+            userService.getReservationHistory(userService.findUsersReservations(u)) :
+            userService.getFutureReservations(userService.findUsersReservations(u));
+
         for (Reservation r : reservations) {
             Offer offer = offerService.findOfferForReservation(r);
             Client client = userService.findClientForReservation(r);    // ne znam da li ovo moze brze

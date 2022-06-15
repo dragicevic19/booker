@@ -27,8 +27,10 @@ public class ReservationToList {
     private Integer capacity;
     private String img;
     private String period;
+    private boolean hasClientRated;
+    private boolean hasOwnerRated;
 
-    public ReservationToList(Reservation r, Offer offer, Client client){
+    public ReservationToList(Reservation r, Offer offer, Client client) {
         this.id = r.getId();
         this.offerName = offer.getName();
         this.client = client.getFirstName() + " " + client.getLastName();
@@ -39,16 +41,22 @@ public class ReservationToList {
         this.capacity = r.getNumOfAttendants();
         this.img = (offer.getImages().size() > 0) ? offer.getImages().get(0) : null;
         this.period = r.getReservationPeriod().toString();
+        this.hasClientRated = r.isHasClientRated();
+        this.hasOwnerRated = r.isHasOwnerRated();
     }
 
     private String setStatus(Period reservationPeriod) { // da li je rezervacija u toku
-        String retString = "";                          // da vlasnik moze da produzi ako jeste
+                                                       // da vlasnik moze da produzi ako jeste
+        if ((reservationPeriod.getDateFrom().isBefore(LocalDate.now())) && reservationPeriod.getDateTo().isAfter(LocalDate.now()))
+            return "now";
 
-        if ((reservationPeriod.getDateFrom().isAfter(LocalDate.now()) && reservationPeriod.getDateTo().isBefore(LocalDate.now()))
-        || (reservationPeriod.getDateFrom().isEqual(LocalDate.now())) || (reservationPeriod.getDateTo().isEqual(LocalDate.now())))
-            retString = "now";
+        if ((reservationPeriod.getDateFrom().isEqual(LocalDate.now())) || reservationPeriod.getDateTo().isEqual(LocalDate.now()))
+            return "now";
 
-        return retString;
+        if ((reservationPeriod.getDateTo().isBefore(LocalDate.now())))
+            return "passed";
+
+        return "not_passed";
     }
 
 }

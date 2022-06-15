@@ -46,6 +46,18 @@ export const reservationColumns =
       field: "period",
       headerName: "Period",
       width: 230,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <div className={`cellWithStatus ${params.row.status}`}>
+            {params.row.status}
+          </div>
+        );
+      },
     }
   ]
   
