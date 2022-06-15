@@ -7,6 +7,17 @@ import {
   faCircleArrowRight,
   faCircleXmark,
   faLocationDot,
+  faSailboat,
+  faShip,
+  faRulerHorizontal,
+  faGaugeHigh,
+  faPeopleGroup,
+  faFishFins,
+  faLocationCrosshairs,
+  faFileLines,
+  faMoneyCheck,
+  faMoneyBill1Wave,
+  faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -15,6 +26,7 @@ import { SearchContext } from "../../components/context/SearchContext";
 import { AuthContext } from "../../components/context/AuthContext";
 import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
+import Rating from "../../dashboard/components/rating/Rating"
 
 const Cottage = () => {
   const location = useLocation();
@@ -79,6 +91,7 @@ const Cottage = () => {
         <div className="cottageContainer">
           <div className="cottageWrapper">
             <button className="bookNow">Reserve or Book Now!</button>
+             
             <h1 className="cottageTitle">{data.name}</h1>
             <div className="cottageAddress">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -100,16 +113,28 @@ const Cottage = () => {
             <div className="cottageDetails">
               <div className="cottageDetailsTexts">
                 <h1 className="cottageTitle">{data.title}</h1>
-                <p className="cottageDesc">{data.description}</p>
+                <p className="cottageDesc">
+                    <FontAwesomeIcon size="2x" icon ={faFileLines}/> Description- {data.description}<br/><br/><br/>
+                    <FontAwesomeIcon size="2x" icon ={faPeopleGroup}/> Capacity- {data.capacity} people<br/>
+                    <FontAwesomeIcon size="2x" icon ={faCircleXmark}/> Regulations- {data.regulations}<br/>
+                    <FontAwesomeIcon size="2x" icon ={faMoneyBill1Wave}/> Price per day- {data.price}$<br/>
+                    <FontAwesomeIcon size="2x" icon ={faMoneyCheck}/> Cancellation fee- {data.cancellationFee}$<br/>
+                    <FontAwesomeIcon size="2x" icon ={faCartPlus}/> Additional services- {data.additionalServices.map(t => {return (<div className="addser"><h>{t.name}</h><br/>   Price- {t.price}$<br/>  Description- {t.description}</div>)})}
+                     
+                  </p>
               </div>
               <div className="cottageDetailsPrice">
+              <Rating className="rating" rating = {data.rating}></Rating>
+              
                 <h1>Perfect for a {days}-night stay!</h1>
         
                 <h2>
                   <b>${days * data.price }</b> ({days}{" "}
                   nights)
                 </h2>
+                
                 <button onClick={handleClick}>Reserve or Book Now!</button>
+                
               </div>
             </div>
           </div>
