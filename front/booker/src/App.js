@@ -15,6 +15,7 @@ import Cottage from './pages/cottage/Cottage';
 import { Switch } from '@mui/material';
 import UserProfile from '../src//userProfile/UserProfile';
 import DeleteReqList from './dashboard/pages/list/DeleteReqList';
+import ReservationsList from './dashboard/pages/list/ReservationsList';
 
 function App() {
 
@@ -43,8 +44,8 @@ function App() {
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
                 <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
-              <Route path='res-hist' element={<></>} />
-              <Route path='future-res' element={<></>} />
+              <Route path='res-hist' element={<ReservationsList history={true}/>} />
+              <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<></>} />
               <Route path='profile' element={<NotificationProvider><UserProfile authOrApi={"api"}/>
               </NotificationProvider>}/>

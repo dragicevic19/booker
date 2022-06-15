@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserRequest;
 import com.example.demo.model.*;
+import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.OfferRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +23,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -110,6 +116,50 @@ public class UserServiceImpl implements UserService {
             }
         }
         return isReserved;
+    }
+
+    @Override
+    public List<Reservation> findUsersReservations(ServiceProvider serviceProvider) {
+        List<Reservation> reservations = new ArrayList<>();
+
+        for(Offer offer : serviceProvider.getOffers()){
+            for(Reservation res : offer.getReservations()){
+                reservations.add(res);
+            }
+        }
+        return reservations;
+    }
+
+    @Override
+    public List<Reservation> getReservationHistory(List<Reservation> usersReservations) {
+        List<Reservation> retList = new ArrayList<>();
+
+        for(Reservation reservation : usersReservations){
+            if (reservation.getReservationPeriod().getDateFrom().isBefore(LocalDate.now())) // ovde se smestaju i trenutne rez
+                retList.add(reservation);
+        }
+        return retList;
+    }
+
+    @Override
+    public List<Reservation> getFutureReservations(List<Reservation> usersReservations) {
+        List<Reservation> retList = new ArrayList<>();
+
+        for(Reservation reservation : usersReservations){
+            if (reservation.getReservationPeriod().getDateTo().isAfter(LocalDate.now()))  // i ovde su i trenutne rez
+                retList.add(reservation);
+        }
+        return retList;
+    }
+
+    @Override
+    public Client findClientForReservation(Reservation r) {
+        for(Client client : clientRepository.findAll()){
+            for(Reservation res : client.getReservations()){
+                if (res.getId() == r.getId()) return client;
+            }
+        }
+        return null;
     }
 
     @Override

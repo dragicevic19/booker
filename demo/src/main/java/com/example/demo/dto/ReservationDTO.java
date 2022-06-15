@@ -1,15 +1,20 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Client;
 import com.example.demo.model.Reservation;
-import org.apache.tomcat.jni.Local;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservationDTO {
 
-    private ClientDTO client;
+    //private ClientDTO client;
     private String text;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -17,10 +22,14 @@ public class ReservationDTO {
 
 
     public ReservationDTO(Reservation r) {
-        client = new ClientDTO(r.getClient());
+//        client = new ClientDTO(r.getClient());
         this.text = "Reserved";
         this.startDate = r.getReservationPeriod().getDateFrom();
+//        this.startDate = LocalDate.parse("2022-06-21");
+
         this.endDate = r.getReservationPeriod().getDateTo();
-        this.typeId = 3;    // na frontu ovo znaci da je obicna res
+//        this.endDate = LocalDate.parse("2022-06-25");
+
+        this.typeId = 3;    // na frontu ovo znaci obicna rezervacija
     }
 }
