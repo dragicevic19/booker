@@ -40,9 +40,9 @@ const Header = ({type,activePage ="1"}) => {
 		})
 	}
 
-
+	// ova metoda se aktivira na klik dugmeta za search u zavisnosti od aktivne stranice poziva se odgovarajuca
 	const handleSearch = () => {
-		navigate("cottages", {state: {destination, date, options}})
+		activePage === "1" ? navigate("cottages", {state: {destination, date, options}}) :activePage === "2" ? navigate("boats", {state: {destination, date, options}}) : navigate("fish", {state: {destination, date, options}})
 	}
 
 

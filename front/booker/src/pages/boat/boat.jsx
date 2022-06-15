@@ -31,7 +31,7 @@ import Rating from "../../dashboard/components/rating/Rating"
 
 const Boat = () => {
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const id = location.pathname.split("/").pop();
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -85,7 +85,7 @@ const Boat = () => {
   return (
     <div>
       <Navbar />
-      <Header type="list" />
+      <Header type="list" activePage="2" />
       {loading ? (
         "loading"
       ) : (

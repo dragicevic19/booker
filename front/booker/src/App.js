@@ -11,7 +11,8 @@ import Single from './dashboard/pages/single/Single';
 import Hotels from './pages/hotels/Hotels';
 import Cottage from './pages/cottage/Cottage';
 import { Switch } from '@mui/material';
-import Boat from './pages/boats/boat';
+import Boat from './pages/boat/boat';
+import Boats from './pages/boats/boats';
 
 function App() {
 
@@ -31,7 +32,15 @@ function App() {
               <Route path="/cottages" element={<Hotels/>}/>
               <Route path="/cottages/:id" element={<Cottage/>}/>
               <Route path="/boat/:id" element={<Boat/>}/>
+              <Route path="/cott/cottages" element={<Hotels/>}/>
+              <Route path="/cott/cottages/:id"  element={<Cottage/>}/>
+              <Route path="/boa/boats" element={<Boats/>}/>
+              <Route path="/boa/boats/:id" element={<Boat/>}/>
+          
             </Route>
+
+             
+
 
             <Route path='/dashboard'>
               <Route index element={<DashboardHome />} />

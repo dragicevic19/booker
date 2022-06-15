@@ -30,7 +30,7 @@ import Rating from "../../dashboard/components/rating/Rating"
 
 const Cottage = () => {
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const id = location.pathname.split("/").pop();
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
