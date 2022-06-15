@@ -8,6 +8,7 @@ import com.example.demo.model.Cottage;
 import com.example.demo.model.User;
 import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
+import com.example.demo.service.FishingLessonService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,8 @@ public class AuthenticationController {
 
     @Autowired
     BoatService boatService;
+    @Autowired
+    FishingLessonService fishingLessonService;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -105,6 +108,16 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
+
+    @GetMapping("adventures/countByCity")
+    public ResponseEntity<java.util.List<Integer>> countAdventuresByCity(@RequestParam String[] cities){
+        List<Integer> retList = new ArrayList<>();
+        for (String c : cities) {
+            retList.add(fishingLessonService.countFishingLessonByCity(c));
+        }
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
 
     @GetMapping("cottages/4offers")
     public ResponseEntity<List<Cottage>> fourOffers(){

@@ -19,7 +19,7 @@ const Hotels = () => {
 
   
 
-  const {  data, loading, error,reFetch } = useFetch('http://localhost:8080/auth/cottages?city=${destination}&min=${min || 0 }&max=${max || 999}');
+  const {  data, loading, error,reFetch } = useFetch('http://localhost:8080/auth/cottages');
 
   
  

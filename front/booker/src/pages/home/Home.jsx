@@ -5,7 +5,7 @@ import Featured from "../../components/featured/Featured"
 import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties"
 import FeaturedBoats from "../../components/featured/featuredBoats"
 import FeaturedPropertiesBoats from "../../components/featuredProperties/featuredPropertiesBoats"
-
+import FeaturedAdventures from "../../components/featured/FeaturedAdventures"
 const Home = ({page = "1"}) => {
 
     return ( 
@@ -19,8 +19,15 @@ const Home = ({page = "1"}) => {
                 <FeaturedProperties />
             </div>
             : 
+            page ==="2"?
             <div className="homeContainer">
             <FeaturedBoats />
+            <h1 className="homeTitle">Boats guests love</h1>
+            <FeaturedPropertiesBoats/>
+            </div>
+            :
+            <div className="homeContainer">
+            <FeaturedAdventures />
             <h1 className="homeTitle">Boats guests love</h1>
             <FeaturedPropertiesBoats/>
             </div>

@@ -11,8 +11,6 @@ public interface BoatService {
 
     List<Boat> findAll();
 
-
-
     List<Boat> fourOffersBoat();
 
     void deleteBoat(Boat boat);

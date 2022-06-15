@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dto.FishingLessonRequest;
 import com.example.demo.model.Address;
-import com.example.demo.model.Cottage;
 import com.example.demo.model.FishingLesson;
 import com.example.demo.repository.FishingLessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +45,12 @@ public class FishingLessonServiceImpl implements FishingLessonService{
     public List<FishingLesson> findAll() {
         return fishingLessonRepository.findAll();
     }
+
+    @Override
+    public Integer countFishingLessonByCity(String c) {
+        return fishingLessonRepository.findByAddressCityIgnoreCase(c).size();
+    }
+
 
     @Override
     public void deleteFishingLesson(FishingLesson fishingLesson) {
