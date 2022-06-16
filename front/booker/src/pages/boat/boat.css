@@ -1,11 +1,11 @@
-.cottageContainer {
+.boatContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
   }
   
-  .cottageWrapper {
+  .boatWrapper {
     width: 100%;
     max-width: 1024px;
     display: flex;
@@ -26,73 +26,64 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  .rating{
-    position: absolute;
-    top: 10px;
-    right: 0;
-    border: none;
-    padding: 10px 20px;
-    background-color: #0071c2;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-  }
   
-  .cottageTitle {
+  .boatTitle {
     font-size: 24px;
   }
   
-  .cottageAddress {
+  .boatAddress {
     font-size: 12px;
     display: flex;
     align-items: center;
     gap: 10px;
   }
   
-  .cottageDistance {
+  .boatDistance {
     color: #0071c2;
     font-weight: 500;
   }
   
-  .cottagePriceHighlight {
+  .boatPriceHighlight {
     color: #008009;
     font-weight: 500;
   }
   
-  /* .cottageImages {
+  /* .boatImages {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
   
-  .cottageImgWrapper {
+  .boatImgWrapper {
     width: 33%;
   }
   
-  .cottageImg {
+  .boatImg {
     width: 100%;
     object-fit: cover;
     cursor: pointer;
   } */
   
-  .cottageDetails {
+  .boatDetails {
     display: flex;
     justify-content: space-between;
     gap: 20px;
     margin-top: 20px;
+    font-weight: bold;
+   
   }
   
-  .cottageDetailsTexts {
+  .boatDetailsTexts {
     flex: 3;
   }
   
-  .cottageDesc {
-    font-size: 14px;
+  .boatDesc {
+    font-size: 18px;
     margin-top: 20px;
+    padding-bottom: 60px;
   }
   
-  .cottageDetailsPrice {
+  .boatDetailsPrice {
     flex: 1;
     background-color: #ebf3ff;
     padding: 20px;
@@ -101,17 +92,17 @@
     gap: 20px;
   }
   
-  .cottageDetailsPrice > h1 {
+  .boatDetailsPrice > h1 {
     font-size: 18px;
     color: #555;
   }
-  .cottageDetailsPrice > span {
+  .boatDetailsPrice > span {
     font-size: 14px;
   }
-  .cottageDetailsPrice > h2 {
+  .boatDetailsPrice > h2 {
     font-weight: 300;
   }
-  .cottageDetailsPrice > button {
+  .boatDetailsPrice > button {
     border: none;
     padding: 10px 20px;
     background-color: #0071c2;
@@ -124,5 +115,13 @@
   .photo {
     max-width: 1024px;
   }
+  .addser{
+      background-color: #0071c2;
+      outline: black;
+      border: 2px solid black 
+  }
+  .addser > h{ 
+    font-size: 25px;
+}
   
   

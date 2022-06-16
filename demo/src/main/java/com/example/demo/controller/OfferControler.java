@@ -91,6 +91,4 @@ public class OfferControler {
 
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
-
-
 }

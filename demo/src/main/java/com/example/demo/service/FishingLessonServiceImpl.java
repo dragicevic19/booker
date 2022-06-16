@@ -48,6 +48,16 @@ public class FishingLessonServiceImpl implements FishingLessonService{
     }
 
     @Override
+    public Integer countFishingLessonByCity(String c) {
+        return fishingLessonRepository.findByAddressCityIgnoreCase(c).size();
+    }
+    @Override
+    public List<FishingLesson> fourOffers() {
+        return fishingLessonRepository.findTop4ByOrderByRatingAverageAsc();
+    }
+
+
+    @Override
     public void deleteFishingLesson(FishingLesson fishingLesson) {
         fishingLesson.setDeleted(true);
         fishingLessonRepository.save(fishingLesson);

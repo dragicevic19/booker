@@ -5,9 +5,13 @@ import com.example.demo.dto.JwtAuthenticationRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
 import com.example.demo.model.Administrator;
+import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
+import com.example.demo.model.FishingLesson;
 import com.example.demo.model.User;
+import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
+import com.example.demo.service.FishingLessonService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +47,10 @@ public class AuthenticationController {
     @Autowired
     CottageService cottageService;
 
+    @Autowired
+    BoatService boatService;
+    @Autowired
+    FishingLessonService fishingLessonService;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -94,21 +102,72 @@ public class AuthenticationController {
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
 
-    @GetMapping("cottages/4offers")
-    public ResponseEntity<List<Cottage>> fourOffers(){
-        List<Cottage> cotlist = cottageService.fourOffers();
-        List<Cottage> retList = new ArrayList<>();
-        for (int i = 0; i < 4 && i < cotlist.size(); i++) {
-            retList.add(cotlist.get(i));
+
+    @GetMapping("boats/countByCity")
+    public ResponseEntity<java.util.List<Integer>> countBoatsByCity(@RequestParam String[] cities){
+        List<Integer> retList = new ArrayList<>();
+        for (String c : cities) {
+            retList.add(boatService.countBoatsByCity(c));
         }
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @GetMapping("adventures/countByCity")
+    public ResponseEntity<java.util.List<Integer>> countAdventuresByCity(@RequestParam String[] cities){
+        List<Integer> retList = new ArrayList<>();
+        for (String c : cities) {
+            retList.add(fishingLessonService.countFishingLessonByCity(c));
+        }
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("cottages/4offers")
+    public ResponseEntity<List<Cottage>> fourOffers(){
+
+        List<Cottage> cotlist = cottageService.fourOffers();
+
+
+        return new ResponseEntity<>(cotlist, HttpStatus.OK);
+    }
+
+    @GetMapping("adventures/4offers")
+    public ResponseEntity<List<FishingLesson>> fourOffersAdventure(){
+
+        List<FishingLesson> fislist = fishingLessonService.fourOffers();
+
+
+        return new ResponseEntity<>(fislist, HttpStatus.OK);
+    }
+
+
+
+
+
+    @GetMapping("boats/4offers")
+    public ResponseEntity<List<Boat>> fourOffersBoat(){
+
+        List<Boat> cotlist = boatService.fourOffersBoat();
+
+
+        return new ResponseEntity<>(cotlist, HttpStatus.OK);
+    }
+    @GetMapping("fishinglessons")
+    public ResponseEntity<List<FishingLesson>> getLessonOffers(){
+        List<FishingLesson> fislist = fishingLessonService.findAll();
+        return new ResponseEntity<>(fislist, HttpStatus.OK);
     }
 
     @GetMapping("cottages")
     public ResponseEntity<List<Cottage>> getOffers(){
         List<Cottage> cotlist = cottageService.findAll();
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
+    }
+    @GetMapping("boats")
+    public ResponseEntity<List<Boat>> getBoatOffers(){
+        List<Boat> boatlist = boatService.findAll();
+        return new ResponseEntity<>(boatlist, HttpStatus.OK);
     }
 
     @GetMapping("cottage/{cottageId}")
@@ -120,6 +179,30 @@ public class AuthenticationController {
         }
 
         return new ResponseEntity<>(new CottageDTO(cottage), HttpStatus.OK);
+    }
+
+
+    @GetMapping("fishinglesson/{fishinglessonId}")
+    public ResponseEntity<FishingLesson> loadFishingLesson(@PathVariable Integer fishinglessonId) {
+
+        FishingLesson fishinglesson = fishingLessonService.findById(fishinglessonId);
+        if (fishinglesson == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(fishinglesson, HttpStatus.OK);
+    }
+
+
+    @GetMapping("boat/{boatId}")
+    public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
+
+        Boat boat = boatService.findById(boatId);
+        if (boat == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(boat, HttpStatus.OK);
     }
 
     @PostMapping("create-deletion-request/{userId}")

@@ -1,13 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BoatRequest;
-import com.example.demo.dto.FishingLessonRequest;
 import com.example.demo.model.Address;
 import com.example.demo.model.Boat;
-import com.example.demo.model.BoatType;
-import com.example.demo.model.FishingLesson;
 import com.example.demo.repository.BoatRepository;
-import com.example.demo.repository.FishingLessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +27,16 @@ public class BoatServiceImpl implements BoatService{
         return boatRepository.findAll();
     }
 
+    @Override
+    public Integer countBoatsByCity(String c) {
+        return boatRepository.findByAddressCityIgnoreCase(c).size();
+    }
+
+    @Override
+    public List<Boat> fourOffersBoat() {
+      return boatRepository.findTop4ByOrderByRatingAverageAsc();
+
+    }
     @Override
     public void deleteBoat(Boat boat) {
         boat.setDeleted(true);

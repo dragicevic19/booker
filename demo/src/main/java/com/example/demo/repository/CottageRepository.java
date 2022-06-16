@@ -9,4 +9,6 @@ public interface CottageRepository extends JpaRepository<Cottage, Integer> {
 
     List<Cottage> findByAddressCityIgnoreCase(String city);
     List<Cottage> getAllByOrderByRating();
+    List<Cottage> findTop4ByOrderByRatingAverageAsc();
+
 }

@@ -27,4 +27,11 @@ public interface UserService extends UserDetailsService {
     void rejectDeletionRequest(User userToBeFound);
 
     boolean isProviderReserved(ServiceProvider serviceProvider);
+
+    List<Reservation> findUsersReservations(ServiceProvider u);
+
+    List<Reservation> getReservationHistory(List<Reservation> usersReservations);
+    List<Reservation> getFutureReservations(List<Reservation> usersReservations);
+
+    Client findClientForReservation(Reservation r);
 }

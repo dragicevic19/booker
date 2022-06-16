@@ -5,10 +5,10 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import useFetch from "../../hooks/useFetch";
-import "./hotels.css";
+import "./fishinglessons.css";
 import SearchItem from "../../components/searchitem/SearchItem";
 
-const Hotels = () => {
+const FishingLessons = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
   const [dates, setDates] = useState(location.state.date);
@@ -19,7 +19,7 @@ const Hotels = () => {
 
   
 
-  const {  data, loading, error,reFetch } = useFetch('http://localhost:8080/auth/cottages');
+  const {  data, loading, error,reFetch } = useFetch('http://localhost:8080/auth/fishinglessons');
 
   
  
@@ -30,7 +30,7 @@ const Hotels = () => {
   return (
     <div>
       <Navbar />
-      <Header type="list" />
+      <Header type="list" activePage="3"/>
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
@@ -124,4 +124,4 @@ const Hotels = () => {
   );
 };
 
-export default Hotels;
+export default FishingLessons;

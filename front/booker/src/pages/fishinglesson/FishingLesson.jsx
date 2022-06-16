@@ -1,4 +1,4 @@
-import "./cottage.css";
+import "./fishinglesson.css";
 import Navbar from "../../components/navbarHome/Navbar";
 import Header from "../../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,14 +28,14 @@ import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
 
-const Cottage = () => {
+const FishingLesson = () => {
   const location = useLocation();
   const id = location.pathname.split("/").pop();
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data, loading, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
+  const { data, loading, error} = useFetch(`http://localhost:8080/auth/fishinglesson/${id}`)
 
  
 
@@ -84,46 +84,47 @@ const Cottage = () => {
   return (
     <div>
       <Navbar />
-      <Header type="list" />
+      <Header type="list" activePage="3" />
       {loading ? (
         "loading"
       ) : (
-        <div className="cottageContainer">
-          <div className="cottageWrapper">
+        <div className=" fishinglessonContainer">
+          <div className=" fishinglessonWrapper">
             <button className="bookNow">Reserve or Book Now!</button>
              
-            <h1 className="cottageTitle">{data.name}</h1>
-            <div className="cottageAddress">
+            <h1 className=" fishinglessonTitle">{data.name}</h1>
+            <div className=" fishinglessonAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               {data.address.city}, {data.address.street}
             </div>
-            <span className="cottageDistance">
+            <span className=" fishinglessonDistance">
               Excellent location – {}m from center
             </span>
-            <span className="cottagePriceHighlight">
+            <span className=" fishinglessonPriceHighlight">
               Book a stay for ${data.price} at this property.
             </span>
-            <div className="cottageImages">
+            <div className=" fishinglessonImages">
              
               <Gallery photos={data.images}/> 
               
               
               
             </div>
-            <div className="cottageDetails">
-              <div className="cottageDetailsTexts">
-                <h1 className="cottageTitle">{data.title}</h1>
-                <p className="cottageDesc">
+            <div className=" fishinglessonDetails">
+              <div className=" fishinglessonDetailsTexts">
+                <h1 className=" fishinglessonTitle">{data.title}</h1>
+                <p className=" fishinglessonDesc">
                     <FontAwesomeIcon size="2x" icon ={faFileLines}/> Description- {data.description}<br/><br/><br/>
                     <FontAwesomeIcon size="2x" icon ={faPeopleGroup}/> Capacity- {data.capacity} people<br/>
                     <FontAwesomeIcon size="2x" icon ={faCircleXmark}/> Regulations- {data.regulations}<br/>
+                    <FontAwesomeIcon size="2x" icon ={faFishFins}/> Fishing equipment- {data.fishingEquipment.map(t => {return t+", " })}<br/>
                     <FontAwesomeIcon size="2x" icon ={faMoneyBill1Wave}/> Price per day- {data.price}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faMoneyCheck}/> Cancellation fee- {data.cancellationFee}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faCartPlus}/> Additional services- {data.additionalServices.map(t => {return (<div className="addser"><h>{t.name}</h><br/>   Price- {t.price}$<br/>  Description- {t.description}</div>)})}
-                     
+       
                   </p>
               </div>
-              <div className="cottageDetailsPrice">
+              <div className=" fishinglessonDetailsPrice">
               <Rating className="rating" rating = {data.rating}></Rating>
               
                 <h1>Perfect for a {days}-night stay!</h1>
@@ -147,4 +148,4 @@ const Cottage = () => {
   );
 };
 
-export default Cottage;
+export default FishingLesson;

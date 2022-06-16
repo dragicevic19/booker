@@ -10,7 +10,7 @@ import {format} from "date-fns"
 import { useNavigate, useNavigationType } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext";
 
-const Header = ({type}) => {
+const Header = ({type,activePage ="1"}) => {
 
 	const [destination, setDestination] = useState("")
 	const [openDate, setOpenDate] = useState(false)
@@ -40,25 +40,25 @@ const Header = ({type}) => {
 		})
 	}
 
-
+	// ova metoda se aktivira na klik dugmeta za search u zavisnosti od aktivne stranice poziva se odgovarajuca
 	const handleSearch = () => {
-		navigate("cottages", {state: {destination, date, options}})
+		activePage === "1" ? navigate("cottages", {state: {destination, date, options}}) :activePage === "2" ? navigate("boats", {state: {destination, date, options}}) : navigate("fishinglessons", {state: {destination, date, options}})
 	}
 
 
   return (
     <div className="header">
-			<div className={type === "list" ? "headerContainer listMode" : "headerContainer" }>
+			<div className={type === "list" ? "headerContainer listMode" : "headerContainer" } >
 				<div className="headerList">
-					<div className="headerListItem active">
+					<div className={activePage === "1" ? "headerListItem active" : "headerListItem" } onClick={()=>navigate('/cott')} >
 						<FontAwesomeIcon icon={faBed} />
 						<span>Stays</span>
 					</div>
-					<div className="headerListItem">
+					<div className={activePage === "2" ? "headerListItem active" : "headerListItem" } onClick={()=>navigate('/boa')}>
 						<FontAwesomeIcon icon={faSailboat} />
 						<span>Boats</span>
 					</div>
-					<div className="headerListItem">
+					<div className={activePage === "3" ? "headerListItem active" : "headerListItem" } onClick={()=>navigate('/fis')}>
 						<FontAwesomeIcon icon={faFish} />
 						<span>Fishing Adventures</span>
 					</div>

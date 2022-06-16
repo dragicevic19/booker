@@ -53,6 +53,8 @@ const NewCottage = ({edit, title}) => {
     fee: "",
   })
 
+  console.log(data);
+
   useEffect(() => {
     if (Object.keys(data).length !== 0 && edit){
       const val = {

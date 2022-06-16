@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Setter
 @Getter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Offer {
 
     @Id
@@ -60,6 +62,10 @@ public abstract class Offer {
     @JoinColumn(name = "offer_id", referencedColumnName = "id")
     protected List<Discount> discounts;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
+    protected List<Reservation> reservations;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "rating_id", referencedColumnName = "id")
     protected Rating rating;
@@ -68,8 +74,7 @@ public abstract class Offer {
     @Column(name = "images")
     protected List<String> images;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    protected List<Reservation> reservations;
+
 
     @Column(name = "deleted")
     protected boolean deleted;
