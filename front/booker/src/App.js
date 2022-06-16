@@ -15,6 +15,7 @@ import Cottage from './pages/cottage/Cottage';
 import { Switch } from '@mui/material';
 import UserProfile from '../src//userProfile/UserProfile';
 import DeleteReqList from './dashboard/pages/list/DeleteReqList';
+import PasswordChange from './pages/login/PasswordChange';
 
 function App() {
 
@@ -82,6 +83,9 @@ function App() {
               </Route> 
 
             </Route>
+            <Route path="/password-change" element={<NotificationProvider>
+              <PasswordChange/>
+            </NotificationProvider>}></Route>
           </Routes>
         </div>
       </div>

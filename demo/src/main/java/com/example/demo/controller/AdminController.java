@@ -1,12 +1,7 @@
 package com.example.demo.controller;
-import com.example.demo.dto.OfferToList;
-import com.example.demo.dto.ServiceProvidersToList;
-import com.example.demo.dto.UserDataTable;
+import com.example.demo.dto.*;
 import com.example.demo.model.*;
-import com.example.demo.service.BoatService;
-import com.example.demo.service.CottageService;
-import com.example.demo.service.FishingLessonService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +26,9 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AdministratorService administratorService;
 
     @GetMapping("/cottages")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
@@ -126,10 +124,12 @@ public class AdminController {
         List<ServiceProvidersToList> serviceProvidersDataTableDTO = new ArrayList<>();
         for(User user : users)
         {
-            if(user.getRoles().get(0).getName().equals("ROLE_INSTRUCTOR") ||
-                    user.getRoles().get(0).getName().equals("ROLE_COTTAGE_OWNER")
-                    || user.getRoles().get(0).getName().equals("ROLE_BOAT_OWNER"))
-                serviceProvidersDataTableDTO.add(new ServiceProvidersToList((ServiceProvider)user));
+            if(user.isEnabled()) {
+                if(user.getRoles().get(0).getName().equals("ROLE_INSTRUCTOR") ||
+                        user.getRoles().get(0).getName().equals("ROLE_COTTAGE_OWNER")
+                        || user.getRoles().get(0).getName().equals("ROLE_BOAT_OWNER"))
+                    serviceProvidersDataTableDTO.add(new ServiceProvidersToList((ServiceProvider)user));
+            }
         }
 
         return new ResponseEntity<>(serviceProvidersDataTableDTO, HttpStatus.OK);
@@ -188,8 +188,10 @@ public class AdminController {
         List<UserDataTable> userDataTableDTO = new ArrayList<>();
         for(User user : users)
         {
-            if(user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
-                userDataTableDTO.add(new UserDataTable(user));
+            if(user.isEnabled()) {
+                if(user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
+                    userDataTableDTO.add(new UserDataTable(user));
+            }
         }
 
         return new ResponseEntity<>(userDataTableDTO, HttpStatus.OK);
@@ -209,5 +211,17 @@ public class AdminController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/change-password/{adminId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Boolean> changePassword(@PathVariable Integer adminId, @RequestBody RequestNewPassword requestNewPassword) {
+
+        Administrator administrator = administratorService.findById(adminId);
+        boolean success = administratorService.changeAdminPassword(administrator, requestNewPassword.getNewPassword());
+        if (!success)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(success, HttpStatus.OK);
     }
 }
