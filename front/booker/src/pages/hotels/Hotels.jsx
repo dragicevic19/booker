@@ -19,7 +19,10 @@ const Hotels = () => {
 
   
 
-  const {  data, loading, error,reFetch } = useFetch('http://localhost:8080/auth/cottages');
+  const {  data, loading, error,reFetch } = useFetch(`http://localhost:8080/auth/cottages?city=${destination}&startDate=${format(
+    dates[0].startDate,
+    "MM/dd/yyyy"
+  )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}`);
 
   
  
@@ -37,7 +40,7 @@ const Hotels = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input placeholder={destination} onChange={(e) => setDestination(e.target.value)} type="text" />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>

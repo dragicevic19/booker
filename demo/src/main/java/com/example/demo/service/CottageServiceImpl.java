@@ -7,6 +7,8 @@ import com.example.demo.repository.CottageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -14,6 +16,8 @@ public class CottageServiceImpl implements CottageService{
 
     @Autowired
     CottageRepository cottageRepository;
+    @Autowired
+    OfferService offerService;
 
     @Override
     public Cottage findById(Integer id) {
@@ -53,6 +57,29 @@ public class CottageServiceImpl implements CottageService{
         return cottageRepository.findTop4ByOrderByRatingAverageAsc();
     }
 
+    @Override
+    public List<Cottage> findAllByCityAndDate(String c, String start, String end){
+        List<Cottage> cotlist = cottageRepository.findByAddressCityIgnoreCase(c);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate startD = LocalDate.parse(start,formatter);
+
+        LocalDate endD = LocalDate.parse(end,formatter) ;
+
+        for(Cottage cot: cotlist){
+            if (!offerService.isPeriodAvailable(startD,endD,cot)){
+                cotlist.remove(cot);
+
+            }
+
+        }
+        return cotlist;
+    }
+
+
+    @Override
+    public List<Cottage> findAllByCity(String c){
+        return cottageRepository.findByAddressCityIgnoreCase(c);
+    }
     @Override
     public void deleteCottage(Cottage cottage) {
         cottage.setDeleted(true);

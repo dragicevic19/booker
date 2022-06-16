@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -157,11 +155,21 @@ public class AuthenticationController {
         return new ResponseEntity<>(fislist, HttpStatus.OK);
     }
 
+
     @GetMapping("cottages")
-    public ResponseEntity<List<Cottage>> getOffers(){
-        List<Cottage> cotlist = cottageService.findAll();
+    public ResponseEntity<List<Cottage>> getOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        List<Cottage> cotlist = cottageService.findAllByCityAndDate(allParams.get("city"),start,end);
+
+        if (cotlist == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
+
     @GetMapping("boats")
     public ResponseEntity<List<Boat>> getBoatOffers(){
         List<Boat> boatlist = boatService.findAll();
