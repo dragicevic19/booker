@@ -79,6 +79,7 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
         cottage.setDiscounts(new ArrayList<>());
         cottage.setPeriodsOfOccupancy(new ArrayList<Period>());
         cottage.setRating(new Rating());
+        cottage.setSubscribedClients(new HashSet<>());
 
         c.getOffers().add(cottage);
 

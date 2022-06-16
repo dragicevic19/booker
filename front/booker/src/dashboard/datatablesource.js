@@ -155,6 +155,18 @@ export const columnsData =
         field: "phoneNumber",
         headerName: "Phone Number",
         width: 120,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 130,
+        renderCell: (params) => {
+          return (
+            <div className={`cellWithStatus ${params.row.status}`}>
+              {params.row.status}
+            </div>
+          );
+        },
       }
     ],
     'ROLE_SUPER_ADMIN':
@@ -215,6 +227,18 @@ export const columnsData =
         field: "phoneNumber",
         headerName: "Phone Number",
         width: 120,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 130,
+        renderCell: (params) => {
+          return (
+            <div className={`cellWithStatus ${params.row.status}`}>
+              {params.row.status}
+            </div>
+          );
+        },
       }
     ],
     'ROLE_INSTRUCTOR':

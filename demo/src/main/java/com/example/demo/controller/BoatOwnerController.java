@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "api/") // vrati na api/
+@RequestMapping(value = "api/")
 public class BoatOwnerController {
 
     @Autowired

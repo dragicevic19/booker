@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.OfferToList;
-import com.example.demo.dto.RegRequestResponseDTO;
-import com.example.demo.dto.UserDataTable;
-import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.*;
+import com.example.demo.model.DeletionRequest;
 import com.example.demo.model.Property;
 import com.example.demo.model.User;
 import com.example.demo.service.EmailService;
@@ -14,14 +12,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
@@ -87,13 +83,62 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/send-email")
+    @RequestMapping("/user/accept-deletion/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public String sendEmail(@RequestBody RegRequestResponseDTO regReqRes) throws InterruptedException, MessagingException, IOException {
+    public ResponseEntity<User> acceptDeletion(@PathVariable Integer userId)
+    {
+        User userToBeFound = loadById(userId);
+        this.userService.acceptDeletionRequest(userToBeFound);
+        return new ResponseEntity<>(userToBeFound, HttpStatus.OK);
+    }
+
+    @RequestMapping("/user/reject-deletion/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<User> rejectDeletion(@PathVariable Integer userId)
+    {
+        User userToBeFound = loadById(userId);
+        this.userService.rejectDeletionRequest(userToBeFound);
+        return new ResponseEntity<>(userToBeFound, HttpStatus.OK);
+    }
+
+    @PostMapping("/send-email-registration")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String sendEmailRegistration(@RequestBody(required = false) RegRequestResponseDTO regReqRes) throws InterruptedException, MessagingException, IOException {
 
         User user = userService.findById(regReqRes.getId());
-        emailService.sendmail(user, regReqRes.isAccepted(), regReqRes.getExplanation());
+        emailService.sendmailRegistration(user, regReqRes.isAccepted(), regReqRes.getExplanation());
 
         return "success";
+    }
+
+    @PostMapping("/send-email-deletion")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String sendEmailDeletion(@RequestBody(required = false) DeleteRequestResponseDTO deleteRegRes) throws InterruptedException, MessagingException, IOException {
+
+        User user = userService.findById(deleteRegRes.getId());
+        emailService.sendmailDeletion(user, deleteRegRes.isAccepted(), deleteRegRes.getRequestText());
+
+        return "success";
+    }
+
+    @GetMapping("/user/deletion-requests")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<DeleteUserDataTable>> deletionRequests(@RequestParam("active") boolean active) {
+        List<User> users = this.userService.findDeleteRequestUsers(active);
+        List<DeleteUserDataTable> deleteUserDataTableDTO = new ArrayList<>();
+        for(User user : users)
+        {
+            deleteUserDataTableDTO.add(new DeleteUserDataTable(user));
+        }
+
+        return new ResponseEntity<>(deleteUserDataTableDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("create-deletion-request/{userId}")
+    public ResponseEntity<Boolean> createDeletionRequest(@PathVariable Integer userId, @RequestParam("request_text") String requestText) {
+
+        User user = userService.findById(userId);
+        userService.createDeletionRequest(user, requestText);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

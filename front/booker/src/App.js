@@ -1,3 +1,7 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import Home from './pages/home/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Registration from "./pages/registration/Registration"
@@ -15,6 +19,10 @@ import Boat from './pages/boat/boat';
 import Boats from './pages/boats/boats';
 import FishingLesson from './pages/fishinglesson/FishingLesson';
 import FishingLessons from './pages/fishinglessons/fishinglessons';
+import UserProfile from '../src//userProfile/UserProfile';
+import DeleteReqList from './dashboard/pages/list/DeleteReqList';
+import ReservationsList from './dashboard/pages/list/ReservationsList';
+
 
 function App() {
 
@@ -45,7 +53,9 @@ function App() {
               
             </Route>
 
-          
+
+            <Route path='/client-profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
+              </NotificationProvider>}/>
 
 
             <Route path='/dashboard'>
@@ -54,13 +64,15 @@ function App() {
                 <Route index element={<List adminRequest={false} serviceType={"offers"}/>} />
                 <Route path=':id' element={<Single />} />
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
-                <Route path='edit/:id' element={<NotificationProvider> <New edit={true} title={'Edit Cottage'}/> </NotificationProvider>} />
+                <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
-              <Route path='res-hist' element={<></>} />
-              <Route path='future-res' element={<></>} />
+              <Route path='res-hist' element={<ReservationsList history={true}/>} />
+              <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<></>} />
-              <Route path='profile' element={<></>} />
+              <Route path='profile' element={<NotificationProvider><UserProfile authOrApi={"api"}/>
+              </NotificationProvider>}/>
               <Route path="reg-req" element={<RegReqList />}/>
+              <Route path="del-req" element={<DeleteReqList />}/>
               
               <Route path="cottages"> 
                 <Route index element={<List adminRequest={true} userType={'ROLE_COTTAGE_OWNER'} entityType={"cottages"}/>}/>

@@ -14,7 +14,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findById(Integer id) {
-        Role auth = this.roleRepository.getOne(id);
+        Role auth = this.roleRepository.getById(id);
         return auth;
     }
 

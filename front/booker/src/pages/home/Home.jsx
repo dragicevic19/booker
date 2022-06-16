@@ -7,7 +7,10 @@ import FeaturedBoats from "../../components/featured/featuredBoats"
 import FeaturedPropertiesBoats from "../../components/featuredProperties/featuredPropertiesBoats"
 import FeaturedAdventures from "../../components/featured/FeaturedAdventures"
 import FeaturedPropertiesAdventures from "../../components/featuredProperties/FeaturedPropertiesAdventures"
+import Calendar from "../../dashboard/components/calendar/Calendar"
+
 const Home = ({page = "1"}) => {
+
 
     return ( 
         <div>

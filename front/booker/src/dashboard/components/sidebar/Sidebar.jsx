@@ -21,6 +21,7 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import { useContext } from "react";
 import { AuthContext } from "../../../components/context/AuthContext";
 import { useNavigate } from "react-router";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Sidebar = () => {
 
@@ -145,6 +146,12 @@ const Sidebar = () => {
           <span>Registration Requests</span>
         </li>
       </Link>
+      <Link to="/dashboard/del-req" style={{textDecoration: "none"}}>
+        <li>
+          <DeleteIcon className="icon" />
+          <span>Deletion Requests</span>
+        </li>
+      </Link>
       <li>
         <ThumbDownAltIcon className="icon" />
         <span>Complaints</span>
@@ -173,10 +180,12 @@ const Sidebar = () => {
         <NotificationsActiveOutlinedIcon className="icon" />
         <span>Notifications</span>
       </li>
-      <li>
-        <PersonOutlinedIcon className="icon" />
-        <span>Profile</span>
-      </li>
+      <Link to="/dashboard/profile" style={{textDecoration: "none"}}>
+        <li>
+          <PersonOutlinedIcon className="icon" />
+          <span>Profile</span>
+        </li>
+      </Link>
       <li onClick={logout}>
         <LogoutOutlinedIcon className="icon" />
         <span>Logout</span>

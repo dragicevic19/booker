@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.OfferToList;
+import com.example.demo.dto.ReservationToList;
 import com.example.demo.model.*;
 import com.example.demo.service.OfferService;
 import com.example.demo.service.UserService;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/")
@@ -56,5 +56,37 @@ public class ServiceProviderController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/provider-reserved/{providerId}")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<Boolean> isServiceProviderReserved(@PathVariable Integer providerId)
+    {
+        ServiceProvider serviceProvider = (ServiceProvider) userService.findById(providerId);
+        boolean isReserved = this.userService.isProviderReserved(serviceProvider);
+        return new ResponseEntity<>(isReserved, HttpStatus.OK);
+    }
+
+    @GetMapping("/reservations/{history}/{userId}")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<List<ReservationToList>> loadReservationHistory(@PathVariable String history, @PathVariable Integer userId) {
+        List<ReservationToList> retList = new ArrayList<>();
+        ServiceProvider u = (ServiceProvider) userService.findById(userId);
+
+        if (u == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<Reservation> reservations = (history.equalsIgnoreCase("history")) ?
+            userService.getReservationHistory(userService.findUsersReservations(u)) :
+            userService.getFutureReservations(userService.findUsersReservations(u));
+
+        for (Reservation r : reservations) {
+            Offer offer = offerService.findOfferForReservation(r);
+            Client client = userService.findClientForReservation(r);    // ne znam da li ovo moze brze
+            retList.add(new ReservationToList(r, offer, client));
+        }
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
     }
 }

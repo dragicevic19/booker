@@ -1,18 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Boat;
-import com.example.demo.model.Cottage;
-import com.example.demo.model.FishingLesson;
+import com.example.demo.dto.*;
+import com.example.demo.model.*;
 import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
 import com.example.demo.service.FishingLessonService;
+import com.example.demo.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "api/")
@@ -27,39 +25,72 @@ public class OfferControler {
     @Autowired
     BoatService boatService;
 
+    @Autowired
+    OfferService offerService;
 
-   // @PreAuthorize("hasRole('COTTAGE_OWNER')")   // da li za ovu funkciju treba autorizacija i autentifikacija jer ce je koristiti i neulogovani verovatno?
+
+    @GetMapping("offer/{offerId}")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<OfferDTO> loadOffer(@PathVariable Integer offerId) {
+
+        Offer offer = offerService.findById(offerId);
+        if (offer == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new OfferDTO(offer), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('COTTAGE_OWNER')")   // da li za ovu funkciju treba autorizacija i autentifikacija jer ce je koristiti i neulogovani verovatno?
     @GetMapping("cottage/{cottageId}")
-    public ResponseEntity<Cottage> loadCottage(@PathVariable Integer cottageId) {
+    public ResponseEntity<CottageDTO> loadCottage(@PathVariable Integer cottageId) {
 
         Cottage cottage = cottageService.findById(cottageId);
         if (cottage == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(cottage, HttpStatus.OK);
+        return new ResponseEntity<>(new CottageDTO(cottage), HttpStatus.OK);
     }
 
     @GetMapping("lesson/{lessonId}")
-    public ResponseEntity<FishingLesson> loadLesson(@PathVariable Integer lessonId) {
+    public ResponseEntity<FishingLessonDTO> loadLesson(@PathVariable Integer lessonId) {
 
         FishingLesson fishingLesson = fishingLessonService.findById(lessonId);
         if (fishingLesson == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(fishingLesson, HttpStatus.OK);
+        return new ResponseEntity<>(new FishingLessonDTO(fishingLesson), HttpStatus.OK);
     }
 
     @GetMapping("boat/{boatId}")
-    public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
+    public ResponseEntity<BoatDTO> loadBoat(@PathVariable Integer boatId) {
 
         Boat boat = boatService.findById(boatId);
         if (boat == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(boat, HttpStatus.OK);
+        return new ResponseEntity<>(new BoatDTO(boat), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @PostMapping("unavailable-period/{offerId}")
+    public ResponseEntity<Offer> newUnavailablePeriod(@PathVariable Integer offerId, @RequestBody PeriodDTO newPeriod) {
+
+        Offer offer = offerService.findById(offerId);
+        if (offer == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        offer = offerService.addUnavailablePeriod(offer, newPeriod);
+        if (offer == null){
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(offer, HttpStatus.OK);
+    }
+
 
 }

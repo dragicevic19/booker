@@ -179,9 +179,10 @@ insert into user_role (user_id, role_id) values (5, 5);
 
 insert into users (
     is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
-VALUES (false, 'klijent1@gmail.com', true, 'Milenko', 'Savic', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0632313236', 7, 4);
+VALUES (false, 'mrsisa2022@gmail.com', true, 'Milenko', 'Savic', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0632313236', 7, 4);
 insert into client (id, num_of_penalties, loyalty_id) values (6, 0, 1);
 insert into user_role (user_id, role_id) values (6, 4);
+insert into offer_subscribed_clients (offer_id, client_id) values (2, 6);
 
 
 insert into users (
@@ -191,3 +192,26 @@ insert into client (id, num_of_penalties, loyalty_id) values (7, 0, 2);
 insert into user_role (user_id, role_id) values (7, 4);
 
 
+insert into period (
+    date_from, date_to, offer_id)
+VALUES ('2022-05-21', '2022-05-26', 2);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 2, 304, 1, 6, 2);
+
+insert into period (
+    date_from, date_to, offer_id)
+VALUES ('2022-06-12', '2022-06-22', 2);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 740, 2, 6, 2);
+
+insert into period (
+    date_from, date_to, offer_id)
+VALUES ('2022-06-27', '2022-06-30', 2);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 222, 3, 6, 2);

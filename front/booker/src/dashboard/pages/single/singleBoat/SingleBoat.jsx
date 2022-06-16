@@ -7,9 +7,9 @@ import Rating from "../../../components/rating/Rating";
 import useFetch from "../../../../hooks/useFetch"
 import { useLocation } from "react-router"
 import { useState, useEffect } from "react"
-import BookingCalendar from "../../../components/calendar/BookingCalendar"
-import { Link } from "react-router-dom";
 import { boatTypes } from "../../../formSource";
+import Calendar from "../../../components/calendar/Calendar";
+import MapComp from "../../../../components/map/MapComp";
 
 const SingleBoat = () => {
 
@@ -30,8 +30,6 @@ const SingleBoat = () => {
     }
   }, [data])
 
-  console.log(offer);
-
   const formatBoatType = (rawType) => 
   {
     for(let i in boatTypes)
@@ -41,18 +39,6 @@ const SingleBoat = () => {
     }
   }
 
-  // samo za prikaz jer nemamo jos uvek rezervacije uradjene
-  const bookings = [
-    new Date(2022, 4, 21),
-    new Date(2022, 4, 22),
-    new Date(2022, 4, 23),
-    new Date(2022, 4, 29),
-    new Date(2022, 4, 30),
-    new Date(2022, 4, 31),
-    new Date(2022, 5, 1),
-  ];
-  
-  
   return (
     <div className="singleBoat">
       <Sidebar />
@@ -60,9 +46,6 @@ const SingleBoat = () => {
         <DashNavbar />
         <div className="top">
           <div className="left">
-            {/* <Link to={`/dashboard/my-offers/edit/${id}`} style={{textDecoration: "none"}}> */}
-              {/* <div disabled className="editButton">Edit</div> */}
-            {/* </Link> */}
             <h1 className="title">Informations</h1>
             <div className="item">
               <div className="details">
@@ -96,43 +79,49 @@ const SingleBoat = () => {
                   <span className="itemValue">{offer.regulations}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Description:</span><br/>
-                  <span className="itemValue">{offer.description}</span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Type:</span><br/>
+                  <span className="itemKey">Type:</span>
                   <span className="itemValue">{formatBoatType(offer.type)}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Length:</span><br/>
+                  <span className="itemKey">Length:</span>
                   <span className="itemValue">{offer.length}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Engine Number:</span><br/>
+                  <span className="itemKey">Engine Number:</span>
                   <span className="itemValue">{offer.engineNum}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Engine Power:</span><br/>
+                  <span className="itemKey">Engine Power:</span>
                   <span className="itemValue">{offer.enginePow}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Max Speed:</span><br/>
+                  <span className="itemKey">Max Speed:</span>
                   <span className="itemValue">{offer.maxSpeed}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Navigation Equipment:</span><br/>
+                  <span className="itemKey">Navigation Equipment:</span>
                   <span className="itemValue">{offer.navEquipment}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Fishing Equipment:</span><br/>
+                  <span className="itemKey">Fishing Equipment:</span>
+                  <span className="itemValue">{offer.fishingEquipment}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Description:</span>
                   <span className="itemValue">{offer.description}</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="right">
-            <h1 className="title">Rating</h1>
-            <Rating rating={offer.rating}/>
+            <div className="topRight">
+              <h1 className="title">Rating</h1>
+              <Rating rating={offer.rating}/>
+            </div>
+            <div className="bottomRight">
+              <h1 className="title">Location</h1>
+              <MapComp location={offer.address}/>
+            </div>
           </div>
         </div>
 
@@ -143,7 +132,7 @@ const SingleBoat = () => {
           </div>
           <div className="bottomBottom">
             <h1 className="title">Calendar</h1>
-            <BookingCalendar bookings={bookings} />
+            <Calendar data={offer.periodsOfOccupancy.discounts.concat(offer.periodsOfOccupancy.reservations).concat(offer.periodsOfOccupancy.unavailablePeriods)}/>
           </div>
         </div>
       </div>}

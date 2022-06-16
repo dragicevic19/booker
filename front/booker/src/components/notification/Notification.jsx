@@ -35,7 +35,7 @@ const Notification = (props) => {
         type: "REMOVE_NOTIFICATION",
         id: props.id
       })
-      if (props.type !== 'error')
+      if (props.type !== 'error' && props.navigateTo)
         navigate(props.navigateTo);
     }, 400)
   }

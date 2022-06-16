@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.NewDiscountDTO;
+import com.example.demo.model.Client;
+import com.example.demo.model.Offer;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -28,13 +31,12 @@ public class EmailServiceImpl implements EmailService{
     private Environment env;
 
     @Async
-    public void sendmail(User user, boolean accepted, String explanation) throws IOException, MessagingException {
+    public void sendmailRegistration(User user, boolean accepted, String explanation) throws IOException, MessagingException {
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("User registration feedback");
-
         System.out.println("Email poslat!");
 
         if (!accepted)
@@ -44,6 +46,41 @@ public class EmailServiceImpl implements EmailService{
         else
         {
             mail.setText("Congratulations! Your account has been accepted!");
+        }
+        javaMailSender.send(mail);
+    }
+
+    @Override
+    @Async
+    public void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount) {
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        for(Client client : offer.getSubscribedClients()){
+            mail.setTo(client.getEmail());
+            mail.setFrom(env.getProperty("spring.mail.username"));
+            mail.setSubject("New discount for offer: " + offer.getName());
+            mail.setText("An offer you are subscribed to gets new discount!\nFrom: " + newDiscount.getStartDate().toString() +
+                    " to: " + newDiscount.getEndDate().toString() + " for only " +  "$" + newDiscount.getPrice() +
+                    "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
+            javaMailSender.send(mail);
+        }
+    }
+
+    @Override
+    public void sendmailDeletion(User user, boolean accepted, String requestText) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom(env.getProperty("spring.mail.username"));
+        mail.setSubject("User deletion feedback");
+        System.out.println("Email poslat!");
+
+        if (!accepted)
+        {
+            mail.setText("Your deletion request has not been accepted! \nExplanation: " + requestText);
+        }
+        else
+        {
+            mail.setText("Your deletion request is accepted! The account has been deleted. \nComment: " + requestText);
         }
         javaMailSender.send(mail);
     }

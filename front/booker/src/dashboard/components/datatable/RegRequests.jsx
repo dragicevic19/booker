@@ -22,16 +22,6 @@ const RegRequests = () => {
     setList(data);
   }, [data]);
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = (id) => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleAccept = async (id) => {
     fetch(`http://localhost:8080/api/user/enable/${id}`, {
         //uspeo sam azurirati i bez method: PUT (sa tim sam imao problema pa sam ga pokusao izbeci)
@@ -65,7 +55,7 @@ const RegRequests = () => {
       width: 140,
       renderCell: (params) => {
         return (
-          <FormDialog userId={params.row.id} handleAccept={handleAccept} handleReject={handleReject}/>
+          <FormDialog userId={params.row.id} handleAccept={handleAccept} handleReject={handleReject} requestType="registrationRequest"/>
         );
       },
     },

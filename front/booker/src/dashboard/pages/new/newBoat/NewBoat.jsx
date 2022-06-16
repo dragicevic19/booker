@@ -92,6 +92,8 @@ const NewBoat = ({edit, title}) => {
       }
       setValues(val);
       setServices(data.additionalServices);
+      setNavGear(data.navEquipment);
+      setFishingGear(data.fishingEquipment);
       setPhotos(data.images);
     } 
   }, [data])

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 import com.example.demo.dto.OfferToList;
+import com.example.demo.dto.ServiceProvidersToList;
 import com.example.demo.dto.UserDataTable;
 import com.example.demo.model.*;
 import com.example.demo.service.BoatService;
@@ -120,18 +121,18 @@ public class AdminController {
 
     @GetMapping("/service_providers")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ResponseEntity<List<UserDataTable>> loadAllServiceProviders() {
+    public ResponseEntity<List<ServiceProvidersToList>> loadAllServiceProviders() {
         List<User> users = this.userService.findAll();
-        List<UserDataTable> userDataTableDTO = new ArrayList<>();
+        List<ServiceProvidersToList> serviceProvidersDataTableDTO = new ArrayList<>();
         for(User user : users)
         {
             if(user.getRoles().get(0).getName().equals("ROLE_INSTRUCTOR") ||
                     user.getRoles().get(0).getName().equals("ROLE_COTTAGE_OWNER")
                     || user.getRoles().get(0).getName().equals("ROLE_BOAT_OWNER"))
-            userDataTableDTO.add(new UserDataTable(user));
+                serviceProvidersDataTableDTO.add(new ServiceProvidersToList((ServiceProvider)user));
         }
 
-        return new ResponseEntity<>(userDataTableDTO, HttpStatus.OK);
+        return new ResponseEntity<>(serviceProvidersDataTableDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/service_providers/{providerId}")
