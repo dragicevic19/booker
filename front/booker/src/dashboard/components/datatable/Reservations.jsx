@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./datatable.scss"
 import { AuthContext } from "../../../components/context/AuthContext";
 import { reservationColumns } from '../../resColumns';
+import ClientsInfosModal from '../clientsInfosModal/ClientsInfosModal';
 
 const Reservations = ({history}) => {
   const navigate = useNavigate();
@@ -30,12 +31,18 @@ const Reservations = ({history}) => {
 
   const [showNewResModal, setShowNewResModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showUsersInfoModal, setShowUsersInfoModal] = useState(false);
+  const [selectedReservationId, setSelectedReservationId] = useState();
+
   const [selectedItem, setSelectedItem] = useState();
 
   const handleOnCellClick = (params) => {
-    if (params.field === 'client'){
-      console.log("PROSAO");
+    if (params.field !== 'client'){
+      return;
     }
+    console.log(params.id);
+    setSelectedReservationId(params.id);
+    setShowUsersInfoModal(!showUsersInfoModal);
   };
 
   const newReservationClick = (id) => {
@@ -48,7 +55,6 @@ const Reservations = ({history}) => {
     setShowReportModal(!showReportModal);
   }
 
-  console.log(data);
   const actionColumn = [
     {
       field: "action",
@@ -88,6 +94,12 @@ const Reservations = ({history}) => {
         getRowId={(row) => row.id}
         onCellClick={handleOnCellClick}
       />
+
+      {selectedReservationId && <ClientsInfosModal 
+                                  reservationId={selectedReservationId}
+                                  showClientsInfosModal={showUsersInfoModal}
+                                  setShowClientsInfosModal={setShowUsersInfoModal} />
+      }
 
       {/* {selectedItem && <>
       <FillReport
