@@ -150,7 +150,11 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
-
+    @GetMapping("fishinglessons")
+    public ResponseEntity<List<FishingLesson>> getLessonOffers(){
+        List<FishingLesson> fislist = fishingLessonService.findAll();
+        return new ResponseEntity<>(fislist, HttpStatus.OK);
+    }
 
     @GetMapping("cottages")
     public ResponseEntity<List<Cottage>> getOffers(){

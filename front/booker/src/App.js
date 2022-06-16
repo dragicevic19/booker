@@ -14,6 +14,7 @@ import { Switch } from '@mui/material';
 import Boat from './pages/boat/boat';
 import Boats from './pages/boats/boats';
 import FishingLesson from './pages/fishinglesson/FishingLesson';
+import FishingLessons from './pages/fishinglessons/fishinglessons';
 
 function App() {
 
@@ -39,7 +40,9 @@ function App() {
               <Route path="/boa/boats/:id" element={<Boat/>}/>
               <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
               <Route path="/fishinglessons/:id" element={<FishingLesson/>}/>
-          
+              <Route path="/fis/fishinglessons" element={<FishingLessons/>}/>
+              <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
+              
             </Route>
 
           
