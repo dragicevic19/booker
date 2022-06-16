@@ -164,7 +164,7 @@ insert into offer_images (offer_id, images) values (7, 'http://res.cloudinary.co
 insert into users (
     is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
     VALUES (false, 'admin@gmail.com', true, 'Admin', 'Adminic', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0632333236', 7, 4);
-insert into administrator (id) values (4);
+insert into administrator (id, password_changed) values (4, true);
 insert into super_admin (id) values (4);
 insert into user_role (user_id, role_id) values (4, 6);
 
@@ -173,7 +173,7 @@ insert into user_role (user_id, role_id) values (4, 6);
 insert into users (
     is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
 VALUES (false, 'obicanadmin@gmail.com', true, 'Admin', 'Adminic', '2021-12-10 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0632333236', 7, 4);
-insert into administrator (id) values (5);
+insert into administrator (id, password_changed) values (5, true);
 insert into user_role (user_id, role_id) values (5, 5);
 
 

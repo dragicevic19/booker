@@ -4,6 +4,7 @@ import com.example.demo.dto.CottageDTO;
 import com.example.demo.dto.JwtAuthenticationRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
+import com.example.demo.model.Administrator;
 import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.FishingLesson;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -203,9 +205,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(boat, HttpStatus.OK);
     }
 
-
-
-
     @PostMapping("create-deletion-request/{userId}")
     public ResponseEntity<Boolean> createDeletionRequest(@PathVariable Integer userId, @RequestParam("request_text") String requestText) {
 
@@ -214,5 +213,18 @@ public class AuthenticationController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @GetMapping("is-password-changed/{email}")
+    public ResponseEntity<Boolean> isPasswordChanged(@PathVariable String email) {
 
+        boolean isPasswordChanged = true;
+        User user = userService.findByEmail(email);
+
+        if (user instanceof Administrator)
+        {
+            if(!((Administrator) user).isPasswordChanged())
+                isPasswordChanged = false;
+        }
+
+        return new ResponseEntity<>(isPasswordChanged, HttpStatus.OK);
+    }
 }

@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.*;
-import com.example.demo.model.DeletionRequest;
-import com.example.demo.model.Property;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +52,23 @@ public class UserController {
 
     @GetMapping("/user/requests")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ResponseEntity<List<UserDataTable>> userRequests(@RequestParam("enabled") boolean enabled) {
+    public ResponseEntity<List<UserDataTable>> userRequests(@RequestParam("enabled") boolean enabled, @RequestParam("user_type") String userType) {
         List<User> users = this.userService.findDisabledUsers(enabled);
         List<UserDataTable> userDataTableDTO = new ArrayList<>();
-        for(User user : users)
-        {
-            userDataTableDTO.add(new UserDataTable(user));
+
+        if(userType.equals("ROLE_SUPER_ADMIN")) {
+            for(User user : users)
+            {
+                userDataTableDTO.add(new UserDataTable(user));
+            }
+        }
+
+        else{
+            for(User user : users)
+            {
+                if(!user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
+                    userDataTableDTO.add(new UserDataTable(user));
+            }
         }
 
         return new ResponseEntity<>(userDataTableDTO, HttpStatus.OK);
