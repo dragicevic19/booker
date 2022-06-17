@@ -79,6 +79,7 @@ public class OfferServiceImpl implements OfferService {
         }
         return null;
     }
+
     @Override
     public boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer) {
 

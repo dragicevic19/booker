@@ -7,6 +7,8 @@ import "./datatable.scss"
 import { AuthContext } from "../../../components/context/AuthContext";
 import { reservationColumns } from '../../resColumns';
 import ClientsInfosModal from '../clientsInfosModal/ClientsInfosModal';
+import FillReport from '../fillReport/FillReport';
+import NewReservationOwner from '../newResOwner/NewReservationOwner';
 
 const Reservations = ({history}) => {
   const navigate = useNavigate();
@@ -101,16 +103,19 @@ const Reservations = ({history}) => {
                                   setShowClientsInfosModal={setShowUsersInfoModal} />
       }
 
-      {/* {selectedItem && <>
-      <FillReport
-        offerId={selectedItem}
-        showAddActionModal={showAddActionModal}
-        setShowAddActionModal={setShowAddActionModal}
-      />
-      <NewReservationOwner 
+      {/* {showAddActionModal &&
+        <FillReport
+          offerId={selectedItem}  // selectedItem mislim da je resId a ne offerId
+          showAddActionModal={showAddActionModal}
+          setShowAddActionModal={setShowAddActionModal}
+      />} */}
 
-      />
-      </>} */}
+      {showNewResModal && 
+        <NewReservationOwner 
+          reservationId={selectedItem}
+          showNewResModal={showNewResModal}
+          setShowNewResModal={setShowNewResModal}
+      />} 
     </div>
   );
 }

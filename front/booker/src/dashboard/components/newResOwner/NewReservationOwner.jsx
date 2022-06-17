@@ -1,23 +1,21 @@
 import { useState } from "react";
-import "./NewActionModal.scss";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import Calendar from "../calendar/Calendar"
-import NewActionDetails from "./NewActionDetails";
 import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import NotificationProvider from "../../../components/notification/NotificationProvider";
+import NewReservationOwnerDetails from "./NewReservationOwnerDetails";
 
-const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) => {
+const NewReservationOwner = ({reservationId, showNewResModal, setShowNewResModal}) => {
 
   const [discounts, setDiscounts] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [unavailablePeriods, setUnavailablePeriods] = useState([]);
 
-
   const [loading, setLoading] = useState(true)
   const [offer, setOffer] = useState();
 
-  const { data, load, error, reFetch} = useFetch(`http://localhost:8080/api/offer/${offerId}`);
+  const { data, load, error, reFetch} = useFetch(`http://localhost:8080/api/reservation/offer/${reservationId}`);
 
   const calendarData = discounts.concat(reservations).concat(unavailablePeriods); 
 
@@ -40,21 +38,23 @@ const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) =>
   }
 
   const onClose = () => {
-    setShowAddActionModal(!showAddActionModal);
+    setShowNewResModal(!showNewResModal);
   }
 
   return (
     <>
-    <Dialog fullWidth maxWidth="xl" className="dialog" open={showAddActionModal} onClose={onClose} onSubmit={handleSubmit}>
-      <DialogTitle className="dialogTitle">Add new period of occupancy</DialogTitle>
+    <Dialog fullWidth maxWidth="xl" className="dialog" open={showNewResModal} onClose={onClose} onSubmit={handleSubmit}>
+      <DialogTitle className="dialogTitle">New Reservation for Client</DialogTitle>
       <hr/>
       <DialogContent className="dialogContent">
-        {!loading && <><NotificationProvider><NewActionDetails 
-          offerId={offerId} 
-          discounts={discounts} 
-          setDiscounts={setDiscounts} 
-          unavailablePeriods={unavailablePeriods}
-          setUnavailablePeriods={setUnavailablePeriods}
+        { !loading && <><NotificationProvider><NewReservationOwnerDetails 
+          offerId={offer.id}
+          reservationId={reservationId}
+          reservations={reservations}
+          setReservations={setReservations}
+          additionalServices={offer.additionalServices}
+          pricePerNight={offer.price}
+          capacity={offer.capacity}
         /></NotificationProvider>
 
         <Calendar data={calendarData} />
@@ -66,4 +66,4 @@ const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) =>
   )
 }
 
-export default NewActionModal
+export default NewReservationOwner

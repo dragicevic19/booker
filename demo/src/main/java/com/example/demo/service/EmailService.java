@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.NewDiscountDTO;
+import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
+import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 
 import javax.mail.MessagingException;
@@ -14,4 +16,6 @@ public interface EmailService {
     void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount);
 
     void sendmailDeletion(User user, boolean accepted, String requestText);
+
+    void sendReservationConfirmationToClient(Client client, Offer offer, Reservation reservation);
 }

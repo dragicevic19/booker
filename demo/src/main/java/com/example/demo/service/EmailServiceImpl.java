@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
+import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -82,6 +83,19 @@ public class EmailServiceImpl implements EmailService{
         {
             mail.setText("Your deletion request is accepted! The account has been deleted. \nComment: " + requestText);
         }
+        javaMailSender.send(mail);
+    }
+
+    @Override
+    public void sendReservationConfirmationToClient(Client client, Offer offer, Reservation reservation) {
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(client.getEmail());
+        mail.setFrom(env.getProperty("spring.mail.username"));
+        mail.setSubject("New reservation for you! Enjoy in " + offer.getName());
+        mail.setText("You have new reserved offer!\nFrom: " + reservation.getReservationPeriod().getDateFrom().toString() +
+                " to: " + reservation.getReservationPeriod().getDateTo().toString() + "\nPrice: $" + reservation.getPrice() +
+                "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
         javaMailSender.send(mail);
     }
 }
