@@ -80,7 +80,8 @@ public class OfferServiceImpl implements OfferService {
         return null;
     }
 
-    private boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer) {
+    @Override
+    public boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer) {
 
         for(Period period : offer.getPeriodsOfOccupancy()){
             if (checkPeriod(period, startDate, endDate))

@@ -6,6 +6,8 @@ import com.example.demo.model.Offer;
 import com.example.demo.model.Period;
 import com.example.demo.model.Reservation;
 
+import java.time.LocalDate;
+
 public interface OfferService {
 
     Offer findById(Integer id);
@@ -17,4 +19,6 @@ public interface OfferService {
     Offer addUnavailablePeriod(Offer offer, PeriodDTO newPeriod);
 
     Offer findOfferForReservation(Reservation r);
+
+    boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer);
 }
