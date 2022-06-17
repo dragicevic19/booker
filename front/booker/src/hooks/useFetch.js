@@ -39,7 +39,7 @@ const useFetch = (passedUrl) => {
     }
     fetchData() 
 
-  }, [])
+  }, [url])
   
   const reFetch = async () => {
     setLoading(true)

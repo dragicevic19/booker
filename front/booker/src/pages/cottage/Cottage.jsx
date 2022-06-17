@@ -43,18 +43,20 @@ const Cottage = () => {
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
-  console.log(data);
+   console.log(dates);
+  console.log(options);
 
-  // const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  // function dayDifference(date1, date2) {
-  //   const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-  //   const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
-  //   return diffDays;
-  // }
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
   
 
-  // const days = dayDifference(dates[0].endDate, dates[0].startDate);
-  const days =5;
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  console.log(days);
+ 
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);

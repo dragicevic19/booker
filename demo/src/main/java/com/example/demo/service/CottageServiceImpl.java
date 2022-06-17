@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,21 +59,27 @@ public class CottageServiceImpl implements CottageService{
     }
 
     @Override
-    public List<Cottage> findAllByCityAndDate(String c, String start, String end){
-        List<Cottage> cotlist = cottageRepository.findByAddressCityIgnoreCase(c);
+    public List<Cottage> findAllByCityAndDateAnd(String c, String start, String end,int min, int max){
+        c = c.trim();
+        List<Cottage> cotlist;
+        if(c.equals(""))
+             cotlist =cottageRepository.findAll();
+        else
+            cotlist = cottageRepository.findByAddressCityIgnoreCase(c);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate startD = LocalDate.parse(start,formatter);
 
         LocalDate endD = LocalDate.parse(end,formatter) ;
-
+        List<Cottage> retlist = new ArrayList<Cottage>();
         for(Cottage cot: cotlist){
-            if (!offerService.isPeriodAvailable(startD,endD,cot)){
-                cotlist.remove(cot);
+            int price = (int) cot.getPrice();
+            if (offerService.isPeriodAvailable(startD,endD,cot ) && price>=min && price<=max){
+                retlist.add(cot);
 
             }
 
         }
-        return cotlist;
+        return retlist;
     }
 
 

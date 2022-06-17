@@ -160,11 +160,11 @@ public class AuthenticationController {
     public ResponseEntity<List<Cottage>> getOffers(@RequestParam Map<String,String> allParams){
         String start =allParams.get("startDate");
         String end = allParams.get("endDate");
-        List<Cottage> cotlist = cottageService.findAllByCityAndDate(allParams.get("city"),start,end);
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        List<Cottage> cotlist ;
+        cotlist = cottageService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max);
 
-        if (cotlist == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
 
 
         return new ResponseEntity<>(cotlist, HttpStatus.OK);

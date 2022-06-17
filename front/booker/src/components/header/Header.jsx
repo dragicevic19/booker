@@ -9,12 +9,13 @@ import 'react-date-range/dist/theme/default.css'
 import {format} from "date-fns"
 import { useNavigate, useNavigationType } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext";
+import { SearchContext } from "../context/SearchContext"
 
 const Header = ({type,activePage ="1"}) => {
 
 	const [destination, setDestination] = useState("")
 	const [openDate, setOpenDate] = useState(false)
-	const [date, setDate] = useState([
+	const [dates, setDates] = useState([
 		{
 			startDate: new Date(),
 			endDate: new Date(),
@@ -39,10 +40,11 @@ const Header = ({type,activePage ="1"}) => {
 			}
 		})
 	}
-
+	const { dispatch } = useContext(SearchContext);
 	// ova metoda se aktivira na klik dugmeta za search u zavisnosti od aktivne stranice poziva se odgovarajuca
 	const handleSearch = () => {
-		activePage === "1" ? navigate("cottages", {state: {destination, date, options}}) :activePage === "2" ? navigate("boats", {state: {destination, date, options}}) : navigate("fishinglessons", {state: {destination, date, options}})
+		dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+		activePage === "1" ? navigate("cottages", {state: {destination, dates, options}}) :activePage === "2" ? navigate("boats", {state: {destination, dates, options}}) : navigate("fishinglessons", {state: {destination, dates, options}})
 	}
 
 
@@ -83,14 +85,14 @@ const Header = ({type,activePage ="1"}) => {
 						<div className="headerSearchItem">
 							<FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
 							<span onClick={()=>{setOpenDate(!openDate); setOpenOptions(false)}}className="headerSearchText">{`${format(
-								date[0].startDate,
+								dates[0].startDate,
 								"dd/MM/yyyy"
-							)} to ${format(date[0].endDate, "dd/MM/yyyy")}`}</span>
+							)} to ${format(dates[0].endDate, "dd/MM/yyyy")}`}</span>
 							{openDate && <DateRange 
 								editableDateInputs={true}
-								onChange={item => setDate([item.selection])}
+								onChange={item => setDates([item.selection])}
 								moveRangeOnFirstSelection={false}
-								ranges={date}
+								ranges={dates}
 								className="date"
 								minDate={new Date()}
 
