@@ -2,12 +2,14 @@ package com.example.demo.service;
 
 import com.example.demo.dto.FishingLessonRequest;
 import com.example.demo.model.Address;
-import com.example.demo.model.Cottage;
 import com.example.demo.model.FishingLesson;
 import com.example.demo.repository.FishingLessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,6 +18,9 @@ public class FishingLessonServiceImpl implements FishingLessonService{
 
     @Autowired
     FishingLessonRepository fishingLessonRepository;
+
+    @Autowired
+    OfferService offerService;
 
     @Override
     public FishingLesson findById(Integer id) {
@@ -41,6 +46,35 @@ public class FishingLessonServiceImpl implements FishingLessonService{
 
         return this.fishingLessonRepository.save(fishingLesson);
     }
+
+
+
+    @Override
+    public List<FishingLesson> findAllByCityAndDateAnd(String c, String start, String end, int min, int max, int guests){
+        c = c.trim();
+        List<FishingLesson> fislist;
+        if(c.equals(""))
+            fislist =fishingLessonRepository.findAll();
+        else
+            fislist = fishingLessonRepository.findByAddressCityIgnoreCase(c);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate startD = LocalDate.parse(start,formatter);
+
+        LocalDate endD = LocalDate.parse(end,formatter) ;
+        List<FishingLesson> retlist = new ArrayList<FishingLesson>();
+        for(FishingLesson fis: fislist){
+            int price = (int) fis.getPrice();
+            if (offerService.isPeriodAvailable(startD,endD,fis ) && price>=min && price<=max && guests <= fis.getCapacity()){
+                retlist.add(fis);
+
+            }
+
+        }
+        return retlist;
+    }
+
+
+
 
     @Override
     public List<FishingLesson> findAll() {

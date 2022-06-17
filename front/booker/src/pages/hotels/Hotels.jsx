@@ -25,7 +25,8 @@ const Hotels = () => {
   )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}&min=${min || 0 }&max=${max || 999}&guests=${options.guests}&rooms=${options.room}`);
 
   console.log(options);
-
+  console.log(destination);
+  console.log(options);
    
   
  
@@ -54,6 +55,7 @@ const Hotels = () => {
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
+                
                   minDate={new Date()}
                   ranges={dates}
                 />

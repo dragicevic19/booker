@@ -150,10 +150,23 @@ public class AuthenticationController {
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
     @GetMapping("fishinglessons")
-    public ResponseEntity<List<FishingLesson>> getLessonOffers(){
-        List<FishingLesson> fislist = fishingLessonService.findAll();
+    public ResponseEntity<List<FishingLesson>> getLessonOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+
+        List<FishingLesson> fislist ;
+        fislist = fishingLessonService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests);
+
+
+
         return new ResponseEntity<>(fislist, HttpStatus.OK);
     }
+
+
+
 
 
     @GetMapping("cottages")

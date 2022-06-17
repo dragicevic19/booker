@@ -44,6 +44,7 @@ const Cottage = () => {
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
+   console.log(dates);
  
  
 
