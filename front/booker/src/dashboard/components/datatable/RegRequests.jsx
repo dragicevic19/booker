@@ -14,8 +14,8 @@ const RegRequests = () => {
   const [list, setList] = useState();
   const {user} = useContext(AuthContext);
 
-  const { data, loading, error } = useFetch(`http://localhost:8080/api/user/requests?enabled=false`);
-
+  const { data, loading, error } = useFetch(`http://localhost:8080/api/user/requests?enabled=false&user_type=${user.type}`);
+  
   const columns = columnsData[user.type];
 
   useEffect(() => {

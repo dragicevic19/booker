@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/context/AuthContext";
 import "./login.css";
 import FormInput from "../../components/formInput/FormInput";
+import useFetch from "../../hooks/useFetch";
  
 
 const Login = () => {
@@ -15,10 +16,12 @@ const Login = () => {
   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate()
-
+  
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const isPasswordChanged = useFetch(`http://localhost:8080/auth/is-password-changed/${credentials.email}`);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -28,7 +31,12 @@ const Login = () => {
     try {
       const res = await axios.post("http://localhost:8080/auth/login", {email:credentials.email, password:credentials.password});
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      navigate("/")
+
+      if(isPasswordChanged.data)
+        navigate("/")
+      else
+        navigate("/password-change")
+      
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error });
     }

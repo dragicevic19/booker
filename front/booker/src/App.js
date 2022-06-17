@@ -21,6 +21,7 @@ import FishingLesson from './pages/fishinglesson/FishingLesson';
 import FishingLessons from './pages/fishinglessons/fishinglessons';
 import UserProfile from '../src//userProfile/UserProfile';
 import DeleteReqList from './dashboard/pages/list/DeleteReqList';
+import PasswordChange from './pages/login/PasswordChange';
 import ReservationsList from './dashboard/pages/list/ReservationsList';
 
 
@@ -105,6 +106,9 @@ function App() {
               </Route> 
 
             </Route>
+            <Route path="/password-change" element={<NotificationProvider>
+              <PasswordChange/>
+            </NotificationProvider>}></Route>
           </Routes>
         </div>
       </div>
