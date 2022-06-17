@@ -30,7 +30,7 @@ public class OfferControler {
 
 
     @GetMapping("offer/{offerId}")
-    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR', 'ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<OfferDTO> loadOffer(@PathVariable Integer offerId) {
 
         Offer offer = offerService.findById(offerId);
@@ -41,7 +41,7 @@ public class OfferControler {
         return new ResponseEntity<>(new OfferDTO(offer), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('COTTAGE_OWNER')")   // da li za ovu funkciju treba autorizacija i autentifikacija jer ce je koristiti i neulogovani verovatno?
+    @PreAuthorize("hasAnyRole('COTTAGE_OWNER', 'ADMIN', 'SUPER_ADMIN')")
     @GetMapping("cottage/{cottageId}")
     public ResponseEntity<CottageDTO> loadCottage(@PathVariable Integer cottageId) {
 
@@ -53,6 +53,7 @@ public class OfferControler {
         return new ResponseEntity<>(new CottageDTO(cottage), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN', 'SUPER_ADMIN')")
     @GetMapping("lesson/{lessonId}")
     public ResponseEntity<FishingLessonDTO> loadLesson(@PathVariable Integer lessonId) {
 
@@ -64,6 +65,7 @@ public class OfferControler {
         return new ResponseEntity<>(new FishingLessonDTO(fishingLesson), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'ADMIN', 'SUPER_ADMIN')")
     @GetMapping("boat/{boatId}")
     public ResponseEntity<BoatDTO> loadBoat(@PathVariable Integer boatId) {
 
