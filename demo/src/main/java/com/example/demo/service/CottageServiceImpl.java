@@ -59,7 +59,7 @@ public class CottageServiceImpl implements CottageService{
     }
 
     @Override
-    public List<Cottage> findAllByCityAndDateAnd(String c, String start, String end,int min, int max){
+    public List<Cottage> findAllByCityAndDateAnd(String c, String start, String end,int min, int max,int guests, int rooms){
         c = c.trim();
         List<Cottage> cotlist;
         if(c.equals(""))
@@ -73,7 +73,7 @@ public class CottageServiceImpl implements CottageService{
         List<Cottage> retlist = new ArrayList<Cottage>();
         for(Cottage cot: cotlist){
             int price = (int) cot.getPrice();
-            if (offerService.isPeriodAvailable(startD,endD,cot ) && price>=min && price<=max){
+            if (offerService.isPeriodAvailable(startD,endD,cot ) && price>=min && price<=max && guests <= cot.getCapacity() && rooms <= cot.getNumOfRooms()){
                 retlist.add(cot);
 
             }

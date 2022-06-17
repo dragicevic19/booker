@@ -17,13 +17,16 @@ const Hotels = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
-  
+ 
 
   const {  data, loading, error,reFetch } = useFetch(`http://localhost:8080/auth/cottages?city=${destination || "   "}&startDate=${format(
     dates[0].startDate,
     "MM/dd/yyyy"
-  )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}&min=${min || 0 }&max=${max || 999}`);
+  )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}&min=${min || 0 }&max=${max || 999}&guests=${options.guests}&rooms=${options.room}`);
 
+  console.log(options);
+
+   
   
  
   const handleClick = () => {
@@ -65,6 +68,7 @@ const Hotels = () => {
                   </span>
                   <input
                     type="number"
+                    min={0}
                     onChange={(e) => setMin(e.target.value)}
                     className="lsOptionInput"
                   />
@@ -75,34 +79,31 @@ const Hotels = () => {
                   </span>
                   <input
                     type="number"
+      
                     onChange={(e) => setMax(e.target.value)}
                     className="lsOptionInput"
                   />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
+                  <span className="lsOptionText">Guests</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
+                    placeholder={options.guests}
+                    onChange={(e) => options.guests = parseInt(e.target.value)}
+                  
+                    
                   />
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children}
-                  />
-                </div>
+          
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Room</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
+                    onChange={(e) => options.room = parseInt(e.target.value)}
                     placeholder={options.room}
                   />
                 </div>

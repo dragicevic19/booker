@@ -162,8 +162,10 @@ public class AuthenticationController {
         String end = allParams.get("endDate");
         int min = Integer.parseInt(allParams.get("min"));
         int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+        int rooms = Integer.parseInt(allParams.get("rooms"));
         List<Cottage> cotlist ;
-        cotlist = cottageService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max);
+        cotlist = cottageService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests,rooms);
 
 
 

@@ -11,7 +11,7 @@ public interface CottageService {
     public Integer countCottagesByCity(String c);
     public List<Cottage> findAll();
 
-    public List<Cottage> findAllByCityAndDateAnd(String c, String start, String end,int min,int max);
+    public List<Cottage> findAllByCityAndDateAnd(String c, String start, String end,int min,int max,int guests, int rooms);
 
     public List<Cottage> findAllByCity(String c);
     Cottage editCottage(Cottage cottage, CottageRequest cottageRequest);
