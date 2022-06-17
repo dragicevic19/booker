@@ -7,6 +7,9 @@ import com.example.demo.repository.CottageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +17,8 @@ public class CottageServiceImpl implements CottageService{
 
     @Autowired
     CottageRepository cottageRepository;
+    @Autowired
+    OfferService offerService;
 
     @Override
     public Cottage findById(Integer id) {
@@ -53,6 +58,35 @@ public class CottageServiceImpl implements CottageService{
         return cottageRepository.findTop4ByOrderByRatingAverageAsc();
     }
 
+    @Override
+    public List<Cottage> findAllByCityAndDateAnd(String c, String start, String end,int min, int max,int guests, int rooms){
+        c = c.trim();
+        List<Cottage> cotlist;
+        if(c.equals(""))
+             cotlist =cottageRepository.findAll();
+        else
+            cotlist = cottageRepository.findByAddressCityIgnoreCase(c);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate startD = LocalDate.parse(start,formatter);
+
+        LocalDate endD = LocalDate.parse(end,formatter) ;
+        List<Cottage> retlist = new ArrayList<Cottage>();
+        for(Cottage cot: cotlist){
+            int price = (int) cot.getPrice();
+            if (offerService.isPeriodAvailable(startD,endD,cot ) && price>=min && price<=max && guests <= cot.getCapacity() && rooms <= cot.getNumOfRooms()){
+                retlist.add(cot);
+
+            }
+
+        }
+        return retlist;
+    }
+
+
+    @Override
+    public List<Cottage> findAllByCity(String c){
+        return cottageRepository.findByAddressCityIgnoreCase(c);
+    }
     @Override
     public void deleteCottage(Cottage cottage) {
         cottage.setDeleted(true);

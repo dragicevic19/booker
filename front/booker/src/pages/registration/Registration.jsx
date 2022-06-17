@@ -184,6 +184,7 @@ const Registration = () => {
                   <option value="cottage_owners">Cottage Owner</option>
                   <option value="boat_owners">Boat Owner</option>
                   <option value="instructors">Fishing Instructor</option>
+                  <option value="administrators"> Administrator</option>
                 </select>
               </div>
             </div>

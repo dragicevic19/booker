@@ -13,6 +13,8 @@ public interface BoatService {
 
     List<Boat> fourOffersBoat();
 
+    public List<Boat> findAllByCityAndDateAnd(String c, String start, String end, int min, int max, int guests);
+
     void deleteBoat(Boat boat);
 
     public Integer countBoatsByCity(String c);

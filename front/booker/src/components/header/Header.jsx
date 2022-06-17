@@ -9,12 +9,13 @@ import 'react-date-range/dist/theme/default.css'
 import {format} from "date-fns"
 import { useNavigate, useNavigationType } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext";
+import { SearchContext } from "../context/SearchContext"
 
 const Header = ({type,activePage ="1"}) => {
 
 	const [destination, setDestination] = useState("")
-	const [openDate, setOpenDate] = useState(false)
-	const [date, setDate] = useState([
+	const [openDate, setOpenDates] = useState(false)
+	const [dates, setDates] = useState([
 		{
 			startDate: new Date(),
 			endDate: new Date(),
@@ -24,8 +25,7 @@ const Header = ({type,activePage ="1"}) => {
 
 	const [openOptions, setOpenOptions] = useState(false)
 	const [options, setOptions] = useState({
-		adult:1,
-		children:0,
+		guests:1,
 		room: 1
 	})
 
@@ -39,10 +39,11 @@ const Header = ({type,activePage ="1"}) => {
 			}
 		})
 	}
-
+	const { dispatch } = useContext(SearchContext);
 	// ova metoda se aktivira na klik dugmeta za search u zavisnosti od aktivne stranice poziva se odgovarajuca
 	const handleSearch = () => {
-		activePage === "1" ? navigate("cottages", {state: {destination, date, options}}) :activePage === "2" ? navigate("boats", {state: {destination, date, options}}) : navigate("fishinglessons", {state: {destination, date, options}})
+		dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+		activePage === "1" ? navigate("cottages", {state: {destination, dates, options}}) :activePage === "2" ? navigate("boats", {state: {destination, dates, options}}) : navigate("fishinglessons", {state: {destination, dates, options}})
 	}
 
 
@@ -82,15 +83,15 @@ const Header = ({type,activePage ="1"}) => {
 						</div>
 						<div className="headerSearchItem">
 							<FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
-							<span onClick={()=>{setOpenDate(!openDate); setOpenOptions(false)}}className="headerSearchText">{`${format(
-								date[0].startDate,
+							<span onClick={()=>{setOpenDates(!openDate); setOpenOptions(false)}}className="headerSearchText">{`${format(
+								dates[0].startDate,
 								"dd/MM/yyyy"
-							)} to ${format(date[0].endDate, "dd/MM/yyyy")}`}</span>
+							)} to ${format(dates[0].endDate, "dd/MM/yyyy")}`}</span>
 							{openDate && <DateRange 
 								editableDateInputs={true}
-								onChange={item => setDate([item.selection])}
+								onChange={item => setDates([item.selection])}
 								moveRangeOnFirstSelection={false}
-								ranges={date}
+								ranges={dates}
 								className="date"
 								minDate={new Date()}
 
@@ -98,32 +99,24 @@ const Header = ({type,activePage ="1"}) => {
 						</div>
 						<div className="headerSearchItem">
 							<FontAwesomeIcon icon={faPerson} className="headerIcon" />
-							<span onClick={()=>{setOpenOptions(!openOptions); setOpenDate(false)}} className="headerSearchText">{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
+							{activePage ==="1"?
+								<span onClick={()=>{setOpenOptions(!openOptions); setOpenDates(false)}} className="headerSearchText">{`${options.guests} guests · ${options.room} room`}</span>
+								:<span onClick={()=>{setOpenOptions(!openOptions); setOpenDates(false)}} className="headerSearchText">{`${options.guests} guests`}</span>
+							}	
 							{openOptions && <div className="options">
 								<div className="optionItem">
-									<span className="optionText">Adult</span>
+									<span className="optionText">Guests</span>
 									<div className="optionCounter">
 										<button 
-											disabled={options.adult <= 1}
+											disabled={options.guests <= 1}
 											className="optionCounterButton" 
-											onClick={()=>handleOption("adult", "d")}
+											onClick={()=>handleOption("guests", "d")}
 										>-</button>
-										<span className="optionCounterNumber">{options.adult}</span>
-										<button className="optionCounterButton" onClick={()=>handleOption("adult", "i")}>+</button>
+										<span className="optionCounterNumber">{options.guests}</span>
+										<button className="optionCounterButton" onClick={()=>handleOption("guests", "i")}>+</button>
 									</div>
 								</div>
-								<div className="optionItem">
-									<span className="optionText">Children</span>
-									<div className="optionCounter">
-										<button 
-											disabled={options.children <= 0}
-											className="optionCounterButton"
-											onClick={()=>handleOption("children", "d")}
-										>-</button>
-										<span className="optionCounterNumber">{options.children}</span>
-										<button className="optionCounterButton" onClick={()=>handleOption("children", "i")}>+</button>
-									</div>
-								</div>
+							{activePage ==="1"&&
 								<div className="optionItem">
 									<span className="optionText">Room</span>
 									<div className="optionCounter">
@@ -135,7 +128,7 @@ const Header = ({type,activePage ="1"}) => {
 										<span className="optionCounterNumber">{options.room}</span>
 										<button className="optionCounterButton" onClick={()=>handleOption("room", "i")}>+</button>
 									</div>
-								</div>
+								</div>}
 							</div> } 
 						</div>
 						<div className="headerSearchItem">

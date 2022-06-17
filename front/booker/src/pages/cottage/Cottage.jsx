@@ -18,6 +18,7 @@ import {
   faMoneyCheck,
   faMoneyBill1Wave,
   faCartPlus,
+  faBed,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -37,24 +38,27 @@ const Cottage = () => {
 
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
 
- 
+  console.log(data);
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
-  console.log(data);
+   console.log(dates);
+ 
+ 
 
-  // const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  // function dayDifference(date1, date2) {
-  //   const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-  //   const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
-  //   return diffDays;
-  // }
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
   
 
-  // const days = dayDifference(dates[0].endDate, dates[0].startDate);
-  const days =5;
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+
+ 
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -117,6 +121,8 @@ const Cottage = () => {
                     <FontAwesomeIcon size="2x" icon ={faFileLines}/> Description- {data.description}<br/><br/><br/>
                     <FontAwesomeIcon size="2x" icon ={faPeopleGroup}/> Capacity- {data.capacity} people<br/>
                     <FontAwesomeIcon size="2x" icon ={faCircleXmark}/> Regulations- {data.regulations}<br/>
+                    <FontAwesomeIcon size="2x" icon ={faBed}/> Number of rooms- {data.numOfRooms}<br/>
+                   
                     <FontAwesomeIcon size="2x" icon ={faMoneyBill1Wave}/> Price per day- {data.price}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faMoneyCheck}/> Cancellation fee- {data.cancellationFee}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faCartPlus}/> Additional services- {data.additionalServices.map(t => {return (<div className="addser"><h>{t.name}</h><br/>   Price- {t.price}$<br/>  Description- {t.description}</div>)})}

@@ -11,7 +11,7 @@ import SearchItem from "../../components/searchitem/SearchItem";
 const Boats = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
-  const [dates, setDates] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [min, setMin] = useState(undefined);
@@ -19,7 +19,18 @@ const Boats = () => {
 
   
 
-  const {  data, loading, error,reFetch } = useFetch("http://localhost:8080/auth/boats");
+  const {  data, loading, error,reFetch } = useFetch(`http://localhost:8080/auth/boats?city=${destination || "   "}&startDate=${format(
+    dates[0].startDate,
+    "MM/dd/yyyy"
+  )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}&min=${min || 0 }&max=${max || 999}&guests=${options.guests}`);
+
+ 
+
+  console.log(options);
+  console.log(destination);
+  console.log(dates);
+   
+
 
   console.log(data);
  
@@ -37,7 +48,7 @@ const Boats = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input placeholder={destination} type="text" onChange={(e) => setDestination(e.target.value)} />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -77,32 +88,16 @@ const Boats = () => {
                   />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
+                  <span className="lsOptionText">Guests</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
+                    placeholder={options.guests}
+                    onChange={(e) => options.guests = parseInt(e.target.value)}
                   />
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    placeholder={options.room}
-                  />
-                </div>
+          
               </div>
             </div>
             <button onClick={handleClick}>Search</button>

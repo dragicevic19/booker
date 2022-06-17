@@ -4,6 +4,7 @@ import com.example.demo.dto.CottageDTO;
 import com.example.demo.dto.JwtAuthenticationRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserTokenState;
+import com.example.demo.model.Administrator;
 import com.example.demo.model.Boat;
 import com.example.demo.model.Cottage;
 import com.example.demo.model.FishingLesson;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,9 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -152,19 +152,53 @@ public class AuthenticationController {
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
     @GetMapping("fishinglessons")
-    public ResponseEntity<List<FishingLesson>> getLessonOffers(){
-        List<FishingLesson> fislist = fishingLessonService.findAll();
+    public ResponseEntity<List<FishingLesson>> getLessonOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+
+        List<FishingLesson> fislist ;
+        fislist = fishingLessonService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests);
+
+
+
         return new ResponseEntity<>(fislist, HttpStatus.OK);
     }
 
+
+
+
+
     @GetMapping("cottages")
-    public ResponseEntity<List<Cottage>> getOffers(){
-        List<Cottage> cotlist = cottageService.findAll();
+    public ResponseEntity<List<Cottage>> getOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+        int rooms = Integer.parseInt(allParams.get("rooms"));
+        List<Cottage> cotlist ;
+        cotlist = cottageService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests,rooms);
+
+
+
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
+
     @GetMapping("boats")
-    public ResponseEntity<List<Boat>> getBoatOffers(){
-        List<Boat> boatlist = boatService.findAll();
+    public ResponseEntity<List<Boat>> getBoatOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+        List<Boat> boatlist ;
+        boatlist = boatService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests);
+
+
+
         return new ResponseEntity<>(boatlist, HttpStatus.OK);
     }
 
@@ -203,9 +237,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(boat, HttpStatus.OK);
     }
 
-
-
-
     @PostMapping("create-deletion-request/{userId}")
     public ResponseEntity<Boolean> createDeletionRequest(@PathVariable Integer userId, @RequestParam("request_text") String requestText) {
 
@@ -214,5 +245,18 @@ public class AuthenticationController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @GetMapping("is-password-changed/{email}")
+    public ResponseEntity<Boolean> isPasswordChanged(@PathVariable String email) {
 
+        boolean isPasswordChanged = true;
+        User user = userService.findByEmail(email);
+
+        if (user instanceof Administrator)
+        {
+            if(!((Administrator) user).isPasswordChanged())
+                isPasswordChanged = false;
+        }
+
+        return new ResponseEntity<>(isPasswordChanged, HttpStatus.OK);
+    }
 }
