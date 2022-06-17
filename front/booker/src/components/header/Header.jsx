@@ -99,7 +99,10 @@ const Header = ({type,activePage ="1"}) => {
 						</div>
 						<div className="headerSearchItem">
 							<FontAwesomeIcon icon={faPerson} className="headerIcon" />
-							<span onClick={()=>{setOpenOptions(!openOptions); setOpenDates(false)}} className="headerSearchText">{`${options.guests} guests · ${options.room} room`}</span>
+							{activePage ==="1"?
+								<span onClick={()=>{setOpenOptions(!openOptions); setOpenDates(false)}} className="headerSearchText">{`${options.guests} guests · ${options.room} room`}</span>
+								:<span onClick={()=>{setOpenOptions(!openOptions); setOpenDates(false)}} className="headerSearchText">{`${options.guests} guests`}</span>
+							}	
 							{openOptions && <div className="options">
 								<div className="optionItem">
 									<span className="optionText">Guests</span>
@@ -113,7 +116,7 @@ const Header = ({type,activePage ="1"}) => {
 										<button className="optionCounterButton" onClick={()=>handleOption("guests", "i")}>+</button>
 									</div>
 								</div>
-	
+							{activePage ==="1"&&
 								<div className="optionItem">
 									<span className="optionText">Room</span>
 									<div className="optionCounter">
@@ -125,7 +128,7 @@ const Header = ({type,activePage ="1"}) => {
 										<span className="optionCounterNumber">{options.room}</span>
 										<button className="optionCounterButton" onClick={()=>handleOption("room", "i")}>+</button>
 									</div>
-								</div>
+								</div>}
 							</div> } 
 						</div>
 						<div className="headerSearchItem">

@@ -173,8 +173,17 @@ public class AuthenticationController {
     }
 
     @GetMapping("boats")
-    public ResponseEntity<List<Boat>> getBoatOffers(){
-        List<Boat> boatlist = boatService.findAll();
+    public ResponseEntity<List<Boat>> getBoatOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+        List<Boat> boatlist ;
+        boatlist = boatService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests);
+
+
+
         return new ResponseEntity<>(boatlist, HttpStatus.OK);
     }
 

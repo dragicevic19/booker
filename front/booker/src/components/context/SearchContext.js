@@ -5,7 +5,6 @@ const INITIAL_STATE = {
   dates: [],
   options: {
     guests: undefined,
- 
     room: undefined,
   },
 };

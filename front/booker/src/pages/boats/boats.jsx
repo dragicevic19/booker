@@ -11,7 +11,7 @@ import SearchItem from "../../components/searchitem/SearchItem";
 const Boats = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
-  const [dates, setDates] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [min, setMin] = useState(undefined);
@@ -19,7 +19,15 @@ const Boats = () => {
 
   
 
-  const {  data, loading, error,reFetch } = useFetch("http://localhost:8080/auth/boats");
+  const {  data, loading, error,reFetch } = useFetch(`http://localhost:8080/auth/boats?city=${destination || "   "}&startDate=${format(
+    dates[0].startDate,
+    "MM/dd/yyyy"
+  )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}&min=${min || 0 }&max=${max || 999}&guests=${options.guests}`);
+
+ 
+
+  
+
 
   console.log(data);
  
@@ -82,19 +90,11 @@ const Boats = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.gusts}
+                    placeholder={options.guests}
+                    onChange={(e) => options.guests = parseInt(e.target.value)}
                   />
                 </div>
-           
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    placeholder={options.room}
-                  />
-                </div>
+          
               </div>
             </div>
             <button onClick={handleClick}>Search</button>
