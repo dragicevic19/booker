@@ -30,6 +30,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     OfferService offerService;
 
+    @Autowired
+    EmailService emailService;
+
     @Override
     public Reservation findById(Integer reservationId) {
         return reservationRepository.getById(reservationId);
@@ -78,6 +81,8 @@ public class ReservationServiceImpl implements ReservationService {
         offer.getPeriodsOfOccupancy().add(period);
 
         client.getReservations().add(newRes);
+
+        emailService.sendReservationConfirmationToClient(client, offer, newRes);
 
         reservationRepository.save(newRes);
 
