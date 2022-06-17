@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.UserRequest;
 import com.example.demo.model.*;
 import com.example.demo.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +38,16 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client save(User user) {
-        // TODO
-        return null;
+        Client c = new Client(user);
+        c.setRating(new Rating());
+        c.setLoyaltyProgram(new LoyaltyProgram());
+        c.setReservations(new ArrayList<>());
+        List<Role> roles = roleService.findByName("ROLE_CLIENT");
+        c.setRoles(roles);
+        c.setNumOfPenalties(0);
+        c.setEnabled(false);
+
+        return this.clientRepository.save(c);
     }
 
     @Override
