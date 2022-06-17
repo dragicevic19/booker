@@ -16,7 +16,8 @@ public interface OfferService {
     Offer addDiscountToOffer(Offer offer, NewDiscountDTO newDiscount);
 
     Offer addUnavailablePeriod(Offer offer, PeriodDTO newPeriod);
-    boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer);
 
     Offer findOfferForReservation(Reservation r);
+
+    boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer);
 }

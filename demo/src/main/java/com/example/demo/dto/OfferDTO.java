@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class OfferDTO {
 
+    private Integer id;
     private String name;
     private Address address;
     private int capacity;
@@ -30,6 +31,7 @@ public class OfferDTO {
     private List<ClientDTO> subscribedClients;
 
     public OfferDTO(Offer offer){
+        id = offer.getId();
         name = offer.getName();
         address = offer.getAddress();
         capacity = offer.getCapacity();

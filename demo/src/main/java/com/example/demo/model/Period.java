@@ -32,6 +32,11 @@ public class Period {
     @Column(name = "date_to", unique = false, nullable = false)
     private LocalDate dateTo;
 
+    public Period(LocalDate from, LocalDate to){
+        dateFrom = from;
+        dateTo = to;
+    }
+
     @Override
     public String toString() {
         return dateFrom.toString() + " - " + dateTo.toString();
