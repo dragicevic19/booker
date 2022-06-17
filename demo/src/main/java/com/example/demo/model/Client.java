@@ -21,7 +21,7 @@ public class Client extends User {
     @Column(name = "num_of_penalties", unique = false, nullable = false)
     private int numOfPenalties;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "loyalty_id", nullable = false)
     private LoyaltyProgram loyaltyProgram;
 
@@ -58,4 +58,11 @@ public class Client extends User {
     public boolean isEnabled() {
         return enabled;
     }
+
+    public Client(User u){
+        super(u);
+    }
+
+
+
 }

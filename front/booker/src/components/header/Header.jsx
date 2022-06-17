@@ -129,6 +129,7 @@ const Header = ({type,activePage ="1"}) => {
 										<button className="optionCounterButton" onClick={()=>handleOption("room", "i")}>+</button>
 									</div>
 								</div>}
+
 							</div> } 
 						</div>
 						<div className="headerSearchItem">
