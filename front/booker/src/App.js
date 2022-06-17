@@ -23,6 +23,7 @@ import UserProfile from '../src//userProfile/UserProfile';
 import DeleteReqList from './dashboard/pages/list/DeleteReqList';
 import PasswordChange from './pages/login/PasswordChange';
 import ReservationsList from './dashboard/pages/list/ReservationsList';
+import RegistrationUser from './pages/registration-user/registrationUser';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
+              <Route path='user-register' element={<NotificationProvider><RegistrationUser /></NotificationProvider>} />
               <Route path="/cottages" element={<Hotels/>}/>
               <Route path="/cottages/:id" element={<Cottage/>}/>
               <Route path="/boat/:id" element={<Boat/>}/>
