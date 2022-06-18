@@ -17,7 +17,7 @@ const DashboardHome = () => {
     'Authorization': `Bearer ${user.accessToken}`,
   }
 
-  const [selectedYear, setSelectedYear] = useState();
+  const [selectedView, setSelectedView] = useState();
 
   const [monthlyData, setMonthlyData] = useState([]);
   const [yearlyData, setYearlyData] = useState([]);
@@ -57,29 +57,49 @@ const DashboardHome = () => {
     {value:2020, label: '2020'},
   ];
 
+  const dataViewOptions = [
+    {value:0, label: 'Monthly Reservations'},
+    {value:1, label: 'Yearly Reservations'},
+    {value:2, label: 'Income for Period'}
+  ]
+
+
+  const handleSelectedView = (selected) => {
+    setSelectedView(selected.value);
+  }
+
   return (
     <div className="dashHome">
       <Sidebar />
       <div className="dashHomeContainer">
         <DashNavbar />
-        <div className="datePicker">
+        <div className="dataToShow">
+          <label>Select data you want to see</label>
+          <Dropdown options={dataViewOptions} setSelected={handleSelectedView} multiSelect={false}/>
+        </div>
+
+
+        {(selectedView == 0) && <><div className="datePicker">
           <label>Select month</label>
           <Dropdown options={monthOptions} setSelected={onMonthSelected} multiSelect={false}/>
         </div>
         <div className="charts">
           <Chart title="Monthly Reservations" aspect={3 / 1} data={monthlyData} />
-        </div>
-        <div className="datePicker year">
+        </div></>}
+
+        {selectedView == 1 && <><div className="datePicker">
           <label>Select year</label>
           <Dropdown options={yearOptions} setSelected={onYearSelected} multiSelect={false}/>
         </div>
         <div className="charts">
           <Chart title="Yearly Reservations" aspect={3 / 1} data={yearlyData}/>
-        </div>
-        <div className="listContainer">
+        </div></>}
+
+
+        {selectedView == 2 && <><div className="listContainer">
           <div className="listTitle">Latest Transactions</div>
           {/* <Table /> */}
-        </div>
+        </div></>}
       </div>
     </div>
   )
