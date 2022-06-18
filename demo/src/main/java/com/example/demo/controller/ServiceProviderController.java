@@ -4,6 +4,7 @@ import com.example.demo.dto.OfferToList;
 import com.example.demo.dto.ReservationToList;
 import com.example.demo.model.*;
 import com.example.demo.service.OfferService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,9 @@ public class ServiceProviderController {
 
     @Autowired
     private OfferService offerService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @GetMapping("/my-offers/{userId}")
     @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
@@ -89,4 +93,32 @@ public class ServiceProviderController {
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
+
+    @GetMapping("/reservations-of-user/{history}/{userId}")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<List<ReservationToList>> loadReservationHistoryOfUser(@PathVariable String history, @PathVariable Integer userId) {
+        List<ReservationToList> retList = new ArrayList<>();
+        Client client = (Client) userService.findById(userId);
+
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<Reservation> reservations = (history.equalsIgnoreCase("history")) ?
+                userService.getReservationHistory(client.getReservations()) :
+                userService.getFutureReservations(client.getReservations());
+
+        for (Reservation r : reservations) {
+            Offer offer = offerService.findOfferForReservation(r);
+            retList.add(new ReservationToList(r, offer, client));
+        }
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+
+
+
+
+
 }

@@ -27,6 +27,7 @@ import ComplaintList from './pages/complaints/ComplaintList';
 import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage';
 import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
+import UserReservationList from './pages/userProfile/reservationHistory/reservationListClient';
 
 
 function App() {
@@ -73,6 +74,13 @@ function App() {
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
                 <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
+
+              <Route path='cottage-reservation-history' element={<UserReservationList history={false}/>} />
+              <Route path='boats-reservation-history' element={<UserReservationList history={false}/>} />
+              <Route path='lessons-reservation-history' element={<UserReservationList history={false}/>} />
+
+
+              
               <Route path='res-hist' element={<ReservationsList history={true}/>} />
               <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<></>} />
