@@ -34,8 +34,12 @@ const NavbarHome = () => {
           <div>
             {usersWithDashboard.indexOf(user.type) > -1 && <button onClick={()=>navigate('/dashboard')} className="navButton">Dashboard</button>}
 
+            {user.type === "ROLE_CLIENT" && <button onClick={()=>navigate('/client-complaints')} className="navButton">
+            File A Complaint</button>}
+
             {user.type === "ROLE_CLIENT" && <button onClick={()=>navigate('/client-profile')} className="navButton">
               Profile</button>}
+
           {/* {user.email} */}
           <button className="navButton"onClick={handleClick}>Logout</button>
           </div>

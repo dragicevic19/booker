@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.model.Offer;
 import com.example.demo.model.User;
@@ -14,4 +15,6 @@ public interface EmailService {
     void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount);
 
     void sendmailDeletion(User user, boolean accepted, String requestText);
+
+    void sendComplaintResponse(ComplaintResponseDTO complaintResponseDTO);
 }

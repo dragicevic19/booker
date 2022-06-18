@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -34,4 +34,12 @@ public interface UserService extends UserDetailsService {
     List<Reservation> getFutureReservations(List<Reservation> usersReservations);
 
     Client findClientForReservation(Reservation r);
+
+    List<OfferForComplaint> findOffersByClient(Client client);
+
+    void addClientComplaint(ComplaintRequest complaintRequest, Offer offer, Client client);
+
+    ServiceProvider findProviderByOfferId(Integer offerId);
+
+    void removeComplaint(Complaint complaint);
 }
