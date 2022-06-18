@@ -21,8 +21,8 @@ const UserReservationDetails = ({offerId, reservations, setReservations, additio
   console.log(endDate);
   
  
-  const [startDatePicked, setStartDatePicked] = useState(false);
-  const [endDatePicked, setEndDatePicked] = useState(false);
+  const [startDatePicked, setStartDatePicked] = useState(true);
+  const [endDatePicked, setEndDatePicked] = useState(true);
 
   const { user } = useContext(AuthContext);
   const headers = {
@@ -64,7 +64,7 @@ const UserReservationDetails = ({offerId, reservations, setReservations, additio
 
   }, [startDate, endDate, selectedAdditionalServices])
 
- 
+ console.log(price);
   
   const addBtnClick = async (e) => {
     e.preventDefault();
