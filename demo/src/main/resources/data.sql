@@ -215,3 +215,16 @@ VALUES ('2022-06-27', '2022-06-30', 2);
 insert into reservation (
     has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
 VALUES (false, false, 4, 222, 3, 6, 2);
+
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 300, 3, 6, 6);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 200, 2, 6, 6);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 250, 1, 6, 6);

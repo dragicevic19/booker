@@ -2,10 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.dto.AdditionalServiceDTO;
 import com.example.demo.dto.NewReservationDTO;
+import com.example.demo.dto.ResReportForClientDTO;
 import com.example.demo.model.*;
-import com.example.demo.repository.ClientRepository;
-import com.example.demo.repository.OfferRepository;
-import com.example.demo.repository.ReservationRepository;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,12 @@ public class ReservationServiceImpl implements ReservationService {
     OfferRepository offerRepository;
 
     @Autowired
+    ServiceProviderRepository serviceProviderRepo;
+
+    @Autowired
+    ReservationReportForClientRepository reportsForClientRepository;
+
+    @Autowired
     AdditionalServicesService additionalServicesService;
 
     @Autowired
@@ -32,6 +37,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     EmailService emailService;
+
+
 
     @Override
     public Reservation findById(Integer reservationId) {
@@ -57,9 +64,41 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public ServiceProvider findOwnerOfOffer(Offer offer) {
+        for (ServiceProvider provider : serviceProviderRepo.findAll())
+            for (Offer o : provider.getOffers())
+                if (o.getId() == offer.getId()) return provider;
+
+        return null;
+    }
+
+    @Override
+    public boolean makeNewReportForClient(ResReportForClientDTO report, Client client, ServiceProvider svcProvider,
+                                          Reservation reservation) {
+
+        ReservationReportForClient rep = new ReservationReportForClient();
+        rep.setClient(client);
+        rep.setReservation(reservation);
+        rep.setComment(report.getComment());
+        rep.setServiceProvider(svcProvider);
+        if (report.getReportType() == 0) {
+            rep.setType(ReportForClientType.BAD_USER);  // ovo ide kod admina pa ako on odobri klijent ce dobiti penal
+        } else {
+            rep.setType(ReportForClientType.USER_DID_NOT_SHOW_UP);
+            client.setNumOfPenalties(client.getNumOfPenalties() + 1); // ?
+        }
+
+        reservation.setHasOwnerRated(true);
+        reportsForClientRepository.save(rep);
+
+        return true;
+    }
+
+
+    @Override
     public boolean makeNewReservationByOwner(Offer offer, Client client, NewReservationDTO newReservation) {
 
-        if (!offerService.isPeriodAvailable(newReservation.getStartDate(), newReservation.getEndDate(), offer)){
+        if (!offerService.isPeriodAvailable(newReservation.getStartDate(), newReservation.getEndDate(), offer)) {
             return false;
         }
         Reservation newRes = new Reservation();
@@ -67,7 +106,7 @@ public class ReservationServiceImpl implements ReservationService {
         newRes.setReservationPeriod(period);
 
         Set<AdditionalService> additionalServices = new HashSet<>();
-        for(AdditionalServiceDTO service : newReservation.getAdditionalServices()){
+        for (AdditionalServiceDTO service : newReservation.getAdditionalServices()) {
             additionalServices.add(additionalServicesService.findById(service.getValue()));
         }
         newRes.setChosenAdditionalServices(additionalServices);
@@ -88,4 +127,6 @@ public class ReservationServiceImpl implements ReservationService {
 
         return true;
     }
+
+
 }

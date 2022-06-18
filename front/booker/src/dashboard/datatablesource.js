@@ -289,5 +289,129 @@ export const columnsData =
           );
         },
       }
-    ]
+    ],
+    'ROLE_CLIENT':
+    [
+      { field: "id", headerName: "ID", width: 100 },
+      {
+        field: "name",
+        headerName: "Name",
+        width: 200,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://thumbs.dreamstime.com/b/boat-icon-vector-travel-concept-thin-line-illustration-editable-stroke-linear-sign-use-web-mobile-apps-logo-192170108.jpg"} alt="avatar" />
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "providerFirstName",
+        headerName: "Provider's First Name",
+        width: 200,
+      },
+      {
+        field: "providerLastName",
+        headerName: "Provider's Last Name",
+        width: 200,
+      },
+      {
+        field: "city",
+        headerName: "City",
+        width: 150,
+      },
+      {
+        field: "rating",
+        headerName: "Rating",
+        width: 100,
+      },
+      {
+        field: "price",
+        headerName: "Price [$]",
+        width: 100,
+      }
+    ],
+    'ROLE_ADMIN/COMPLAINTS':
+    [
+      {
+        field: "id",
+        headerName: "Complaint ID",
+        width: 150,
+      },
+      {
+        field: "clientEmail",
+        headerName: "Client's Email",
+        width: 220,
+      },
+      { field: "offerId", 
+      headerName: "Offer ID", 
+      width: 100 
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      },
+      {
+        field: "providerEmail",
+        headerName: "Provder's Email",
+        width: 220,
+      }
+    ],
+    'ROLE_SUPER_ADMIN/COMPLAINTS':
+    [
+      {
+        field: "id",
+        headerName: "Complaint ID",
+        width: 150,
+      },
+      {
+        field: "clientEmail",
+        headerName: "Client's Email",
+        width: 220,
+      },
+      { field: "offerId", 
+      headerName: "Offer ID", 
+      width: 100 
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      },
+      {
+        field: "providerEmail",
+        headerName: "Provder's Email",
+        width: 220,
+      }
+    ],
 };

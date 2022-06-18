@@ -2,6 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.*;
 import com.example.demo.model.*;
+import com.example.demo.service.*;
+import com.example.demo.dto.CottageDTO;
+import com.example.demo.dto.JwtAuthenticationRequest;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserTokenState;
+
 import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
 import com.example.demo.service.FishingLessonService;
@@ -42,8 +48,12 @@ public class AuthenticationController {
 
     @Autowired
     BoatService boatService;
+
     @Autowired
     FishingLessonService fishingLessonService;
+
+    @Autowired
+    OfferService offerService;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -267,5 +277,26 @@ public class AuthenticationController {
         }
 
         return new ResponseEntity<>(isPasswordChanged, HttpStatus.OK);
+    }
+
+    @GetMapping("/entities-for-complaints/{clientId}")
+    public ResponseEntity<List<OfferForComplaint>> entitiesForComplaints(@PathVariable Integer clientId) {
+        Client client = (Client) userService.findById(clientId);
+
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<OfferForComplaint> offersToPresent = userService.findOffersByClient(client);
+        return new ResponseEntity<>(offersToPresent, HttpStatus.OK);
+    }
+
+    @PostMapping("file-complaint/{userId}")
+    public ResponseEntity<Boolean> createDeletionRequest(@PathVariable Integer userId, @RequestBody ComplaintRequest complaintRequest) {
+
+        Client client = (Client) userService.findById(userId);
+        Offer offer = offerService.findById(complaintRequest.getOfferId());
+        userService.addClientComplaint(complaintRequest, offer, client);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../components/context/AuthContext";
-import { useNotification } from "../components/notification/NotificationProvider";
-import useFetch from "../hooks/useFetch";
-import Dropdown from "../dashboard/components/dropdownCheckboxes/Option"
+import { AuthContext } from "../../components/context/AuthContext";
+import { useNotification } from "../../components/notification/NotificationProvider";
+ 
+import Dropdown from "../../dashboard/components/dropdownCheckboxes/Option"
 import { DateBox } from 'devextreme-react'
 import { useEffect } from "react";
 import axios from "axios";
-import { SearchContext } from "../components/context/SearchContext";
+import { SearchContext } from "../../components/context/SearchContext";
 
 
 const UserReservationDetails = ({offerId, reservations, setReservations, additionalServices, pricePerNight, capacity}) => {

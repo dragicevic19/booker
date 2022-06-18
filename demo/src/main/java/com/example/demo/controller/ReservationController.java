@@ -3,10 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.dto.ClientDTO;
 import com.example.demo.dto.NewReservationDTO;
 import com.example.demo.dto.OfferDTO;
+import com.example.demo.dto.ResReportForClientDTO;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
+
 import com.example.demo.service.ClientService;
+
+import com.example.demo.model.ServiceProvider;
+
 import com.example.demo.service.OfferService;
 import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +115,37 @@ public class ReservationController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(new OfferDTO(offer), HttpStatus.OK);
+    }
+
+
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @PostMapping("reservation/svcProvReport/{reservationId}")
+    public ResponseEntity<Boolean> reportForClient(@PathVariable Integer reservationId, @RequestBody ResReportForClientDTO report) {
+        Reservation reservation = reservationService.findById(reservationId);
+        if (reservation == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        Offer offer = reservationService.findOfferForReservation(reservation);
+        if (offer == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        Client client = reservationService.findClientForReservation(reservation);
+        if (client == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        ServiceProvider svcProvider = reservationService.findOwnerOfOffer(offer);
+        if (svcProvider == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        if (reservationService.makeNewReportForClient(report, client, svcProvider, reservation)) {
+            return new ResponseEntity<>(true, HttpStatus.OK);   // ok
+        }
+
+        return new ResponseEntity<>(false, HttpStatus.CONFLICT);
     }
 
 }

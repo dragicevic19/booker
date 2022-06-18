@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import Calendar from "../dashboard/components/calendar/Calendar"
+import Calendar from "../../dashboard/components/calendar/Calendar"
 import { useEffect } from "react";
-import useFetch from "../hooks/useFetch";
-import NotificationProvider from "../components/notification/NotificationProvider";
+ 
+import NotificationProvider from "../../components/notification/NotificationProvider";
 import UserReservationDetails from "./UserReservationDetails";
 import { useContext } from "react";
-import { AuthContext } from "../components/context/AuthContext";
+import { AuthContext } from "../../components/context/AuthContext";
 
 const UserReservation = ({of, showNewResModal, setShowNewResModal}) => {
 

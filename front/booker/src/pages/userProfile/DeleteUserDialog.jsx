@@ -8,8 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState, useContext } from 'react';
 import { TextareaAutosize } from '@mui/material';
-import { AuthContext } from '../components/context/AuthContext';
-import { useNotification } from '../components/notification/NotificationProvider';
+import { AuthContext } from '../../components/context/AuthContext';
+import { useNotification } from '../../components/notification/NotificationProvider';
 
 export default function DeleteUserDialog({userId, handleDelete, isProviderReserved, authOrApi}) {
   

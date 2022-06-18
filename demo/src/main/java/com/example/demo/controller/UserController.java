@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.*;
 import com.example.demo.model.*;
+import com.example.demo.service.ComplaintService;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ComplaintService complaintService;
 
     // Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
     // Ukoliko nema, server ce vratiti gresku 403 Forbidden
@@ -149,5 +153,19 @@ public class UserController {
         User user = userService.findById(userId);
         userService.createDeletionRequest(user, requestText);
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("/send-email-complaint")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String sendEmailComplaint(@RequestBody(required = false) ComplaintResponseDTO complaintResponseDTO) throws InterruptedException, MessagingException, IOException {
+        emailService.sendComplaintResponse(complaintResponseDTO);
+        return "success";
+    }
+
+    @DeleteMapping("/delete-complaint/{complaintId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public void deleteComplaint(@PathVariable Integer complaintId) throws InterruptedException, MessagingException, IOException {
+        Complaint complaint = complaintService.findById(complaintId);
+        userService.removeComplaint(complaint);
     }
 }
