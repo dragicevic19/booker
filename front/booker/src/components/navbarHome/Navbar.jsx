@@ -15,7 +15,8 @@ const NavbarHome = () => {
     "ROLE_BOAT_OWNER",
     "ROLE_INSTRUCTOR",
     "ROLE_ADMIN",
-    "ROLE_SUPER_ADMIN"
+    "ROLE_SUPER_ADMIN",
+    "ROLE_CLIENT"
   ]
 
   const handleClick = async (e) => {

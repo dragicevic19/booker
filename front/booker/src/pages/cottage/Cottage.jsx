@@ -28,6 +28,7 @@ import { AuthContext } from "../../components/context/AuthContext";
 import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
+import UserReservation from "../../userProfile/UserReservations"
 
 const Cottage = () => {
   const location = useLocation();
@@ -36,15 +37,19 @@ const Cottage = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+  const [showNewResModal, setShowNewResModal] = useState(false);
+ 
+
+
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
 
-  console.log(data);
+  
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
-   console.log(dates);
+ 
  
  
 
@@ -76,9 +81,16 @@ const Cottage = () => {
     setSlideNumber(newSlideNumber);
   };
 
+
+
+
+
+
   const handleClick = () => {
     if (user) {
-      setOpenModal(true);
+      if(user.type ==="ROLE_CLIENT")
+        {setShowNewResModal(!showNewResModal);}
+    
     } else {
       navigate("/login");
     }
@@ -144,6 +156,12 @@ const Cottage = () => {
               </div>
             </div>
           </div>
+          {showNewResModal && 
+        <UserReservation 
+          of={data}
+          showNewResModal={showNewResModal}
+          setShowNewResModal={setShowNewResModal}
+      />} 
           
          <Footer/>
         </div>
