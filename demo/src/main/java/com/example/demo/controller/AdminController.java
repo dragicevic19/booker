@@ -30,6 +30,9 @@ public class AdminController {
     @Autowired
     AdministratorService administratorService;
 
+    @Autowired
+    ClientService clientService;
+
     @GetMapping("/cottages")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<List<OfferToList>> loadAllCottages() {
@@ -223,5 +226,23 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(success, HttpStatus.OK);
+    }
+
+    @GetMapping("/complaints")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<ComplaintToShow>> getComplaints() {
+        List<ComplaintToShow> complaintsToShow = new ArrayList<>();
+        List<Client> clients = clientService.findAll();
+
+        for(Client client : clients)
+        {
+            for(Complaint complaint : client.getComplaints())
+            {
+                ServiceProvider provider = userService.findProviderByOfferId(complaint.getOffer().getId());
+                complaintsToShow.add(new ComplaintToShow(complaint, client, provider));
+            }
+        }
+
+        return new ResponseEntity<>(complaintsToShow, HttpStatus.OK);
     }
 }

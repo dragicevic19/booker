@@ -1,10 +1,10 @@
 import React from 'react'
 import "./userProfile.scss";
 import DeleteUserDialog from './DeleteUserDialog';
-import { AuthContext } from '../components/context/AuthContext';
+import { AuthContext } from '../../components/context/AuthContext';
 import { useContext } from 'react';
-import { useNotification } from '../components/notification/NotificationProvider';
-import useFetch from '../hooks/useFetch';
+import { useNotification } from '../../components/notification/NotificationProvider';
+import useFetch from '../../hooks/useFetch';
 import { useEffect } from 'react';
 import { useState } from 'react';
 

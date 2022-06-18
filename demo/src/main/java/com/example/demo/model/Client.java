@@ -29,6 +29,10 @@ public class Client extends User {
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     protected List<Reservation> reservations;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_complaint_id", referencedColumnName = "id")
+    protected List<Complaint> complaints;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.getRoles();

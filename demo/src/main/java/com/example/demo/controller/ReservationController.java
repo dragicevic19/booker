@@ -4,7 +4,11 @@ import com.example.demo.dto.*;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
+
+import com.example.demo.service.ClientService;
+
 import com.example.demo.model.ServiceProvider;
+
 import com.example.demo.service.OfferService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
@@ -27,10 +31,36 @@ public class ReservationController {
 
     @Autowired
     OfferService offerService;
+    @Autowired
+    ClientService clientService;
 
     @Autowired
     UserService userService;
 
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @PostMapping("newReservationUser/{clientId}/{offerId}")
+    public ResponseEntity<Boolean> newReservationByUser(@PathVariable Integer clientId,
+                                                         @PathVariable Integer offerId,
+                                                         @RequestBody NewReservationDTO newReservation) {
+
+
+        Offer offer = offerService.findById(offerId);
+        if (offer == null) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
+        Client client = clientService.findById(clientId);
+        if (client == null) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
+        if (reservationService.makeNewReservationByOwner(offer, client, newReservation)) {
+            return new ResponseEntity<>(true, HttpStatus.OK);   // ok
+        }
+
+        return new ResponseEntity<>(false, HttpStatus.CONFLICT);
+    }
 
     @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
     @PostMapping("newReservationOwner/{reservationId}/{offerId}")

@@ -19,10 +19,13 @@ import Boat from './pages/boat/boat';
 import Boats from './pages/boats/boats';
 import FishingLesson from './pages/fishinglesson/FishingLesson';
 import FishingLessons from './pages/fishinglessons/fishinglessons';
-import UserProfile from '../src//userProfile/UserProfile';
+import UserProfile from './pages/userProfile/UserProfile';
 import DeleteReqList from './dashboard/pages/list/DeleteReqList';
 import PasswordChange from './pages/login/PasswordChange';
 import ReservationsList from './dashboard/pages/list/ReservationsList';
+import ComplaintList from './pages/complaints/ComplaintList';
+import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage';
+import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
 
 
@@ -59,7 +62,8 @@ function App() {
 
             <Route path='/client-profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
               </NotificationProvider>}/>
-
+            <Route path='/client-complaints' element={<ComplaintList/>}>
+            </Route>
 
             <Route path='/dashboard'>
               <Route index element={<DashboardHome />} />
@@ -76,6 +80,7 @@ function App() {
               </NotificationProvider>}/>
               <Route path="reg-req" element={<RegReqList />}/>
               <Route path="del-req" element={<DeleteReqList />}/>
+              <Route path="complaints" element={<AdminComplaintList />}/>
               
               <Route path="cottages"> 
                 <Route index element={<List adminRequest={true} userType={'ROLE_COTTAGE_OWNER'} entityType={"cottages"}/>}/>
