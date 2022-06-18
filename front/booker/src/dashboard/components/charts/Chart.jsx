@@ -21,6 +21,7 @@ const Chart = ({ aspect, title, data }) => {
             </linearGradient>
           </defs>
           <XAxis dataKey="name" stroke="gray" />
+          <YAxis dataKey="total" stroke="gray" />
           <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
           <Tooltip />
           <Area

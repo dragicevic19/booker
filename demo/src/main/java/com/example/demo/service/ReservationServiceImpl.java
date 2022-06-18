@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.AdditionalServiceDTO;
-import com.example.demo.dto.NewReservationDTO;
-import com.example.demo.dto.ResReportForClientDTO;
-import com.example.demo.dto.ReservationsForMonth;
+import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +118,12 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         return resForMonth;
+    }
+
+    @Override
+    public void sortDates(List<ReservationsForMonthDTO> reservationsForMonth) {
+
+
     }
 
     @Override

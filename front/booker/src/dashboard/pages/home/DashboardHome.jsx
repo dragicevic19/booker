@@ -68,14 +68,14 @@ const DashboardHome = () => {
           <Dropdown options={monthOptions} setSelected={onMonthSelected} multiSelect={false}/>
         </div>
         <div className="charts">
-          <Chart title="Monthlty Revenue" aspect={3 / 1} data={monthlyData} />
+          <Chart title="Monthly Reservations" aspect={3 / 1} data={monthlyData} />
         </div>
         <div className="datePicker year">
           <label>Select year</label>
           <Dropdown options={yearOptions} setSelected={onYearSelected} multiSelect={false}/>
         </div>
         <div className="charts">
-          <Chart title="Yearly Revenue" aspect={3 / 1} data={yearlyData}/>
+          <Chart title="Yearly Reservations" aspect={3 / 1} data={yearlyData}/>
         </div>
         <div className="listContainer">
           <div className="listTitle">Latest Transactions</div>

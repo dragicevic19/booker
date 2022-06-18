@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.NewReservationDTO;
 import com.example.demo.dto.ResReportForClientDTO;
 import com.example.demo.dto.ReservationsForMonth;
+import com.example.demo.dto.ReservationsForMonthDTO;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
@@ -24,4 +25,6 @@ public interface ReservationService {
     ServiceProvider findOwnerOfOffer(Offer offer);
 
     ReservationsForMonth findReservationsForProviderForMonth(ServiceProvider svc, Integer month);
+
+    void sortDates(List<ReservationsForMonthDTO> retList);
 }

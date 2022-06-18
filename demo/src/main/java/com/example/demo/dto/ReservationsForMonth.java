@@ -1,13 +1,16 @@
 package com.example.demo.dto;
 
+import com.example.demo.helpers.NameComparator;
 import com.example.demo.model.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Getter
 @Setter
@@ -19,8 +22,7 @@ public class ReservationsForMonth {
 
     public ReservationsForMonth(int month){
 
-        numOfReservations = new HashMap<>();
-
+        numOfReservations = new TreeMap<>(new NameComparator());
         switch (month){
             case 1:
             case 3:

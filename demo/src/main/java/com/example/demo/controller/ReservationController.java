@@ -136,6 +136,9 @@ public class ReservationController {
         for (Map.Entry<String,Integer> entry : reservations.getNumOfReservations().entrySet())
             retList.add(new ReservationsForMonthDTO(entry.getKey(), entry.getValue()));
 
+        reservationService.sortDates(retList);
+
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
+
 }
