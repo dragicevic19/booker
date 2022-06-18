@@ -224,14 +224,14 @@ public class AuthenticationController {
 
 
     @GetMapping("fishinglesson/{fishinglessonId}")
-    public ResponseEntity<FishingLesson> loadFishingLesson(@PathVariable Integer fishinglessonId) {
+    public ResponseEntity<FishingLessonDTO> loadFishingLesson(@PathVariable Integer fishinglessonId) {
 
         FishingLesson fishinglesson = fishingLessonService.findById(fishinglessonId);
         if (fishinglesson == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(fishinglesson, HttpStatus.OK);
+        return new ResponseEntity<>(new FishingLessonDTO(fishinglesson), HttpStatus.OK);
     }
 
 
