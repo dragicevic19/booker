@@ -152,10 +152,12 @@ const Sidebar = () => {
           <span>Deletion Requests</span>
         </li>
       </Link>
-      <li>
-        <ThumbDownAltIcon className="icon" />
-        <span>Complaints</span>
-      </li>
+      <Link to="/dashboard/complaints" style={{textDecoration: "none"}}>
+        <li>
+          <ThumbDownAltIcon className="icon" />
+          <span>Complaints</span>
+        </li>
+      </Link>
       
       <p className="title">FINANCIAL</p>
       <li>

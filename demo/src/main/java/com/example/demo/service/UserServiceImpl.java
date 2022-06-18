@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.*;
 import com.example.demo.model.*;
-import com.example.demo.repository.ClientRepository;
-import com.example.demo.repository.OfferRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,6 +42,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private OfferRepository offerRepository;
 
+    @Autowired
+    private ServiceProviderRepository serviceProviderRepository;
+
+    @Autowired
+    private ComplaintRepository complaintRepository;
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -162,6 +165,65 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<OfferForComplaint> findOffersByClient(Client client) {
+        List<OfferForComplaint> offersToPresent = new ArrayList<>();
+
+        for(ServiceProvider provider : serviceProviderRepository.findAll())
+        {
+            for (Offer offer : provider.getOffers())
+            {
+                for(Reservation reservation : offer.getReservations())
+                {
+                    for (Client subscriber : offer.getSubscribedClients())
+                    {
+                        if (client.getId().equals(subscriber.getId()) && reservation.getReservationPeriod().getDateTo().isBefore(LocalDate.now()))
+                        {
+                            OfferForComplaint offerToPresent = new OfferForComplaint(offer, provider);
+                            offersToPresent.add(offerToPresent);
+                        }
+                    }
+                }
+            }
+        }
+
+        return offersToPresent;
+    }
+
+    @Override
+    public void addClientComplaint(ComplaintRequest complaintRequest, Offer offer, Client client) {
+        Complaint complaint = new Complaint();
+        complaint.setOffer(offer);
+        complaint.setComplaintForOffer(complaintRequest.getOfferComplaint());
+        complaint.setComplaintForProvider(complaintRequest.getProviderComplaint());
+        this.complaintRepository.save(complaint);
+        client.getComplaints().add(complaint);
+        this.userRepository.save(client);
+    }
+
+    @Override
+    public ServiceProvider findProviderByOfferId(Integer offerId) {
+        List<ServiceProvider> allProviders = this.serviceProviderRepository.findAll();
+        ServiceProvider wantedProvider = null;
+        for(ServiceProvider provider : allProviders)
+        {
+            for (Offer offer : provider.getOffers())
+            {
+                if (offer.getId().equals(offerId)) {
+                    wantedProvider = provider;
+                    break;
+                }
+            }
+        }
+        return wantedProvider;
+    }
+
+    @Override
+    public void removeComplaint(Complaint complaint) {
+        complaint.setDeleted(true);
+        this.complaintRepository.save(complaint);
     }
 
     @Override

@@ -75,7 +75,7 @@ insert into boat_nav_equipment (boat_id, nav_equipment) values (1, 'gps');
 
 insert into users (
     is_deleted, email, enabled, first_name, last_name, last_password_reset_date, password, phone_number, address_id, rating_id)
-    VALUES (false, 'djura@gmail.com', true, 'Djura', 'Djuric', '2021-10-11 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0612522125', 2, 2);
+    VALUES (false, 'soviljnikola3@gmail.com', true, 'Djura', 'Djuric', '2021-10-11 18:57:58.508-07', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '0612522125', 2, 2);
 insert into user_role (user_id, role_id) values (2, 2);
 insert into service_provider (id, loyalty_id) values (2, 2);
 insert into property_owner (id) values (2);
@@ -215,3 +215,16 @@ VALUES ('2022-06-27', '2022-06-30', 2);
 insert into reservation (
     has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
 VALUES (false, false, 4, 222, 3, 6, 2);
+
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 300, 3, 6, 6);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 200, 2, 6, 6);
+
+insert into reservation (
+    has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
+VALUES (false, false, 4, 250, 1, 6, 6);

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
@@ -12,7 +13,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailService{
             javaMailSender.send(mail);
         }
     }
-
+    @Async
     @Override
     public void sendmailDeletion(User user, boolean accepted, String requestText) {
         SimpleMailMessage mail = new SimpleMailMessage();
@@ -85,7 +85,28 @@ public class EmailServiceImpl implements EmailService{
         }
         javaMailSender.send(mail);
     }
+    @Async
+    @Override
+    public void sendComplaintResponse(ComplaintResponseDTO complaintResponseDTO) {
+        SimpleMailMessage mailToClient = new SimpleMailMessage();
+        SimpleMailMessage mailToProvider = new SimpleMailMessage();
 
+        mailToClient.setTo(complaintResponseDTO.getClientEmail());
+        mailToProvider.setTo(complaintResponseDTO.getProviderEmail());
+        mailToClient.setFrom(env.getProperty("spring.mail.username"));
+        mailToClient.setSubject("User complaint feedback");
+        mailToProvider.setSubject("User complaint feedback");
+
+        System.out.println("Email poslat!");
+        mailToClient.setText("Your complaint for offer (" + complaintResponseDTO.getOfferName() + "): \n" + complaintResponseDTO.getOfferComplaint() + "\n\nYour complaint for service provider (" + complaintResponseDTO.getProviderEmail() + "): \n"
+                + complaintResponseDTO.getProviderComplaint() + "\n\nAdministrator's repsonse: \n" + complaintResponseDTO.getAdminResponse());
+        mailToProvider.setText("Client complaint for your offer (" + complaintResponseDTO.getOfferName() + "): \n" + complaintResponseDTO.getOfferComplaint() + "\n\nClient complaint for you: \n"
+                + complaintResponseDTO.getProviderComplaint() + "\n\nAdministrator's response: \n" + complaintResponseDTO.getAdminResponse());
+        javaMailSender.send(mailToClient);
+        javaMailSender.send(mailToProvider);
+
+    }
+    @Async
     @Override
     public void sendReservationConfirmationToClient(Client client, Offer offer, Reservation reservation) {
 
