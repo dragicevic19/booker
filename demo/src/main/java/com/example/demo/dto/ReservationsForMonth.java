@@ -7,14 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class ReservationsForMonth {
 
@@ -46,6 +42,22 @@ public class ReservationsForMonth {
                 }
                 break;
         }
+    }
+
+    public ReservationsForMonth(){
+        numOfReservations = new LinkedHashMap<>();
+        numOfReservations.put("January", 0);
+        numOfReservations.put("February", 0);
+        numOfReservations.put("March", 0);
+        numOfReservations.put("April", 0);
+        numOfReservations.put("May", 0);
+        numOfReservations.put("June", 0);
+        numOfReservations.put("July", 0);
+        numOfReservations.put("August", 0);
+        numOfReservations.put("September", 0);
+        numOfReservations.put("October", 0);
+        numOfReservations.put("November", 0);
+        numOfReservations.put("December", 0);
     }
 
 }

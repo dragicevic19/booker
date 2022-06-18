@@ -26,5 +26,5 @@ public interface ReservationService {
 
     ReservationsForMonth findReservationsForProviderForMonth(ServiceProvider svc, Integer month);
 
-    void sortDates(List<ReservationsForMonthDTO> retList);
+    ReservationsForMonth findReservationsForProviderForYear(ServiceProvider svc, Integer year);
 }

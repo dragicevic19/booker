@@ -26,15 +26,14 @@ const DashboardHome = () => {
     const res = await axios.get(`http://localhost:8080/api/reservations/monthly/${user.id}/${selectedMonth.value}`, {
       headers: headers
     })
-    console.log(res.data);
     setMonthlyData(res.data);
   }
 
   const onYearSelected = async (selectedYear) => {
-    const res = await axios.get(`http://localhost:8080/api/reservations/yearly/${user.id}/${selectedYear}`, {
+    const res = await axios.get(`http://localhost:8080/api/reservations/yearly/${user.id}/${selectedYear.value}`, {
       headers: headers
     })
-    console.log(res);
+    setYearlyData(res.data);
   }
 
   const monthOptions = [

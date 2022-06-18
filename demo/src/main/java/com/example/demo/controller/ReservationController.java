@@ -136,9 +136,21 @@ public class ReservationController {
         for (Map.Entry<String,Integer> entry : reservations.getNumOfReservations().entrySet())
             retList.add(new ReservationsForMonthDTO(entry.getKey(), entry.getValue()));
 
-        reservationService.sortDates(retList);
-
         return new ResponseEntity<>(retList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @GetMapping("reservations/yearly/{userId}/{year}")
+    public ResponseEntity<List<ReservationsForMonthDTO>> reservationsForYear(@PathVariable Integer year, @PathVariable Integer userId) {
+
+        List<ReservationsForMonthDTO> retList = new ArrayList<>();
+        ServiceProvider svc = (ServiceProvider) userService.findById(userId);
+
+        ReservationsForMonth reservations = reservationService.findReservationsForProviderForYear(svc, year);
+
+        for (Map.Entry<String,Integer> entry : reservations.getNumOfReservations().entrySet())
+            retList.add(new ReservationsForMonthDTO(entry.getKey(), entry.getValue()));
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
 }

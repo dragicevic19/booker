@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.*;
 
 @Service
@@ -116,14 +117,28 @@ public class ReservationServiceImpl implements ReservationService {
                 }
             }
         }
-
         return resForMonth;
     }
 
     @Override
-    public void sortDates(List<ReservationsForMonthDTO> reservationsForMonth) {
+    public ReservationsForMonth findReservationsForProviderForYear(ServiceProvider svc, Integer year) {
+        ReservationsForMonth resForMonth = new ReservationsForMonth();
 
+        for (Offer offer : svc.getOffers()) {
+            for (Reservation reservation : offer.getReservations()) {
+                if (reservation.getReservationPeriod().getDateFrom().getYear() == year) {
 
+                    String month = reservation.getReservationPeriod().getDateFrom().getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+                    resForMonth.getNumOfReservations().put(month, resForMonth.getNumOfReservations().get(month) + 1);
+                }
+                else if (reservation.getReservationPeriod().getDateTo().getYear() == year) {
+                    String month = reservation.getReservationPeriod().getDateTo().getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+                    resForMonth.getNumOfReservations().put(month, resForMonth.getNumOfReservations().get(month) + 1);
+                }
+            }
+        }
+
+        return resForMonth;
     }
 
     @Override
