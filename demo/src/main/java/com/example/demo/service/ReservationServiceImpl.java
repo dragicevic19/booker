@@ -3,13 +3,14 @@ package com.example.demo.service;
 import com.example.demo.dto.AdditionalServiceDTO;
 import com.example.demo.dto.NewReservationDTO;
 import com.example.demo.dto.ResReportForClientDTO;
+import com.example.demo.dto.ReservationsForMonth;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -37,7 +38,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     EmailService emailService;
-
 
 
     @Override
@@ -70,6 +70,57 @@ public class ReservationServiceImpl implements ReservationService {
                 if (o.getId() == offer.getId()) return provider;
 
         return null;
+    }
+
+    @Override
+    public ReservationsForMonth findReservationsForProviderForMonth(ServiceProvider svc, Integer month) {
+
+        ReservationsForMonth resForMonth = new ReservationsForMonth(month);
+
+        for (Offer offer : svc.getOffers()) {
+            for (Reservation reservation : offer.getReservations()) {
+                if (reservation.getReservationPeriod().getDateFrom().getMonthValue() == month) {
+
+                    LocalDate startDate = reservation.getReservationPeriod().getDateFrom();
+                    for (int i = startDate.getDayOfMonth(); i <= startDate.lengthOfMonth(); i++) {
+
+                        String key = String.valueOf(i) + ". " + String.valueOf(month) + ".";
+
+                        if (startDate.isBefore(reservation.getReservationPeriod().getDateTo()) ||
+                                startDate.isEqual(reservation.getReservationPeriod().getDateTo())) {    // da li treba i equal?
+
+                            resForMonth.getNumOfReservations().put(key, resForMonth.getNumOfReservations().get(key) + 1);
+
+                            startDate.plusDays(1);
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                }
+
+                else if (reservation.getReservationPeriod().getDateTo().getMonthValue() == month) {
+                    LocalDate endDate = reservation.getReservationPeriod().getDateTo();
+                    for (int i = endDate.getDayOfMonth(); i > 0; i--) {
+
+                        String key = String.valueOf(i) + ". " + String.valueOf(month) + ".";
+
+                        if (endDate.isAfter(reservation.getReservationPeriod().getDateFrom()) ||
+                                endDate.isEqual(reservation.getReservationPeriod().getDateFrom())) {
+
+                            resForMonth.getNumOfReservations().put(key, resForMonth.getNumOfReservations().get(key) + 1);
+
+                            endDate.minusDays(1);
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return resForMonth;
     }
 
     @Override

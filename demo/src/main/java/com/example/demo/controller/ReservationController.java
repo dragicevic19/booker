@@ -1,20 +1,22 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ClientDTO;
-import com.example.demo.dto.NewReservationDTO;
-import com.example.demo.dto.OfferDTO;
-import com.example.demo.dto.ResReportForClientDTO;
+import com.example.demo.dto.*;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.ServiceProvider;
 import com.example.demo.service.OfferService;
 import com.example.demo.service.ReservationService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/")
@@ -25,6 +27,9 @@ public class ReservationController {
 
     @Autowired
     OfferService offerService;
+
+    @Autowired
+    UserService userService;
 
 
     @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
@@ -118,4 +123,19 @@ public class ReservationController {
         return new ResponseEntity<>(false, HttpStatus.CONFLICT);
     }
 
+
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @GetMapping("reservations/monthly/{userId}/{month}")
+    public ResponseEntity<List<ReservationsForMonthDTO>> reservationsForMonth(@PathVariable Integer month, @PathVariable Integer userId) {
+
+        List<ReservationsForMonthDTO> retList = new ArrayList<>();
+        ServiceProvider svc = (ServiceProvider) userService.findById(userId);
+
+        ReservationsForMonth reservations = reservationService.findReservationsForProviderForMonth(svc, month);
+
+        for (Map.Entry<String,Integer> entry : reservations.getNumOfReservations().entrySet())
+            retList.add(new ReservationsForMonthDTO(entry.getKey(), entry.getValue()));
+
+        return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
 }
