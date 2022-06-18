@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { AuthContext } from "../components/context/AuthContext";
 
 const UserReservation = ({of, showNewResModal, setShowNewResModal}) => {
-    console.log(of);
+
   const [discounts, setDiscounts] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [unavailablePeriods, setUnavailablePeriods] = useState([]);
@@ -44,8 +44,7 @@ const UserReservation = ({of, showNewResModal, setShowNewResModal}) => {
 
 
 
-  console.log(offer);
- 
+
   const handleSubmit = () => {
   }
 

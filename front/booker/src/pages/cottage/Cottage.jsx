@@ -39,10 +39,10 @@ const Cottage = () => {
 
   const [showNewResModal, setShowNewResModal] = useState(false);
  
-
+   
 
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
-
+  console.log(data);
   
 
   const { user } = useContext(AuthContext);

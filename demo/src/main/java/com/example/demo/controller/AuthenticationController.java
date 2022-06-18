@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CottageDTO;
-import com.example.demo.dto.JwtAuthenticationRequest;
-import com.example.demo.dto.UserRequest;
-import com.example.demo.dto.UserTokenState;
+import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.service.BoatService;
 import com.example.demo.service.CottageService;
@@ -239,14 +236,14 @@ public class AuthenticationController {
 
 
     @GetMapping("boat/{boatId}")
-    public ResponseEntity<Boat> loadBoat(@PathVariable Integer boatId) {
+    public ResponseEntity<BoatDTO> loadBoat(@PathVariable Integer boatId) {
 
         Boat boat = boatService.findById(boatId);
         if (boat == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(boat, HttpStatus.OK);
+        return new ResponseEntity<>(new BoatDTO(boat), HttpStatus.OK);
     }
 
     @PostMapping("create-deletion-request/{userId}")
