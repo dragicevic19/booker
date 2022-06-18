@@ -45,6 +45,39 @@ const Sidebar = () => {
       <hr />
       <div className="center">
 
+
+
+      {user.type=='ROLE_CLIENT' && (<><ul>
+        <p className="title">LISTS</p>
+        
+        <Link to="/dashboard/cottage-reservation-history" style={{textDecoration: "none"}}>
+          <li>
+            <CottageOutlinedIcon className="icon" /> 
+            <span>Booking hisrory for cottages</span>
+          </li>
+        </Link>
+        <Link to="/dashboard/boats-reservation-history" style={{textDecoration: "none"}}>
+          <li>
+            <DirectionsBoatFilledOutlinedIcon className="icon" /> 
+            <span>Booking hisrory for boats</span>
+          </li>
+        </Link>
+        <Link to="/dashboard/lessons-reservation-history" style={{textDecoration: "none"}}>
+          <li>
+            <PhishingOutlinedIcon className="icon" /> 
+            <span>Booking hisrory for lessons</span>
+          </li>
+        </Link>
+      </ul></>)}
+
+    
+
+
+
+
+
+
+
         {user.type !== 'ROLE_SUPER_ADMIN' && user.type !== 'ROLE_ADMIN' && user.type!=='ROLE_CLIENT' && (<><ul>
         <p className="title">LISTS</p>
         
