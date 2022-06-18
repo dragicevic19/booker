@@ -30,7 +30,7 @@ const Reservations = ({history}) => {
     setList(data);
   }, [data]);
 
-  console.log(link);
+  console.log(list);
 
   const columns = reservationColumns;
 
@@ -71,7 +71,7 @@ const Reservations = ({history}) => {
             <div 
               onClick={()=> newReportClick(params.row.id)}
               className="viewButton"
-              disabled = {history === false || params.row.status === "now"}
+              disabled = {history === false || params.row.status === "now" || params.row.hasOwnerRated}
             >Fill Report
             </div>
             <div 
