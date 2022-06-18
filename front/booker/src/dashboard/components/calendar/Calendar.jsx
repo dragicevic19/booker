@@ -29,6 +29,7 @@ const Calendar = ({data}) => {
       firstDayOfWeek={1}
       startDayHour={9}
       endDayHour={19}
+      editing={false}
       onAppointmentFormOpening={onAppointmentFormOpening}>
 
         <Resource

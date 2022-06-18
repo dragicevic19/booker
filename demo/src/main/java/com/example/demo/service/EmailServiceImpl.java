@@ -4,6 +4,7 @@ import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
+import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -12,7 +13,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailService{
             javaMailSender.send(mail);
         }
     }
-
+    @Async
     @Override
     public void sendmailDeletion(User user, boolean accepted, String requestText) {
         SimpleMailMessage mail = new SimpleMailMessage();
@@ -85,7 +85,7 @@ public class EmailServiceImpl implements EmailService{
         }
         javaMailSender.send(mail);
     }
-
+    @Async
     @Override
     public void sendComplaintResponse(ComplaintResponseDTO complaintResponseDTO) {
         SimpleMailMessage mailToClient = new SimpleMailMessage();
@@ -99,10 +99,24 @@ public class EmailServiceImpl implements EmailService{
 
         System.out.println("Email poslat!");
         mailToClient.setText("Your complaint for offer (" + complaintResponseDTO.getOfferName() + "): \n" + complaintResponseDTO.getOfferComplaint() + "\n\nYour complaint for service provider (" + complaintResponseDTO.getProviderEmail() + "): \n"
-        + complaintResponseDTO.getProviderComplaint() + "\n\nAdministrator's repsonse: \n" + complaintResponseDTO.getAdminResponse());
+                + complaintResponseDTO.getProviderComplaint() + "\n\nAdministrator's repsonse: \n" + complaintResponseDTO.getAdminResponse());
         mailToProvider.setText("Client complaint for your offer (" + complaintResponseDTO.getOfferName() + "): \n" + complaintResponseDTO.getOfferComplaint() + "\n\nClient complaint for you: \n"
                 + complaintResponseDTO.getProviderComplaint() + "\n\nAdministrator's response: \n" + complaintResponseDTO.getAdminResponse());
         javaMailSender.send(mailToClient);
         javaMailSender.send(mailToProvider);
+
+    }
+    @Async
+    @Override
+    public void sendReservationConfirmationToClient(Client client, Offer offer, Reservation reservation) {
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(client.getEmail());
+        mail.setFrom(env.getProperty("spring.mail.username"));
+        mail.setSubject("New reservation for you! Enjoy in " + offer.getName());
+        mail.setText("You have new reserved offer!\nFrom: " + reservation.getReservationPeriod().getDateFrom().toString() +
+                " to: " + reservation.getReservationPeriod().getDateTo().toString() + "\nPrice: $" + reservation.getPrice() +
+                "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
+        javaMailSender.send(mail);
     }
 }

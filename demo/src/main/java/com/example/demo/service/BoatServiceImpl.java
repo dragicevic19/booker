@@ -7,6 +7,9 @@ import com.example.demo.repository.BoatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,6 +19,8 @@ public class BoatServiceImpl implements BoatService{
     @Autowired
     BoatRepository boatRepository;
 
+    @Autowired
+    OfferService offerService;
 
     @Override
     public Boat findById(Integer id) {
@@ -30,6 +35,31 @@ public class BoatServiceImpl implements BoatService{
     @Override
     public Integer countBoatsByCity(String c) {
         return boatRepository.findByAddressCityIgnoreCase(c).size();
+    }
+
+
+    @Override
+    public List<Boat> findAllByCityAndDateAnd(String c, String start, String end, int min, int max, int guests){
+        c = c.trim();
+        List<Boat> boatList;
+        if(c.equals(""))
+            boatList =boatRepository.findAll();
+        else
+            boatList = boatRepository.findByAddressCityIgnoreCase(c);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate startD = LocalDate.parse(start,formatter);
+
+        LocalDate endD = LocalDate.parse(end,formatter) ;
+        List<Boat> retlist = new ArrayList<Boat>();
+        for(Boat boat: boatList){
+            int price = (int) boat.getPrice();
+            if (offerService.isPeriodAvailable(startD,endD,boat ) && price>=min && price<=max && guests <= boat.getCapacity()){
+                retlist.add(boat);
+
+            }
+
+        }
+        return retlist;
     }
 
     @Override

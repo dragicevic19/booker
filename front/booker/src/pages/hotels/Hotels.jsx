@@ -11,16 +11,23 @@ import SearchItem from "../../components/searchitem/SearchItem";
 const Hotels = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
-  const [dates, setDates] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
-  
+ 
 
-  const {  data, loading, error,reFetch } = useFetch('http://localhost:8080/auth/cottages');
+  const {  data, loading, error,reFetch } = useFetch(`http://localhost:8080/auth/cottages?city=${destination || "   "}&startDate=${format(
+    dates[0].startDate,
+    "MM/dd/yyyy"
+  )}&endDate=${format(dates[0].endDate, "MM/dd/yyyy")}&min=${min || 0 }&max=${max || 999}&guests=${options.guests}&rooms=${options.room}`);
 
+  console.log(options);
+  console.log(destination);
+  console.log(options);
+   
   
  
   const handleClick = () => {
@@ -37,7 +44,7 @@ const Hotels = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input placeholder={destination} onChange={(e) => setDestination(e.target.value)} type="text" />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -48,6 +55,7 @@ const Hotels = () => {
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
+                
                   minDate={new Date()}
                   ranges={dates}
                 />
@@ -62,6 +70,7 @@ const Hotels = () => {
                   </span>
                   <input
                     type="number"
+                    min={0}
                     onChange={(e) => setMin(e.target.value)}
                     className="lsOptionInput"
                   />
@@ -72,34 +81,31 @@ const Hotels = () => {
                   </span>
                   <input
                     type="number"
+      
                     onChange={(e) => setMax(e.target.value)}
                     className="lsOptionInput"
                   />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
+                  <span className="lsOptionText">Guests</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
+                    placeholder={options.guests}
+                    onChange={(e) => options.guests = parseInt(e.target.value)}
+                  
+                    
                   />
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children}
-                  />
-                </div>
+          
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Room</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
+                    onChange={(e) => options.room = parseInt(e.target.value)}
                     placeholder={options.room}
                   />
                 </div>

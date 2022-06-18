@@ -1,9 +1,9 @@
-import "./registration.css"
+import "./registrationUser.css"
 import FormInput from '../../components/formInput/FormInput'
 import { useState } from "react"
 import { useNotification } from "../../components/notification/NotificationProvider";
 
-const Registration = () => {
+const RegistrationUser = () => {
 
   const dispatch = useNotification();
 
@@ -17,7 +17,7 @@ const Registration = () => {
     city:"",
     street:"",
     phoneNumber:"",
-    type:"cottage_owners"
+    type:"clients"
   })
 
   const inputs = [
@@ -114,12 +114,10 @@ const Registration = () => {
       pattern: "^[0-9]{9,13}$"
     },
   ]
-  console.log(JSON.parse(""));
-
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:8080/auth/signup', {
+    fetch('http://localhost:8080/auth/register-user', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(values)
@@ -180,15 +178,7 @@ const Registration = () => {
                   onChange={onChange} 
                 />
               ))}
-              <div className="userType">
-                <label>User Type</label>
-                <select name="type" onChange={onChange}>
-                  <option value="cottage_owners">Cottage Owner</option>
-                  <option value="boat_owners">Boat Owner</option>
-                  <option value="instructors">Fishing Instructor</option>
-                  <option value="administrators"> Administrator</option>
-                </select>
-              </div>
+               
             </div>
           </div>
           <button>Submit</button>
@@ -199,4 +189,4 @@ const Registration = () => {
   )
 }
 
-export default Registration
+export default RegistrationUser

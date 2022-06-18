@@ -7,6 +7,9 @@ import "./datatable.scss"
 import { AuthContext } from "../../../components/context/AuthContext";
 import { reservationColumns } from '../../resColumns';
 import ClientsInfosModal from '../clientsInfosModal/ClientsInfosModal';
+import FillReport from '../fillReport/FillReport';
+import NewReservationOwner from '../newResOwner/NewReservationOwner';
+import NotificationProvider from '../../../components/notification/NotificationProvider';
 
 const Reservations = ({history}) => {
   const navigate = useNavigate();
@@ -95,22 +98,26 @@ const Reservations = ({history}) => {
         onCellClick={handleOnCellClick}
       />
 
-      {selectedReservationId && <ClientsInfosModal 
-                                  reservationId={selectedReservationId}
-                                  showClientsInfosModal={showUsersInfoModal}
-                                  setShowClientsInfosModal={setShowUsersInfoModal} />
-      }
+      {selectedReservationId &&
+       <ClientsInfosModal 
+          reservationId={selectedReservationId}
+          showClientsInfosModal={showUsersInfoModal}
+          setShowClientsInfosModal={setShowUsersInfoModal} 
+      />}
 
-      {/* {selectedItem && <>
-      <FillReport
-        offerId={selectedItem}
-        showAddActionModal={showAddActionModal}
-        setShowAddActionModal={setShowAddActionModal}
-      />
-      <NewReservationOwner 
+      {showReportModal && <><NotificationProvider>
+        <FillReport
+          reservationId={selectedItem} 
+          showReportModal={showReportModal}
+          setShowReportModal={setShowReportModal}
+      /></NotificationProvider></>}
 
-      />
-      </>} */}
+      {showNewResModal && 
+        <NewReservationOwner 
+          reservationId={selectedItem}
+          showNewResModal={showNewResModal}
+          setShowNewResModal={setShowNewResModal}
+      />} 
     </div>
   );
 }

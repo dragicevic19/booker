@@ -1,20 +1,44 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Client;
-import com.example.demo.model.Reservation;
-import com.example.demo.repository.ClientRepository;
-import com.example.demo.repository.ReservationRepository;
+import com.example.demo.dto.AdditionalServiceDTO;
+import com.example.demo.dto.NewReservationDTO;
+import com.example.demo.dto.ResReportForClientDTO;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
-public class ReservationServiceImpl implements ReservationService{
+public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     ReservationRepository reservationRepository;
 
     @Autowired
     ClientRepository clientRepository;
+
+    @Autowired
+    OfferRepository offerRepository;
+
+    @Autowired
+    ServiceProviderRepository serviceProviderRepo;
+
+    @Autowired
+    ReservationReportForClientRepository reportsForClientRepository;
+
+    @Autowired
+    AdditionalServicesService additionalServicesService;
+
+    @Autowired
+    OfferService offerService;
+
+    @Autowired
+    EmailService emailService;
+
+
 
     @Override
     public Reservation findById(Integer reservationId) {
@@ -23,10 +47,86 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public Client findClientForReservation(Reservation reservation) {
-        for(Client client : clientRepository.findAll())
-            for(Reservation res : client.getReservations())
+        for (Client client : clientRepository.findAll())
+            for (Reservation res : client.getReservations())
                 if (res.getId() == reservation.getId())
                     return client;
         return null;
     }
+
+    @Override
+    public Offer findOfferForReservation(Reservation reservation) {
+        for (Offer offer : offerRepository.findAll())
+            for (Reservation res : offer.getReservations())
+                if (res.getId() == reservation.getId())
+                    return offer;
+        return null;
+    }
+
+    @Override
+    public ServiceProvider findOwnerOfOffer(Offer offer) {
+        for (ServiceProvider provider : serviceProviderRepo.findAll())
+            for (Offer o : provider.getOffers())
+                if (o.getId() == offer.getId()) return provider;
+
+        return null;
+    }
+
+    @Override
+    public boolean makeNewReportForClient(ResReportForClientDTO report, Client client, ServiceProvider svcProvider,
+                                          Reservation reservation) {
+
+        ReservationReportForClient rep = new ReservationReportForClient();
+        rep.setClient(client);
+        rep.setReservation(reservation);
+        rep.setComment(report.getComment());
+        rep.setServiceProvider(svcProvider);
+        if (report.getReportType() == 0) {
+            rep.setType(ReportForClientType.BAD_USER);  // ovo ide kod admina pa ako on odobri klijent ce dobiti penal
+        } else {
+            rep.setType(ReportForClientType.USER_DID_NOT_SHOW_UP);
+            client.setNumOfPenalties(client.getNumOfPenalties() + 1); // ?
+        }
+
+        reservation.setHasOwnerRated(true);
+        reportsForClientRepository.save(rep);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean makeNewReservationByOwner(Offer offer, Client client, NewReservationDTO newReservation) {
+
+        if (!offerService.isPeriodAvailable(newReservation.getStartDate(), newReservation.getEndDate(), offer)) {
+            return false;
+        }
+        Reservation newRes = new Reservation();
+        Period period = new Period(newReservation.getStartDate(), newReservation.getEndDate());
+        newRes.setReservationPeriod(period);
+
+        Set<AdditionalService> additionalServices = new HashSet<>();
+        for (AdditionalServiceDTO service : newReservation.getAdditionalServices()) {
+            additionalServices.add(additionalServicesService.findById(service.getValue()));
+        }
+        newRes.setChosenAdditionalServices(additionalServices);
+
+        newRes.setHasOwnerRated(false);
+        newRes.setHasClientRated(false);
+        newRes.setNumOfAttendants(newReservation.getNumOfAttendants());
+        newRes.setPrice(newReservation.getPrice());
+
+        offer.getReservations().add(newRes);
+        offer.getPeriodsOfOccupancy().add(period);
+
+        client.getReservations().add(newRes);
+
+        emailService.sendReservationConfirmationToClient(client, offer, newRes);
+
+        reservationRepository.save(newRes);
+
+        return true;
+    }
+
+
 }

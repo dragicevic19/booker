@@ -1,14 +1,20 @@
 package com.example.demo.controller;
-
 import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.service.*;
+import com.example.demo.dto.CottageDTO;
+import com.example.demo.dto.JwtAuthenticationRequest;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserTokenState;
+import com.example.demo.service.BoatService;
+import com.example.demo.service.CottageService;
+import com.example.demo.service.FishingLessonService;
+import com.example.demo.service.UserService;
 import com.example.demo.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,6 +81,20 @@ public class AuthenticationController {
     // Endpoint za registraciju novog korisnika
     @PostMapping("/signup")
     public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+        userRequest.setEmail(userRequest.getEmail().toLowerCase(Locale.ROOT));
+        User existUser = this.userService.findByEmail(userRequest.getEmail());
+
+        if (existUser != null) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//            throw new ResourceConflictException("Email already exists");
+        }
+
+        User user = this.userService.save(userRequest);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/register-user")
+    public ResponseEntity<User> addUserUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
         userRequest.setEmail(userRequest.getEmail().toLowerCase(Locale.ROOT));
         User existUser = this.userService.findByEmail(userRequest.getEmail());
 
@@ -148,19 +169,53 @@ public class AuthenticationController {
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
     @GetMapping("fishinglessons")
-    public ResponseEntity<List<FishingLesson>> getLessonOffers(){
-        List<FishingLesson> fislist = fishingLessonService.findAll();
+    public ResponseEntity<List<FishingLesson>> getLessonOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+
+        List<FishingLesson> fislist ;
+        fislist = fishingLessonService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests);
+
+
+
         return new ResponseEntity<>(fislist, HttpStatus.OK);
     }
 
+
+
+
+
     @GetMapping("cottages")
-    public ResponseEntity<List<Cottage>> getOffers(){
-        List<Cottage> cotlist = cottageService.findAll();
+    public ResponseEntity<List<Cottage>> getOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+        int rooms = Integer.parseInt(allParams.get("rooms"));
+        List<Cottage> cotlist ;
+        cotlist = cottageService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests,rooms);
+
+
+
         return new ResponseEntity<>(cotlist, HttpStatus.OK);
     }
+
     @GetMapping("boats")
-    public ResponseEntity<List<Boat>> getBoatOffers(){
-        List<Boat> boatlist = boatService.findAll();
+    public ResponseEntity<List<Boat>> getBoatOffers(@RequestParam Map<String,String> allParams){
+        String start =allParams.get("startDate");
+        String end = allParams.get("endDate");
+        int min = Integer.parseInt(allParams.get("min"));
+        int max = Integer.parseInt(allParams.get("max"));
+        int guests = Integer.parseInt(allParams.get("guests"));
+        List<Boat> boatlist ;
+        boatlist = boatService.findAllByCityAndDateAnd(allParams.get("city"),start,end,min,max,guests);
+
+
+
         return new ResponseEntity<>(boatlist, HttpStatus.OK);
     }
 

@@ -26,6 +26,7 @@ import ReservationsList from './dashboard/pages/list/ReservationsList';
 import ComplaintList from './pages/complaints/ComplaintList';
 import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage';
 import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
+import RegistrationUser from './pages/registration-user/registrationUser';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
+              <Route path='user-register' element={<NotificationProvider><RegistrationUser /></NotificationProvider>} />
               <Route path="/cottages" element={<Hotels/>}/>
               <Route path="/cottages/:id" element={<Cottage/>}/>
               <Route path="/boat/:id" element={<Boat/>}/>
