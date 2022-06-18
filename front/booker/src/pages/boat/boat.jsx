@@ -27,7 +27,7 @@ import { AuthContext } from "../../components/context/AuthContext";
 import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
-import UserReservation from "../../userProfile/UserReservations"
+import UserReservation from "../userProfile/UserReservations"
 
 
 const Boat = () => {
