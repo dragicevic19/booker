@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.hibernate.annotations.Where;
 import javax.persistence.*;
+
+@Where(clause = "deleted = false")
 
 @Entity
 @NoArgsConstructor
@@ -36,5 +38,8 @@ public class ReservationReportForClient {
 
     @Column(name = "report_type", unique = false, nullable = true)
     private ReportForClientType type;
+
+    @Column(name = "deleted", nullable = false)
+    protected boolean deleted;
 
 }

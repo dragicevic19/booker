@@ -414,4 +414,118 @@ export const columnsData =
         width: 220,
       }
     ],
+    'ROLE_ADMIN/PENALTIES':
+    [
+      {
+        field: "id",
+        headerName: "Request ID",
+        width: 85,
+      },
+      {
+        field: "clientId",
+        headerName: "Client's ID",
+        width: 85,
+      },
+      {
+        field: "clientEmail",
+        headerName: "Client's Email",
+        width: 220,
+      },
+      {
+        field: "clientName",
+        headerName: "Client's First Name",
+        width: 150,
+      },
+      {
+        field: "clientLastName",
+        headerName: "Client's Last Name",
+        width: 150,
+      },
+      {
+        field: "providerId",
+        headerName: "Provider's ID",
+        width: 100,
+      },
+      {
+        field: "providerEmail",
+        headerName: "Provider's Email",
+        width: 220,
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      }
+    ],
+    'ROLE_SUPER_ADMIN/PENALTIES':
+    [
+      {
+        field: "id",
+        headerName: "Request ID",
+        width: 85,
+      },
+      {
+        field: "clientId",
+        headerName: "Client's ID",
+        width: 85,
+      },
+      {
+        field: "clientEmail",
+        headerName: "Client's Email",
+        width: 220,
+      },
+      {
+        field: "clientName",
+        headerName: "Client's First Name",
+        width: 150,
+      },
+      {
+        field: "clientLastName",
+        headerName: "Client's Last Name",
+        width: 150,
+      },
+      {
+        field: "providerId",
+        headerName: "Provider's ID",
+        width: 100,
+      },
+      {
+        field: "providerEmail",
+        headerName: "Provider's Email",
+        width: 220,
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      }
+    ],
 };

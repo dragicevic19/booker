@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
+import com.example.demo.dto.PenaltyRequestResponseDTO;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
@@ -118,5 +119,47 @@ public class EmailServiceImpl implements EmailService{
                 " to: " + reservation.getReservationPeriod().getDateTo().toString() + "\nPrice: $" + reservation.getPrice() +
                 "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
         javaMailSender.send(mail);
+    }
+
+    @Override
+    public void sendPenaltyRequestEmail(PenaltyRequestResponseDTO penaltyRequestResponseDTO, boolean accepted) {
+        SimpleMailMessage mailToClient = new SimpleMailMessage();
+        SimpleMailMessage mailToProvider = new SimpleMailMessage();
+
+        mailToClient.setTo(penaltyRequestResponseDTO.getClientEmail());
+        mailToProvider.setTo(penaltyRequestResponseDTO.getProviderEmail());
+        mailToClient.setFrom(env.getProperty("spring.mail.username"));
+        mailToClient.setSubject("User penalty request feedback");
+        mailToProvider.setSubject("User penalty request feedback");
+
+        System.out.println("Email poslat!");
+
+        if(accepted)
+        {
+            mailToClient.setText("Administrator has accepted the request of provider " + penaltyRequestResponseDTO.getProviderFirstName() +
+                    " " + penaltyRequestResponseDTO.getProviderLastName() + " (" + penaltyRequestResponseDTO.getProviderEmail() + ") for " +
+                    "you to receive 1 penalty for your behaviour while attending the offer called " + penaltyRequestResponseDTO.getOfferName() +
+                    ".\n\nProvider's comment on your behaviour:\n" + penaltyRequestResponseDTO.getComment() + "\n\nYou are sanctioned with 1 penalty!");
+
+            mailToProvider.setText("Administrator has accepted your request for client " + penaltyRequestResponseDTO.getClientFirstName() +
+                    " " + penaltyRequestResponseDTO.getClientLastName() + " (" + penaltyRequestResponseDTO.getClientEmail() + ") to receive" +
+                    " 1 penalty for his/her behaviour while attending the offer called " + penaltyRequestResponseDTO.getOfferName() +
+                    ".\n\nYour comment on client's behaviour:\n" + penaltyRequestResponseDTO.getComment() + "\n\nThe client is sanctioned with 1 penalty!");
+        }
+        else
+        {
+            mailToClient.setText("Administrator has rejected the request of provider " + penaltyRequestResponseDTO.getProviderFirstName() +
+                    " " + penaltyRequestResponseDTO.getProviderLastName() + " (" + penaltyRequestResponseDTO.getProviderEmail() + ") for " +
+                    "you to receive 1 penalty for your behaviour while attending the offer called " + penaltyRequestResponseDTO.getOfferName() +
+                    ".\n\nProvider's comment on your behaviour:\n" + penaltyRequestResponseDTO.getComment() + "\n\nYou are not sanctioned!");
+
+            mailToProvider.setText("Administrator has rejected your request for client " + penaltyRequestResponseDTO.getClientFirstName() +
+                    " " + penaltyRequestResponseDTO.getClientLastName() + " (" + penaltyRequestResponseDTO.getClientEmail() + ") to receive" +
+                    " 1 penalty for his/her behaviour while attending the offer called " + penaltyRequestResponseDTO.getOfferName() +
+                    ".\n\nYour comment on client's behaviour:\n" + penaltyRequestResponseDTO.getComment() + "\n\nThe client is not sanctioned!");
+        }
+
+        javaMailSender.send(mailToClient);
+        javaMailSender.send(mailToProvider);
     }
 }
