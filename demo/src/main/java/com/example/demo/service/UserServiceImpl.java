@@ -227,6 +227,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void givePenaltyPoints(Client client, int penaltiesToAdd) {
+        client.setNumOfPenalties(client.getNumOfPenalties() + penaltiesToAdd);
+        this.userRepository.save(client);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null) {

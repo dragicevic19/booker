@@ -27,6 +27,7 @@ import ComplaintList from './pages/complaints/ComplaintList';
 import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage';
 import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
+import PenaltyReqList from './dashboard/pages/list/PenaltyReqList';
 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
               <Route path="reg-req" element={<RegReqList />}/>
               <Route path="del-req" element={<DeleteReqList />}/>
               <Route path="complaints" element={<AdminComplaintList />}/>
+              <Route path="penalty-req" element={<PenaltyReqList />}/>
               
               <Route path="cottages"> 
                 <Route index element={<List adminRequest={true} userType={'ROLE_COTTAGE_OWNER'} entityType={"cottages"}/>}/>
