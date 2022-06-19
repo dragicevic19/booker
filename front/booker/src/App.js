@@ -75,9 +75,9 @@ function App() {
                 <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
 
-              <Route path='cottage-reservation-history' element={<UserReservationList history={false}/>} />
-              <Route path='boats-reservation-history' element={<UserReservationList history={false}/>} />
-              <Route path='lessons-reservation-history' element={<UserReservationList history={false}/>} />
+              <Route path='cottage-reservation-history' element={<UserReservationList history={true} typeOfRes ={"cott"}/>} />
+              <Route path='boats-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"boat"}/>} />
+              <Route path='lessons-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"less"}/>} />
 
 
               

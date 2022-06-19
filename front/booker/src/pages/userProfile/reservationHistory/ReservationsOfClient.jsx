@@ -10,7 +10,7 @@ import FillReport from '../../../dashboard/components/fillReport/FillReport';
  
 import NotificationProvider from '../../../components/notification/NotificationProvider';
 
-const ReservationsOfClient = ({history}) => {
+const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,vikendica,cas
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -22,7 +22,7 @@ const ReservationsOfClient = ({history}) => {
     'Authorization': `Bearer ${user.accessToken}`,
   }
 
-  const link = history ? `http://localhost:8080/api/reservations-of-user/history/${user.id}` : `http://localhost:8080/api/reservations-of-user/future/${user.id}`
+  const link = history ? `http://localhost:8080/api/reservations-of-user/history/${user.id}/${typeOfRes}` : `http://localhost:8080/api/reservations-of-user/future/${user.id}/0`
 
   const { data, loading, error } = useFetch(link);
   console.log(data);
@@ -37,27 +37,27 @@ const ReservationsOfClient = ({history}) => {
   
 
 
-  const [showReportModal, setShowReportModal] = useState(false);
-  const [showUsersInfoModal, setShowUsersInfoModal] = useState(false);
+  // const [showReportModal, setShowReportModal] = useState(false);
+  // const [showUsersInfoModal, setShowUsersInfoModal] = useState(false);
   const [selectedReservationId, setSelectedReservationId] = useState();
 
   const [selectedItem, setSelectedItem] = useState();
 
-  const handleOnCellClick = (params) => {
-    if (params.field !== 'client'){
-      return;
-    }
-    console.log(params.id);
-    setSelectedReservationId(params.id);
-    setShowUsersInfoModal(!showUsersInfoModal);
-  };
+  // const handleOnCellClick = (params) => {
+  //   if (params.field !== 'client'){
+  //     return;
+  //   }
+  //   console.log(params.id);
+  //   setSelectedReservationId(params.id);
+  //   setShowUsersInfoModal(!showUsersInfoModal);
+  // };
 
  
 
-  const newReportClick = (id) => {
-    setSelectedItem(id);
-    setShowReportModal(!showReportModal);
-  }
+  // const newReportClick = (id) => {
+  //   setSelectedItem(id);
+  //   setShowReportModal(!showReportModal);
+  // }
 
   const actionColumn = [
     {
@@ -68,16 +68,10 @@ const ReservationsOfClient = ({history}) => {
         return (
           <div className="cellAction">
             <div 
-              onClick={()=> newReportClick(params.row.id)}
+              //onClick={()=> newReportClick(params.row.id)}
               className="viewButton"
               disabled = {history === false || params.row.status === "now"}
             >Fill Report
-            </div>
-            <div 
-        
-              className="newActionButton"
-              disabled={params.row.status !== "now"}
-            >New Reservation
             </div>
           </div>
         );
@@ -93,20 +87,20 @@ const ReservationsOfClient = ({history}) => {
         className="datagrid"
         rows={list}
         columns={columns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
+        pageSize={8}
+        rowsPerPageOptions={[8]}
         getRowId={(row) => row.id}
-        onCellClick={handleOnCellClick}
+        // onCellClick={handleOnCellClick}
       />
 
  
 
-      {showReportModal && <><NotificationProvider>
+      {/* {showReportModal && <><NotificationProvider>
         <FillReport
           reservationId={selectedItem} 
           showReportModal={showReportModal}
           setShowReportModal={setShowReportModal}
-      /></NotificationProvider></>}
+      /></NotificationProvider></>} */}
 
     
     </div>
