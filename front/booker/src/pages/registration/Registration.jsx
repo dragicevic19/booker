@@ -114,8 +114,6 @@ const Registration = () => {
       pattern: "^[0-9]{9,13}$"
     },
   ]
-  console.log(JSON.parse(""));
-
 
   const handleSubmit = (e) => {
     e.preventDefault()

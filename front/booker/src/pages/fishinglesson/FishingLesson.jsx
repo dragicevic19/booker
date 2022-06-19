@@ -27,6 +27,8 @@ import { AuthContext } from "../../components/context/AuthContext";
 import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
+import UserReservation from "../userProfile/UserReservations"
+
 
 const FishingLesson = () => {
   const location = useLocation();
@@ -34,7 +36,7 @@ const FishingLesson = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
+  const [showNewResModal, setShowNewResModal] = useState(false);
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/fishinglesson/${id}`)
 
  
@@ -74,7 +76,8 @@ const FishingLesson = () => {
 
   const handleClick = () => {
     if (user) {
-      setOpenModal(true);
+      if(user.type ==="ROLE_CLIENT")
+      {setShowNewResModal(!showNewResModal);}
     } else {
       navigate("/login");
     }
@@ -139,6 +142,12 @@ const FishingLesson = () => {
               </div>
             </div>
           </div>
+          {showNewResModal && 
+            <UserReservation 
+            of={data}
+            showNewResModal={showNewResModal}
+            setShowNewResModal={setShowNewResModal}
+      />} 
           
          <Footer/>
         </div>

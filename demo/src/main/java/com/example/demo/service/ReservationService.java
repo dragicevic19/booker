@@ -1,10 +1,14 @@
 package com.example.demo.service;
-
 import com.example.demo.dto.NewReservationDTO;
 import com.example.demo.dto.ResReportForClientDTO;
 import com.example.demo.model.*;
-
 import java.util.List;
+import com.example.demo.dto.ReservationsForMonth;
+import com.example.demo.model.Client;
+import com.example.demo.model.Offer;
+import com.example.demo.model.Reservation;
+import com.example.demo.model.ServiceProvider;
+
 
 public interface ReservationService {
     Reservation findById(Integer reservationId);
@@ -24,4 +28,8 @@ public interface ReservationService {
     ReservationReportForClient findReservationReportById(Integer penaltyReqId);
 
     void removeReservationReport(ReservationReportForClient rrfc);
+    ReservationsForMonth findReservationsForProviderForMonth(ServiceProvider svc, Integer month);
+
+    ReservationsForMonth findReservationsForProviderForYear(ServiceProvider svc, Integer year);
+
 }
