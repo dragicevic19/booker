@@ -33,6 +33,9 @@ public class AdminController {
     @Autowired
     ClientService clientService;
 
+    @Autowired
+    ReservationService reservationService;
+
     @GetMapping("/cottages")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<List<OfferToList>> loadAllCottages() {
@@ -244,5 +247,20 @@ public class AdminController {
         }
 
         return new ResponseEntity<>(complaintsToShow, HttpStatus.OK);
+    }
+
+    @GetMapping("/penalty-requests")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<ReportForReview>> getPenaltyRequests() {
+        List<ReportForReview> reportsToShow = new ArrayList<>();
+        List<ReservationReportForClient> penaltyRequests = reservationService.getPenaltyRequestsByType(ReportForClientType.BAD_USER);
+
+        for(ReservationReportForClient penaltyRequest : penaltyRequests)
+        {
+            Offer offer = reservationService.findOfferForReservation(penaltyRequest.getReservation());
+            reportsToShow.add(new ReportForReview(penaltyRequest, offer));
+        }
+
+        return new ResponseEntity<>(reportsToShow, HttpStatus.OK);
     }
 }

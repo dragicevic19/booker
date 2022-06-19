@@ -42,4 +42,6 @@ public interface UserService extends UserDetailsService {
     ServiceProvider findProviderByOfferId(Integer offerId);
 
     void removeComplaint(Complaint complaint);
+
+    void givePenaltyPoints(Client client, int penaltiesToAdd);
 }

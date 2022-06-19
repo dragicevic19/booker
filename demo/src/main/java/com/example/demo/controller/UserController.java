@@ -4,6 +4,7 @@ import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.service.ComplaintService;
 import com.example.demo.service.EmailService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class UserController {
 
     @Autowired
     private ComplaintService complaintService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     // Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
     // Ukoliko nema, server ce vratiti gresku 403 Forbidden
@@ -167,5 +171,26 @@ public class UserController {
     public void deleteComplaint(@PathVariable Integer complaintId) throws InterruptedException, MessagingException, IOException {
         Complaint complaint = complaintService.findById(complaintId);
         userService.removeComplaint(complaint);
+    }
+
+    @PostMapping("/penalty-req-response")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String sendEmailPenaltyRequest(@RequestBody(required = false) ReportForReview reportForReview, @RequestParam("accepted") boolean accepted) throws InterruptedException, MessagingException, IOException {
+        ServiceProvider provider = (ServiceProvider)userService.findById(reportForReview.getProviderId());
+        Client client = (Client)userService.findById(reportForReview.getClientId());
+        PenaltyRequestResponseDTO penaltyRequestResponseDTO = new PenaltyRequestResponseDTO(reportForReview, provider);
+
+        if(accepted)
+            userService.givePenaltyPoints(client, 1);
+
+        emailService.sendPenaltyRequestEmail(penaltyRequestResponseDTO, accepted);
+        return "success";
+    }
+
+    @DeleteMapping("/delete-penalty-req/{penaltyReqId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public void deletePenaltyRequest(@PathVariable Integer penaltyReqId) throws InterruptedException, MessagingException, IOException {
+        ReservationReportForClient rrfc = reservationService.findReservationReportById(penaltyReqId);
+        reservationService.removeReservationReport(rrfc);
     }
 }

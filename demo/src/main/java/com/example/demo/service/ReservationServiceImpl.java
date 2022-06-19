@@ -8,7 +8,9 @@ import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -70,6 +72,30 @@ public class ReservationServiceImpl implements ReservationService {
                 if (o.getId() == offer.getId()) return provider;
 
         return null;
+    }
+
+    @Override
+    public List<ReservationReportForClient> getPenaltyRequestsByType(ReportForClientType type) {
+        List<ReservationReportForClient> reportsByType = new ArrayList<>();
+        List<ReservationReportForClient> allResReports = this.reportsForClientRepository.findAll();
+        for (ReservationReportForClient resReport : allResReports)
+        {
+            if(resReport.getType().equals(type))
+                reportsByType.add(resReport);
+        }
+
+        return reportsByType;
+    }
+
+    @Override
+    public ReservationReportForClient findReservationReportById(Integer penaltyReqId) {
+        return reportsForClientRepository.findById(penaltyReqId).orElse(null);
+    }
+
+    @Override
+    public void removeReservationReport(ReservationReportForClient rrfc) {
+        rrfc.setDeleted(true);
+        this.reportsForClientRepository.save(rrfc);
     }
 
     @Override

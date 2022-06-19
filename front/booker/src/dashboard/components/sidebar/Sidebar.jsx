@@ -22,6 +22,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../components/context/AuthContext";
 import { useNavigate } from "react-router";
 import DeleteIcon from '@mui/icons-material/Delete';
+import NearbyErrorIcon from '@mui/icons-material/NearbyError';
 
 const Sidebar = () => {
 
@@ -156,6 +157,12 @@ const Sidebar = () => {
         <li>
           <ThumbDownAltIcon className="icon" />
           <span>Complaints</span>
+        </li>
+      </Link>
+      <Link to="/dashboard/penalty-req" style={{textDecoration: "none"}}>
+        <li>
+          <NearbyErrorIcon className="icon" />
+          <span>Penalty Requests</span>
         </li>
       </Link>
       
