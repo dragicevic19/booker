@@ -12,12 +12,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
@@ -53,9 +53,9 @@ public class UserController {
     }
 
     @GetMapping("/whoami")
-    @PreAuthorize("hasRole('USER')")
-    public User user(Principal user) {
-        return this.userService.findByEmail(user.getName());
+    @PreAuthorize("hasRole('CLIENT')")
+    public ClientDTO user(Principal user) {
+        return new ClientDTO((Client) this.userService.findByEmail(user.getName()));
     }
 
     @GetMapping("/user/requests")

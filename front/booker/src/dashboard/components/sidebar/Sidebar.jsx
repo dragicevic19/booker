@@ -76,6 +76,17 @@ const Sidebar = () => {
             <span>Future Reservations</span>
           </li>
         </Link>
+        <p className="title">USER</p>
+      <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>
+        <li>
+          <PersonOutlinedIcon className="icon" />
+          <span>Profile</span>
+        </li>
+      </Link>
+      <li onClick={logout}>
+        <LogoutOutlinedIcon className="icon" />
+        <span>Logout</span>
+      </li>
 
       </ul></>)}
 
