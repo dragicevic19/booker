@@ -48,26 +48,34 @@ const Sidebar = () => {
 
 
       {user.type=='ROLE_CLIENT' && (<><ul>
-        <p className="title">LISTS</p>
+        <p className="title">HISTORY</p>
         
         <Link to="/dashboard/cottage-reservation-history" style={{textDecoration: "none"}}>
           <li>
             <CottageOutlinedIcon className="icon" /> 
-            <span>Booking hisrory for cottages</span>
+            <span>Booking history for cottages</span>
           </li>
         </Link>
         <Link to="/dashboard/boats-reservation-history" style={{textDecoration: "none"}}>
           <li>
             <DirectionsBoatFilledOutlinedIcon className="icon" /> 
-            <span>Booking hisrory for boats</span>
+            <span>Booking history for boats</span>
           </li>
         </Link>
         <Link to="/dashboard/lessons-reservation-history" style={{textDecoration: "none"}}>
           <li>
             <PhishingOutlinedIcon className="icon" /> 
-            <span>Booking hisrory for lessons</span>
+            <span>Booking history for lessons</span>
           </li>
         </Link>
+        <p className="title">FUTURE RESERVATIONS</p>
+        <Link to="/dashboard/future-reservations" style={{textDecoration: "none"}}>
+          <li>
+          <ViewListOutlinedIcon className="icon" />
+            <span>Future Reservations</span>
+          </li>
+        </Link>
+
       </ul></>)}
 
     

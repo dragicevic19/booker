@@ -78,9 +78,10 @@ function App() {
               <Route path='cottage-reservation-history' element={<UserReservationList history={true} typeOfRes ={"cott"}/>} />
               <Route path='boats-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"boat"}/>} />
               <Route path='lessons-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"less"}/>} />
+              <Route path='future-reservations' element={<UserReservationList history={false}  typeOfRes ={" "}/>} />
 
 
-              
+               
               <Route path='res-hist' element={<ReservationsList history={true}/>} />
               <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<></>} />
