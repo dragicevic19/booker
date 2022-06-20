@@ -23,10 +23,10 @@ const DashboardHome = () => {
 
   const [monthlyData, setMonthlyData] = useState([]);
   const [yearlyData, setYearlyData] = useState([]);
-  const [incomeData, setIncomeData] = useState([]);
+  const [incomeData, setIncomeData] = useState({});
 
-  const [startDate, setStartDate] = useState(Date.now());
-  const [endDate, setEndDate] = useState(Date.now());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const [startDatePicked, setStartDatePicked] = useState(false);
   const [endDatePicked, setEndDatePicked] = useState(false);
@@ -47,9 +47,13 @@ const DashboardHome = () => {
   }
 
   const onDatesSelected = async () => {
+    let start = startDate.toISOString();
+    let end = endDate.toISOString();
 
+    start = start.substring(0, start.search('T'));
+    end = end.substring(0, end.search('T'));
     const res = await axios.get(`http://localhost:8080/api/reservations/income/${user.id}`, { 
-      params: {dateFrom: startDate, dateTo: endDate},
+      params: {dateFrom: start, dateTo: end},
       headers: headers
     });
     setIncomeData(res.data);
@@ -90,15 +94,17 @@ const DashboardHome = () => {
   const onStartDateSelected = (e) => {
     setStartDate(e.value);
     setStartDatePicked(true);
-
-    if (endDatePicked) onDatesSelected();
   }
 
   const onEndDateSelected = (e) => {
     setEndDate(e.value);
     setEndDatePicked(true); 
-    if (startDatePicked) onDatesSelected();
   }
+
+  useEffect(() => {
+    if (startDate instanceof Date && endDate instanceof Date)
+      onDatesSelected();
+  }, [endDate, startDate])
 
   return (
     <div className="dashHome">
@@ -134,7 +140,6 @@ const DashboardHome = () => {
               <DateBox 
                 defaultValue={new Date()}
                 type="date"
-                min={Date.now()}
                 onValueChanged={onStartDateSelected}
               />
             </div>
@@ -147,13 +152,8 @@ const DashboardHome = () => {
                 onValueChanged={onEndDateSelected}
               />
             </div>
-            {startDatePicked && endDatePicked && <div className="inputs incomes">
-              <label className="income">Total Income:</label>
-              
-            </div>}
           </div>
-
-          {incomeData.length > 0 && <Reservations />}
+          {startDatePicked && endDatePicked && <Reservations reservations={incomeData.reservations} title={`Total Income: $${incomeData.total}`}/>}
         </div></>}
       </div>
     </div>
