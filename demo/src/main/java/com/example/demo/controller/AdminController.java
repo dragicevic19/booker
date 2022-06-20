@@ -273,7 +273,6 @@ public class AdminController {
         List<ReservationProfitDTO> reservationProfits = new ArrayList<>();
         List<Reservation> allPassedReservations = reservationService.getPassedReservations();
         ProfitPercentage profitPercentage = profitPercentageService.findById(1);
-
         for(Reservation reservation : allPassedReservations)
         {
             Offer offer = reservationService.findOfferForReservation(reservation);
