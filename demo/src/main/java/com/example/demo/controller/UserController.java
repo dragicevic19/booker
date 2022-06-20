@@ -194,4 +194,19 @@ public class UserController {
         ReservationReportForClient rrfc = reservationService.findReservationReportById(penaltyReqId);
         reservationService.removeReservationReport(rrfc);
     }
+
+    @PostMapping("/change")
+    @PreAuthorize("hasRole('CLIENT')")
+    public String changeInfo(@RequestBody UserRequest userRequest) {
+
+        this.userService.changeUserInfo(userRequest);
+        return "success";
+    }
+
+
+
+
+
+
+
 }

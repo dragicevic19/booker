@@ -44,4 +44,6 @@ public interface UserService extends UserDetailsService {
     void removeComplaint(Complaint complaint);
 
     void givePenaltyPoints(Client client, int penaltiesToAdd);
+
+    Boolean changeUserInfo(UserRequest userRequest);
 }

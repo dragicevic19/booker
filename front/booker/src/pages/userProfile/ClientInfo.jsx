@@ -1,10 +1,13 @@
  
 import FormInput from '../../components/formInput/FormInput'
-import { useState } from "react"
+ 
 import { useNotification } from "../../components/notification/NotificationProvider";
 import useFetch from "../../hooks/useFetch"
 import { useEffect } from 'react';
-
+import { AuthContext } from '../../components/context/AuthContext';
+import { useState, useContext } from 'react';
+import "./clientInfo.css"
+import { blue } from '@mui/material/colors';
 const ClientInfo = () => {
 
   const dispatch = useNotification();
@@ -12,6 +15,7 @@ const ClientInfo = () => {
    const { data, loading, error } = useFetch(`http://localhost:8080/api/whoami`);
    console.log(data);
  
+   const { user } = useContext(AuthContext);
 
   const [values, setValues] = useState({
     email:"",
@@ -21,29 +25,22 @@ const ClientInfo = () => {
     city:"",
     street:"",
     phoneNumber:"",
-    type:"clients"
+    type:"clients",
+    password:"",
   })
  
   
   useEffect(() => {
     setValues({["email"]:data.email,["firstName"]:data.firstName,["lastName"]:data.lastName,["phoneNumber"]:data.phoneNumber,
-    ["country"]:data.country,["city"]:data.city,["street"]:data.street,});
+    ["country"]:data.country,["city"]:data.city,["street"]:data.street,["password"]:"",});
   }, [data]);
 
 
   const inputs = [
     
-    {
-        id:1,
-        name:"email",
-        type:"email",
-        placeholder:"Email",
-        errorMessage:"It should be a valid email address!",
-        label:"Email",
-        required: true, 
-      },
+   
       {
-      id:2,
+      id:1,
       name:"firstName",
       type:"text",
       placeholder:"First Name",
@@ -53,7 +50,7 @@ const ClientInfo = () => {
       pattern: `^[A-Z][a-z ,.'-]+$`
     },
     {
-      id:3,
+      id:2,
       name:"lastName",
       type:"text",
       placeholder:"Last Name",
@@ -111,19 +108,24 @@ const ClientInfo = () => {
   
 
   const handleSubmit = (e) => {
-    // e.preventDefault()
-    // fetch('http://localhost:8080/auth/register-user', {
-    //     method: 'POST',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify(values)
-    //   })
+    e.preventDefault()
+
+    
+    fetch('http://localhost:8080/api/change', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.accessToken}`,
+          },
+        body: JSON.stringify(values)
+      })
        
-    //     .then(data => {
-    //       sendNotification("success", "You successfully sent a request for registration. Please wait for administrator to approve your request!");
-    //     })
-    //     .catch(err => {
-    //       sendNotification("error", err.message)
-    //     })
+        .then(data => {
+          sendNotification("success", "You successfully");
+        })
+        .catch(err => {
+          sendNotification("error", err.message)
+        })
 
    
 
@@ -142,12 +144,14 @@ const ClientInfo = () => {
   }
 
   return (
-    <div className="registration">
+    <div className="info">
       <div className="form">
         <h1>Profile info</h1>
         <form onSubmit={handleSubmit}>
           <div className="formElements">
             <div className="row">
+            <label  >Email :</label><br/>
+            <label style={{fontSize: '24px' ,color:'blue' }}>  {data.email}</label><br/><br/>
               {inputs.map((input) => (
                 <FormInput 
                   key={input.id}
@@ -158,7 +162,9 @@ const ClientInfo = () => {
                    
                 />
               ))}
-               <label >Num of penalties :{data.numOfPenalties}</label>
+              <br/>
+               <label style={{fontSize: '24px' , color:'blue'}} >Num of penalties : {data.numOfPenalties}</label><br/>
+               <label style={{fontSize: '24px' , color:'blue'}} >Loyalty rank : {data.rank}</label>
             </div>
             <div className="row">
               {inputsSecondRow.map((input) => (
@@ -174,7 +180,7 @@ const ClientInfo = () => {
                
             </div>
           </div>
-          <button>Submit</button>
+          <button>Change info</button>
         </form>
       </div>
     </div>

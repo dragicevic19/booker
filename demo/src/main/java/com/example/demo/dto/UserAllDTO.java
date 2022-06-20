@@ -26,6 +26,8 @@ public class UserAllDTO {
     private int numOfPenalties;
     private LoyaltyProgram loyaltyProgram;
 
+    private String rank;
+
 
     public UserAllDTO(Client client) {
         id = client.getId();
@@ -40,6 +42,7 @@ public class UserAllDTO {
         rating = client.getRating();
         numOfPenalties = client.getNumOfPenalties();
         loyaltyProgram = client.getLoyaltyProgram();
+        rank = String.valueOf(client.getLoyaltyProgram().getRank());
     }
     // slika?
 }

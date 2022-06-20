@@ -285,4 +285,28 @@ public class UserServiceImpl implements UserService {
                 return null;
         }
     }
+
+    @Override
+    public Boolean changeUserInfo(UserRequest userRequest){
+        Client c =(Client) userRepository.findByEmail(userRequest.getEmail());
+        c.setFirstName(userRequest.getFirstName());
+        c.setLastName(userRequest.getLastName());
+        c.setPhoneNumber(userRequest.getPhoneNumber());
+        Address a = new Address();
+        a.setCity(userRequest.getCity());
+        a.setCountry(userRequest.getCountry());
+        a.setStreet(userRequest.getStreet());
+        c.setAddress(a);
+
+        userRepository.save(c);
+        return true;
+
+
+
+
+    }
+
+
+
+
 }
