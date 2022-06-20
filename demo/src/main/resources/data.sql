@@ -228,3 +228,5 @@ VALUES (false, false, 4, 200, 2, 6, 6);
 insert into reservation (
     has_client_rated, has_owner_rated, num_of_attendants, price, period_id, client_id, offer_id)
 VALUES (false, false, 4, 250, 1, 6, 6);
+
+insert into profit_percentage (id, profit_percentage_value) values (1, 0.3);    --postojace samo jedan profit_percentage u sistemu koji se menja i vazi za sve rezervacije
