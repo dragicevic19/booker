@@ -3,45 +3,36 @@ import FormInput from '../../components/formInput/FormInput'
 import { useState } from "react"
 import { useNotification } from "../../components/notification/NotificationProvider";
 import useFetch from "../../hooks/useFetch"
+import { useEffect } from 'react';
+
 const ClientInfo = () => {
 
   const dispatch = useNotification();
 
-  const { pod, loading, error } = useFetch(`http://localhost:8080/api/whoami`);
-  console.log(pod);
+   const { data, loading, error } = useFetch(`http://localhost:8080/api/whoami`);
+   console.log(data);
+ 
 
   const [values, setValues] = useState({
     email:"",
-    firstName:"Vasd",
-    lastName:"Peric",
+    firstName:"",
+    lastName:"",
     country:"",
-    city:"Nesot",
+    city:"",
     street:"",
     phoneNumber:"",
     type:"clients"
   })
+ 
+  
+  useEffect(() => {
+    setValues({["email"]:data.email,["firstName"]:data.firstName,["lastName"]:data.lastName,["phoneNumber"]:data.phoneNumber,
+    ["country"]:data.country,["city"]:data.city,["street"]:data.street,});
+  }, [data]);
+
 
   const inputs = [
-    {
-      id:1,
-      name:"firstName",
-      type:"text",
-      placeholder:"First Name",
-      errorMessage:"Invalid input!",
-      label:"First Name",
-      required: true,
-      pattern: `^[A-Z][a-z ,.'-]+$`
-    },
-    {
-      id:2,
-      name:"lastName",
-      type:"text",
-      placeholder:"Last Name",
-      errorMessage:"Invalid input!",
-      label:"Last Name",
-      required: true,
-      pattern: `^[A-Z][a-z ,.'-]+$`
-    },
+    
     {
         id:1,
         name:"email",
@@ -51,6 +42,27 @@ const ClientInfo = () => {
         label:"Email",
         required: true, 
       },
+      {
+      id:2,
+      name:"firstName",
+      type:"text",
+      placeholder:"First Name",
+      errorMessage:"Invalid input!",
+      label:"First Name",
+      required: true,
+      pattern: `^[A-Z][a-z ,.'-]+$`
+    },
+    {
+      id:3,
+      name:"lastName",
+      type:"text",
+      placeholder:"Last Name",
+      errorMessage:"Invalid input!",
+      label:"Last Name",
+      required: true,
+      pattern: `^[A-Z][a-z ,.'-]+$`
+    },
+  
   
   ]
 
@@ -96,7 +108,7 @@ const ClientInfo = () => {
       pattern: "^[0-9]{9,13}$"
     },
   ]
-  const data = "";
+  
 
   const handleSubmit = (e) => {
     // e.preventDefault()
@@ -141,9 +153,12 @@ const ClientInfo = () => {
                   key={input.id}
                   {...input}
                   value={values[input.name]}
-                  onChange={onChange} 
+                  onChange={onChange}
+                  
+                   
                 />
               ))}
+               <label >Num of penalties :{data.numOfPenalties}</label>
             </div>
             <div className="row">
               {inputsSecondRow.map((input) => (
@@ -154,6 +169,8 @@ const ClientInfo = () => {
                   onChange={onChange} 
                 />
               ))}
+
+              
                
             </div>
           </div>

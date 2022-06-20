@@ -54,8 +54,9 @@ public class UserController {
 
     @GetMapping("/whoami")
     @PreAuthorize("hasRole('CLIENT')")
-    public ClientDTO user(Principal user) {
-        return new ClientDTO((Client) this.userService.findByEmail(user.getName()));
+    public ResponseEntity<UserAllDTO> user(Principal user) {
+
+        return new  ResponseEntity<>(new UserAllDTO((Client) this.userService.findByEmail(user.getName())), HttpStatus.OK);
     }
 
     @GetMapping("/user/requests")
