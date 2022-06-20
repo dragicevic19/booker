@@ -6,13 +6,17 @@ import DialogContent from '@mui/material/DialogContent';
 import { useState, useContext } from 'react';
 import { TextareaAutosize } from '@mui/material';
 import { AuthContext } from '../../../components/context/AuthContext';
-import { useNotification } from '../../../components/notification/NotificationProvider';
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import "./circularBar.scss"
 
 export default function ChangeProfitPercentage() {
 
   const { user } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
+
+  const [response, setResponse] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,6 +25,11 @@ export default function ChangeProfitPercentage() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handeChangeResponse = (e) =>
+  {
+    setResponse(e.target.value)
+  }
 
   return (
     <div>
@@ -31,21 +40,19 @@ export default function ChangeProfitPercentage() {
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent style={{height:'400px', width:'400px'}}>
-          <TextareaAutosize
-            style={{height:'70%', width:'100%'}}
-            autoFocus
-            minRows={5}
-            margin="dense"
-            id="name"
-            label="Text"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+        <div className="circularBarWrapper">
+          <div className="bottomCircularBar">
+            <div className="circularBarItem">
+              <CircularProgressbar value={20} text={'20%'} strokeWidth={5} />
+            </div>
+            <p className="titleCircularBar">Profit Percentage</p>
+            <p className="amountCircularBar">{'df'}</p>
+          </div>
+        </div>
         </DialogContent>
         <DialogActions>
-          <Button style={{color: 'black'}} onClick={handleClose}>Cancel</Button>
-          <Button style={{color: 'green'}} onClick={handleClose}>Submit</Button>
+          <Button style={{color: '#0071c2'}} onClick={handleClose}>Cancel</Button>
+          <Button style={{color: '#0071c2'}} onClick={handleClose}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>
