@@ -38,12 +38,16 @@ const NewReservationOwnerDetails = ({offerId, reservationId, reservations, setRe
     attendantsOptions.push({value:i, label:i});
   }
 
-  const buttonEnable = startDatePicked && endDatePicked && numOfAttendants;
+  const [buttonEnable, setButtonEnable] = useState(false);
+
+  //const buttonEnable = startDatePicked && endDatePicked && numOfAttendants;
 
   let nightsToStay = 1;
 
   useEffect(()=>{
     let priceCount = 0;
+
+    setButtonEnable(startDatePicked && endDatePicked && numOfAttendants)
 
     if (startDatePicked && endDatePicked && endDate > startDate) {
 
@@ -58,11 +62,12 @@ const NewReservationOwnerDetails = ({offerId, reservationId, reservations, setRe
     else 
       setPrice('enter dates properly');
 
-  }, [startDate, endDate, selectedAdditionalServices])
+  }, [startDate, endDate, selectedAdditionalServices, numOfAttendants])
 
   
   const addBtnClick = async (e) => {
     e.preventDefault();
+    setButtonEnable(false);
     try{
 
       if (!(price.substr(1,) > 0)) throw new Error();

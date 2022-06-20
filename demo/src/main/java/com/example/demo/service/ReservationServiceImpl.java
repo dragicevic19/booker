@@ -189,9 +189,12 @@ public class ReservationServiceImpl implements ReservationService {
         rep.setServiceProvider(svcProvider);
         if (report.getReportType() == 0) {
             rep.setType(ReportForClientType.BAD_USER);  // ovo ide kod admina pa ako on odobri klijent ce dobiti penal
-        } else {
+        } else if (report.getReportType() == 1) {
             rep.setType(ReportForClientType.USER_DID_NOT_SHOW_UP);
-            client.setNumOfPenalties(client.getNumOfPenalties() + 1); // ?
+            client.setNumOfPenalties(client.getNumOfPenalties() + 1);
+        }
+        else{
+            rep.setType(ReportForClientType.OK_REPORT);
         }
 
         reservation.setHasOwnerRated(true);
