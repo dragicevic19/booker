@@ -10,6 +10,7 @@ import { AuthContext } from "../../../components/context/AuthContext";
 import ChangeProfitPercentage from "./ChangeProfitPercentage";
 import DateBox from "devextreme-react/date-box";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { localeData } from "moment";
 
 
 const FinancialTable = () => {
@@ -22,7 +23,7 @@ const FinancialTable = () => {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${user.accessToken}`,
   }
-
+  
   const { data, loading, error } = useFetch(`http://localhost:8080/api/reservations-profit`);
   
   const columns = columnsData[user.type + "/FINANCIAL"];
@@ -31,7 +32,7 @@ const FinancialTable = () => {
     setList(data);
   }, [data]);
   
-  const [startDate, setStartDate] = useState(Date.now());
+  const [startDate, setStartDate] = useState(new Date(2022, 0, 1));
   const [endDate, setEndDate] = useState(Date.now());
   const [startDatePicked, setStartDatePicked] = useState(false);
   const [endDatePicked, setEndDatePicked] = useState(false);
@@ -41,8 +42,11 @@ const FinancialTable = () => {
     var totalCashFlow = 0;
     for(let reservation of data)
     {
-      var cashFlow = parseInt(reservation.cashFlow.slice(1));
-      totalCashFlow += cashFlow;
+        if(new Date(reservation.reservationEndDate) >= new Date(startDate) && new Date(reservation.reservationEndDate) <= new Date(endDate))
+        {
+          var cashFlow = parseInt(reservation.cashFlow.slice(1));
+          totalCashFlow += cashFlow;
+        }
     }
 
     return '$ ' + totalCashFlow;
@@ -53,10 +57,13 @@ const FinancialTable = () => {
     var totalExpenses = 0;
     for(let reservation of data)
     {
-      var cashFlow = parseInt(reservation.cashFlow.slice(1));
-      var profit = parseInt(reservation.profit.slice(1));
-      var expenses = cashFlow - profit
-      totalExpenses += expenses;
+      if(new Date(reservation.reservationEndDate) >= new Date(startDate) && new Date(reservation.reservationEndDate) <= new Date(endDate))
+      {
+        var cashFlow = parseInt(reservation.cashFlow.slice(1));
+        var profit = parseInt(reservation.profit.slice(1));
+        var expenses = cashFlow - profit
+        totalExpenses += expenses;
+      }
     }
 
     return '$ ' + totalExpenses;
@@ -67,11 +74,28 @@ const FinancialTable = () => {
     var totalProfit = 0;
     for(let reservation of data)
     {
-      var profit = parseInt(reservation.profit.slice(1));
-      totalProfit += profit;
+      if(new Date(reservation.reservationEndDate) >= new Date(startDate) && new Date(reservation.reservationEndDate) <= new Date(endDate))
+      {
+        var profit = parseInt(reservation.profit.slice(1));
+        totalProfit += profit;
+      }
     }
 
     return '$ ' + totalProfit;
+  }
+
+  const filterTable = () =>
+  {
+    console.log(list)
+    var filteredList = [];
+    for (let reservation of data)
+    {
+      if(new Date(reservation.reservationEndDate) >= new Date(startDate) && new Date(reservation.reservationEndDate) <= new Date(endDate))
+      {
+        filteredList.push(reservation);
+      }
+    }
+    return filteredList;
   }
 
   return (
@@ -82,7 +106,7 @@ const FinancialTable = () => {
                 <div className="inputs">
                     <label>Start Date</label>
                     <DateBox 
-                    defaultValue={new Date()}
+                    defaultValue={startDate}
                     type="date"
                     onValueChanged={(e)=>{setStartDatePicked(true); setStartDate(e.value);}}
                     />
@@ -90,9 +114,10 @@ const FinancialTable = () => {
                 <div className="inputs">
                     <label>End Date</label>
                     <DateBox 
-                    defaultValue={new Date()}
+                    defaultValue={endDate}
                     type="date"
                     min={startDate}
+                    max={Date.now()}
                     onValueChanged={(e)=>{setEndDatePicked(true); setEndDate(e.value);}}
                     />
             </div>
@@ -100,17 +125,16 @@ const FinancialTable = () => {
         
       <DataGrid
         className="datagrid"
-        rows={list}
+        rows={filterTable()}
         columns={columns}
         pageSize={9}
         rowsPerPageOptions={[9]}
         getRowId={(row) => row.id}
       />
-      <div>{totalInfo}</div>
       <div className="dashboard-financial-footer">
         <div>
           <h2>Total Cash Flow</h2>
-          <h1 style={{color: '#006400'}}><b>{calculateTotalFlow()}</b></h1>
+          {<h1 style={{color: '#006400'}}><b>{calculateTotalFlow()}</b></h1>}
         </div>
         <div>
           <h2>Total Expenses</h2>
