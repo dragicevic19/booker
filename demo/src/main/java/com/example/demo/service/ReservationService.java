@@ -36,4 +36,10 @@ public interface ReservationService {
     ReservationsForMonth findReservationsForProviderForYear(ServiceProvider svc, Integer year);
 
     List<ReservationOfferClient> findReservationsInPeriodForProvider(ServiceProvider svc, LocalDate dateFrom, LocalDate dateTo);
+
+    List<Reservation> findAll();
+
+    List<Reservation> getPassedReservations();
+
+    int getTotalCashFlow(List<Reservation> allPassedReservations);
 }

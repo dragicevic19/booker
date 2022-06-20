@@ -169,13 +169,47 @@ public class ReservationServiceImpl implements ReservationService {
         List<ReservationOfferClient> reservations = new ArrayList<>();
 
         for (Offer offer : svc.getOffers()) {
-            for (Reservation res : offer.getReservations()){
-                if (res.getReservationPeriod().isBetween(dateFrom, dateTo)){
+            for (Reservation res : offer.getReservations()) {
+                if (res.getReservationPeriod().isBetween(dateFrom, dateTo)) {
                     reservations.add(new ReservationOfferClient(res, findClientForReservation(res), offer));
                 }
             }
         }
         return reservations;
+
+    }
+
+    @Override
+    public List<Reservation> findAll() {
+        return reservationRepository.findAll();
+    }
+
+    @Override
+    public List<Reservation> getPassedReservations() {
+        List<Reservation> retList = new ArrayList<>();
+        List<Reservation> allReservations = reservationRepository.findAll();
+        for(Reservation reservation : allReservations)
+        {
+            if (reservation.getReservationPeriod().getDateTo().isBefore(LocalDate.now()))
+                retList.add(reservation);
+        }
+
+        return retList;
+    }
+
+    @Override
+    public int getTotalCashFlow(List<Reservation> allPassedReservations) {
+
+        int totalCashFlow = 0;
+
+        for(Reservation reservation : allPassedReservations)
+        {
+            totalCashFlow += reservation.getPrice();
+            for(AdditionalService additionalService : reservation.getChosenAdditionalServices())
+                totalCashFlow += additionalService.getPrice();
+        }
+
+        return totalCashFlow;
     }
 
     @Override

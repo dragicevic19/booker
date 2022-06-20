@@ -36,6 +36,9 @@ public class AdminController {
     @Autowired
     ReservationService reservationService;
 
+    @Autowired
+    ProfitPercentageService profitPercentageService;
+
     @GetMapping("/cottages")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<List<OfferToList>> loadAllCottages() {
@@ -262,5 +265,21 @@ public class AdminController {
         }
 
         return new ResponseEntity<>(reportsToShow, HttpStatus.OK);
+    }
+
+    @GetMapping("/reservations-profit")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<ReservationProfitDTO>> getReservationsProfit() {
+        List<ReservationProfitDTO> reservationProfits = new ArrayList<>();
+        List<Reservation> allPassedReservations = reservationService.getPassedReservations();
+        ProfitPercentage profitPercentage = profitPercentageService.findById(1);
+
+        for(Reservation reservation : allPassedReservations)
+        {
+            Offer offer = reservationService.findOfferForReservation(reservation);
+            reservationProfits.add(new ReservationProfitDTO(reservation, offer, profitPercentage));
+        }
+
+        return new ResponseEntity<>(reservationProfits, HttpStatus.OK);
     }
 }
