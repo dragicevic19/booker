@@ -1,7 +1,10 @@
 package com.example.demo.service;
 import com.example.demo.dto.NewReservationDTO;
 import com.example.demo.dto.ResReportForClientDTO;
+import com.example.demo.dto.ReservationOfferClient;
 import com.example.demo.model.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import com.example.demo.dto.ReservationsForMonth;
 import com.example.demo.model.Client;
@@ -31,6 +34,8 @@ public interface ReservationService {
     ReservationsForMonth findReservationsForProviderForMonth(ServiceProvider svc, Integer month);
 
     ReservationsForMonth findReservationsForProviderForYear(ServiceProvider svc, Integer year);
+
+    List<ReservationOfferClient> findReservationsInPeriodForProvider(ServiceProvider svc, LocalDate dateFrom, LocalDate dateTo);
 
     List<Reservation> findAll();
 
