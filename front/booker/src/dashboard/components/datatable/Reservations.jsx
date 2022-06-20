@@ -30,8 +30,6 @@ const Reservations = ({history}) => {
     setList(data);
   }, [data]);
 
-  console.log(list);
-
   const columns = reservationColumns;
 
   const [showNewResModal, setShowNewResModal] = useState(false);

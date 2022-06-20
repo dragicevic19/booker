@@ -1,9 +1,11 @@
 import axios from "axios"
+import { DateBox } from "devextreme-react"
 import { useContext, useEffect } from "react"
 import { useState } from "react"
 import { AuthContext } from "../../../components/context/AuthContext"
 import useFetch from "../../../hooks/useFetch"
 import Chart from "../../components/charts/Chart"
+import Reservations from "../../components/datatable/Reservations"
 import Dropdown from "../../components/dropdownCheckboxes/Option"
 import DashNavbar from "../../components/navbar/DashNavbar"
 import Sidebar from "../../components/sidebar/Sidebar"
@@ -21,6 +23,14 @@ const DashboardHome = () => {
 
   const [monthlyData, setMonthlyData] = useState([]);
   const [yearlyData, setYearlyData] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
+
+  const [startDate, setStartDate] = useState(Date.now());
+  const [endDate, setEndDate] = useState(Date.now());
+
+  const [startDatePicked, setStartDatePicked] = useState(false);
+  const [endDatePicked, setEndDatePicked] = useState(false);
+
 
   const onMonthSelected = async (selectedMonth) => {
     const res = await axios.get(`http://localhost:8080/api/reservations/monthly/${user.id}/${selectedMonth.value}`, {
@@ -34,6 +44,15 @@ const DashboardHome = () => {
       headers: headers
     })
     setYearlyData(res.data);
+  }
+
+  const onDatesSelected = async () => {
+
+    const res = await axios.get(`http://localhost:8080/api/reservations/income/${user.id}`, { 
+      params: {dateFrom: startDate, dateTo: endDate},
+      headers: headers
+    });
+    setIncomeData(res.data);
   }
 
   const monthOptions = [
@@ -68,6 +87,19 @@ const DashboardHome = () => {
     setSelectedView(selected.value);
   }
 
+  const onStartDateSelected = (e) => {
+    setStartDate(e.value);
+    setStartDatePicked(true);
+
+    if (endDatePicked) onDatesSelected();
+  }
+
+  const onEndDateSelected = (e) => {
+    setEndDate(e.value);
+    setEndDatePicked(true); 
+    if (startDatePicked) onDatesSelected();
+  }
+
   return (
     <div className="dashHome">
       <Sidebar />
@@ -95,10 +127,33 @@ const DashboardHome = () => {
           <Chart title="Yearly Reservations" aspect={3 / 1} data={yearlyData}/>
         </div></>}
 
-
         {selectedView == 2 && <><div className="listContainer">
-          <div className="listTitle">Latest Transactions</div>
-          {/* <Table /> */}
+          <div className="inputsWrapper">
+            <div className="inputs">
+              <label>Start Date</label>
+              <DateBox 
+                defaultValue={new Date()}
+                type="date"
+                min={Date.now()}
+                onValueChanged={onStartDateSelected}
+              />
+            </div>
+            <div className="inputs">
+              <label>End Date</label>
+              <DateBox 
+                defaultValue={new Date()}
+                type="date"
+                min={startDate}
+                onValueChanged={onEndDateSelected}
+              />
+            </div>
+            {startDatePicked && endDatePicked && <div className="inputs incomes">
+              <label className="income">Total Income:</label>
+              
+            </div>}
+          </div>
+
+          {incomeData.length > 0 && <Reservations />}
         </div></>}
       </div>
     </div>
