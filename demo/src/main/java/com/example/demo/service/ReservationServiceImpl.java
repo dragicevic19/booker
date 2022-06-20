@@ -1,9 +1,11 @@
 package com.example.demo.service;
+
 import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -78,9 +80,8 @@ public class ReservationServiceImpl implements ReservationService {
     public List<ReservationReportForClient> getPenaltyRequestsByType(ReportForClientType type) {
         List<ReservationReportForClient> reportsByType = new ArrayList<>();
         List<ReservationReportForClient> allResReports = this.reportsForClientRepository.findAll();
-        for (ReservationReportForClient resReport : allResReports)
-        {
-            if(resReport.getType().equals(type))
+        for (ReservationReportForClient resReport : allResReports) {
+            if (resReport.getType().equals(type))
                 reportsByType.add(resReport);
         }
 
@@ -117,14 +118,11 @@ public class ReservationServiceImpl implements ReservationService {
                             resForMonth.getNumOfReservations().put(key, resForMonth.getNumOfReservations().get(key) + 1);
 
                             startDate.plusDays(1);
-                        }
-                        else {
+                        } else {
                             break;
                         }
                     }
-                }
-
-                else if (reservation.getReservationPeriod().getDateTo().getMonthValue() == month) {
+                } else if (reservation.getReservationPeriod().getDateTo().getMonthValue() == month) {
                     LocalDate endDate = reservation.getReservationPeriod().getDateTo();
                     for (int i = endDate.getDayOfMonth(); i > 0; i--) {
 
@@ -136,8 +134,7 @@ public class ReservationServiceImpl implements ReservationService {
                             resForMonth.getNumOfReservations().put(key, resForMonth.getNumOfReservations().get(key) + 1);
 
                             endDate.minusDays(1);
-                        }
-                        else {
+                        } else {
                             break;
                         }
                     }
@@ -157,8 +154,7 @@ public class ReservationServiceImpl implements ReservationService {
 
                     String month = reservation.getReservationPeriod().getDateFrom().getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
                     resForMonth.getNumOfReservations().put(month, resForMonth.getNumOfReservations().get(month) + 1);
-                }
-                else if (reservation.getReservationPeriod().getDateTo().getYear() == year) {
+                } else if (reservation.getReservationPeriod().getDateTo().getYear() == year) {
                     String month = reservation.getReservationPeriod().getDateTo().getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
                     resForMonth.getNumOfReservations().put(month, resForMonth.getNumOfReservations().get(month) + 1);
                 }
@@ -166,6 +162,54 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         return resForMonth;
+    }
+
+    @Override
+    public List<ReservationOfferClient> findReservationsInPeriodForProvider(ServiceProvider svc, LocalDate dateFrom, LocalDate dateTo) {
+        List<ReservationOfferClient> reservations = new ArrayList<>();
+
+        for (Offer offer : svc.getOffers()) {
+            for (Reservation res : offer.getReservations()) {
+                if (res.getReservationPeriod().isBetween(dateFrom, dateTo)) {
+                    reservations.add(new ReservationOfferClient(res, findClientForReservation(res), offer));
+                }
+            }
+        }
+        return reservations;
+
+    }
+
+    @Override
+    public List<Reservation> findAll() {
+        return reservationRepository.findAll();
+    }
+
+    @Override
+    public List<Reservation> getPassedReservations() {
+        List<Reservation> retList = new ArrayList<>();
+        List<Reservation> allReservations = reservationRepository.findAll();
+        for(Reservation reservation : allReservations)
+        {
+            if (reservation.getReservationPeriod().getDateTo().isBefore(LocalDate.now()))
+                retList.add(reservation);
+        }
+
+        return retList;
+    }
+
+    @Override
+    public int getTotalCashFlow(List<Reservation> allPassedReservations) {
+
+        int totalCashFlow = 0;
+
+        for(Reservation reservation : allPassedReservations)
+        {
+            totalCashFlow += reservation.getPrice();
+            for(AdditionalService additionalService : reservation.getChosenAdditionalServices())
+                totalCashFlow += additionalService.getPrice();
+        }
+
+        return totalCashFlow;
     }
 
     @Override
@@ -179,9 +223,12 @@ public class ReservationServiceImpl implements ReservationService {
         rep.setServiceProvider(svcProvider);
         if (report.getReportType() == 0) {
             rep.setType(ReportForClientType.BAD_USER);  // ovo ide kod admina pa ako on odobri klijent ce dobiti penal
-        } else {
+        } else if (report.getReportType() == 1) {
             rep.setType(ReportForClientType.USER_DID_NOT_SHOW_UP);
-            client.setNumOfPenalties(client.getNumOfPenalties() + 1); // ?
+            client.setNumOfPenalties(client.getNumOfPenalties() + 1);
+        }
+        else{
+            rep.setType(ReportForClientType.OK_REPORT);
         }
 
         reservation.setHasOwnerRated(true);

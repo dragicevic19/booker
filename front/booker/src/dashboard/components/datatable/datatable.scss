@@ -29,6 +29,18 @@
     }
   }
 
+  .dashboard-financial-footer
+  {
+    width: 100%;
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+
   .cellWithImg {
     display: flex;
     align-items: center;
@@ -38,7 +50,7 @@
       height: 32px;
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 20px;
+      margin-right: 50px;
     }
   }
 
@@ -152,6 +164,17 @@
       border-radius: 5px;
       color: crimson;
       border: 1px dotted rgba(220, 20, 60, 0.6);
+      cursor: pointer;
+    }
+
+    .changeIncomePercentageButton{
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: white;
+      border: 1px dotted rgba(220, 20, 60, 0.6);
+      background-color: #0071c2;
+      margin-top: 30px;
+      font-size: 22px;
       cursor: pointer;
     }
 

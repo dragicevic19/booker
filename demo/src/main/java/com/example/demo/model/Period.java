@@ -20,7 +20,6 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Period {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -40,5 +39,17 @@ public class Period {
     @Override
     public String toString() {
         return dateFrom.toString() + " - " + dateTo.toString();
+    }
+
+    public boolean isBetween(LocalDate startDate, LocalDate endDate) {
+
+        if ((startDate.isAfter(dateFrom) || startDate.isEqual(dateFrom)) && startDate.isBefore(dateTo))
+            return true;
+        if (endDate.isAfter(dateFrom)  && (endDate.isBefore(dateTo) || endDate.isEqual(dateTo)))
+            return true;
+        if (startDate.isBefore(dateFrom) && ((endDate.isAfter(dateTo) || endDate.isEqual(dateTo))))
+            return true;
+
+        return false;
     }
 }

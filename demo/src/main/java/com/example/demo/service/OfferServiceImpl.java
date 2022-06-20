@@ -106,9 +106,9 @@ public class OfferServiceImpl implements OfferService {
 
         if ((startDate.isAfter(period.getDateFrom()) || startDate.isEqual(period.getDateFrom())) && startDate.isBefore(period.getDateTo()))
             return true;
-        if (endDate.isAfter(period.getDateFrom())  && endDate.isBefore(period.getDateTo()))
+        if (endDate.isAfter(period.getDateFrom())  && (endDate.isBefore(period.getDateTo()) || endDate.isEqual(period.getDateTo())))
             return true;
-        if (startDate.isBefore(period.getDateFrom()) && endDate.isAfter(period.getDateTo()))
+        if (startDate.isBefore(period.getDateFrom()) && (endDate.isAfter(period.getDateTo()) || endDate.isEqual(period.getDateTo())))
             return true;
 
         return false;

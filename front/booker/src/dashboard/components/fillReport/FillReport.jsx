@@ -17,7 +17,7 @@ const FillReport = ({reservationId, showReportModal, setShowReportModal}) => {
   const dispatch = useNotification();
 
   const [comment, setComment] = useState();
-  const [reportSelected, setReportSelected] = useState();
+  const [reportSelected, setReportSelected] = useState(-1);
   
   const handleSubmit = () => {
   }
@@ -25,6 +25,11 @@ const FillReport = ({reservationId, showReportModal, setShowReportModal}) => {
   const onClose = () => {
     setShowReportModal(!showReportModal);
   }
+
+  const onReportSelected = (e) => {
+    if (e == null) setReportSelected(-1)
+    else setReportSelected(e.value)
+  } 
 
   const options = [
     {value: 0, label:'Bad client - send request for giving 1 penalty point to client'},
@@ -36,13 +41,14 @@ const FillReport = ({reservationId, showReportModal, setShowReportModal}) => {
     try{
       const newReport = {
         comment: comment,
-        reportType: reportSelected.value
+        reportType: reportSelected
       }
+
+      setComment('');
 
       await axios.post(`http://localhost:8080/api/reservation/svcProvReport/${reservationId}`, newReport, {
         headers: headers
       });
-
       sendNotification("success", 'Report is successfully sent!');
 
     } catch(error){
@@ -54,7 +60,7 @@ const FillReport = ({reservationId, showReportModal, setShowReportModal}) => {
     dispatch({
       type: type,
       message: message,
-      navigateTo: false
+      navigateTo: '/dashboard/my-offers'
     });
   }
 
@@ -76,7 +82,7 @@ const FillReport = ({reservationId, showReportModal, setShowReportModal}) => {
 
         <div className="inputs">
           <label>Bad client? Report them!</label>
-          <Dropdown options={options} setSelected={setReportSelected} multiSelect={false}/>
+          <Dropdown options={options} setSelected={onReportSelected} multiSelect={false}/>
         </div>
 
         <button className={"addBtn " + (!comment && " disabled")} disabled={!comment} onClick={addBtnClick}>SEND</button>
