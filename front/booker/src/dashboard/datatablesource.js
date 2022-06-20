@@ -528,4 +528,128 @@ export const columnsData =
         width: 150,
       }
     ],
+    'ROLE_ADMIN/FINANCIAL':
+    [
+      {
+        field: "id",
+        headerName: "ID",
+        width: 60,
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      },
+      {
+        field: "reservationEndDate",
+        headerName: "End Date",
+        width: 120,
+      },
+      {
+        field: "numOfAdditionalServices",
+        headerName: "Number Of Additional Services",
+        width: 220,
+      },
+      {
+        field: "basePrice",
+        headerName: "Base Price",
+        width: 150,
+      },
+      {
+        field: "additionalServicesPrice",
+        headerName: "Additional Services Price",
+        width: 200,
+      },
+      {
+        field: "cashFlow",
+        headerName: "Cash Flow",
+        width: 100,
+      },
+      {
+        field: "profitPercentage",
+        headerName: "Profit Percentage",
+        width: 170,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        width: 120,
+      },
+    ],
+    'ROLE_SUPER_ADMIN/FINANCIAL':
+    [
+      {
+        field: "id",
+        headerName: "ID",
+        width: 60,
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      },
+      {
+        field: "reservationEndDate",
+        headerName: "End Date",
+        width: 120,
+      },
+      {
+        field: "numOfAdditionalServices",
+        headerName: "Number Of Additional Services",
+        width: 220,
+      },
+      {
+        field: "basePrice",
+        headerName: "Base Price",
+        width: 150,
+      },
+      {
+        field: "additionalServicesPrice",
+        headerName: "Additional Services Price",
+        width: 200,
+      },
+      {
+        field: "cashFlow",
+        headerName: "Cash Flow",
+        width: 100,
+      },
+      {
+        field: "profitPercentage",
+        headerName: "Profit Percentage",
+        width: 170,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        width: 120,
+      },
+    ],
 };

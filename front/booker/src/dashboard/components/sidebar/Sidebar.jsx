@@ -167,10 +167,12 @@ const Sidebar = () => {
       </Link>
       
       <p className="title">FINANCIAL</p>
-      <li>
-        <AttachMoneyIcon className="icon" />
-        <span>Financial</span>
-      </li>
+      <Link to="/dashboard/financial" style={{textDecoration: "none"}}>
+        <li>
+          <AttachMoneyIcon className="icon" />
+          <span>Financial</span>
+        </li>
+      </Link>
 
       <p className="title">LOYALTY PROGRAM</p>
       <li>

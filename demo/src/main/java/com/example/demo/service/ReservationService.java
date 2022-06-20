@@ -32,4 +32,9 @@ public interface ReservationService {
 
     ReservationsForMonth findReservationsForProviderForYear(ServiceProvider svc, Integer year);
 
+    List<Reservation> findAll();
+
+    List<Reservation> getPassedReservations();
+
+    int getTotalCashFlow(List<Reservation> allPassedReservations);
 }

@@ -28,6 +28,7 @@ import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage'
 import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
 import PenaltyReqList from './dashboard/pages/list/PenaltyReqList';
+import FinancialList from './dashboard/pages/list/FinancialList';
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
               <Route path="del-req" element={<DeleteReqList />}/>
               <Route path="complaints" element={<AdminComplaintList />}/>
               <Route path="penalty-req" element={<PenaltyReqList />}/>
+              <Route path="financial" element={<FinancialList />}/>
               
               <Route path="cottages"> 
                 <Route index element={<List adminRequest={true} userType={'ROLE_COTTAGE_OWNER'} entityType={"cottages"}/>}/>
