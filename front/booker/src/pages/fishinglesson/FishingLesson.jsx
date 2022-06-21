@@ -31,6 +31,7 @@ import UserReservation from "../userProfile/UserReservations"
 
 import { useEffect } from 'react';
 import { useNotification } from "../../components/notification/NotificationProvider";
+import MapComp from "../../components/map/MapComp";
 
 
 const FishingLesson = () => {
@@ -48,7 +49,6 @@ const FishingLesson = () => {
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
-  console.log(data);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
@@ -115,7 +115,7 @@ const FishingLesson = () => {
       })
        
         .then(data => {
-          sendNotification("success", "You successfully");
+          sendNotification("success", "You successfully subscribed");
         })
         .catch(err => {
           sendNotification("error", err.message)
@@ -126,7 +126,7 @@ const FishingLesson = () => {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/'
+      navigateTo: false
     });
   }
 
@@ -145,7 +145,8 @@ const FishingLesson = () => {
         <div className=" fishinglessonContainer">
           <div className=" fishinglessonWrapper">
           {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
-             
+            <div className=" fishinglessonDetails">
+            <div className="left">
             <h1 className=" fishinglessonTitle">{data.name}</h1>
             <div className=" fishinglessonAddress">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -158,13 +159,8 @@ const FishingLesson = () => {
               Book a stay for ${data.price} at this property.
             </span>
             <div className=" fishinglessonImages">
-             
               <Gallery photos={data.images}/> 
-              
-              
-              
             </div>
-            <div className=" fishinglessonDetails">
               <div className=" fishinglessonDetailsTexts">
                 <h1 className=" fishinglessonTitle">{data.title}</h1>
                 <p className=" fishinglessonDesc">
@@ -178,6 +174,11 @@ const FishingLesson = () => {
        
                   </p>
               </div>
+              <div className="map">
+                <MapComp location={data.address}/>
+              </div>
+              </div>
+              <div className="right">
               <div className=" fishinglessonDetailsPrice">
               <Rating className="rating" rating = {data.rating}></Rating>
               
@@ -190,6 +191,7 @@ const FishingLesson = () => {
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
                 
+              </div>
               </div>
             </div>
           </div>
