@@ -231,7 +231,46 @@ public class UserController {
 
     }
 
+    @GetMapping("/sub-list")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<List<OfferToList>> subList(Principal user)
+    {
+        Client c = (Client) userService.findByEmail(user.getName());
+        List<OfferToList>  lista = new ArrayList<>();
+        for(int i : c.getSubscriptionList())
+        {
+            Offer o = offerService.findById(i);
+            lista.add(new OfferToList(o));
+        }
 
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
+    @PostMapping("/sub-list-del")
+    @PreAuthorize("hasRole('CLIENT')")
+    public String subdel(@RequestBody SubDTO subDTO) {
+        Client c = (Client) userService.findById(subDTO.client_id);
+        List<Integer> a = c.getSubscriptionList();
+        if (a.contains(subDTO.offer_id ))
+        {
+            a.remove( (Integer)subDTO.offer_id );
+            c.setSubscriptionList(a);
+            userService.save(c);
+            Offer o = offerService.findById(subDTO.offer_id);
+            Set<Client> set = o.getSubscribedClients();
+            set.remove(c);
+
+            offerService.save(o);
+
+
+
+
+            return "success";
+        }
+        else
+            return "error";
+
+    }
 
 
 

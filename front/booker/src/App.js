@@ -33,6 +33,7 @@ import PenaltyReqList from './dashboard/pages/list/PenaltyReqList';
 import ProfileInfo from './pages/userProfile/ProfileInfo';
 
 import FinancialList from './dashboard/pages/list/FinancialList';
+import Sub from './pages/userProfile/Sub'
 
 
 
@@ -87,7 +88,8 @@ function App() {
               <Route path='future-reservations' element={<UserReservationList history={false}  typeOfRes ={" "}/>} />
 
               <Route path='profile-info' element={<NotificationProvider><ProfileInfo /></NotificationProvider>}/>
-               
+              <Route path='subscriptions' element={<Sub />}/>
+              
               <Route path='res-hist' element={<ReservationsList history={true}/>} />
               <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<DashboardHome />} />
