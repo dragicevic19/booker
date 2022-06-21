@@ -87,7 +87,7 @@ const SingleBoat = () => {
                   <span className="itemValue">{offer.length}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Engine Number:</span>
+                  <span className="itemKey">Number of Engines:</span>
                   <span className="itemValue">{offer.engineNum}</span>
                 </div>
                 <div className="detailItem">

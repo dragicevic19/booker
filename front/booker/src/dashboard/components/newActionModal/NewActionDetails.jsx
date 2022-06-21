@@ -1,15 +1,20 @@
 import axios from 'axios';
 import { DateBox, SelectBox } from 'devextreme-react'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../components/context/AuthContext';
 import { useNotification } from '../../../components/notification/NotificationProvider';
+import Dropdown from '../dropdownCheckboxes/Option';
 
-const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods, setUnavailablePeriods}) => {
+const NewActionDetails = ({offer, discounts, setDiscounts, unavailablePeriods, setUnavailablePeriods}) => {
 
   const [startDate, setStartDate] = useState(Date.now());
   const [endDate, setEndDate] = useState(Date.now());
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
+  const [selectedAdditionalServices, setSelectedAdditionalServices] = useState([]);
+
+  const [startDatePicked, setStartDatePicked] = useState(false);
+  const [endDatePicked, setEndDatePicked] = useState(false);
 
   const { user } = useContext(AuthContext);
   const headers = {
@@ -18,9 +23,24 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
   }
   const dispatch = useNotification();
 
+  let options = [];
+  for(const service of offer.additionalServices){
+    options.push({value:service.id, label:service.name + ' - $' + service.price, price: service.price})
+  }
+
+  const [buttonEnable, setButtonEnable] = useState(false);
+
+  useEffect(()=>{
+    setButtonEnable(startDatePicked && endDatePicked && type)
+
+  }, [startDate, endDate, type])
+
+  
   
   const addBtnClick = async (e) => {
     e.preventDefault();
+    setButtonEnable(false);
+
     try{
       let newPeriod = null;
       if (type==='SALE - Fast Reservation'){
@@ -28,8 +48,9 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
           startDate: startDate,
           endDate: endDate,
           price: price,
+          additionalServices: selectedAdditionalServices,
         }
-        await axios.post(`http://localhost:8080/api/newDiscount/${offerId}`, newPeriod, {
+        await axios.post(`http://localhost:8080/api/newDiscount/${offer.id}`, newPeriod, {
           headers: headers
         });
         newPeriod.typeId = 2;
@@ -41,7 +62,7 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
           startDate: startDate,
           endDate: endDate
         }
-        await axios.post(`http://localhost:8080/api/unavailable-period/${offerId}`, newPeriod, {
+        await axios.post(`http://localhost:8080/api/unavailable-period/${offer.id}`, newPeriod, {
           headers: headers
         });
         newPeriod.typeId = 4;
@@ -73,7 +94,7 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
               defaultValue={new Date()}
               type="date"
               min={Date.now()}
-              onValueChanged={(e)=>{setStartDate(e.value)}}
+              onValueChanged={(e)=>{setStartDatePicked(true); setStartDate(e.value)}}
             />
           </div>
           <div className="inputs">
@@ -82,32 +103,38 @@ const NewActionDetails = ({offerId, discounts, setDiscounts, unavailablePeriods,
               defaultValue={new Date()}
               type="date"
               min={startDate}
-              onValueChanged={(e)=>{setEndDate(e.value)}}
+              onValueChanged={(e)=>{setEndDatePicked(true); setEndDate(e.value)}}
             />
           </div>
+          {type === 'SALE - Fast Reservation' && <div className="inputs">
+          <label>Additional Services</label>
+          <Dropdown options={options} setSelected={setSelectedAdditionalServices} multiSelect={true}/>
+        </div>}
         </div>
         <div className="inputsWrapper">
-          <div className="inputs">
+          <div className="inputs selectBox">
             <label>Type</label>
             <SelectBox 
-              width={215}
+              width={230}
               items={['SALE - Fast Reservation', 'Unavailable Period']}
               onValueChange={(e)=>{setType(e)}}
               />
           </div>
           {type==='SALE - Fast Reservation' && <div className="inputs">
-            <label>Price [$]</label>
+            <label>Total Price [$]</label>
             <input className="input"
               name={"price"}
               type={"number"}
-              placeholder={"1000"}
+              placeholder={"Enter total price"}
               required={true}
               min={0}
               onChange={(e)=>{setPrice(e.target.value)}}
             />
           </div>}
+          
         </div>
-        <button className="addBtn">ADD</button>
+
+        <button className={"addBtn " + (!buttonEnable && " disabled")} disabled={!buttonEnable}>RESERVE</button>
       </div>
     </form>
   )

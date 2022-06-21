@@ -279,11 +279,12 @@ export const boatInputs = [
   {
     id: 9,
     name:"engineNum",
-    type:"text",
-    placeholder:"BBHJ-1104216",
+    type:"number",
+    placeholder:"1",
     errorMessage:"Invalid input!",
-    label:"Engine Number",
+    label:"Number of Engines",
     required: true,
+    min: "0",
   },
   {
     id: 10,

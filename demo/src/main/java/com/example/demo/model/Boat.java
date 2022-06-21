@@ -24,7 +24,7 @@ public class Boat extends Property {
     private double length;
 
     @Column(name = "engine_num", unique = true, nullable = false)
-    private String engineNum;
+    private int engineNum;
 
     @Column(name = "engine_pow", unique = false, nullable = false)
     private double enginePow;
