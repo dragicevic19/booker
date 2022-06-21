@@ -50,7 +50,7 @@ const NewActionModal = ({offerId, showAddActionModal, setShowAddActionModal}) =>
       <hr/>
       <DialogContent className="dialogContent">
         {!loading && <><NotificationProvider><NewActionDetails 
-          offerId={offerId} 
+          offer={offer} 
           discounts={discounts} 
           setDiscounts={setDiscounts} 
           unavailablePeriods={unavailablePeriods}

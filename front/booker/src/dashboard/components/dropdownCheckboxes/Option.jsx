@@ -47,7 +47,7 @@ export default class Dropdown extends Component {
           isMulti={this.props.multiSelect}
           closeMenuOnSelect={!this.props.multiSelect}
           isClearable={true}
-          hideSelectedOptions={false}
+          hideSelectedOptions={this.props.multiSelect}
           components={{
             Option
           }}
