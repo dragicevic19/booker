@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.AdditionalServiceDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.dto.PeriodDTO;
-import com.example.demo.model.Discount;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Period;
-import com.example.demo.model.Reservation;
+import com.example.demo.model.*;
 import com.example.demo.repository.DiscountRepository;
 import com.example.demo.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -21,6 +21,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private DiscountRepository discountRepository;
+
+    @Autowired
+    private AdditionalServicesService additionalServicesService;
 
     @Override
     public Offer findById(Integer id) {
@@ -35,6 +38,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Offer addDiscountToOffer(Offer offer, NewDiscountDTO newDiscount) {
+
         if (!isPeriodAvailable(newDiscount.getStartDate(), newDiscount.getEndDate(), offer))
             return null;
 
@@ -44,6 +48,16 @@ public class OfferServiceImpl implements OfferService {
         period.setDateFrom(newDiscount.getStartDate());
         period.setDateTo(newDiscount.getEndDate());
         discount.setPeriod(period);
+
+        Set<AdditionalService> additionalServices = new HashSet<>();
+        for (AdditionalServiceDTO service : newDiscount.getAdditionalServices()) {
+            AdditionalService a = additionalServicesService.findById(service.getValue());
+            if (a == null) {
+                return null;
+            }
+            additionalServices.add(a);
+        }
+        discount.setChosenAdditionalServices(additionalServices);
 
         discount.setPrice(newDiscount.getPrice());
         discount.setActive(true);

@@ -13,6 +13,6 @@ public class AdditionalServicesServiceImpl implements AdditionalServicesService{
 
     @Override
     public AdditionalService findById(Integer value) {
-        return additionalServicesRepository.getById(value);
+        return additionalServicesRepository.findById(value).get();
     }
 }
