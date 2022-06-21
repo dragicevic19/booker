@@ -15,4 +15,14 @@ public class ProfitPercentageServiceImpl implements ProfitPercentageService{
     public ProfitPercentage findById(Integer id) {
         return profitPercentageRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void changeProfitPercentageValue(ProfitPercentage profitPercentage, double profitPercentageValue) {
+        profitPercentage.setProfitPercentageValue(profitPercentageValue);
+    }
+
+    @Override
+    public ProfitPercentage save(ProfitPercentage profitPercentage) {
+        return this.profitPercentageRepository.save(profitPercentage);
+    }
 }

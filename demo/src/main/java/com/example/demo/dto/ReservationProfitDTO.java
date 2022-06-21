@@ -36,7 +36,7 @@ public class ReservationProfitDTO {
         this.basePrice = "$" + String.valueOf(Math.round(reservation.getPrice()));
         this.additionalServicesPrice = "$" + String.valueOf(Math.round(this.countAdditionalServicesPrice(reservation.getChosenAdditionalServices())));
         this.cashFlow = "$" + String.valueOf(Math.round(this.countCashFlow(reservation)));
-        this.profitPercentage = String.valueOf(Math.round(profitPercentage.getProfitPercentageValue()*100)) + "%";
+        this.profitPercentage = String.valueOf(profitPercentage.getProfitPercentageValue()*100.00) + "%";
         this.profit = "$" + String.valueOf(Math.round(this.countProfit(reservation, profitPercentage)));
     }
 
