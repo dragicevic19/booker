@@ -53,16 +53,16 @@ function App() {
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
               <Route path='user-register' element={<NotificationProvider><RegistrationUser /></NotificationProvider>} />
               <Route path="/cottages" element={<Hotels/>}/>
-              <Route path="/cottages/:id" element={<Cottage/>}/>
-              <Route path="/boat/:id" element={<Boat/>}/>
+              <Route path="/cottages/:id" element={<NotificationProvider><Cottage/></NotificationProvider>  }/>
+              <Route path="/boat/:id" element={<NotificationProvider><Boat/></NotificationProvider>}/>
               <Route path="/cott/cottages" element={<Hotels/>}/>
-              <Route path="/cott/cottages/:id"  element={<Cottage/>}/>
+              <Route path="/cott/cottages/:id"  element={<NotificationProvider> <Cottage/></NotificationProvider>}/>
               <Route path="/boa/boats" element={<Boats/>}/>
-              <Route path="/boa/boats/:id" element={<Boat/>}/>
-              <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
-              <Route path="/fishinglessons/:id" element={<FishingLesson/>}/>
+              <Route path="/boa/boats/:id" element={<NotificationProvider><Boat/></NotificationProvider> }/>
+              <Route path="/fis/fishinglessons/:id" element={<NotificationProvider><FishingLesson/></NotificationProvider> }/>
+              <Route path="/fishinglessons/:id" element={<NotificationProvider><FishingLesson/></NotificationProvider> }/>
               <Route path="/fis/fishinglessons" element={<FishingLessons/>}/>
-              <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
+              <Route path="/fis/fishinglessons/:id" element={<NotificationProvider><FishingLesson/></NotificationProvider> }/>
               
             </Route>
 

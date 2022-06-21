@@ -13,7 +13,7 @@ const ClientInfo = () => {
   const dispatch = useNotification();
 
    const { data, loading, error } = useFetch(`http://localhost:8080/api/whoami`);
-   console.log(data);
+ 
  
    const { user } = useContext(AuthContext);
 
