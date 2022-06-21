@@ -13,11 +13,13 @@ import com.example.demo.service.OfferService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +43,8 @@ public class ReservationController {
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("newReservationUser/{clientId}/{offerId}")
     public ResponseEntity<Boolean> newReservationByUser(@PathVariable Integer clientId,
-                                                         @PathVariable Integer offerId,
-                                                         @RequestBody NewReservationDTO newReservation) {
+                                                        @PathVariable Integer offerId,
+                                                        @RequestBody NewReservationDTO newReservation) {
 
 
         Offer offer = offerService.findById(offerId);
@@ -163,7 +165,7 @@ public class ReservationController {
 
         ReservationsForMonth reservations = reservationService.findReservationsForProviderForMonth(svc, month);
 
-        for (Map.Entry<String,Integer> entry : reservations.getNumOfReservations().entrySet())
+        for (Map.Entry<String, Integer> entry : reservations.getNumOfReservations().entrySet())
             retList.add(new ReservationsForMonthDTO(entry.getKey(), entry.getValue()));
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
@@ -178,9 +180,27 @@ public class ReservationController {
 
         ReservationsForMonth reservations = reservationService.findReservationsForProviderForYear(svc, year);
 
-        for (Map.Entry<String,Integer> entry : reservations.getNumOfReservations().entrySet())
+        for (Map.Entry<String, Integer> entry : reservations.getNumOfReservations().entrySet())
             retList.add(new ReservationsForMonthDTO(entry.getKey(), entry.getValue()));
 
         return new ResponseEntity<>(retList, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'COTTAGE_OWNER', 'INSTRUCTOR')")
+    @GetMapping("reservations/income/{userId}")
+    public ResponseEntity<ReservationsIncome> incomeFromReservations(@PathVariable Integer userId,
+                                                                     @RequestParam("dateFrom") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
+                                                                     @RequestParam("dateTo") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTo) {
+
+        ReservationsIncome income = new ReservationsIncome();
+        ServiceProvider svc = (ServiceProvider) userService.findById(userId);
+
+        List<ReservationOfferClient> reservationsForPeriod = reservationService.findReservationsInPeriodForProvider(svc, dateFrom, dateTo);
+        for (ReservationOfferClient res : reservationsForPeriod) {
+            income.setTotal(income.getTotal() + res.getReservation().getPrice());
+            income.getReservations().add(new ReservationToList(res.getReservation(), res.getOffer(), res.getClient()));
+        }
+
+        return new ResponseEntity<>(income, HttpStatus.OK);
     }
 }

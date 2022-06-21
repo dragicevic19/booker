@@ -11,7 +11,7 @@ import FillReport from '../fillReport/FillReport';
 import NewReservationOwner from '../newResOwner/NewReservationOwner';
 import NotificationProvider from '../../../components/notification/NotificationProvider';
 
-const Reservations = ({history}) => {
+const Reservations = ({history, reservations, title}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -29,8 +29,6 @@ const Reservations = ({history}) => {
   useEffect(() => {
     setList(data);
   }, [data]);
-
-  console.log(list);
 
   const columns = reservationColumns;
 
@@ -71,7 +69,7 @@ const Reservations = ({history}) => {
             <div 
               onClick={()=> newReportClick(params.row.id)}
               className="viewButton"
-              disabled = {history === false || params.row.status === "now" || params.row.hasOwnerRated}
+              disabled = {history === false || params.row.status === "now" || params.row.status === "not_passed" || params.row.hasOwnerRated}
             >Fill Report
             </div>
             <div 
@@ -88,11 +86,11 @@ const Reservations = ({history}) => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        <h1>Reservations</h1>
+        <h1>{title ? title : 'Reservations'}</h1>
       </div>
       <DataGrid
         className="datagrid"
-        rows={list}
+        rows={(reservations) ? reservations : list}
         columns={columns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
