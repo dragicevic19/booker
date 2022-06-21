@@ -95,20 +95,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PostMapping("/register-user")
-    public ResponseEntity<User> addUserUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
-        userRequest.setEmail(userRequest.getEmail().toLowerCase(Locale.ROOT));
-        User existUser = this.userService.findByEmail(userRequest.getEmail());
-
-        if (existUser != null) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//            throw new ResourceConflictException("Email already exists");
-        }
-
-        User user = this.userService.save(userRequest);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
     @GetMapping("cottages/countByCity")
     public ResponseEntity<java.util.List<Integer>> countCottagesByCity(@RequestParam String[] cities){
         List<Integer> retList = new ArrayList<>();

@@ -25,6 +25,18 @@ const NavbarHome = () => {
     navigate('/login');
   }
 
+  const onDashboardClick = () => {
+    if (user.type === "ROLE_COTTAGE_OWNER" || user.type === "ROLE_BOAT_OWNER" || user.type === "ROLE_INSTRUCTOR"){
+      navigate('/dashboard/my-offers');
+    }
+    else if (user.type === "ROLE_ADMIN" || user.type === "ROLE_SUPER_ADMIN"){
+      navigate('/dashboard/financial');
+    }
+    else {
+      navigate('/dashboard/');
+    }
+  }
+
   return (
     <div className="navbar">
       <div className="navContainer">
@@ -33,7 +45,7 @@ const NavbarHome = () => {
         </Link>
         {user ?  (
           <div>
-            {usersWithDashboard.indexOf(user.type) > -1 && <button onClick={()=>navigate('/dashboard')} className="navButton">Dashboard</button>}
+            {usersWithDashboard.indexOf(user.type) > -1 && <button onClick={onDashboardClick} className="navButton">Dashboard</button>}
 
             {user.type === "ROLE_CLIENT" && <button onClick={()=>navigate('/client-complaints')} className="navButton">
             File A Complaint</button>}

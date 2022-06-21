@@ -44,9 +44,10 @@ public class CottageOwnerServiceImpl implements CottageOwnerService {
     }
 
     @Override
-    public CottageOwner save(User user) {
+    public CottageOwner save(User user, UserRequest userRequest) {
 
         CottageOwner c = new CottageOwner(user);
+        c.setExplanationOfRegistration(userRequest.getExplanation());
         c.setRating(new Rating());
         c.setLoyaltyProgram(new LoyaltyProgram());
         c.setOffers(new ArrayList<>());

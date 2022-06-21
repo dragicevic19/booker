@@ -2,6 +2,7 @@ import "./registration.css"
 import FormInput from '../../components/formInput/FormInput'
 import { useState } from "react"
 import { useNotification } from "../../components/notification/NotificationProvider";
+import FormTextArea from "../../components/formTextArea/FormTextArea";
 
 const Registration = () => {
 
@@ -17,7 +18,8 @@ const Registration = () => {
     city:"",
     street:"",
     phoneNumber:"",
-    type:"cottage_owners"
+    type:"cottage_owners",
+    explanation:"",
   })
 
   const inputs = [
@@ -187,13 +189,25 @@ const Registration = () => {
                   <option value="administrators"> Administrator</option>
                 </select>
               </div>
+              <div className="explanation">
+                <label>Explanation of Registration</label>
+                <textarea 
+                  name="explanation"
+                  type="text"
+                  placeholder="Explanation of Registration"
+                  required
+                  pattern={`^.{1,}$`}
+                  rows={5}
+                  cols={10}
+                  onChange={onChange}
+                />
+              </div>
             </div>
           </div>
           <button>Submit</button>
         </form>
       </div>
     </div>
-
   )
 }
 
