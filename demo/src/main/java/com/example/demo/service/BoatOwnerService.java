@@ -14,7 +14,7 @@ public interface BoatOwnerService {
     BoatOwner findById(Integer id);
     BoatOwner findByEmail(String email);
     List<BoatOwner> findAll ();
-    BoatOwner save(User user);
+    BoatOwner save(User user, UserRequest userRequest);
 
     User updateUser(User user);
 

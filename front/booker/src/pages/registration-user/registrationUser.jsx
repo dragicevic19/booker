@@ -117,7 +117,7 @@ const RegistrationUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:8080/auth/register-user', {
+    fetch('http://localhost:8080/auth/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(values)

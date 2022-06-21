@@ -1,13 +1,23 @@
 .footer{
     width: 100%;
-    width: 1024px;
     font-size: 12px;
-    width: 100%;
     margin: 0px;
     padding: 20px 0px 0px 0px;
     background-color: #003580;
+    justify-content: center;
+    display: flex;
   }
  
+
+  .footerContainer{
+    max-width: 1024px;
+    width: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
   
   .fLists{
     width: 90%;

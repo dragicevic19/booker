@@ -13,7 +13,7 @@ public interface CottageOwnerService {
     CottageOwner findById(Integer id);
     CottageOwner findByEmail(String email);
     List<CottageOwner> findAll ();
-    CottageOwner save(User user);
+    CottageOwner save(User user, UserRequest userRequest);
 
     Cottage addCottage(CottageRequest cottageRequest, CottageOwner c);
 

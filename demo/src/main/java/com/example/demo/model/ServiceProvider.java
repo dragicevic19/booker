@@ -24,6 +24,9 @@ public abstract class ServiceProvider extends User {
     @JoinColumn(name = "offer_owner_id")
     private List<Offer> offers;
 
+    @Column(name = "explanation_of_registration")
+    private String explanationOfRegistration;
+
     public ServiceProvider(User user) {
         super(user);
     }

@@ -13,7 +13,7 @@ public interface FishingInstructorService {
     FishingInstructor findById(Integer id);
     FishingInstructor findByEmail(String email);
     List<FishingInstructor> findAll ();
-    FishingInstructor save(User user);
+    FishingInstructor save(User user, UserRequest userRequest);
 
     User updateUser(User user);
 
