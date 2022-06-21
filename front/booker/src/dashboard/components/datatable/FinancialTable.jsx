@@ -90,6 +90,8 @@ const FinancialTable = () => {
     {
       if(new Date(reservation.reservationEndDate) >= new Date(startDate) && new Date(reservation.reservationEndDate) <= new Date(endDate))
       {
+        reservation.profitPercentage = parseFloat(reservation.profitPercentage).toFixed(2);
+        reservation.profitPercentage += '%';
         filteredList.push(reservation);
       }
     }
