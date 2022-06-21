@@ -46,6 +46,58 @@ const Sidebar = () => {
       <hr />
       <div className="center">
 
+
+
+      {user.type=='ROLE_CLIENT' && (<><ul>
+        <p className="title">HISTORY</p>
+        
+        <Link to="/dashboard/cottage-reservation-history" style={{textDecoration: "none"}}>
+          <li>
+            <CottageOutlinedIcon className="icon" /> 
+            <span>Booking history for cottages</span>
+          </li>
+        </Link>
+        <Link to="/dashboard/boats-reservation-history" style={{textDecoration: "none"}}>
+          <li>
+            <DirectionsBoatFilledOutlinedIcon className="icon" /> 
+            <span>Booking history for boats</span>
+          </li>
+        </Link>
+        <Link to="/dashboard/lessons-reservation-history" style={{textDecoration: "none"}}>
+          <li>
+            <PhishingOutlinedIcon className="icon" /> 
+            <span>Booking history for lessons</span>
+          </li>
+        </Link>
+        <p className="title">FUTURE RESERVATIONS</p>
+        <Link to="/dashboard/future-reservations" style={{textDecoration: "none"}}>
+          <li>
+          <ViewListOutlinedIcon className="icon" />
+            <span>Future Reservations</span>
+          </li>
+        </Link>
+        <p className="title">USER</p>
+      <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>
+        <li>
+          <PersonOutlinedIcon className="icon" />
+          <span>Profile</span>
+        </li>
+      </Link>
+      <li onClick={logout}>
+        <LogoutOutlinedIcon className="icon" />
+        <span>Logout</span>
+      </li>
+
+      </ul></>)}
+
+    
+
+
+
+
+
+
+
         {user.type !== 'ROLE_SUPER_ADMIN' && user.type !== 'ROLE_ADMIN' && user.type!=='ROLE_CLIENT' && (<><ul>
         <p className="title">LISTS</p>
         

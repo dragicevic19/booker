@@ -8,6 +8,7 @@ import useFetch from "../../hooks/useFetch";
 import "./boats.css";
 import SearchItem from "../../components/searchitem/SearchItem";
 
+
 const Boats = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);

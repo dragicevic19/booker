@@ -27,8 +27,13 @@ import ComplaintList from './pages/complaints/ComplaintList';
 import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage';
 import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
+import UserReservationList from './pages/userProfile/reservationHistory/reservationListClient';
 import PenaltyReqList from './dashboard/pages/list/PenaltyReqList';
+
+import ProfileInfo from './pages/userProfile/ProfileInfo';
+
 import FinancialList from './dashboard/pages/list/FinancialList';
+
 
 
 function App() {
@@ -75,6 +80,14 @@ function App() {
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
                 <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
+
+              <Route path='cottage-reservation-history' element={<UserReservationList history={true} typeOfRes ={"cott"}/>} />
+              <Route path='boats-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"boat"}/>} />
+              <Route path='lessons-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"less"}/>} />
+              <Route path='future-reservations' element={<UserReservationList history={false}  typeOfRes ={" "}/>} />
+
+              <Route path='profile-info' element={<NotificationProvider><ProfileInfo /></NotificationProvider>}/>
+               
               <Route path='res-hist' element={<ReservationsList history={true}/>} />
               <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<DashboardHome />} />

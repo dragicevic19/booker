@@ -1,12 +1,11 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.BoatOwner;
 import com.example.demo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
@@ -24,4 +23,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByEnabled(boolean enabled);
 
     List<User> findByDeletionRequestActive(boolean active);
+
+
+
+    Set<User> findUserByEmail(String email);
 }
