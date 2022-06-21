@@ -86,7 +86,6 @@ const sendNotification = (type, message) => {
             <div
               className="deleteButton"
               onClick={() => handleSubmit(params.row.id)}
-               
             >
               Unsubscribe
             </div>

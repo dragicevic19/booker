@@ -33,7 +33,7 @@ const NavbarHome = () => {
       navigate('/dashboard/financial');
     }
     else {
-      navigate('/dashboard/');
+      navigate('/dashboard/cottage-reservation-history');
     }
   }
 

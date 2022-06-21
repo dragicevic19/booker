@@ -54,8 +54,9 @@ const Cottage = () => {
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
+   
  
-   console.log(user);
+   console.log(dates);
  
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -107,17 +108,18 @@ const Cottage = () => {
    
   })
 
-  const user_id = user.id;
-  const off_id = parseInt(id);
-  useEffect(() => {
-    setValues({["offer_id"]:off_id,["client_id"]:user_id});
-  }, [user]);
-
+ 
 
 
 
   const handleSub = (e) => {
     e.preventDefault()
+    const user_id = user.id;
+    const off_id = parseInt(id);
+   
+    setValues({["offer_id"]:off_id,["client_id"]:user_id});
+  
+  
 
     
     fetch('http://localhost:8080/api/sub', {
@@ -202,7 +204,7 @@ const Cottage = () => {
                 </h2>
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
-                
+                <button  >Brze rezervacije!</button>
               </div>
             </div>
           </div>

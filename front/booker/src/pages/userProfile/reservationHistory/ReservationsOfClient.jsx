@@ -5,7 +5,7 @@ import useFetch from "../../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import "../../../dashboard/components/datatable/datatable.scss"
 import { AuthContext } from "../../../components/context/AuthContext";
-import { reservationColumns } from '../../../dashboard/resColumns';
+import { reservationColumnsForClient } from '../../../dashboard/resColumns';
 import FillReport from '../../../dashboard/components/fillReport/FillReport';
  
 import NotificationProvider from '../../../components/notification/NotificationProvider';
@@ -32,7 +32,7 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
     setList(data);
   }, [data]);
 
-  const columns = reservationColumns;
+  const columns = reservationColumnsForClient;
 
   
 
