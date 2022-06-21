@@ -29,6 +29,9 @@ import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
 import UserReservation from "../userProfile/UserReservations"
 
+import { useEffect } from 'react';
+import { useNotification } from "../../components/notification/NotificationProvider";
+
 
 const FishingLesson = () => {
   const location = useLocation();
@@ -39,7 +42,7 @@ const FishingLesson = () => {
   const [showNewResModal, setShowNewResModal] = useState(false);
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/fishinglesson/${id}`)
 
- 
+  const dispatch = useNotification();
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -83,6 +86,54 @@ const FishingLesson = () => {
     }
   };
 
+  const [values, setValues] = useState({
+    offer_id: 0,
+    client_id: 0
+   
+  })
+
+  const user_id = user.id;
+  const off_id = parseInt(id);
+  useEffect(() => {
+    setValues({["offer_id"]:off_id,["client_id"]:user_id});
+  }, [user]);
+
+
+
+
+  const handleSub = (e) => {
+    e.preventDefault()
+
+    
+    fetch('http://localhost:8080/api/sub', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.accessToken}`,
+          },
+        body: JSON.stringify(values)
+      })
+       
+        .then(data => {
+          sendNotification("success", "You successfully");
+        })
+        .catch(err => {
+          sendNotification("error", err.message)
+        })
+  }
+
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: '/'
+    });
+  }
+
+
+
+
+
 
   return (
     <div>
@@ -93,7 +144,7 @@ const FishingLesson = () => {
       ) : (
         <div className=" fishinglessonContainer">
           <div className=" fishinglessonWrapper">
-            <button className="bookNow">Reserve or Book Now!</button>
+          {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
              
             <h1 className=" fishinglessonTitle">{data.name}</h1>
             <div className=" fishinglessonAddress">
