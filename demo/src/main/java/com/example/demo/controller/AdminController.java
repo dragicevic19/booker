@@ -281,4 +281,20 @@ public class AdminController {
 
         return new ResponseEntity<>(reservationProfits, HttpStatus.OK);
     }
+
+    @GetMapping("/get-profit-percentage")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<Double> getProfitPercentage() {
+        ProfitPercentage profitPercentage = profitPercentageService.findById(1);
+        return new ResponseEntity<>(profitPercentage.getProfitPercentageValue()*100, HttpStatus.OK);
+    }
+
+    @PostMapping("/change-profit-percentage")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<ProfitPercentage> changeProfitPercentage(@RequestParam("profitPercentageValue") double profitPercentageValue) {
+        ProfitPercentage profitPercentage = profitPercentageService.findById(1);
+        profitPercentageService.changeProfitPercentageValue(profitPercentage, profitPercentageValue);
+        ProfitPercentage updatedProfitPercentage = profitPercentageService.save(profitPercentage);
+        return new ResponseEntity<ProfitPercentage>(updatedProfitPercentage, HttpStatus.OK);
+    }
 }
