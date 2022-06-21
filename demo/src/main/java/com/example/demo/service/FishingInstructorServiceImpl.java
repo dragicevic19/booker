@@ -40,8 +40,10 @@ public class FishingInstructorServiceImpl implements FishingInstructorService{
     }
 
     @Override
-    public FishingInstructor save(User user) {
+    public FishingInstructor save(User user, UserRequest userRequest) {
         FishingInstructor f = new FishingInstructor(user);
+
+        f.setExplanationOfRegistration(userRequest.getExplanation());
         f.setRating(new Rating());
         f.setLoyaltyProgram(new LoyaltyProgram());
         f.setFishingLessons(new ArrayList<>());

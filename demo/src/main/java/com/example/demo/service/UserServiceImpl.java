@@ -272,13 +272,13 @@ public class UserServiceImpl implements UserService {
         // TODO: refaktorisati sa nekim nasledjivanjem mozda?
         switch (userRequest.getType()) {
             case "boat_owners":
-                return boatOwnerService.save(u);
+                return boatOwnerService.save(u, userRequest);
             case "cottage_owners":
-                return cottageOwnerService.save(u);
+                return cottageOwnerService.save(u, userRequest);
             case "clients":
                 return clientService.save(u);
             case "instructors":
-                return fishingInstructorService.save(u);
+                return fishingInstructorService.save(u, userRequest);
             case "administrators":
                 return administratorService.save(u);
             default:

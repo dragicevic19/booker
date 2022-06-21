@@ -46,11 +46,12 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     }
 
     @Override
-    public BoatOwner save(User user) {
+    public BoatOwner save(User user, UserRequest userRequest) {
         BoatOwner b = new BoatOwner(user);
+
+        b.setExplanationOfRegistration(userRequest.getExplanation());
         b.setRating(new Rating());
         b.setOffers(new ArrayList<>());
-        //b.setEnabled(true); ovo ce administrator da omoguci
         b.setLoyaltyProgram(new LoyaltyProgram());
 
         List<Role> roles = roleService.findByName("ROLE_BOAT_OWNER");

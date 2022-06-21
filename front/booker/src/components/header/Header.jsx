@@ -70,7 +70,7 @@ const Header = ({type,activePage ="1"}) => {
 					{!user && <p className="headerDesc">
 						Sign in and enjoy our accommodations!
 					</p>}
-					{!user && <button className="headerBtn">Sign in / Register</button>}
+					{!user && <button className="headerBtn" onClick={()=>navigate('/user-register')}>Sign in / Register</button>}
 					<div className="headerSearch">
 						<div className="headerSearchItem">
 							<FontAwesomeIcon icon={faBed} className="headerIcon" />
