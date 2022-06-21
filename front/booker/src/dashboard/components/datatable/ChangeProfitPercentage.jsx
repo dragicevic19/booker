@@ -71,7 +71,7 @@ export default function ChangeProfitPercentage() {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/'
+      navigateTo: '/dashboard'
     });
   }
 
