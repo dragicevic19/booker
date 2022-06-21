@@ -102,11 +102,20 @@ const Cottage = () => {
     }
   };
 
+   
   const [values, setValues] = useState({
     offer_id: 0,
     client_id: 0
    
   })
+
+  const user_id = user? user.id: 1;
+  const off_id = parseInt(id);
+  useEffect(() => {
+    setValues({["offer_id"]:off_id,["client_id"]:user_id});
+  }, [user]);
+
+
 
  
 
@@ -114,10 +123,9 @@ const Cottage = () => {
 
   const handleSub = (e) => {
     e.preventDefault()
-    const user_id = user.id;
-    const off_id = parseInt(id);
+    
    
-    setValues({["offer_id"]:off_id,["client_id"]:user_id});
+    // setValues({["offer_id"]:off_id,["client_id"]:user_id});
   
   
 

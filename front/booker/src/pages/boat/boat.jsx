@@ -90,7 +90,7 @@ const Boat = () => {
    
   })
 
-  const user_id = user.id;
+  const user_id = user? user.id: 1;
   const off_id = parseInt(id);
   useEffect(() => {
     setValues({["offer_id"]:off_id,["client_id"]:user_id});

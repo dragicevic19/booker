@@ -66,7 +66,7 @@ const sendNotification = (type, message) => {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/dashboard'
+      navigateTo: '/dashboard/cottage-reservation-history'
     });
   }
 
