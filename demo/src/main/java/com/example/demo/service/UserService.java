@@ -46,4 +46,6 @@ public interface UserService extends UserDetailsService {
     void givePenaltyPoints(Client client, int penaltiesToAdd);
 
     Boolean changeUserInfo(UserRequest userRequest);
+
+    boolean changeUserPassword(User user, String newPassword);
 }

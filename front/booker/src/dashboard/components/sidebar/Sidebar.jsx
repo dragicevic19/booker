@@ -135,7 +135,7 @@ const Sidebar = () => {
           <NotificationsActiveOutlinedIcon className="icon" />
           <span>Notifications</span>
         </li>
-        <Link to="/dashboard/profile" style={{textDecoration: "none"}}>
+        <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>
           <li>
             <PersonOutlinedIcon className="icon" />
             <span>Profile</span>
@@ -243,7 +243,7 @@ const Sidebar = () => {
         <NotificationsActiveOutlinedIcon className="icon" />
         <span>Notifications</span>
       </li>
-      <Link to="/dashboard/profile" style={{textDecoration: "none"}}>
+      <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>
         <li>
           <PersonOutlinedIcon className="icon" />
           <span>Profile</span>

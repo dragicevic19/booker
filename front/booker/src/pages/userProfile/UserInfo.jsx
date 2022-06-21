@@ -1,21 +1,69 @@
  
 import FormInput from '../../components/formInput/FormInput'
- 
+import {Link} from "react-router-dom"
 import { useNotification } from "../../components/notification/NotificationProvider";
 import useFetch from "../../hooks/useFetch"
 import { useEffect } from 'react';
 import { AuthContext } from '../../components/context/AuthContext';
 import { useState, useContext } from 'react';
-import "./clientInfo.css"
+import "./userInfo.css"
 import { blue } from '@mui/material/colors';
-const ClientInfo = () => {
+import DeleteUserDialog from './DeleteUserDialog';
+import UserPasswordChange from './UserPasswordChange';
+import { useNavigate } from 'react-router-dom';
+
+const UserInfo = () => {
+
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate()
+
+  var userType = '';
+  var authOrApi = '';
+
+  if(user.type === "ROLE_CLIENT")
+  {
+    userType = "client"
+    authOrApi = "auth"
+  }
+  else
+  {
+    userType = "other-users"
+    authOrApi = "api"
+  }
 
   const dispatch = useNotification();
 
-   const { data, loading, error } = useFetch(`http://localhost:8080/api/whoami`);
-   console.log(data);
- 
-   const { user } = useContext(AuthContext);
+   const { data, loading, error } = useFetch(`http://localhost:8080/api/whoami-${userType}`);
+
+   const isProviderReserved = useFetch(`http://localhost:8080/api/provider-reserved/${user.id}`)
+
+  const handleDelete = (id, explanation) =>
+    {
+      fetch(`http://localhost:8080/${authOrApi}/create-deletion-request/${id}?request_text=${explanation}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.accessToken}`,
+      },
+      })
+        .then(res => {
+          if (!res.ok){
+            if (res.status == 409){
+              console.log('email exists error');
+              throw Error('E-mail already exists!');
+            }
+            console.log('unknown error')
+            throw Error('Unknown fetch error occurred!')
+          } 
+          return res.json()
+        })
+        .then(data => {
+          sendNotification("success", "You successfully sent a request for deletion. Please wait for administrator to approve your request!");
+        })
+        .catch(err => {
+          sendNotification("error", err.message)
+        })
+    }
 
   const [values, setValues] = useState({
     email:"",
@@ -121,7 +169,7 @@ const ClientInfo = () => {
       })
        
         .then(data => {
-          sendNotification("success", "You successfully");
+          sendNotification("success", "You successfully updated personal data");
         })
         .catch(err => {
           sendNotification("error", err.message)
@@ -163,8 +211,9 @@ const ClientInfo = () => {
                 />
               ))}
               <br/>
-               <label style={{fontSize: '24px' , color:'blue'}} >Num of penalties : {data.numOfPenalties}</label><br/>
-               <label style={{fontSize: '24px' , color:'blue'}} >Loyalty rank : {data.rank}</label>
+               {userType === "client" && <label style={{fontSize: '24px' , color:'blue'}} >Num of penalties : {data.numOfPenalties}</label>}<br/>
+               {userType === "client" && <label style={{fontSize: '24px' , color:'blue'}} >Loyalty rank : {data.rank}</label>}
+              
             </div>
             <div className="row">
               {inputsSecondRow.map((input) => (
@@ -174,13 +223,20 @@ const ClientInfo = () => {
                   value={values[input.name]}
                   onChange={onChange} 
                 />
-              ))}
-
-              
-               
+              ))}   
             </div>
           </div>
+        
           <button>Change info</button>
+          <div className='buttonWrapper'>
+          <Link to="/dashboard/password-change-not-necessary" style={{textDecoration: "none"}}>
+              <div className='changePasswordButton'>
+                        Change Password
+              </div>
+            </Link>
+
+                <DeleteUserDialog userId={user.id} handleDelete={handleDelete} isProviderReserved={isProviderReserved.data} authOrApi={authOrApi}/> 
+          </div>
         </form>
       </div>
     </div>
@@ -188,4 +244,4 @@ const ClientInfo = () => {
   )
 }
 
-export default ClientInfo
+export default UserInfo

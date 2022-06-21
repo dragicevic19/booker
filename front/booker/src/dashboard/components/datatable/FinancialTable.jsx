@@ -22,9 +22,9 @@ const FinancialTable = () => {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${user.accessToken}`,
   }
-  
+ 
   const { data, loading, error } = useFetch(`http://localhost:8080/api/reservations-profit`);
-  
+  console.log(user)
   const columns = columnsData[user.type + "/FINANCIAL"];
 
   useEffect(() => {

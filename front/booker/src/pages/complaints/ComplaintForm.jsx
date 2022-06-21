@@ -8,7 +8,7 @@ import { TextareaAutosize } from '@mui/material';
 import { AuthContext } from '../../components/context/AuthContext';
 import { useNotification } from '../../components/notification/NotificationProvider';
 
-export default function ComplaintForm({offerId}) {
+export default function ComplaintForm({reservationId}) {
 
   const { user } = useContext(AuthContext);
 
@@ -42,7 +42,7 @@ export default function ComplaintForm({offerId}) {
 
     const data = {
         userId: user.id,
-        offerId: offerId,
+        reservationId: reservationId,
         offerComplaint: offerComplaint,
         providerComplaint: providerComplaint
       }
@@ -75,7 +75,7 @@ export default function ComplaintForm({offerId}) {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/client-complaints'
+      navigateTo: '/dashboard'
     });
   }
 

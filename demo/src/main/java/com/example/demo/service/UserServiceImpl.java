@@ -288,7 +288,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean changeUserInfo(UserRequest userRequest){
-        Client c =(Client) userRepository.findByEmail(userRequest.getEmail());
+        User c = userRepository.findByEmail(userRequest.getEmail());
         c.setFirstName(userRequest.getFirstName());
         c.setLastName(userRequest.getLastName());
         c.setPhoneNumber(userRequest.getPhoneNumber());
@@ -306,7 +306,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public boolean changeUserPassword(User user, String newPassword) {
+        boolean success = !passwordEncoder.matches(newPassword, user.getPassword());
+        if(success)
+        {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setLastPasswordResetDate(Timestamp.valueOf(LocalDateTime.now()));
+            this.userRepository.save(user);
+        }
 
+        return success;
+    }
 
 
 }

@@ -2,16 +2,16 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/context/AuthContext";
-import "./login.css";
+import '../login/login.css';
 import FormInput from "../../components/formInput/FormInput";
 import useFetch from "../../hooks/useFetch";
 import { useNotification } from "../../components/notification/NotificationProvider";
  
 
-const PasswordChange = () => {
+const UserPasswordChange = () => {
    
   const { user } = useContext(AuthContext);
-  console.log(user)
+  
   const [values, setValues] = useState({
     newPassword: "",
     repeatNewPassword: "",
@@ -60,12 +60,12 @@ const PasswordChange = () => {
   const navigate = useNavigate()
 
   const handleClick = (e) => {
-
+    console.log(values.newPassword)
     e.preventDefault()
-    fetch(`http://localhost:8080/api/change-password/${user.id}`, {
+    fetch(`http://localhost:8080/api/change-password-not-necessary/${user.id}`, {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify(values.newPassword)
+        body: JSON.stringify(values.newPassword),
       })
         .then(res => {
           if (!res.ok){
@@ -89,7 +89,7 @@ const PasswordChange = () => {
   return (
     <div className="login">
       <div className="lContainer">
-        <h1 className="loginTitle" onClick={()=>navigate('/login')}>Change password</h1> 
+        <h1 className="loginTitle" onClick={()=>navigate('/dashboard')}>Change password</h1> 
         {inputs.map((input) => (
             <FormInput 
                 key={input.id}
@@ -107,4 +107,4 @@ const PasswordChange = () => {
   );
 };
 
-export default PasswordChange;
+export default UserPasswordChange;

@@ -23,7 +23,6 @@ import UserProfile from './pages/userProfile/UserProfile';
 import DeleteReqList from './dashboard/pages/list/DeleteReqList';
 import PasswordChange from './pages/login/PasswordChange';
 import ReservationsList from './dashboard/pages/list/ReservationsList';
-import ComplaintList from './pages/complaints/ComplaintList';
 import SingleCottage from './dashboard/pages/single/singleCottage/SingleCottage';
 import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
@@ -33,6 +32,7 @@ import PenaltyReqList from './dashboard/pages/list/PenaltyReqList';
 import ProfileInfo from './pages/userProfile/ProfileInfo';
 
 import FinancialList from './dashboard/pages/list/FinancialList';
+import UserPasswordChange from './pages/userProfile/UserPasswordChange';
 
 
 
@@ -69,8 +69,6 @@ function App() {
 
             <Route path='/client-profile' element={<NotificationProvider><UserProfile authOrApi={"auth"}/>
               </NotificationProvider>}/>
-            <Route path='/client-complaints' element={<ComplaintList/>}>
-            </Route>
 
             <Route path='/dashboard'>
               <Route index element={<DashboardHome />} />
@@ -80,7 +78,10 @@ function App() {
                 <Route path='new' element={<NotificationProvider><New edit={false} title={'Add New Cottage'}/></NotificationProvider>} />
                 <Route path='edit/:id' element={<NotificationProvider><New edit={true} title={'Edit Cottage'}/></NotificationProvider>} />
               </Route> 
-
+              <Route path="password-change-not-necessary" element={<NotificationProvider>
+                <UserPasswordChange/>
+              </NotificationProvider>}>
+              </Route>
               <Route path='cottage-reservation-history' element={<UserReservationList history={true} typeOfRes ={"cott"}/>} />
               <Route path='boats-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"boat"}/>} />
               <Route path='lessons-reservation-history' element={<UserReservationList history={true}  typeOfRes ={"less"}/>} />

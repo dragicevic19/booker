@@ -52,11 +52,18 @@ public class UserController {
         return this.userService.findAll();
     }
 
-    @GetMapping("/whoami")
+    @GetMapping("/whoami-client")
     @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<ClientAllDTO> client(Principal user) {
+
+        return new  ResponseEntity<>(new ClientAllDTO((Client) this.userService.findByEmail(user.getName())), HttpStatus.OK);
+    }
+
+    @GetMapping("/whoami-other-users")
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'SUPER_ADMIN', 'COTTAGE_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<UserAllDTO> user(Principal user) {
 
-        return new  ResponseEntity<>(new UserAllDTO((Client) this.userService.findByEmail(user.getName())), HttpStatus.OK);
+        return new  ResponseEntity<>(new UserAllDTO((User) this.userService.findByEmail(user.getName())), HttpStatus.OK);
     }
 
     @GetMapping("/user/requests")
@@ -196,13 +203,24 @@ public class UserController {
     }
 
     @PostMapping("/change")
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'SUPER_ADMIN', 'COTTAGE_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public String changeInfo(@RequestBody UserRequest userRequest) {
 
         this.userService.changeUserInfo(userRequest);
         return "success";
     }
 
+    @PostMapping("/change-password-not-necessary/{userId}")
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'SUPER_ADMIN', 'COTTAGE_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<Boolean> changeUserPassword(@PathVariable Integer userId, @RequestBody RequestNewPassword requestNewPassword) {
+
+        User user = userService.findById(userId);
+        boolean success = userService.changeUserPassword(user, requestNewPassword.getNewPassword());
+        if (!success)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(success, HttpStatus.OK);
+    }
 
 
 
