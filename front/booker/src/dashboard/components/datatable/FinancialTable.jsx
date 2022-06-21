@@ -9,8 +9,7 @@ import { columnsData } from "../../datatablesource";
 import { AuthContext } from "../../../components/context/AuthContext";
 import ChangeProfitPercentage from "./ChangeProfitPercentage";
 import DateBox from "devextreme-react/date-box";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { localeData } from "moment";
+import NotificationProvider from "../../../components/notification/NotificationProvider";
 
 
 const FinancialTable = () => {
@@ -31,7 +30,7 @@ const FinancialTable = () => {
   useEffect(() => {
     setList(data);
   }, [data]);
-  
+
   const [startDate, setStartDate] = useState(new Date(2022, 0, 1));
   const [endDate, setEndDate] = useState(Date.now());
   const [startDatePicked, setStartDatePicked] = useState(false);
@@ -86,23 +85,27 @@ const FinancialTable = () => {
 
   const filterTable = () =>
   {
-    console.log(list)
     var filteredList = [];
     for (let reservation of data)
     {
       if(new Date(reservation.reservationEndDate) >= new Date(startDate) && new Date(reservation.reservationEndDate) <= new Date(endDate))
       {
+        reservation.profitPercentage = parseFloat(reservation.profitPercentage).toFixed(2);
+        reservation.profitPercentage += '%';
         filteredList.push(reservation);
       }
     }
     return filteredList;
   }
 
+
   return (
     <div className="datatable">
         <div className="datatableTitle">
             <h2>Income From Reservations</h2>
-            <ChangeProfitPercentage/>
+            <NotificationProvider>
+              <ChangeProfitPercentage/>
+            </NotificationProvider>
                 <div className="inputs">
                     <label>Start Date</label>
                     <DateBox 

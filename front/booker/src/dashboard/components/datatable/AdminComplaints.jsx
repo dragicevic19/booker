@@ -44,7 +44,6 @@ const AdminComplaints = () => {
 
   const findComplaintDataById = (id) =>
   {
-    console.log("fdsaf")
     for (let i of list)
     {
       if (i.id === id)

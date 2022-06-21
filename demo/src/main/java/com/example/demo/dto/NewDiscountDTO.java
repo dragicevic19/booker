@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,6 +17,6 @@ public class NewDiscountDTO {
     private LocalDate startDate;
     private LocalDate endDate;
     private double price;
-
+    private List<AdditionalServiceDTO> additionalServices;
 
 }

@@ -18,7 +18,7 @@ public class BoatRequest {
     private String description;
     private String regulations;
     private String boatType;
-    private String engineNum;
+    private Integer engineNum;
 
     private int capacity;
     private Integer owner_id;

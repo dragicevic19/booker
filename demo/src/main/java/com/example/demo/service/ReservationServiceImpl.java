@@ -112,12 +112,12 @@ public class ReservationServiceImpl implements ReservationService {
 
                         String key = String.valueOf(i) + ". " + String.valueOf(month) + ".";
 
-                        if (startDate.isBefore(reservation.getReservationPeriod().getDateTo()) ||
-                                startDate.isEqual(reservation.getReservationPeriod().getDateTo())) {    // da li treba i equal?
-
+                        if (startDate.isBefore(reservation.getReservationPeriod().getDateTo()))
+                        //  || startDate.isEqual(reservation.getReservationPeriod().getDateTo())) {    // da li treba i equal?
+                        {
                             resForMonth.getNumOfReservations().put(key, resForMonth.getNumOfReservations().get(key) + 1);
 
-                            startDate.plusDays(1);
+                            startDate = startDate.plusDays(1);
                         } else {
                             break;
                         }
@@ -133,7 +133,7 @@ public class ReservationServiceImpl implements ReservationService {
 
                             resForMonth.getNumOfReservations().put(key, resForMonth.getNumOfReservations().get(key) + 1);
 
-                            endDate.minusDays(1);
+                            endDate = endDate.minusDays(1);
                         } else {
                             break;
                         }

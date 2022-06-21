@@ -18,7 +18,7 @@ public class BoatDTO extends OfferDTO{
 
     private BoatType type;
     private double length;
-    private String engineNum;
+    private int engineNum;
     private double enginePow;
     private double maxSpeed;
     private Set<String> navEquipment;
