@@ -305,6 +305,11 @@ public class UserServiceImpl implements UserService {
 
 
     }
+    @Override
+    public boolean save(Client c){
+        userRepository.save(c);
+        return true;
+    }
 
 
 

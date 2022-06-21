@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.*;
 import com.example.demo.model.*;
-import com.example.demo.service.ComplaintService;
-import com.example.demo.service.EmailService;
-import com.example.demo.service.ReservationService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +15,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
@@ -33,6 +31,9 @@ public class UserController {
 
     @Autowired
     private ComplaintService complaintService;
+
+    @Autowired
+    private OfferService offerService;
 
     @Autowired
     private ReservationService reservationService;
@@ -201,6 +202,33 @@ public class UserController {
 
         this.userService.changeUserInfo(userRequest);
         return "success";
+    }
+
+
+    @PostMapping("/sub")
+    @PreAuthorize("hasRole('CLIENT')")
+    public String changeInfo(@RequestBody SubDTO subDTO) {
+        Client c = (Client) userService.findById(subDTO.client_id);
+        List<Integer> a = c.getSubscriptionList();
+        if (!a.contains(subDTO.offer_id ))
+        {
+        a.add( subDTO.offer_id );
+        c.setSubscriptionList(a);
+        userService.save(c);
+        Offer o = offerService.findById(subDTO.offer_id);
+        Set<Client> set = o.getSubscribedClients();
+        set.add(c);
+
+        offerService.save(o);
+
+
+
+
+        return "success";
+        }
+        else
+            return "error";
+
     }
 
 
