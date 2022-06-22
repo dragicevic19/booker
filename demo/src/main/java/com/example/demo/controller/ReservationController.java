@@ -85,6 +85,7 @@ public class ReservationController {
         }
 
         if (reservationService.makeNewReservationByOwner(offer, client, newReservation)) {
+
             return new ResponseEntity<>(true, HttpStatus.OK);   // ok
         }
 

@@ -306,16 +306,7 @@ export const columnsData =
           );
         }
       },
-      {
-        field: "providerFirstName",
-        headerName: "Provider's First Name",
-        width: 200,
-      },
-      {
-        field: "providerLastName",
-        headerName: "Provider's Last Name",
-        width: 200,
-      },
+
       {
         field: "city",
         headerName: "City",

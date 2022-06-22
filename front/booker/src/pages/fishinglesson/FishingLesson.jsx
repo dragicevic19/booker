@@ -29,6 +29,10 @@ import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
 import UserReservation from "../userProfile/UserReservations"
 
+import { useEffect } from 'react';
+import { useNotification } from "../../components/notification/NotificationProvider";
+import MapComp from "../../components/map/MapComp";
+
 
 const FishingLesson = () => {
   const location = useLocation();
@@ -39,13 +43,12 @@ const FishingLesson = () => {
   const [showNewResModal, setShowNewResModal] = useState(false);
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/fishinglesson/${id}`)
 
- 
+  const dispatch = useNotification();
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
    const { dates, options } = useContext(SearchContext);
-  console.log(data);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
@@ -83,6 +86,54 @@ const FishingLesson = () => {
     }
   };
 
+  const [values, setValues] = useState({
+    offer_id: 0,
+    client_id: 0
+   
+  })
+
+  const user_id = user? user.id: 1;
+  const off_id = parseInt(id);
+  useEffect(() => {
+    setValues({["offer_id"]:off_id,["client_id"]:user_id});
+  }, [user]);
+
+
+
+
+  const handleSub = (e) => {
+    e.preventDefault()
+
+    
+    fetch('http://localhost:8080/api/sub', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.accessToken}`,
+          },
+        body: JSON.stringify(values)
+      })
+       
+        .then(data => {
+          sendNotification("success", "You successfully subscribed");
+        })
+        .catch(err => {
+          sendNotification("error", err.message)
+        })
+  }
+
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: false
+    });
+  }
+
+
+
+
+
 
   return (
     <div>
@@ -93,8 +144,9 @@ const FishingLesson = () => {
       ) : (
         <div className=" fishinglessonContainer">
           <div className=" fishinglessonWrapper">
-            <button className="bookNow">Reserve or Book Now!</button>
-             
+          {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
+            <div className=" fishinglessonDetails">
+            <div className="left">
             <h1 className=" fishinglessonTitle">{data.name}</h1>
             <div className=" fishinglessonAddress">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -107,13 +159,8 @@ const FishingLesson = () => {
               Book a stay for ${data.price} at this property.
             </span>
             <div className=" fishinglessonImages">
-             
               <Gallery photos={data.images}/> 
-              
-              
-              
             </div>
-            <div className=" fishinglessonDetails">
               <div className=" fishinglessonDetailsTexts">
                 <h1 className=" fishinglessonTitle">{data.title}</h1>
                 <p className=" fishinglessonDesc">
@@ -127,6 +174,11 @@ const FishingLesson = () => {
        
                   </p>
               </div>
+              <div className="map">
+                <MapComp location={data.address}/>
+              </div>
+              </div>
+              <div className="right">
               <div className=" fishinglessonDetailsPrice">
               <Rating className="rating" rating = {data.rating}></Rating>
               
@@ -139,6 +191,7 @@ const FishingLesson = () => {
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
                 
+              </div>
               </div>
             </div>
           </div>
