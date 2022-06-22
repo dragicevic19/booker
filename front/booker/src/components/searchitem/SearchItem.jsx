@@ -23,7 +23,7 @@ const navigate = useNavigate();
       <div className="siDetails">
         {item.rating.average && <div className="siRating">
           <label>Rating</label>
-          <button>{item.rating.average}</button>
+          <button>{item.rating.average.toFixed(1)}</button>
         </div>}
         <div className="siDetailTexts">
           <span className="siPrice">${item.price}</span>
