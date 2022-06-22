@@ -6,26 +6,15 @@ import "./login.css";
 import FormInput from "../../components/formInput/FormInput";
 import useFetch from "../../hooks/useFetch";
 import { useNotification } from "../../components/notification/NotificationProvider";
+import { AirTwoTone } from "@mui/icons-material";
  
 
 const PasswordChange = () => {
    
-  const { user } = useContext(AuthContext);
-  console.log(user)
   const [values, setValues] = useState({
     newPassword: "",
     repeatNewPassword: "",
   })
-
-  const dispatch = useNotification();
-
-  const sendNotification = (type, message) => {
-    dispatch({
-      type: type,
-      message: message,
-      navigateTo: '/'
-    });
-  }
 
   const onChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
@@ -53,43 +42,37 @@ const PasswordChange = () => {
   },
 ]
 
-  const headers = {
+  const { user } = useContext(AuthContext);
+
+  const headers = user && {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${user.accessToken}`,
   }
   const navigate = useNavigate()
 
-  const handleClick = (e) => {
+  const [error, setError] = useState(false); 
+
+
+  const handleClick = async (e) => {
 
     e.preventDefault()
-    fetch(`http://localhost:8080/api/change-password/${user.id}`, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(values.newPassword)
-      })
-        .then(res => {
-          if (!res.ok){
-            if (res.status == 409){
-              console.log('email exists error');
-              throw Error('E-mail already exists!');
-            }
-            console.log('unknown error')
-            throw Error('You entered the old password!')
-          } 
-          return res.json()
-        })
-        .then(data => {
-          sendNotification("success", "You successfully changed the password!");
-        })
-        .catch(err => {
-          sendNotification("error", err.message)
-        })
+
+    try{
+      const res = await axios.post(`http://localhost:8080/api/change-password/${user.id}`, {newPassword: values.newPassword}, {
+        headers: headers
+      });
+      console.log('test res')
+      navigate('/login')
+
+    } catch (err) {
+      setError(true);
+    }
   };
 
   return (
     <div className="login">
       <div className="lContainer">
-        <h1 className="loginTitle" onClick={()=>navigate('/login')}>Change password</h1> 
+        <h1 className="loginTitle" onClick={()=>{setError(false); navigate('/login');}}>Change password</h1> 
         {inputs.map((input) => (
             <FormInput 
                 key={input.id}
@@ -102,6 +85,8 @@ const PasswordChange = () => {
         <button onClick={handleClick} className="lButton" disabled={!values.newPassword.match(inputs[0].pattern) || !values.repeatNewPassword.match(inputs[0].pattern) || values.newPassword !== values.repeatNewPassword}>
           Submit
         </button>
+        {error && <span className="wrong">You can't enter your old password</span>}
+
       </div>
     </div>
   );
