@@ -1,16 +1,13 @@
 package com.example.demo.service;
+
 import com.example.demo.dto.NewReservationDTO;
 import com.example.demo.dto.ResReportForClientDTO;
 import com.example.demo.dto.ReservationOfferClient;
+import com.example.demo.dto.ReservationsForMonth;
 import com.example.demo.model.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.example.demo.dto.ReservationsForMonth;
-import com.example.demo.model.Client;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Reservation;
-import com.example.demo.model.ServiceProvider;
 
 
 public interface ReservationService {
@@ -42,4 +39,9 @@ public interface ReservationService {
     List<Reservation> getPassedReservations();
 
     int getTotalCashFlow(List<Reservation> allPassedReservations);
+
+    boolean allowsCancellation(Reservation res);
+
+    void deleteRes(Reservation res);
+
 }

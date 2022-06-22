@@ -270,6 +270,22 @@ public class ReservationServiceImpl implements ReservationService {
 
         return true;
     }
+    @Override
+    public boolean allowsCancellation(Reservation res){
+        LocalDate in3 = LocalDate.now().plusDays(2);
+        if(res.getReservationPeriod().getDateFrom().isAfter(in3))
+            return true;
+        return false;
+    }
+
+    @Override
+    public void deleteRes(Reservation res){
+        reservationRepository.delete(res);
+    }
+
+
+
+
 
 
 

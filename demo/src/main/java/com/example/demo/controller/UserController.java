@@ -273,6 +273,48 @@ public class UserController {
     }
 
 
+    @PostMapping("/cancel-res")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<String> cancelRes(@RequestBody ResCancelDTO resCancelDTO) {
+        Reservation res = reservationService.findById(resCancelDTO.res_id);
+
+        if(reservationService.allowsCancellation(res))
+
+        {
+            Client c = (Client) userService.findById(resCancelDTO.client_id);
+//brisemo iz liste rezervacija klijenta
+            List<Reservation>  list= c.getReservations();
+            list.remove(res);
+            c.setReservations(list);
+            userService.save(c);
+
+        //ovde brisemo iz liste rezervacija ponoude
+            Offer of = offerService.findOfferForReservation(res);
+
+            List<Reservation> listOfRes = of.getReservations();
+            listOfRes.remove(res);
+            of.setReservations(listOfRes);
+
+            // ovde izbacujemo iz liste zauzetosi otkazano
+            List<Period> listOfOcc = of.getPeriodsOfOccupancy();
+            listOfOcc.remove(res.getReservationPeriod());
+            of.setPeriodsOfOccupancy(listOfOcc);
+
+
+            offerService.save(of);
+
+            reservationService.deleteRes(res);
+
+
+            return new ResponseEntity<>("good", HttpStatus.OK);
+
+
+         }
+        return new ResponseEntity<>("bad", HttpStatus.CONFLICT);
+    }
+
+
+
 
 
 
