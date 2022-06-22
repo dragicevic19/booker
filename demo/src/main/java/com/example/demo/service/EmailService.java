@@ -9,7 +9,6 @@ import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import java.io.IOException;
 
 public interface EmailService {
@@ -17,6 +16,7 @@ public interface EmailService {
 
     void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount);
 
+    void sendmailRegistrationClient(Client client);
     void sendmailDeletion(User user, boolean accepted, String requestText);
 
     void sendComplaintResponse(ComplaintResponseDTO complaintResponseDTO);

@@ -57,6 +57,9 @@ public class UserServiceImpl implements UserService {
         return owner.getOffers();
     }
 
+
+
+
     @Override
     public List<User> findDisabledUsers(boolean enabled) {
         return userRepository.findByEnabled(enabled);

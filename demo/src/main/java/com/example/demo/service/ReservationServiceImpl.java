@@ -309,7 +309,7 @@ public class ReservationServiceImpl implements ReservationService {
         client.getReservations().add(newRes);
         offer.getDiscounts().remove(dis);
 
-        
+
 
 
         emailService.sendReservationConfirmationToClient(client, offer, newRes);

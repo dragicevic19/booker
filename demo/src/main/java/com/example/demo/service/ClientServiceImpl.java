@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -20,6 +21,8 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public Client findById(Integer id) {
@@ -46,9 +49,24 @@ public class ClientServiceImpl implements ClientService {
         c.setRoles(roles);
         c.setNumOfPenalties(0);
         c.setEnabled(false);
+        String s = this.generateRandomPassword(15);
+        c.setRegToken(s);
+        emailService.sendmailRegistrationClient(c);
 
         return this.clientRepository.save(c);
     }
+
+
+    public String generateRandomPassword(int len) {
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
+                +"lmnopqrstuvwxyz";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        return sb.toString();
+    }
+
 
     @Override
     public User updateUser(User user) {

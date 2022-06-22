@@ -10,6 +10,7 @@ public interface UserService extends UserDetailsService {
     User findById(Integer id);
     List<User> findAll ();
     User save(UserRequest userRequest);
+
     boolean save(Client c);
     User findByEmail(String email);
     List<Offer> findUsersOffers(ServiceProvider s);

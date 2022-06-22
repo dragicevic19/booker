@@ -9,16 +9,13 @@ import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import javax.mail.*;
-import javax.mail.internet.*;
+
+import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Properties;
 
 
 @Service
@@ -51,6 +48,23 @@ public class EmailServiceImpl implements EmailService{
         }
         javaMailSender.send(mail);
     }
+
+
+
+    @Override
+    @Async
+    public void sendmailRegistrationClient(Client client){
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(client.getEmail());
+        mail.setFrom(env.getProperty("spring.mail.username"));
+        mail.setSubject("User registration feedback");
+
+        mail.setText("http://localhost:8080/auth/regtoken/"+ client.getEmail()+"?token="+client.getRegToken());
+
+        javaMailSender.send(mail);
+    }
+
 
     @Override
     @Async

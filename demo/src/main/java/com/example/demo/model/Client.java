@@ -21,6 +21,10 @@ public class Client extends User {
     @Column(name = "num_of_penalties", unique = false, nullable = false)
     private int numOfPenalties;
 
+    @Column(name = "reg_token")
+    private String regToken;
+
+
     @ElementCollection
     @Column(name = "subscription_list", unique = false ,nullable = false)
     private List<Integer> subscriptionList;

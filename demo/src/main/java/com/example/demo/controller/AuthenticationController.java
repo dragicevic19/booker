@@ -95,6 +95,20 @@ public class AuthenticationController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+
+
+    @GetMapping("regtoken/{email}")
+    public void gadjaj( @PathVariable String email, @RequestParam String token) {
+        Client c = (Client) userService.findByEmail(email);
+        if (c.getRegToken().equals(token))
+        {
+            c.setEnabled(true);
+            userService.save(c);
+        }
+
+
+    }
+
     @GetMapping("cottages/countByCity")
     public ResponseEntity<java.util.List<Integer>> countCottagesByCity(@RequestParam String[] cities){
         List<Integer> retList = new ArrayList<>();
