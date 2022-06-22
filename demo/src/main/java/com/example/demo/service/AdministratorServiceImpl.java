@@ -29,6 +29,7 @@ public class AdministratorServiceImpl implements AdministratorService{
         Administrator administrator = new Administrator(u);
         List<Role> roles = roleService.findByName("ROLE_ADMIN");
         administrator.setRoles(roles);
+        administrator.setEnabled(true);
 
         return this.administratorRepository.save(administrator);
     }

@@ -51,7 +51,9 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
-              <Route path='user-register' element={<NotificationProvider><RegistrationUser /></NotificationProvider>} />
+              <Route path='user-register' element={<NotificationProvider><RegistrationUser userType={'clients'}/></NotificationProvider>} />
+              <Route path='register-admin' element={<NotificationProvider><RegistrationUser userType={'administrators'}/></NotificationProvider>} />
+
               <Route path="/cottages" element={<Hotels/>}/>
               <Route path="/cottages/:id" element={<Cottage/>}/>
               <Route path="/boat/:id" element={<Boat/>}/>
