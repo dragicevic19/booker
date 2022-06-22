@@ -30,6 +30,8 @@ import Rating from "../../dashboard/components/rating/Rating"
 import UserReservation from "../userProfile/UserReservations"
 import { useEffect } from 'react';
 import { useNotification } from "../../components/notification/NotificationProvider";
+import QuickBooking from "../quickBooking/QuickBooking";
+
 
 const Boat = () => {
   const location = useLocation();
@@ -46,6 +48,8 @@ const Boat = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [showListDis, setShowListDis] = useState(false);
+
    const { dates, options } = useContext(SearchContext);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -57,7 +61,7 @@ const Boat = () => {
   
 
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
-  //const days =5;
+ 
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -97,6 +101,16 @@ const Boat = () => {
   }, [user]);
 
 
+
+  const handleListClick = () => {
+    if (user) {
+      if(user.type ==="ROLE_CLIENT")
+        {setShowListDis(!showListDis);}
+    
+    } else {
+      navigate("/login");
+    }
+  };
 
 
   const handleSub = (e) => {
@@ -186,6 +200,7 @@ const Boat = () => {
                   nights)
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
+                <button  onClick={handleListClick}>Brze rezervacije!</button>
               </div>
             </div>
           </div>
@@ -194,6 +209,12 @@ const Boat = () => {
           of={data}
           showNewResModal={showNewResModal}
           setShowNewResModal={setShowNewResModal}
+      />} 
+         {showListDis && 
+        <QuickBooking 
+          of={data}
+          showNewResModal={showListDis}
+          setShowNewResModal={setShowListDis}
       />} 
           
          <Footer/>
