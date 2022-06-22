@@ -31,6 +31,7 @@ import Rating from "../../dashboard/components/rating/Rating"
 import UserReservation from "../userProfile/UserReservations"
 import { useEffect } from 'react';
 import { useNotification } from "../../components/notification/NotificationProvider";
+import QuickBooking from "../quickBooking/QuickBooking";
 
 const Cottage = () => {
   const dispatch = useNotification();
@@ -44,6 +45,9 @@ const Cottage = () => {
 
   const [showNewResModal, setShowNewResModal] = useState(false);
  
+  const [showListDis, setShowListDis] = useState(false);
+ 
+   
    
 
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/cottage/${id}`)
@@ -101,6 +105,20 @@ const Cottage = () => {
       navigate("/login");
     }
   };
+
+  const handleListClick = () => {
+    if (user) {
+      if(user.type ==="ROLE_CLIENT")
+        {setShowListDis(!showListDis);}
+    
+    } else {
+      navigate("/login");
+    }
+  };
+
+
+
+   
 
    
   const [values, setValues] = useState({
@@ -212,7 +230,7 @@ const Cottage = () => {
                 </h2>
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
-                <button  >Brze rezervacije!</button>
+                <button  onClick={handleListClick}>Brze rezervacije!</button>
               </div>
             </div>
           </div>
@@ -221,6 +239,13 @@ const Cottage = () => {
           of={data}
           showNewResModal={showNewResModal}
           setShowNewResModal={setShowNewResModal}
+      />} 
+
+        {showListDis && 
+        <QuickBooking 
+          of={data}
+          showNewResModal={showListDis}
+          setShowNewResModal={setShowListDis}
       />} 
           
          <Footer/>

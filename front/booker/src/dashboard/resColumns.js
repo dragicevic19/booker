@@ -112,3 +112,27 @@ export const reservationColumns =
     }
   ]
   
+
+export const quickReservationCol = 
+  [
+    { field: "id", headerName: "ID", width: 40 },
+   ,
+   {
+    field: "time",
+    headerName: "Period",
+    width: 230,
+  },
+    {
+      field: "price",
+      headerName: "Price [$]",
+      width: 110,
+    },
+    {
+      field: "addServ",
+      headerName: "Additional services",
+      width: 1000,
+    }
+
+    
+  ]
+  
