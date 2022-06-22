@@ -2,8 +2,9 @@ import "./registrationUser.css"
 import FormInput from '../../components/formInput/FormInput'
 import { useState } from "react"
 import { useNotification } from "../../components/notification/NotificationProvider";
+import { useNavigate } from "react-router";
 
-const RegistrationUser = () => {
+const RegistrationUser = ({userType}) => {
 
   const dispatch = useNotification();
 
@@ -17,7 +18,7 @@ const RegistrationUser = () => {
     city:"",
     street:"",
     phoneNumber:"",
-    type:"clients"
+    type:userType
   })
 
   const inputs = [
@@ -131,10 +132,16 @@ const RegistrationUser = () => {
             console.log('unknown error')
             throw Error('Unknown fetch error occurred!')
           } 
+          console.log(res);
           return res.json()
         })
         .then(data => {
-          sendNotification("success", "You successfully sent a request for registration. Please wait for administrator to approve your request!");
+          if (userType === 'clients'){
+            sendNotification("success", "Please check your email and confirm registration!");
+          }
+          else {
+            sendNotification("success", "You successfully added new administrator!");
+          }
         })
         .catch(err => {
           sendNotification("error", err.message)
@@ -145,7 +152,7 @@ const RegistrationUser = () => {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/'
+      navigateTo: userType === 'clients' ? '/' : '/dashboard/administrators'
     });
   }
 
@@ -153,10 +160,23 @@ const RegistrationUser = () => {
     setValues({...values, [e.target.name]: e.target.value})
   }
 
+  const navigate = useNavigate();
+
+  const onCancelClick = (e) => {
+    e.preventDefault();
+
+    if (userType === 'clients'){
+      navigate('/');
+    }
+    else {
+      navigate('/dashboard/administrators');
+    }
+  }
+
   return (
     <div className="registration">
       <div className="form">
-        <h1>Register</h1>
+        <h1>Registration</h1>
         <form onSubmit={handleSubmit}>
           <div className="formElements">
             <div className="row">
@@ -181,7 +201,10 @@ const RegistrationUser = () => {
                
             </div>
           </div>
-          <button>Submit</button>
+          <div className="buttons">
+            <button className="cancel" onClick={onCancelClick}>Cancel</button>
+            <button className="submit">Submit</button>
+          </div>
         </form>
       </div>
     </div>

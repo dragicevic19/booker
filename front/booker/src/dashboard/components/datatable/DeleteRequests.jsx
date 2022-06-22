@@ -60,11 +60,6 @@ const DeleteRequests = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <div 
-              onClick={()=>navigate(`/dashboard/${path}/${params.row.id}`)}
-              className="viewButton"
-            >View               
-            </div>
             <FormDialog userId={params.row.id} handleAccept={handleAccept} handleReject={handleReject} requestType="deletionRequest"/>
           </div>
         );

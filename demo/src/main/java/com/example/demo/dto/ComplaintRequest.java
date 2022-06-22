@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ComplaintRequest {
 
     private Integer userId;
-    private Integer offerId;
+    private Integer reservationId;
     private String offerComplaint;
     private String providerComplaint;
 }

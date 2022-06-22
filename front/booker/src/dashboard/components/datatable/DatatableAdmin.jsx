@@ -76,7 +76,12 @@ const DatatableAdmin = ({userType, entityType}) => {
       <div className="datatableTitle">
         {entityType === "service_providers" && "Service Providers"}
         {entityType === "lessons" && "Fishing Lessons"}
-        {entityType !== "service_providers" && entityType !== "lessons" && capitalize(entityType)}
+        {entityType !== "service_providers" && entityType !== "lessons" && 
+        <>{capitalize(entityType)}
+          {entityType === "administrators" && <Link to={`/register-admin`} className="link">
+            Register New Administrator
+          </Link>}
+        </>}
       </div>
       <DataGrid
         className="datagrid"

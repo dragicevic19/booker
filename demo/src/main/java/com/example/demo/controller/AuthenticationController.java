@@ -55,6 +55,9 @@ public class AuthenticationController {
     @Autowired
     OfferService offerService;
 
+    @Autowired
+    ReservationService reservationService;
+
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
@@ -265,23 +268,12 @@ public class AuthenticationController {
         return new ResponseEntity<>(isPasswordChanged, HttpStatus.OK);
     }
 
-    @GetMapping("/entities-for-complaints/{clientId}")
-    public ResponseEntity<List<OfferForComplaint>> entitiesForComplaints(@PathVariable Integer clientId) {
-        Client client = (Client) userService.findById(clientId);
-
-        if (client == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        List<OfferForComplaint> offersToPresent = userService.findOffersByClient(client);
-        return new ResponseEntity<>(offersToPresent, HttpStatus.OK);
-    }
-
     @PostMapping("file-complaint/{userId}")
-    public ResponseEntity<Boolean> createDeletionRequest(@PathVariable Integer userId, @RequestBody ComplaintRequest complaintRequest) {
+    public ResponseEntity<Boolean> fileComplaint(@PathVariable Integer userId, @RequestBody ComplaintRequest complaintRequest) {
 
         Client client = (Client) userService.findById(userId);
-        Offer offer = offerService.findById(complaintRequest.getOfferId());
+        Reservation reservation = reservationService.findById(complaintRequest.getReservationId());
+        Offer offer = offerService.findOfferForReservation(reservation);
         userService.addClientComplaint(complaintRequest, offer, client);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }

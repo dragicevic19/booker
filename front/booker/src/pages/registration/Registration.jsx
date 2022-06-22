@@ -3,6 +3,7 @@ import FormInput from '../../components/formInput/FormInput'
 import { useState } from "react"
 import { useNotification } from "../../components/notification/NotificationProvider";
 import FormTextArea from "../../components/formTextArea/FormTextArea";
+import { useNavigate } from "react-router";
 
 const Registration = () => {
 
@@ -154,11 +155,13 @@ const Registration = () => {
   const onChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
   }
+  
+  const navigate = useNavigate();
 
   return (
     <div className="registration">
       <div className="form">
-        <h1>Register</h1>
+        <h1>Registration</h1>
         <form onSubmit={handleSubmit}>
           <div className="formElements">
             <div className="row">
@@ -186,10 +189,11 @@ const Registration = () => {
                   <option value="cottage_owners">Cottage Owner</option>
                   <option value="boat_owners">Boat Owner</option>
                   <option value="instructors">Fishing Instructor</option>
-                  <option value="administrators"> Administrator</option>
                 </select>
               </div>
-              <div className="explanation">
+            </div>
+          </div>
+          <div className="explanation">
                 <label>Explanation of Registration</label>
                 <textarea 
                   name="explanation"
@@ -202,9 +206,10 @@ const Registration = () => {
                   onChange={onChange}
                 />
               </div>
-            </div>
+          <div className="buttons">
+            <button className="cancel" onClick={()=>navigate('/')}>Cancel</button>
+            <button className="submit">Submit</button>
           </div>
-          <button>Submit</button>
         </form>
       </div>
     </div>

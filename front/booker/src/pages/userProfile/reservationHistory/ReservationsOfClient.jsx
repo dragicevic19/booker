@@ -7,8 +7,9 @@ import "../../../dashboard/components/datatable/datatable.scss"
 import { AuthContext } from "../../../components/context/AuthContext";
 import { reservationColumnsForClient } from '../../../dashboard/resColumns';
 import FillReport from '../../../dashboard/components/fillReport/FillReport';
- 
 import NotificationProvider from '../../../components/notification/NotificationProvider';
+import ComplaintForm from '../../complaints/ComplaintForm';
+
 
 const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,vikendica,cas
   const navigate = useNavigate();
@@ -69,9 +70,11 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
           <div className="cellAction">
             <div 
               //onClick={()=> newReportClick(params.row.id)}
-              className="viewButton"
               disabled = {history === false || params.row.status === "now"}
-            >Fill Report
+            >
+              <NotificationProvider>
+                <ComplaintForm reservationId={params.row.id}/>
+              </NotificationProvider>
             </div>
           </div>
         );
