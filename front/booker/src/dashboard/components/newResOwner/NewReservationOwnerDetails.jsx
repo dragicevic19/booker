@@ -40,8 +40,6 @@ const NewReservationOwnerDetails = ({offerId, reservationId, reservations, setRe
 
   const [buttonEnable, setButtonEnable] = useState(false);
 
-  //const buttonEnable = startDatePicked && endDatePicked && numOfAttendants;
-
   let nightsToStay = 1;
 
   useEffect(()=>{

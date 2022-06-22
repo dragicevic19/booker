@@ -2,6 +2,7 @@ import axios from "axios"
 import { DateBox } from "devextreme-react"
 import { useContext, useEffect } from "react"
 import { useState } from "react"
+import { Navigate, useNavigate } from "react-router"
 import { AuthContext } from "../../../components/context/AuthContext"
 import useFetch from "../../../hooks/useFetch"
 import Chart from "../../components/charts/Chart"
@@ -13,11 +14,24 @@ import "./home.scss"
 
 const DashboardHome = () => {
 
+  const navigate = useNavigate();
   const {user} = useContext(AuthContext)
-  const headers = {
+
+
+  useEffect(()=>{
+    if (user){
+      console.log(user);
+    }
+    else{
+      navigate('/login');
+    }
+  }, [user])
+
+  const headers = user && {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${user.accessToken}`,
   }
+
 
   const [selectedView, setSelectedView] = useState();
 
@@ -107,7 +121,8 @@ const DashboardHome = () => {
   }, [endDate, startDate])
 
   return (
-    <div className="dashHome">
+    <>
+    {user && <div className="dashHome">
       <Sidebar />
       <div className="dashHomeContainer">
         <DashNavbar />
@@ -156,7 +171,8 @@ const DashboardHome = () => {
           {startDatePicked && endDatePicked && <Reservations reservations={incomeData.reservations} title={`Total Income: $${incomeData.total}`}/>}
         </div></>}
       </div>
-    </div>
+    </div>}
+    </>
   )
 }
 

@@ -152,7 +152,6 @@ const Boat = () => {
       ) : (
         <div className="boatContainer">
           <div className="boatWrapper">
-          {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
           <div className="boatDetails">
             <div className="left">
             <h1 className="boatTitle">{data.name}</h1>
@@ -198,6 +197,8 @@ const Boat = () => {
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
                 <button  onClick={handleListClick}>Quick Booking!</button>
+                {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}>Subscribe</button> }
+
               </div>
             </div>
             </div>
