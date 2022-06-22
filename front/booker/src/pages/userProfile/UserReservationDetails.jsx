@@ -17,9 +17,6 @@ const UserReservationDetails = ({offerId, reservations, setReservations, additio
   const [endDate, setEndDate] = useState(dates[0].endDate);
   const [price, setPrice] = useState();
   const [numOfAttendants, setNumOfAttendants] = useState();
-  console.log(startDate);
-  console.log(endDate);
-  
  
   const [startDatePicked, setStartDatePicked] = useState(true);
   const [endDatePicked, setEndDatePicked] = useState(true);
@@ -30,6 +27,9 @@ const UserReservationDetails = ({offerId, reservations, setReservations, additio
     'Authorization': `Bearer ${user.accessToken}`,
   }
   const dispatch = useNotification();
+
+  const [buttonEnable, setButtonEnable] = useState(false);
+
 
   let options = [];
   for(const service of additionalServices){
@@ -42,12 +42,12 @@ const UserReservationDetails = ({offerId, reservations, setReservations, additio
     attendantsOptions.push({value:i, label:i});
   }
 
-  const buttonEnable = (startDatePicked ||dates[0].startDate)&& (endDatePicked ||dates[0].endDate)&& numOfAttendants;
-
   let nightsToStay = 1;
 
   useEffect(()=>{
     let priceCount = 0;
+
+    setButtonEnable(startDatePicked && endDatePicked && numOfAttendants)
 
     if (startDatePicked && endDatePicked && endDate > startDate) {
 
@@ -62,15 +62,16 @@ const UserReservationDetails = ({offerId, reservations, setReservations, additio
     else 
       setPrice('enter dates properly');
 
-  }, [startDate, endDate, selectedAdditionalServices])
+  }, [startDate, endDate, selectedAdditionalServices, numOfAttendants])
 
  console.log(price);
   
   const addBtnClick = async (e) => {
     e.preventDefault();
+    setButtonEnable(false);
+
     try{
 
-        
       if (!(price.substr(1,) > 0)) throw new Error();
 
       let newReservation = {

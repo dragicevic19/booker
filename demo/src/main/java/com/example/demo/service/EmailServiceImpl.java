@@ -4,10 +4,7 @@ import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.dto.PenaltyRequestResponseDTO;
 import com.example.demo.dto.RatingRequestResponse;
-import com.example.demo.model.Client;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Reservation;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
@@ -37,8 +34,6 @@ public class EmailServiceImpl implements EmailService{
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("User registration feedback");
-        System.out.println("Email poslat!");
-
         if (!accepted)
         {
             mail.setText("Your account has not been accepted! \nExplanation: " + explanation);
@@ -59,9 +54,10 @@ public class EmailServiceImpl implements EmailService{
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
-        mail.setSubject("User registration feedback");
+        mail.setSubject("TheBooker registration confirmation");
 
-        mail.setText("http://localhost:8080/auth/regtoken/"+ client.getEmail()+"?token="+client.getRegToken());
+        mail.setText("Please click the link to confirm registration: http://localhost:8080/auth/regtoken/"+ client.getEmail()+"?token="+client.getRegToken() +
+                "\nThen you can log in: http://localhost:3000/login");
 
         javaMailSender.send(mail);
     }
@@ -71,6 +67,11 @@ public class EmailServiceImpl implements EmailService{
     @Async
     public void sendEmailToSubscribedClients(Offer offer, NewDiscountDTO newDiscount) {
 
+        String path = "";
+        if (offer instanceof Cottage) path = "cottages";
+        else if (offer instanceof Boat) path = "boat";
+        else if (offer instanceof FishingLesson) path = "fishinglessons";
+
         SimpleMailMessage mail = new SimpleMailMessage();
         for(Client client : offer.getSubscribedClients()){
             mail.setTo(client.getEmail());
@@ -78,7 +79,7 @@ public class EmailServiceImpl implements EmailService{
             mail.setSubject("New discount for offer: " + offer.getName());
             mail.setText("An offer you are subscribed to gets new discount!\nFrom: " + newDiscount.getStartDate().toString() +
                     " to: " + newDiscount.getEndDate().toString() + " for only " +  "$" + newDiscount.getPrice() +
-                    "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
+                    "\n\nVisit link to see more: http://localhost:3000/" + path + "/" + offer.getId());
             javaMailSender.send(mail);
         }
     }
@@ -125,6 +126,10 @@ public class EmailServiceImpl implements EmailService{
     @Async
     @Override
     public void sendReservationConfirmationToClient(Client client, Offer offer, Reservation reservation) {
+        String path = "";
+        if (offer instanceof Cottage) path = "cottages";
+        else if (offer instanceof Boat) path = "boat";
+        else if (offer instanceof FishingLesson) path = "fishinglessons";
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getEmail());
@@ -132,7 +137,7 @@ public class EmailServiceImpl implements EmailService{
         mail.setSubject("New reservation for you! Enjoy in " + offer.getName());
         mail.setText("You have new reserved offer!\nFrom: " + reservation.getReservationPeriod().getDateFrom().toString() +
                 " to: " + reservation.getReservationPeriod().getDateTo().toString() + "\nPrice: $" + reservation.getPrice() +
-                "\n\nVisit link to see more: http://localhost:3000/cottages/" + offer.getId());
+                "\n\nVisit link to see more: http://localhost:3000/" + path + "/" + offer.getId());
         javaMailSender.send(mail);
     }
 
