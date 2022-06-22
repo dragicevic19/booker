@@ -110,7 +110,7 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
     {
       field: "action",
       headerName: "Action",
-      width: 230,
+      width: 280,
       renderCell: (params) => {
         return (
           <div className="cellAction">

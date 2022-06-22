@@ -54,11 +54,12 @@ const DatatableAdmin = ({userType, entityType}) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <div 
+          {(entityType==="cottages"||entityType ==="boats"|| entityType==="lessons") &&
+           <div 
               onClick={()=>navigate(`/dashboard/${path}/${params.row.id}`)}
               className="viewButton"
             >View
-            </div>
+            </div>}
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}

@@ -8,6 +8,7 @@ import FeaturedPropertiesBoats from "../../components/featuredProperties/feature
 import FeaturedAdventures from "../../components/featured/FeaturedAdventures"
 import FeaturedPropertiesAdventures from "../../components/featuredProperties/FeaturedPropertiesAdventures"
 import Calendar from "../../dashboard/components/calendar/Calendar"
+import Footer from "../../components/footer/Footer"
 
 const Home = ({page = "1"}) => {
 
@@ -36,6 +37,7 @@ const Home = ({page = "1"}) => {
             <FeaturedPropertiesAdventures/>
             </div>
             }
+            <Footer/>
            
         </div>
      );
