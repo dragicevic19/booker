@@ -28,12 +28,12 @@ import AdminComplaintList from './dashboard/pages/list/AdminComplaintList';
 import RegistrationUser from './pages/registration-user/registrationUser';
 import UserReservationList from './pages/userProfile/reservationHistory/reservationListClient';
 import PenaltyReqList from './dashboard/pages/list/PenaltyReqList';
-
 import ProfileInfo from './pages/userProfile/ProfileInfo';
-
 import FinancialList from './dashboard/pages/list/FinancialList';
 import UserPasswordChange from './pages/userProfile/UserPasswordChange';
+import RatingReqList from './dashboard/pages/list/RatingReqList';
 import Sub from './pages/userProfile/Sub'
+
 
 
 
@@ -102,6 +102,7 @@ function App() {
               <Route path="del-req" element={<DeleteReqList />}/>
               <Route path="complaints" element={<AdminComplaintList />}/>
               <Route path="penalty-req" element={<PenaltyReqList />}/>
+              <Route path="rating-req" element={<RatingReqList />}/>
               <Route path="financial" element={<FinancialList />}/>
               
               <Route path="cottages"> 

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.AdditionalServiceDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.dto.PeriodDTO;
+import com.example.demo.dto.RatingRequestResponse;
 import com.example.demo.model.*;
 import com.example.demo.repository.DiscountRepository;
 import com.example.demo.repository.OfferRepository;
@@ -114,6 +115,12 @@ public class OfferServiceImpl implements OfferService {
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public void changeOfferRating(Offer offer, RatingRequestResponse ratingRequestResponse) {
+        offer.getRating().setNewRatingAverage(ratingRequestResponse.getRatingValue());
+        offerRepository.save(offer);
     }
 
     private boolean checkPeriod(Period period, LocalDate startDate, LocalDate endDate){

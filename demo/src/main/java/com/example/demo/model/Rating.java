@@ -29,4 +29,12 @@ public class Rating {
         numOfVotes = 0;
         average = 0;
     }
+
+    public void setNewRatingAverage(double newRating)
+    {
+        double rateSum = this.average * this.numOfVotes;
+        rateSum += newRating;
+        this.numOfVotes++;
+        this.average = rateSum/this.numOfVotes;
+    }
 }

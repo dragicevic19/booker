@@ -309,4 +309,22 @@ public class AdminController {
         ProfitPercentage updatedProfitPercentage = profitPercentageService.save(profitPercentage);
         return new ResponseEntity<ProfitPercentage>(updatedProfitPercentage, HttpStatus.OK);
     }
+
+    @GetMapping("/rating-requests")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<RatingRequestToShow>> getRatingRequests() {
+        List<RatingRequestToShow> ratingRequestsToShow = new ArrayList<>();
+        List<Client> clients = clientService.findAll();
+
+        for(Client client : clients)
+        {
+            for(RatingRequest ratingRequest : client.getRatingRequests())
+            {
+                ServiceProvider provider = userService.findProviderByOfferId(ratingRequest.getOffer().getId());
+                ratingRequestsToShow.add(new RatingRequestToShow(ratingRequest, client, provider));
+            }
+        }
+
+        return new ResponseEntity<>(ratingRequestsToShow, HttpStatus.OK);
+    }
 }

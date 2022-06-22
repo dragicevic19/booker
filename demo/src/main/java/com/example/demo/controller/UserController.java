@@ -38,6 +38,9 @@ public class UserController {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private RatingRequestService ratingRequestService;
+
     // Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
     // Ukoliko nema, server ce vratiti gresku 403 Forbidden
     // Korisnik jeste autentifikovan, ali nije autorizovan da pristupi resursu
@@ -223,6 +226,23 @@ public class UserController {
         return new ResponseEntity<>(success, HttpStatus.OK);
     }
 
+    @PostMapping("/rating-request-response/{accepted}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String ratingRequestResponse(@PathVariable boolean accepted, @RequestBody RatingRequestResponse ratingRequestResponse) throws InterruptedException, MessagingException, IOException {
+        Offer offer = offerService.findById(ratingRequestResponse.getOfferId());
+        ServiceProvider serviceProvider = (ServiceProvider) userService.findByEmail(ratingRequestResponse.getProviderEmail());
+        offerService.changeOfferRating(offer, ratingRequestResponse);
+        userService.changeProviderRating(serviceProvider, ratingRequestResponse);
+        emailService.sendRatingRequestResponse(ratingRequestResponse, accepted);
+        return "success";
+    }
+
+    @DeleteMapping("/delete-rating-req/{ratingReqId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public void deleteRatingRequest(@PathVariable Integer ratingReqId) throws InterruptedException, MessagingException, IOException {
+        RatingRequest ratingRequest = ratingRequestService.findById(ratingReqId);
+        userService.removeRatingRequest(ratingRequest);
+    }
 
     @PostMapping("/sub")
     @PreAuthorize("hasRole('CLIENT')")
@@ -290,8 +310,4 @@ public class UserController {
             return "error";
 
     }
-
-
-
-
 }

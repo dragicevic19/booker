@@ -9,6 +9,7 @@ import { reservationColumnsForClient } from '../../../dashboard/resColumns';
 import FillReport from '../../../dashboard/components/fillReport/FillReport';
 import NotificationProvider from '../../../components/notification/NotificationProvider';
 import ComplaintForm from '../../complaints/ComplaintForm';
+import RatingForm from './RatingForm';
 
 
 const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,vikendica,cas
@@ -60,6 +61,15 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
   //   setShowReportModal(!showReportModal);
   // }
 
+  const findReservationDataById = (id) =>
+  {
+    for (let i of list)
+    {
+      if (i.id === id)
+        return i; 
+    }
+  }
+
   const actionColumn = [
     {
       field: "action",
@@ -74,6 +84,11 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
             >
               <NotificationProvider>
                 <ComplaintForm reservationId={params.row.id}/>
+              </NotificationProvider>
+            </div>
+            <div>
+              <NotificationProvider>
+                 <RatingForm reservationId={params.row.id} hasClientRated={findReservationDataById(params.row.id).hasClientRated}/>
               </NotificationProvider>
             </div>
           </div>

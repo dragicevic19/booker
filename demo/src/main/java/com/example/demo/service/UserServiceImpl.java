@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ComplaintRepository complaintRepository;
 
+    @Autowired
+    private RatingRequestRepository ratingRequestRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -321,6 +327,35 @@ public class UserServiceImpl implements UserService {
         }
 
         return success;
+    }
+
+    @Override
+    public void addClientRating(RatingRequestDTO ratingRequestDTO, Offer offer, Client client) {
+        RatingRequest ratingRequest = new RatingRequest();
+        ratingRequest.setOffer(offer);
+        ratingRequest.setRatingValue(ratingRequestDTO.getRatingOfUser());
+        ratingRequest.setComment(ratingRequestDTO.getCommentOfUser());
+        this.ratingRequestRepository.save(ratingRequest);
+        client.getRatingRequests().add(ratingRequest);
+        this.userRepository.save(client);
+    }
+
+    @Override
+    public void removeRatingRequest(RatingRequest ratingRequest) {
+        ratingRequest.setDeleted(true);
+        this.ratingRequestRepository.save(ratingRequest);
+    }
+
+    @Override
+    public void changeProviderRating(ServiceProvider serviceProvider, RatingRequestResponse ratingRequestResponse) {
+        serviceProvider.getRating().setNewRatingAverage(ratingRequestResponse.getRatingValue());
+        serviceProviderRepository.save(serviceProvider);
+    }
+
+    @Override
+    public void setRatedByClient(Reservation reservation, Client client) {
+        reservation.setHasClientRated(true);
+        reservationRepository.save(reservation);
     }
 
 
