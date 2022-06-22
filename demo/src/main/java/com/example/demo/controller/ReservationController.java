@@ -1,17 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.*;
-import com.example.demo.model.Client;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Reservation;
+import com.example.demo.model.*;
 
-import com.example.demo.service.ClientService;
+import com.example.demo.service.*;
 
-import com.example.demo.model.ServiceProvider;
-
-import com.example.demo.service.OfferService;
-import com.example.demo.service.ReservationService;
-import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -38,6 +31,10 @@ public class ReservationController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    DiscountService discountService;
+
 
 
     @PreAuthorize("hasRole('CLIENT')")
@@ -204,4 +201,46 @@ public class ReservationController {
 
         return new ResponseEntity<>(income, HttpStatus.OK);
     }
+
+
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @PostMapping("quickbooking")
+    public ResponseEntity<Boolean> newReservationByQuickBooking(@RequestBody QuickResDto quickResDto) {
+
+
+        Offer offer = offerService.findById(quickResDto.getOffer_id());
+        if (offer == null) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
+        Client client = clientService.findById(quickResDto.getClient_id());
+        if (client == null) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        Discount dis = discountService.findById(quickResDto.getQres_id());
+
+        NewReservationDTO nwr = new NewReservationDTO();
+        nwr.setPrice(dis.getPrice());
+        List<AdditionalServiceDTO> lista = new ArrayList<>();
+        for(AdditionalService ad: dis.getChosenAdditionalServices())
+            lista.add(new AdditionalServiceDTO(ad));
+        nwr.setAdditionalServices(lista);
+        nwr.setNumOfAttendants(offer.getCapacity());
+        nwr.setStartDate(dis.getPeriod().getDateFrom());
+        nwr.setEndDate(dis.getPeriod().getDateTo());
+
+
+
+        if (reservationService.makeNewReservationFromQuick(offer, client, nwr, dis)) {
+            discountService.delete(dis);
+            return new ResponseEntity<>(true, HttpStatus.OK);   // ok
+        }
+
+        return new ResponseEntity<>(false, HttpStatus.CONFLICT);
+    }
+
+
+
+
 }

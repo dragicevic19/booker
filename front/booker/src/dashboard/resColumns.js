@@ -130,7 +130,7 @@ export const quickReservationCol =
     {
       field: "addServ",
       headerName: "Additional services",
-      width: 1000,
+      width: 800,
     }
 
     

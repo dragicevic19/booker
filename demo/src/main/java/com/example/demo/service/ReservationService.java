@@ -21,6 +21,8 @@ public interface ReservationService {
 
     boolean makeNewReservationByOwner(Offer offer, Client client, NewReservationDTO newReservation);
 
+    boolean makeNewReservationFromQuick(Offer offer, Client client, NewReservationDTO newReservation, Discount dis);
+
     ServiceProvider findOwnerOfOffer(Offer offer);
 
     List<ReservationReportForClient> getPenaltyRequestsByType(ReportForClientType type);

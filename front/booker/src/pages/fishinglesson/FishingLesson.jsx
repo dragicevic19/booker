@@ -32,6 +32,7 @@ import UserReservation from "../userProfile/UserReservations"
 import { useEffect } from 'react';
 import { useNotification } from "../../components/notification/NotificationProvider";
 
+import QuickBooking from "../quickBooking/QuickBooking";
 
 const FishingLesson = () => {
   const location = useLocation();
@@ -40,6 +41,8 @@ const FishingLesson = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [showNewResModal, setShowNewResModal] = useState(false);
+  const [showListDis, setShowListDis] = useState(false);
+
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/fishinglesson/${id}`)
 
   const dispatch = useNotification();
@@ -76,6 +79,18 @@ const FishingLesson = () => {
 
     setSlideNumber(newSlideNumber);
   };
+
+
+  const handleListClick = () => {
+    if (user) {
+      if(user.type ==="ROLE_CLIENT")
+        {setShowListDis(!showListDis);}
+    
+    } else {
+      navigate("/login");
+    }
+  };
+
 
   const handleClick = () => {
     if (user) {
@@ -189,7 +204,7 @@ const FishingLesson = () => {
                 </h2>
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
-                
+                <button  onClick={handleListClick}>Quick Booking!</button>
               </div>
             </div>
           </div>
@@ -198,6 +213,12 @@ const FishingLesson = () => {
             of={data}
             showNewResModal={showNewResModal}
             setShowNewResModal={setShowNewResModal}
+      />} 
+           {showListDis && 
+        <QuickBooking 
+          of={data}
+          showNewResModal={showListDis}
+          setShowNewResModal={setShowListDis}
       />} 
           
          <Footer/>

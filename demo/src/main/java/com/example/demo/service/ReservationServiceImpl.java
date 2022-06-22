@@ -285,6 +285,42 @@ public class ReservationServiceImpl implements ReservationService {
 
 
 
+    @Override
+    public boolean makeNewReservationFromQuick(Offer offer, Client client, NewReservationDTO newReservation, Discount dis) {
+
+
+        Reservation newRes = new Reservation();
+        Period period = new Period(newReservation.getStartDate(), newReservation.getEndDate());
+        newRes.setReservationPeriod(period);
+
+        Set<AdditionalService> additionalServices = new HashSet<>();
+        for (AdditionalServiceDTO service : newReservation.getAdditionalServices()) {
+            additionalServices.add(additionalServicesService.findById(service.getValue()));
+        }
+        newRes.setChosenAdditionalServices(additionalServices);
+
+        newRes.setHasOwnerRated(false);
+        newRes.setHasClientRated(false);
+        newRes.setNumOfAttendants(newReservation.getNumOfAttendants());
+        newRes.setPrice(newReservation.getPrice());
+
+        offer.getPeriodsOfOccupancy().add(period);
+        offer.getReservations().add(newRes);
+        client.getReservations().add(newRes);
+        offer.getDiscounts().remove(dis);
+
+        
+
+
+        emailService.sendReservationConfirmationToClient(client, offer, newRes);
+
+        reservationRepository.save(newRes);
+
+        return true;
+    }
+
+
+
 
 
 

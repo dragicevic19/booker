@@ -200,7 +200,7 @@ const Boat = () => {
                   nights)
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
-                <button  onClick={handleListClick}>Brze rezervacije!</button>
+                <button  onClick={handleListClick}>Quick Booking!</button>
               </div>
             </div>
           </div>

@@ -5,48 +5,96 @@ import useFetch from "../../hooks/useFetch";
 import { DataGrid } from "@mui/x-data-grid";
 import {quickReservationCol} from "../../dashboard/resColumns"
 import "../../dashboard/components/datatable/datatable.scss"
+import axios from "axios";
+import {useNotification} from '../../components/notification/NotificationProvider';
+
  
 
 
  
 const QuickBooking = ({of, showNewResModal, setShowNewResModal}) => {
 
- 
- 
- 
- const [offer, setOffer] = useState();
+    const [offer, setOffer] = useState();
+    const [loading, setLoading] = useState(true)
+    const { user } = useContext(AuthContext);
+    const [list, setList] = useState();
+    const dispatch = useNotification();
 
-  const [loading, setLoading] = useState(true)
- 
-  const { user } = useContext(AuthContext);
+    useEffect(() => {
+        setOffer(of);
+    }, [of]);
 
-  const [list, setList] = useState();
-
-  useEffect(() => {
-    setOffer(of);
-  }, [of]);
-
-  const columns = quickReservationCol;
+    const columns = quickReservationCol;
 
     const { data, load, error, reFetch} = useFetch(`http://localhost:8080/api/discounts/${of.id}`);
    
-   
-
     useEffect(() => {
         setList(data);
-      }, [data]);
-    
-      console.log(list);
-      console.log(columns);
+    }, [data]);
+
  
+
   const handleSubmit = () => {
-}
+    }
 
-
- 
   const onClose = () => {
     setShowNewResModal(!showNewResModal);
   }
+
+
+  const reserve = async (id) => {
+    try{
+      const values=({
+        qres_id:id,
+        client_id:user.id,
+        offer_id:of.id
+
+        });
+      await axios.post('http://localhost:8080/api/quickbooking', values, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.accessToken}`,
+        }
+      });
+      sendNotification("success", 'Successfully canceled reservation!');
+
+    } catch(error){
+      sendNotification("error", 'Cancellation is possible 3 days before the start!');
+    }
+
+}
+const sendNotification = (type, message) => {
+    dispatch({
+    type: type,
+    message: message,
+    navigateTo: '/dashboard/cottage-reservation-history'
+    });
+}
+
+
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <div 
+              onClick={()=> reserve(params.row.id)}
+              className="newActionButton"
+            >RESERVE 
+            </div>
+          </div>
+        );
+      },
+    },
+  ];
+
+
+
+
 
   return (
     <>
@@ -62,7 +110,7 @@ const QuickBooking = ({of, showNewResModal, setShowNewResModal}) => {
         width="800px"
         className="datagrid"
         rows={list}
-        columns={columns}  // .concat(actionColumn)
+        columns={columns.concat(actionColumn)}   
         pageSize={8}
         rowsPerPageOptions={[8]}
         getRowId={(row) => row.id}
