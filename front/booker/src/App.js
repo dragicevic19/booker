@@ -32,6 +32,8 @@ import ProfileInfo from './pages/userProfile/ProfileInfo';
 import FinancialList from './dashboard/pages/list/FinancialList';
 import UserPasswordChange from './pages/userProfile/UserPasswordChange';
 import RatingReqList from './dashboard/pages/list/RatingReqList';
+import Sub from './pages/userProfile/Sub'
+
 
 
 
@@ -50,18 +52,20 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path='service-reg' element={<Registration />} />
               <Route path='host-register' element={<NotificationProvider><Registration /></NotificationProvider>} />
-              <Route path='user-register' element={<NotificationProvider><RegistrationUser /></NotificationProvider>} />
+              <Route path='user-register' element={<NotificationProvider><RegistrationUser userType={'clients'}/></NotificationProvider>} />
+              <Route path='register-admin' element={<NotificationProvider><RegistrationUser userType={'administrators'}/></NotificationProvider>} />
+
               <Route path="/cottages" element={<Hotels/>}/>
-              <Route path="/cottages/:id" element={<Cottage/>}/>
-              <Route path="/boat/:id" element={<Boat/>}/>
+              <Route path="/cottages/:id" element={<NotificationProvider><Cottage/></NotificationProvider>  }/>
+              <Route path="/boat/:id" element={<NotificationProvider><Boat/></NotificationProvider>}/>
               <Route path="/cott/cottages" element={<Hotels/>}/>
-              <Route path="/cott/cottages/:id"  element={<Cottage/>}/>
+              <Route path="/cott/cottages/:id"  element={<NotificationProvider> <Cottage/></NotificationProvider>}/>
               <Route path="/boa/boats" element={<Boats/>}/>
-              <Route path="/boa/boats/:id" element={<Boat/>}/>
-              <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
-              <Route path="/fishinglessons/:id" element={<FishingLesson/>}/>
+              <Route path="/boa/boats/:id" element={<NotificationProvider><Boat/></NotificationProvider> }/>
+              <Route path="/fis/fishinglessons/:id" element={<NotificationProvider><FishingLesson/></NotificationProvider> }/>
+              <Route path="/fishinglessons/:id" element={<NotificationProvider><FishingLesson/></NotificationProvider> }/>
               <Route path="/fis/fishinglessons" element={<FishingLessons/>}/>
-              <Route path="/fis/fishinglessons/:id" element={<FishingLesson/>}/>
+              <Route path="/fis/fishinglessons/:id" element={<NotificationProvider><FishingLesson/></NotificationProvider> }/>
               
             </Route>
 
@@ -87,7 +91,8 @@ function App() {
               <Route path='future-reservations' element={<UserReservationList history={false}  typeOfRes ={" "}/>} />
 
               <Route path='profile-info' element={<NotificationProvider><ProfileInfo /></NotificationProvider>}/>
-               
+              <Route path='subscriptions' element={<Sub />}/>
+              
               <Route path='res-hist' element={<ReservationsList history={true}/>} />
               <Route path='future-res' element={<ReservationsList history={false}/>} />
               <Route path='reports' element={<DashboardHome />} />

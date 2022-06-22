@@ -19,6 +19,7 @@ public interface OfferService {
     Offer addUnavailablePeriod(Offer offer, PeriodDTO newPeriod);
 
     Offer findOfferForReservation(Reservation r);
+    void save(Offer o);
 
     boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer);
 

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
@@ -32,10 +33,10 @@ public class UserController {
     private ComplaintService complaintService;
 
     @Autowired
-    private ReservationService reservationService;
+    private OfferService offerService;
 
     @Autowired
-    private OfferService offerService;
+    private ReservationService reservationService;
 
     @Autowired
     private RatingRequestService ratingRequestService;
@@ -243,7 +244,70 @@ public class UserController {
         userService.removeRatingRequest(ratingRequest);
     }
 
+    @PostMapping("/sub")
+    @PreAuthorize("hasRole('CLIENT')")
+    public String changeInfo(@RequestBody SubDTO subDTO) {
+        Client c = (Client) userService.findById(subDTO.client_id);
+        List<Integer> a = c.getSubscriptionList();
+        if (!a.contains(subDTO.offer_id ))
+        {
+        a.add( subDTO.offer_id );
+        c.setSubscriptionList(a);
+        userService.save(c);
+        Offer o = offerService.findById(subDTO.offer_id);
+        Set<Client> set = o.getSubscribedClients();
+        set.add(c);
+
+        offerService.save(o);
 
 
 
+
+        return "success";
+        }
+        else
+            return "error";
+
+    }
+
+    @GetMapping("/sub-list")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<List<OfferToList>> subList(Principal user)
+    {
+        Client c = (Client) userService.findByEmail(user.getName());
+        List<OfferToList>  lista = new ArrayList<>();
+        for(int i : c.getSubscriptionList())
+        {
+            Offer o = offerService.findById(i);
+            lista.add(new OfferToList(o));
+        }
+
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
+    @PostMapping("/sub-list-del")
+    @PreAuthorize("hasRole('CLIENT')")
+    public String subdel(@RequestBody SubDTO subDTO) {
+        Client c = (Client) userService.findById(subDTO.client_id);
+        List<Integer> a = c.getSubscriptionList();
+        if (a.contains(subDTO.offer_id ))
+        {
+            a.remove( (Integer)subDTO.offer_id );
+            c.setSubscriptionList(a);
+            userService.save(c);
+            Offer o = offerService.findById(subDTO.offer_id);
+            Set<Client> set = o.getSubscribedClients();
+            set.remove(c);
+
+            offerService.save(o);
+
+
+
+
+            return "success";
+        }
+        else
+            return "error";
+
+    }
 }

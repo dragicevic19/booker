@@ -134,4 +134,9 @@ public class OfferServiceImpl implements OfferService {
 
         return false;
     }
+    @Override
+    public void save(Offer o){
+        offerRepository.save(o);
+    }
+
 }

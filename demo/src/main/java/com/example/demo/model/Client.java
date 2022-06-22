@@ -21,6 +21,10 @@ public class Client extends User {
     @Column(name = "num_of_penalties", unique = false, nullable = false)
     private int numOfPenalties;
 
+    @ElementCollection
+    @Column(name = "subscription_list", unique = false ,nullable = false)
+    private List<Integer> subscriptionList;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "loyalty_id", nullable = false)
     private LoyaltyProgram loyaltyProgram;

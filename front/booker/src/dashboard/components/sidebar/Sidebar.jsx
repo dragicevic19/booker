@@ -76,6 +76,14 @@ const Sidebar = () => {
           <ViewListOutlinedIcon className="icon" />
             <span>Future Reservations</span>
           </li>
+        </Link> 
+
+        <p className="title">SUBSCRIPTIONS</p>
+        <Link to="/dashboard/subscriptions" style={{textDecoration: "none"}}>
+          <li>
+          <ViewListOutlinedIcon className="icon" />
+            <span>subscriptions</span>
+          </li>
         </Link>
         <p className="title">USER</p>
       <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>

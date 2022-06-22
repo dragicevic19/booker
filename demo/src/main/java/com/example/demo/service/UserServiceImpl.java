@@ -275,7 +275,6 @@ public class UserServiceImpl implements UserService {
         u.setDeleted(false);
         u.setLastPasswordResetDate(Timestamp.valueOf(LocalDateTime.now()));
 
-        // TODO: refaktorisati sa nekim nasledjivanjem mozda?
         switch (userRequest.getType()) {
             case "boat_owners":
                 return boatOwnerService.save(u, userRequest);
@@ -310,6 +309,11 @@ public class UserServiceImpl implements UserService {
 
 
 
+    }
+    @Override
+    public boolean save(Client c){
+        userRepository.save(c);
+        return true;
     }
 
     @Override

@@ -28,7 +28,9 @@ import Gallery from "../../components/gallery/Gallery";
 import Footer from "../../components/footer/Footer";
 import Rating from "../../dashboard/components/rating/Rating"
 import UserReservation from "../userProfile/UserReservations"
-
+import { useEffect } from 'react';
+import { useNotification } from "../../components/notification/NotificationProvider";
+import MapComp from "../../components/map/MapComp";
 
 const Boat = () => {
   const location = useLocation();
@@ -37,7 +39,7 @@ const Boat = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [showNewResModal, setShowNewResModal] = useState(false);
- 
+  const dispatch = useNotification();
 
   const { data, loading, error} = useFetch(`http://localhost:8080/auth/boat/${id}`)
   
@@ -83,6 +85,49 @@ const Boat = () => {
     }
   };
 
+  const [values, setValues] = useState({
+    offer_id: 0,
+    client_id: 0
+   
+  })
+
+  const user_id = user? user.id: 1;
+  const off_id = parseInt(id);
+  useEffect(() => {
+    setValues({["offer_id"]:off_id,["client_id"]:user_id});
+  }, [user]);
+
+
+
+
+  const handleSub = (e) => {
+    e.preventDefault()
+
+    
+    fetch('http://localhost:8080/api/sub', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.accessToken}`,
+          },
+        body: JSON.stringify(values)
+      })
+       
+        .then(data => {
+          sendNotification("success", "You successfully subscribed");
+        })
+        .catch(err => {
+          sendNotification("error", err.message)
+        })
+  }
+
+  const sendNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+      navigateTo: false
+    });
+  }
 
   return (
     <div>
@@ -93,23 +138,20 @@ const Boat = () => {
       ) : (
         <div className="boatContainer">
           <div className="boatWrapper">
-            <button className="bookNow">Reserve or Book Now!</button>
+          {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
+          <div className="boatDetails">
+            <div className="left">
             <h1 className="boatTitle">{data.name}</h1>
             <div className="boatAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               {data.address.city}, {data.address.street}
             </div>
-            <span className="boatDistance">
-              Excellent location – {}m from center
-            </span>
             <span className="boatPriceHighlight">
               Book a stay for ${data.price} at this property.
             </span>
             <div className="boatImages">
               <Gallery photos={data.images}/> 
-              
             </div>
-            <div className="boatDetails">
               <div className="boatDetailsTexts">
                 <h1 className="boatTitle">{data.title}</h1>
                 <p className="boatDesc">
@@ -125,12 +167,13 @@ const Boat = () => {
                     <FontAwesomeIcon size="2x" icon ={faMoneyBill1Wave}/> Price per day- {data.price}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faMoneyCheck}/> Cancellation fee- {data.cancellationFee}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faCartPlus}/> Additional services- {data.additionalServices.map(t => {return (<div className="addser"><h>{t.name}</h><br/>   Price- {t.price}$<br/>  Description- {t.description}</div>)})}
-                        
-                        
-                  
-
                   </p>
               </div>
+              <div className="map">
+                <MapComp location={data.address}/>
+              </div>
+              </div>
+              <div className="right">
               <div className="boatDetailsPrice">
               <Rating className="rating" rating = {data.rating}></Rating>
                 <h1>Perfect for a {days}-night stay!</h1>
@@ -141,6 +184,7 @@ const Boat = () => {
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
+            </div>
             </div>
           </div>
           {showNewResModal && 
