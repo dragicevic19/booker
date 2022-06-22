@@ -38,6 +38,9 @@ public class UserController {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private RatingRequestService ratingRequestService;
+
     // Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
     // Ukoliko nema, server ce vratiti gresku 403 Forbidden
     // Korisnik jeste autentifikovan, ali nije autorizovan da pristupi resursu
@@ -53,11 +56,18 @@ public class UserController {
         return this.userService.findAll();
     }
 
-    @GetMapping("/whoami")
+    @GetMapping("/whoami-client")
     @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<ClientAllDTO> client(Principal user) {
+
+        return new  ResponseEntity<>(new ClientAllDTO((Client) this.userService.findByEmail(user.getName())), HttpStatus.OK);
+    }
+
+    @GetMapping("/whoami-other-users")
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'SUPER_ADMIN', 'COTTAGE_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<UserAllDTO> user(Principal user) {
 
-        return new  ResponseEntity<>(new UserAllDTO((Client) this.userService.findByEmail(user.getName())), HttpStatus.OK);
+        return new  ResponseEntity<>(new UserAllDTO((User) this.userService.findByEmail(user.getName())), HttpStatus.OK);
     }
 
     @GetMapping("/user/requests")
@@ -197,13 +207,42 @@ public class UserController {
     }
 
     @PostMapping("/change")
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'SUPER_ADMIN', 'COTTAGE_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public String changeInfo(@RequestBody UserRequest userRequest) {
 
         this.userService.changeUserInfo(userRequest);
         return "success";
     }
 
+    @PostMapping("/change-password-not-necessary/{userId}")
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'SUPER_ADMIN', 'COTTAGE_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
+    public ResponseEntity<Boolean> changeUserPassword(@PathVariable Integer userId, @RequestBody RequestNewPassword requestNewPassword) {
+
+        User user = userService.findById(userId);
+        boolean success = userService.changeUserPassword(user, requestNewPassword.getNewPassword());
+        if (!success)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(success, HttpStatus.OK);
+    }
+
+    @PostMapping("/rating-request-response/{accepted}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public String ratingRequestResponse(@PathVariable boolean accepted, @RequestBody RatingRequestResponse ratingRequestResponse) throws InterruptedException, MessagingException, IOException {
+        Offer offer = offerService.findById(ratingRequestResponse.getOfferId());
+        ServiceProvider serviceProvider = (ServiceProvider) userService.findByEmail(ratingRequestResponse.getProviderEmail());
+        offerService.changeOfferRating(offer, ratingRequestResponse);
+        userService.changeProviderRating(serviceProvider, ratingRequestResponse);
+        emailService.sendRatingRequestResponse(ratingRequestResponse, accepted);
+        return "success";
+    }
+
+    @DeleteMapping("/delete-rating-req/{ratingReqId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public void deleteRatingRequest(@PathVariable Integer ratingReqId) throws InterruptedException, MessagingException, IOException {
+        RatingRequest ratingRequest = ratingRequestService.findById(ratingReqId);
+        userService.removeRatingRequest(ratingRequest);
+    }
 
     @PostMapping("/sub")
     @PreAuthorize("hasRole('CLIENT')")
@@ -273,6 +312,7 @@ public class UserController {
     }
 
 
+
     @PostMapping("/cancel-res")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<String> cancelRes(@RequestBody ResCancelDTO resCancelDTO) {
@@ -313,9 +353,5 @@ public class UserController {
         return new ResponseEntity<>("bad", HttpStatus.CONFLICT);
     }
 
-
-
-
-
-
+ 
 }

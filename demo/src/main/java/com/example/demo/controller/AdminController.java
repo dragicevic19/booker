@@ -2,10 +2,16 @@ package com.example.demo.controller;
 import com.example.demo.dto.*;
 import com.example.demo.model.*;
 import com.example.demo.service.*;
+import com.example.demo.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,6 +29,12 @@ public class AdminController {
 
     @Autowired
     BoatService boatService;
+
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     UserService userService;
@@ -229,9 +241,9 @@ public class AdminController {
         Administrator administrator = administratorService.findById(adminId);
         boolean success = administratorService.changeAdminPassword(administrator, requestNewPassword.getNewPassword());
         if (!success)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(success, HttpStatus.OK);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @GetMapping("/complaints")
@@ -296,5 +308,23 @@ public class AdminController {
         profitPercentageService.changeProfitPercentageValue(profitPercentage, profitPercentageValue);
         ProfitPercentage updatedProfitPercentage = profitPercentageService.save(profitPercentage);
         return new ResponseEntity<ProfitPercentage>(updatedProfitPercentage, HttpStatus.OK);
+    }
+
+    @GetMapping("/rating-requests")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<RatingRequestToShow>> getRatingRequests() {
+        List<RatingRequestToShow> ratingRequestsToShow = new ArrayList<>();
+        List<Client> clients = clientService.findAll();
+
+        for(Client client : clients)
+        {
+            for(RatingRequest ratingRequest : client.getRatingRequests())
+            {
+                ServiceProvider provider = userService.findProviderByOfferId(ratingRequest.getOffer().getId());
+                ratingRequestsToShow.add(new RatingRequestToShow(ratingRequest, client, provider));
+            }
+        }
+
+        return new ResponseEntity<>(ratingRequestsToShow, HttpStatus.OK);
     }
 }

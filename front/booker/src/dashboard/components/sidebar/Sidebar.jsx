@@ -23,6 +23,7 @@ import { AuthContext } from "../../../components/context/AuthContext";
 import { useNavigate } from "react-router";
 import DeleteIcon from '@mui/icons-material/Delete';
 import NearbyErrorIcon from '@mui/icons-material/NearbyError';
+import GradeIcon from '@mui/icons-material/Grade';
 
 const Sidebar = () => {
 
@@ -143,7 +144,7 @@ const Sidebar = () => {
           <NotificationsActiveOutlinedIcon className="icon" />
           <span>Notifications</span>
         </li>
-        <Link to="/dashboard/profile" style={{textDecoration: "none"}}>
+        <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>
           <li>
             <PersonOutlinedIcon className="icon" />
             <span>Profile</span>
@@ -225,6 +226,12 @@ const Sidebar = () => {
           <span>Penalty Requests</span>
         </li>
       </Link>
+      <Link to="/dashboard/rating-req" style={{textDecoration: "none"}}>
+        <li>
+          <GradeIcon className="icon" />
+          <span>Rating Requests</span>
+        </li>
+      </Link>
       
       <p className="title">FINANCIAL</p>
       <Link to="/dashboard/financial" style={{textDecoration: "none"}}>
@@ -251,7 +258,7 @@ const Sidebar = () => {
         <NotificationsActiveOutlinedIcon className="icon" />
         <span>Notifications</span>
       </li>
-      <Link to="/dashboard/profile" style={{textDecoration: "none"}}>
+      <Link to="/dashboard/profile-info" style={{textDecoration: "none"}}>
         <li>
           <PersonOutlinedIcon className="icon" />
           <span>Profile</span>

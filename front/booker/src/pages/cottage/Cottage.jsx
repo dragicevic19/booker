@@ -31,7 +31,11 @@ import Rating from "../../dashboard/components/rating/Rating"
 import UserReservation from "../userProfile/UserReservations"
 import { useEffect } from 'react';
 import { useNotification } from "../../components/notification/NotificationProvider";
+
 import QuickBooking from "../quickBooking/QuickBooking";
+
+import MapComp from "../../components/map/MapComp"
+
 
 const Cottage = () => {
   const dispatch = useNotification();
@@ -133,21 +137,10 @@ const Cottage = () => {
     setValues({["offer_id"]:off_id,["client_id"]:user_id});
   }, [user]);
 
-
-
- 
-
-
-
   const handleSub = (e) => {
     e.preventDefault()
-    
-   
     // setValues({["offer_id"]:off_id,["client_id"]:user_id});
   
-  
-
-    
     fetch('http://localhost:8080/api/sub', {
         method: 'POST',
         headers: {
@@ -158,7 +151,7 @@ const Cottage = () => {
       })
        
         .then(data => {
-          sendNotification("success", "You successfully");
+          sendNotification("success", "You successfully subscribed");
         })
         .catch(err => {
           sendNotification("error", err.message)
@@ -169,7 +162,7 @@ const Cottage = () => {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/'
+      navigateTo: false
     });
   }
 
@@ -185,26 +178,19 @@ const Cottage = () => {
         <div className="cottageContainer">
           <div className="cottageWrapper">
             {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
-             
+            <div className="cottageDetails">
+             <div className="left">
             <h1 className="cottageTitle">{data.name}</h1>
             <div className="cottageAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               {data.address.city}, {data.address.street}
             </div>
-            <span className="cottageDistance">
-              Excellent location – {}m from center
-            </span>
             <span className="cottagePriceHighlight">
               Book a stay for ${data.price} at this property.
             </span>
             <div className="cottageImages">
-             
               <Gallery photos={data.images}/> 
-              
-              
-              
             </div>
-            <div className="cottageDetails">
               <div className="cottageDetailsTexts">
                 <h1 className="cottageTitle">{data.title}</h1>
                 <p className="cottageDesc">
@@ -219,6 +205,11 @@ const Cottage = () => {
                      
                   </p>
               </div>
+              <div className="map">
+                <MapComp location={data.address}/>
+              </div>
+              </div>
+              <div className="right">
               <div className="cottageDetailsPrice">
               <Rating className="rating" rating = {data.rating}></Rating>
               
@@ -230,9 +221,12 @@ const Cottage = () => {
                 </h2>
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
+
                 <button  onClick={handleListClick}>Quick Booking!</button>
+
               </div>
             </div>
+          </div>
           </div>
           {showNewResModal && 
         <UserReservation 
@@ -251,7 +245,7 @@ const Cottage = () => {
          <Footer/>
         </div>
       )}
-  
+
     </div>
   );
 };

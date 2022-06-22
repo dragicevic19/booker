@@ -51,7 +51,7 @@ export default function DeleteUserDialog({userId, handleDelete, isProviderReserv
                   Delete Account
         </div>}
         {isProviderReserved == true && <div className="rejectDeletion">
-             You have reservations running!
+             Can't Delete Profile
         </div>}
       </div>
       <Dialog open={open} onClose={handleClose}>

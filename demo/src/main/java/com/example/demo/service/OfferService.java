@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.dto.PeriodDTO;
+import com.example.demo.dto.RatingRequestResponse;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
 
@@ -21,4 +22,6 @@ public interface OfferService {
     void save(Offer o);
 
     boolean isPeriodAvailable(LocalDate startDate, LocalDate endDate, Offer offer);
+
+    void changeOfferRating(Offer offer, RatingRequestResponse ratingRequestResponse);
 }

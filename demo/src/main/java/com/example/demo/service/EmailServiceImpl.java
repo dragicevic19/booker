@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.dto.PenaltyRequestResponseDTO;
+import com.example.demo.dto.RatingRequestResponse;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
@@ -174,6 +175,28 @@ public class EmailServiceImpl implements EmailService{
         }
 
         javaMailSender.send(mailToClient);
+        javaMailSender.send(mailToProvider);
+    }
+
+    @Override
+    public void sendRatingRequestResponse(RatingRequestResponse ratingRequestResponse, boolean accepted) {
+        SimpleMailMessage mailToProvider = new SimpleMailMessage();
+        mailToProvider.setTo(ratingRequestResponse.getProviderEmail());
+        mailToProvider.setFrom(env.getProperty("spring.mail.username"));
+        mailToProvider.setSubject("Rating Request Feedback");
+
+        if(accepted)
+        {
+            mailToProvider.setText("Administrator has accepted comment from our client " + ratingRequestResponse.getClientEmail()
+            + "while rating your offer " + ratingRequestResponse.getOfferName() + ".\n\nClient's rating: " +
+                    ratingRequestResponse.getRatingValue() + "\n\nClient's comment: " + ratingRequestResponse.getComment());
+        }
+        else
+        {
+            mailToProvider.setText("Administrator has rejected comment from our client " + ratingRequestResponse.getClientEmail()
+                    + "while rating your offer " + ratingRequestResponse.getOfferName() + ".\n\nClient's rating: " +
+                    ratingRequestResponse.getRatingValue() + "\n\nClient's comment: " + ratingRequestResponse.getComment());
+        }
         javaMailSender.send(mailToProvider);
     }
 }

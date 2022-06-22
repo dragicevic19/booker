@@ -208,7 +208,7 @@ export default function FormDialog({userId, handleAccept, handleReject, requestT
         </div>}
       </div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Explanation of rejection</DialogTitle>
+        <DialogTitle>Explanation</DialogTitle>
         <DialogContent style={{height:'400px', width:'400px'}}>
           <TextareaAutosize
             style={{height:'85%', width:'98%'}}

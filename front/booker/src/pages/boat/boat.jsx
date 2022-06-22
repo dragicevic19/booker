@@ -31,7 +31,8 @@ import UserReservation from "../userProfile/UserReservations"
 import { useEffect } from 'react';
 import { useNotification } from "../../components/notification/NotificationProvider";
 import QuickBooking from "../quickBooking/QuickBooking";
-
+import MapComp from "../../components/map/MapComp";
+ 
 
 const Boat = () => {
   const location = useLocation();
@@ -127,7 +128,7 @@ const Boat = () => {
       })
        
         .then(data => {
-          sendNotification("success", "You successfully");
+          sendNotification("success", "You successfully subscribed");
         })
         .catch(err => {
           sendNotification("error", err.message)
@@ -138,11 +139,9 @@ const Boat = () => {
     dispatch({
       type: type,
       message: message,
-      navigateTo: '/'
+      navigateTo: false
     });
   }
-
-
 
   return (
     <div>
@@ -154,22 +153,19 @@ const Boat = () => {
         <div className="boatContainer">
           <div className="boatWrapper">
           {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
+          <div className="boatDetails">
+            <div className="left">
             <h1 className="boatTitle">{data.name}</h1>
             <div className="boatAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               {data.address.city}, {data.address.street}
             </div>
-            <span className="boatDistance">
-              Excellent location – {}m from center
-            </span>
             <span className="boatPriceHighlight">
               Book a stay for ${data.price} at this property.
             </span>
             <div className="boatImages">
               <Gallery photos={data.images}/> 
-              
             </div>
-            <div className="boatDetails">
               <div className="boatDetailsTexts">
                 <h1 className="boatTitle">{data.title}</h1>
                 <p className="boatDesc">
@@ -185,12 +181,13 @@ const Boat = () => {
                     <FontAwesomeIcon size="2x" icon ={faMoneyBill1Wave}/> Price per day- {data.price}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faMoneyCheck}/> Cancellation fee- {data.cancellationFee}$<br/>
                     <FontAwesomeIcon size="2x" icon ={faCartPlus}/> Additional services- {data.additionalServices.map(t => {return (<div className="addser"><h>{t.name}</h><br/>   Price- {t.price}$<br/>  Description- {t.description}</div>)})}
-                        
-                        
-                  
-
                   </p>
               </div>
+              <div className="map">
+                <MapComp location={data.address}/>
+              </div>
+              </div>
+              <div className="right">
               <div className="boatDetailsPrice">
               <Rating className="rating" rating = {data.rating}></Rating>
                 <h1>Perfect for a {days}-night stay!</h1>
@@ -202,6 +199,7 @@ const Boat = () => {
                 <button onClick={handleClick}>Reserve or Book Now!</button>
                 <button  onClick={handleListClick}>Quick Booking!</button>
               </div>
+            </div>
             </div>
           </div>
           {showNewResModal && 

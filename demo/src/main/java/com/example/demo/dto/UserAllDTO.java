@@ -3,6 +3,7 @@ package com.example.demo.dto;
 import com.example.demo.model.Client;
 import com.example.demo.model.LoyaltyProgram;
 import com.example.demo.model.Rating;
+import com.example.demo.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,26 +24,19 @@ public class UserAllDTO {
     private String country;
     private String phoneNumber;
     private Rating rating;
-    private int numOfPenalties;
-    private LoyaltyProgram loyaltyProgram;
-
-    private String rank;
 
 
-    public UserAllDTO(Client client) {
-        id = client.getId();
-        firstName = client.getFirstName();
-        lastName = client.getLastName();
-        email = client.getEmail();
-        country = client.getAddress().getCountry();
-        street = client.getAddress().getStreet();
-        city = client.getAddress().getCity();
+    public UserAllDTO(User user) {
+        id = user.getId();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        email = user.getEmail();
+        country = user.getAddress().getCountry();
+        street = user.getAddress().getStreet();
+        city = user.getAddress().getCity();
 
-        phoneNumber = client.getPhoneNumber();
-        rating = client.getRating();
-        numOfPenalties = client.getNumOfPenalties();
-        loyaltyProgram = client.getLoyaltyProgram();
-        rank = String.valueOf(client.getLoyaltyProgram().getRank());
+        phoneNumber = user.getPhoneNumber();
+        rating = user.getRating();
     }
     // slika?
 }

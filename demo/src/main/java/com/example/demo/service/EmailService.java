@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.ComplaintResponseDTO;
 import com.example.demo.dto.NewDiscountDTO;
 import com.example.demo.dto.PenaltyRequestResponseDTO;
+import com.example.demo.dto.RatingRequestResponse;
 import com.example.demo.model.Client;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Reservation;
@@ -23,4 +24,6 @@ public interface EmailService {
     void sendReservationConfirmationToClient(Client client, Offer offer, Reservation reservation);
 
     void sendPenaltyRequestEmail(PenaltyRequestResponseDTO penaltyRequestResponseDTO, boolean accepted);
+
+    void sendRatingRequestResponse(RatingRequestResponse ratingRequestResponse, boolean accepted);
 }

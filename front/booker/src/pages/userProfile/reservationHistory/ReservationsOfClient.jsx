@@ -8,8 +8,10 @@ import { AuthContext } from "../../../components/context/AuthContext";
 import { reservationColumnsForClient } from '../../../dashboard/resColumns';
 import FillReport from '../../../dashboard/components/fillReport/FillReport';
 import axios from "axios";
- 
 import {useNotification} from '../../../components/notification/NotificationProvider';
+import NotificationProvider from '../../../components/notification/NotificationProvider';
+import ComplaintForm from '../../complaints/ComplaintForm';
+import RatingForm from './RatingForm';
 
 const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,vikendica,cas
   const navigate = useNavigate();
@@ -95,6 +97,15 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
   }
 
 
+  const findReservationDataById = (id) =>
+  {
+    for (let i of list)
+    {
+      if (i.id === id)
+        return i; 
+    }
+  }
+
   const actionColumn = [
     {
       field: "action",
@@ -105,9 +116,16 @@ const ReservationsOfClient = ({history,typeOfRes}) => {// tip rezervacije brod,v
           <div className="cellAction">
             <div 
               //onClick={()=> newReportClick(params.row.id)}
-              className="viewButton"
               disabled = {history === false || params.row.status === "now"}
-            >Fill Report
+            >
+              <NotificationProvider>
+                <ComplaintForm reservationId={params.row.id}/>
+              </NotificationProvider>
+            </div>
+            <div>
+              <NotificationProvider>
+                 <RatingForm reservationId={params.row.id} hasClientRated={findReservationDataById(params.row.id).hasClientRated}/>
+              </NotificationProvider>
             </div>
             {!history &&<div 
               onClick={()=> cancel(params.row.id)}

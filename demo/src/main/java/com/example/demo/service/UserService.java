@@ -48,4 +48,14 @@ public interface UserService extends UserDetailsService {
     void givePenaltyPoints(Client client, int penaltiesToAdd);
 
     Boolean changeUserInfo(UserRequest userRequest);
+
+    boolean changeUserPassword(User user, String newPassword);
+
+    void addClientRating(RatingRequestDTO ratingRequestDTO, Offer offer, Client client);
+
+    void removeRatingRequest(RatingRequest ratingRequest);
+
+    void changeProviderRating(ServiceProvider serviceProvider, RatingRequestResponse ratingRequestResponse);
+
+    void setRatedByClient(Reservation reservation, Client client);
 }

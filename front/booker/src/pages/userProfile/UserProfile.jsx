@@ -1,5 +1,4 @@
 import React from 'react'
-import "./userProfile.scss";
 import DeleteUserDialog from './DeleteUserDialog';
 import { AuthContext } from '../../components/context/AuthContext';
 import { useContext } from 'react';

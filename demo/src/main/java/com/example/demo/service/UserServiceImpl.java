@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ComplaintRepository complaintRepository;
 
+    @Autowired
+    private RatingRequestRepository ratingRequestRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -272,7 +278,6 @@ public class UserServiceImpl implements UserService {
         u.setDeleted(false);
         u.setLastPasswordResetDate(Timestamp.valueOf(LocalDateTime.now()));
 
-        // TODO: refaktorisati sa nekim nasledjivanjem mozda?
         switch (userRequest.getType()) {
             case "boat_owners":
                 return boatOwnerService.save(u, userRequest);
@@ -291,7 +296,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean changeUserInfo(UserRequest userRequest){
-        Client c =(Client) userRepository.findByEmail(userRequest.getEmail());
+        User c = userRepository.findByEmail(userRequest.getEmail());
         c.setFirstName(userRequest.getFirstName());
         c.setLastName(userRequest.getLastName());
         c.setPhoneNumber(userRequest.getPhoneNumber());
@@ -314,7 +319,47 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean changeUserPassword(User user, String newPassword) {
+        boolean success = !passwordEncoder.matches(newPassword, user.getPassword());
+        if(success)
+        {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setLastPasswordResetDate(Timestamp.valueOf(LocalDateTime.now()));
+            this.userRepository.save(user);
+        }
 
+        return success;
+    }
+
+    @Override
+    public void addClientRating(RatingRequestDTO ratingRequestDTO, Offer offer, Client client) {
+        RatingRequest ratingRequest = new RatingRequest();
+        ratingRequest.setOffer(offer);
+        ratingRequest.setRatingValue(ratingRequestDTO.getRatingOfUser());
+        ratingRequest.setComment(ratingRequestDTO.getCommentOfUser());
+        this.ratingRequestRepository.save(ratingRequest);
+        client.getRatingRequests().add(ratingRequest);
+        this.userRepository.save(client);
+    }
+
+    @Override
+    public void removeRatingRequest(RatingRequest ratingRequest) {
+        ratingRequest.setDeleted(true);
+        this.ratingRequestRepository.save(ratingRequest);
+    }
+
+    @Override
+    public void changeProviderRating(ServiceProvider serviceProvider, RatingRequestResponse ratingRequestResponse) {
+        serviceProvider.getRating().setNewRatingAverage(ratingRequestResponse.getRatingValue());
+        serviceProviderRepository.save(serviceProvider);
+    }
+
+    @Override
+    public void setRatedByClient(Reservation reservation, Client client) {
+        reservation.setHasClientRated(true);
+        reservationRepository.save(reservation);
+    }
 
 
 }
