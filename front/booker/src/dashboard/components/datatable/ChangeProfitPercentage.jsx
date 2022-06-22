@@ -61,7 +61,7 @@ export default function ChangeProfitPercentage() {
       },
       })
       .then(data => {
-        sendNotification("success", "You successfully sent a request for registration. Please wait for administrator to approve your request!");
+        sendNotification("success", "You successfully updated profit percentage!");
       })
       handleClose();
     }

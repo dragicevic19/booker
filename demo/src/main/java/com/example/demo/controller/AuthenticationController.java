@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -275,6 +276,17 @@ public class AuthenticationController {
         Reservation reservation = reservationService.findById(complaintRequest.getReservationId());
         Offer offer = offerService.findOfferForReservation(reservation);
         userService.addClientComplaint(complaintRequest, offer, client);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("create-rating-request/{userId}")
+    public ResponseEntity<Boolean> createRatingRequest(@PathVariable Integer userId, @RequestBody RatingRequestDTO ratingRequestDTO) {
+
+        Client client = (Client) userService.findById(userId);
+        Reservation reservation = reservationService.findById(ratingRequestDTO.getReservationId());
+        Offer offer = offerService.findOfferForReservation(reservation);
+        userService.addClientRating(ratingRequestDTO, offer, client);
+        userService.setRatedByClient(reservation, client);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

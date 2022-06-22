@@ -23,6 +23,7 @@ import { AuthContext } from "../../../components/context/AuthContext";
 import { useNavigate } from "react-router";
 import DeleteIcon from '@mui/icons-material/Delete';
 import NearbyErrorIcon from '@mui/icons-material/NearbyError';
+import GradeIcon from '@mui/icons-material/Grade';
 
 const Sidebar = () => {
 
@@ -215,6 +216,12 @@ const Sidebar = () => {
         <li>
           <NearbyErrorIcon className="icon" />
           <span>Penalty Requests</span>
+        </li>
+      </Link>
+      <Link to="/dashboard/rating-req" style={{textDecoration: "none"}}>
+        <li>
+          <GradeIcon className="icon" />
+          <span>Rating Requests</span>
         </li>
       </Link>
       

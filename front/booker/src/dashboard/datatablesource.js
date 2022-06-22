@@ -652,4 +652,86 @@ export const columnsData =
         width: 120,
       },
     ],
+    'ROLE_ADMIN/RATING_REQUESTS':
+    [
+      {
+        field: "id",
+        headerName: "Request ID",
+        width: 150,
+      },
+      {
+        field: "clientEmail",
+        headerName: "Client's Email",
+        width: 220,
+      },
+      { field: "offerId", 
+      headerName: "Offer ID", 
+      width: 100 
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      },
+      {
+        field: "providerEmail",
+        headerName: "Provder's Email",
+        width: 220,
+      }
+    ],
+    'ROLE_SUPER_ADMIN/RATING_REQUESTS':
+    [
+      {
+        field: "id",
+        headerName: "Request ID",
+        width: 150,
+      },
+      {
+        field: "clientEmail",
+        headerName: "Client's Email",
+        width: 220,
+      },
+      { field: "offerId", 
+      headerName: "Offer ID", 
+      width: 100 
+      },
+      {
+        field: "icon",
+        headerName: "Icon",
+        width: 60,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img || "https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png"} alt="avatar" />
+
+              {params.row.name}
+            </div>
+          );
+        }
+      },
+      {
+        field: "offerName",
+        headerName: "Offer Name",
+        width: 150,
+      },
+      {
+        field: "providerEmail",
+        headerName: "Provder's Email",
+        width: 220,
+      }
+    ],
 };
