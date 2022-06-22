@@ -82,7 +82,7 @@ const Sidebar = () => {
         <Link to="/dashboard/subscriptions" style={{textDecoration: "none"}}>
           <li>
           <ViewListOutlinedIcon className="icon" />
-            <span>subscriptions</span>
+            <span>Subscriptions</span>
           </li>
         </Link>
         <p className="title">USER</p>

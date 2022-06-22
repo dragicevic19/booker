@@ -108,7 +108,8 @@ public class ReservationServiceImpl implements ReservationService {
                 if (reservation.getReservationPeriod().getDateFrom().getMonthValue() == month) {
 
                     LocalDate startDate = reservation.getReservationPeriod().getDateFrom();
-                    for (int i = startDate.getDayOfMonth(); i <= startDate.lengthOfMonth(); i++) {
+                    int lenOfMonth = startDate.lengthOfMonth();
+                    for (int i = startDate.getDayOfMonth(); i <= lenOfMonth; i++) {
 
                         String key = String.valueOf(i) + ". " + String.valueOf(month) + ".";
 

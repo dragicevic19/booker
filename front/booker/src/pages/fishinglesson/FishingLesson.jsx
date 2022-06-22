@@ -159,7 +159,6 @@ const FishingLesson = () => {
       ) : (
         <div className=" fishinglessonContainer">
           <div className=" fishinglessonWrapper">
-          {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}  className="bookNow">Subscribe</button> }
             <div className=" fishinglessonDetails">
             <div className="left">
             <h1 className=" fishinglessonTitle">{data.name}</h1>
@@ -167,9 +166,6 @@ const FishingLesson = () => {
               <FontAwesomeIcon icon={faLocationDot} />
               {data.address.city}, {data.address.street}
             </div>
-            <span className=" fishinglessonDistance">
-              Excellent location – {}m from center
-            </span>
             <span className=" fishinglessonPriceHighlight">
               Book a stay for ${data.price} at this property.
             </span>
@@ -206,6 +202,8 @@ const FishingLesson = () => {
                 
                 <button onClick={handleClick}>Reserve or Book Now!</button>
                 <button  onClick={handleListClick}>Quick Booking!</button>
+                {user && user.type === "ROLE_CLIENT" && <button onClick={handleSub}>Subscribe</button> }
+
               </div>
               </div>
             </div>

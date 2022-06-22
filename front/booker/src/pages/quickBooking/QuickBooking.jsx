@@ -56,10 +56,10 @@ const QuickBooking = ({of, showNewResModal, setShowNewResModal}) => {
           'Authorization': `Bearer ${user.accessToken}`,
         }
       });
-      sendNotification("success", 'Successfully canceled reservation!');
+      sendNotification("success", 'Successfully reserved!');
 
     } catch(error){
-      sendNotification("error", 'Cancellation is possible 3 days before the start!');
+      sendNotification("error", 'Error!');
     }
 
 }
