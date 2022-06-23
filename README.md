@@ -1,5 +1,10 @@
 # isa-mrs-tim12
-#NAPOMENA: sve sifre test korisnika su: 123
+
+# Frontend
+  Pre pokretanju fronta neophodno je instalirati potrebne dependecy-je komandom npm install u terminalu. Za pokretanje je potrebno uneti komandu npm start. Radiće na portu 3000.
+
+# Login info
+Sve sifre test korisnika su: 123
 
 KREDENCIJALI:
 
